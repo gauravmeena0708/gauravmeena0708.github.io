@@ -9,11 +9,35 @@
 		width:1000px !important;
 		height:300px !important;
 	}
+	.shadow {
+		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+	}
+	.input {
+	background: linear-gradient(#9dd2ea, #8bceec);
+	}
+	
+	.input-group, .list-group {
+		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+	}
 	</style>
 
 </head>
 
 <body>
+	<header class="p-3 bg-info text-white shadow mb-3">
+		<div class="container">
+		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+			  <li><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
+			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension</a></li>
+			  <li><a href="pension2.html?q=1.json" class="nav-link px-2 text-white">Pension 1</a></li>
+			  <li><a href="pension2.html?q=2.json" class="nav-link px-2 text-white">Pension 2</a></li>
+			  <li><a href="pension2.html?q=3.json" class="nav-link px-2 text-white">Pension 3</a></li>
+			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI</a></li>
+			</ul>
+		  </div>
+		</div>
+	  </header>
 	<div class="container-fluid">
 		<div class="row bg-light mt-2">
 			<div class="col-sm-6">
