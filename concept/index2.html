@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+	<!-- CSS only -->
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" type="text/javascript"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js" type="text/javascript"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js" type="text/javascript"></script>
+
+	<title>Concept Pages</title>
+</head>
+
+
+<body ng-app="myApp" class="pt-100 pb-100">
+	<header class="p-3 bg-info text-white">
+		<div class="container">
+		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+			  <li><a href="#!/" class="nav-link px-2 text-white">Home</a></li>
+			  <li><a href="#!eep" class="nav-link px-2 text-white">Employee Pages</a></li>
+			  <li><a href="#!erp" class="nav-link px-2 text-white">Employer Pages</a></li>
+			  <li><a href="#" class="nav-link px-2 text-white">Sample Processing</a></li>
+			  <li><a href="#" class="nav-link px-2 text-white">Report Pages</a></li>
+			  <li><a href="#" class="nav-link px-2 text-white">Ideal EPFO</a></li>
+			</ul>
+		  </div>
+		</div>
+	  </header>
+	<div class="container pb-3">
+		<div class="row">
+			<div class="col-lg-12">
+				<div ng-view></div>
+			</div>
+		</div>
+	</div>
+
+<script>
+var app = angular.module("myApp", ["ngRoute","ngCookies"]);
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl : "home.html",
+        controller : "homCtrl"
+    })
+	.when("/eep", {
+        templateUrl : "eeprofile.html",
+        controller : "eepCtrl"
+    })
+    .when("/erp", {
+        templateUrl : "erprofile.html",
+        controller : "erpCtrl"
+    })
+    .when("/paris", {
+        templateUrl : "paris.htm",
+        controller : "parisCtrl"
+    })
+	.when("/rr", {
+        templateUrl : "rr.html",
+        controller : "rrCtrl"
+    })
+	.when("/mem", {
+        templateUrl : "mem.html",
+        controller : "memCtrl"
+    })
+	.when("/cpe", {
+        templateUrl : "cpe.html",
+        controller : "cpeCtrl"
+    })
+	.when("/not", {
+        templateUrl : "not.html",
+        controller : "notCtrl"
+    })
+	.when("/cir", {
+        templateUrl : "cir.html",
+        controller : "cirCtrl"
+    })
+	.when("/gnm", {
+        templateUrl : "gnm.html",
+        controller : "gnmCtrl"
+    })
+    .when("/clm", {
+        templateUrl : "clm.html",
+        controller : "clmCtrl"
+    })
+    .when("/elg", {
+        templateUrl : "elg.html",
+        controller : "elgCtrl"
+    });
+});
+app.controller("eepCtrl", function ($scope) {
+    $scope.msg = "showing Employee Profile Page";
+});
+app.controller("erpCtrl", function ($scope) {
+    $scope.msg = "showing Employer Profile Page";
+});
+app.controller("homCtrl", function ($scope) {
+    $scope.msg = "showing home";
+});
+app.controller("estCtrl", function ($scope) {
+    $scope.msg = "showing Establishment Home";
+});
+app.controller('rrCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+	$scope.names = [];
+	$scope.test='';
+	$scope.msg = "showing rr";
+	success1 = {
+		"heading":["Sr","Title","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"],
+		"data":[
+			[1, "Total UAN", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[2, "Exited", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[3, "Active", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[4, "No of ECRs filed", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[5, "Paid for no of UANs", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[6, "Total amount paid (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[7, "Not paid for UANs", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[8, "Short Payments (Rs) against 5", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[9, "Damages due on delay (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[10, "Interest Due on delay (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[11, "Damages paid (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[12, "Interest paid (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[13, "Balance Damages payable (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[14, "Balance Interest payable (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[15, "New Employees joined", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[16, "PMRPY benefit taken for", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[17, "Benefit amount (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[18, "Any recovery due (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[19, "Amount refunded (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[20, "Interest/Damages paid (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115],
+			[21, "Balance principal amount (Rs)", 100, 110, 112, 115, 100, 110, 112, 115, 100, 110, 112, 115]
+		]
+	};
+	$http({
+		method: 'GET',
+		url: './suggestions.json'
+	}).then(function (success){
+		$scope.sugg =success1;
+		console.log();
+	},function (error){
+		console.log(error)
+	});
+}]);
+
+app.controller("profileCtrl", function ($scope) {
+    $scope.msg = "showing Profile";
+});
+
+app.controller("cpeCtrl", function ($scope) {
+    $scope.msg = "showing cpe";
+});
+
+app.controller("notCtrl", function ($scope) {
+    $scope.msg = "showing notices";
+});
+
+app.controller("cirCtrl", function ($scope) {
+    $scope.msg = "showing circulars";
+});
+
+app.controller("gnmCtrl", function ($scope) {
+    $scope.msg = "showing circulars";
+});
+    
+app.controller("clmCtrl", function ($scope) {
+    $scope.msg = "I am claim controller";
+});
+    
+app.controller("elgCtrl", function ($scope) {
+    $scope.msg = "I am eligible";
+});
+
+
+</script>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
