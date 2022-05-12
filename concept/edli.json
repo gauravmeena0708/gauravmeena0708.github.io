@@ -1,93 +1,90 @@
 [
-{
-	"id":1,
-	"start": "01-08-1976",
-	"end": "31-07-1979",
-	"min_balance":0,
-	"part_a":"10000",
-	"part_b":""
-},
-{
-	"id":2,
-	"start": "01-08-1979",
-	"end": "28-02-1990",
-	"min_balance":1000,
-	"part_a":10000,
-	"part_b":""
-},
-{
-	"id":3,
-	"start": "01-03-1990",
-	"end": "31-03-1993",
-	"min_balance":500,
-	"part_a":"Rs. 15,000/- + 25% of the amount in excess of Rs. 15,000/- subject to the ceiling of Rs. 25,000/-",
-	"part_b":""
-},
-{
-	"id":4,
-	"start": "01-04-1993",
-	"end": "23-06-2000",
-	"min_balance":0,
-	"part_a":"Rs. 25,000/- + 25% of the amount in excess of Rs. 25,000/- subject to the ceiling of Rs. 35000/-",
-	"part_b":""
-},
-{
-	"id":5,
-	"start": "24-06-2000",
-	"end": "17-06-2010",
-	"min_balance":0,
-	"part_a":"Rs. 35,000/- + 25% of the amount in excess of Rs. 35,000/- subject to the ceiling of Rs. 60,000/-",
-	"part_b":""
-},
-{
-	"id":6,
-	"start": "18-06-2010",
-	"end": "07-01-2011",
-	"min_balance":0,
-	"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh",
-	"part_b":""
-},
-{
-	"id":7,
-	"start": "08-01-2011",
-	"end": "31-08-2014",
-	"min_balance":0,
-	"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh",
-	"part_b":"Average Monthly wages drawm for the preceding twelve months prior to the month of death (subject to the maximum of Rs. 6500/=) multiplied by 20  (Admissible if the employee who had been employed in the same establishment for a continuous period of twelve months)"
-},
-{
-	"id":8,
-	"start": "01-09-2014",
-	"end": "23-05-2016",
-	"min_balance":0,
-	"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh + 20% of such amount",
-	"part_b":"Average Monthly wages drawm for the preceding twelve months prior to the month of death, subject to the maximum of Rs. 15000/- multiplied by 20 + 20% of such amount"
-},
-{
-	"id":9,
-	"start": "24-05-2016",
-	"end": "14-02-2018",
-	"min_balance":0,
-	"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh + 20% of such amount",
-	"part_b":"Average Monthly wages drawm for the preceding twelve months prior to the month of death, subject to the maximum of Rs. 15000/-  multiplied by 30 + 50% of the average balance of PF contributions, for preceding twelve months prior to the month of death, ceiling of Rs. 1,50,000/- (i.e. Maximum Benefit is Rs. 4,50,000+Rs.1,50,000/- = Rs. 6,00,000/-)"
-},
-{
-	"id":10,
-	"start": "15-02-2018",
-	"end": "14-02-2020",
-	"min_balance":0,
-	"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh + 20% of such amount",
-	"part_b":"Same as above - Minimum Assurance Benefit is fixed to Rs. 2.50 Lakhs"
-},
-{
-	"id":11,
-	"start": "15-02-2020",
-	"end": "27-04-2024",
-	"min_balance":0,
-	"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh + 20% of such amount",
-	"part_b":"Average Monthly wages drawm for the preceding twelve months prior to the month of death, subject to the maximum of Rs. 15000/-  multiplied by 35 + 50% of the average balance of PF contributions, for preceding twelve months prior to the month of death, ceiling of Rs. 1,75,000/- (i.e. Maximum Benefit is Rs. 5,25,000+Rs.1,75,000/- = Rs. 7,00,000/-) (Admissible if the employee who had been in employment for a continuous period of twelve months irrestpective of change in establishment)"
-}
-]
-
-
-
+			{
+				"id":1,
+				"start": "01-08-1976",
+				"end": "31-07-1979",
+				"min_balance":0,
+				"part_a":"10000",
+				"part_b":""
+			},
+			{
+				"id":2,
+				"start": "01-08-1979",
+				"end": "28-02-1990",
+				"min_balance":1000,
+				"part_a":10000,
+				"part_b":""
+			},
+			{
+				"id":3,
+				"start": "01-03-1990",
+				"end": "31-03-1993",
+				"min_balance":500,
+				"part_a":"Rs. 15,000/- + 25% of the amount in excess of Rs. 15,000/- subject to the ceiling of Rs. 25,000/-",
+				"part_b":""
+			},
+			{
+				"id":4,
+				"start": "01-04-1993",
+				"end": "23-06-2000",
+				"min_balance":0,
+				"part_a":"Rs. 25,000/- + 25% of the amount in excess of Rs. 25,000/- subject to the ceiling of Rs. 35000/-",
+				"part_b":""
+			},
+			{
+				"id":5,
+				"start": "24-06-2000",
+				"end": "17-06-2010",
+				"min_balance":0,
+				"part_a":"Rs. 35,000/- + 25% of the amount in excess of Rs. 35,000/- subject to the ceiling of Rs. 60,000/-",
+				"part_b":""
+			},
+			{
+				"id":6,
+				"start": "18-06-2010",
+				"end": "07-01-2011",
+				"min_balance":0,
+				"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh",
+				"part_b":""
+			},
+			{
+				"id":7,
+				"start": "08-01-2011",
+				"end": "31-08-2014",
+				"min_balance":0,
+				"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh",
+				"part_b":"Average Monthly wages drawm for the preceding twelve months prior to the month of death (subject to the maximum of Rs. 6500/=) multiplied by 20  (Admissible if the employee who had been employed in the same establishment for a continuous period of twelve months)"
+			},
+			{
+				"id":8,
+				"start": "01-09-2014",
+				"end": "23-05-2016",
+				"min_balance":0,
+				"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh + 20% of such amount",
+				"part_b":"Average Monthly wages drawm for the preceding twelve months prior to the month of death, subject to the maximum of Rs. 15000/- multiplied by 20 + 20% of such amount"
+			},
+			{
+				"id":9,
+				"start": "24-05-2016",
+				"end": "14-02-2018",
+				"min_balance":0,
+				"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh + 20% of such amount",
+				"part_b":"Average Monthly wages drawm for the preceding twelve months prior to the month of death, subject to the maximum of Rs. 15000/-  multiplied by 30 + 50% of the average balance of PF contributions, for preceding twelve months prior to the month of death, ceiling of Rs. 1,50,000/- (i.e. Maximum Benefit is Rs. 4,50,000+Rs.1,50,000/- = Rs. 6,00,000/-)"
+			},
+			{
+				"id":10,
+				"start": "15-02-2018",
+				"end": "14-02-2020",
+				"min_balance":0,
+				"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh + 20% of such amount",
+				"part_b":"Same as above - Minimum Assurance Benefit is fixed to Rs. 2.50 Lakhs"
+			},
+			{
+				"id":11,
+				"start": "15-02-2020",
+				"end": "27-04-2024",
+				"min_balance":0,
+				"part_a":"Rs. 50,000/= + 40% of the amount in excess Rs. 50,000/-, subject to the ceiling of Rs. 1 Lakh + 20% of such amount",
+				"part_b":"Average Monthly wages drawm for the preceding twelve months prior to the month of death, subject to the maximum of Rs. 15000/-  multiplied by 35 + 50% of the average balance of PF contributions, for preceding twelve months prior to the month of death, ceiling of Rs. 1,75,000/- (i.e. Maximum Benefit is Rs. 5,25,000+Rs.1,75,000/- = Rs. 7,00,000/-) (Admissible if the employee who had been in employment for a continuous period of twelve months irrestpective of change in establishment)"
+			}
+		]
