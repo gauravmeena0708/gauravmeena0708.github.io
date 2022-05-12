@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Pension Calculator</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container" ng-app="myApp" ng-controller="namesCtrl">
+		<div class="btn-group"><a href="./" class="btn btn-sq-lg btn-default"><i class="fa fa-user"> Back</i></a></div>
+		<h3>Pension Calculator</h3>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<form ng-submit="myFunc()">
+					<input type="text" style="width:100%; padding:4px;" placeholder="Type the textfile url from which data is to be fetched? " ng-model="test" />
+					<input type="submit" value="submit" ng-show="false">
+				</form>
+			</div>
+		</div>
+	
+		<div class="table-responsive">
+			<table class="table table-condensed table-hover table-bordered table-striped">
+				<thead>
+					<tr class="bg-info">
+						<th class="col-md-4" >Name</th>
+						<th class="col-md-8">DOB</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td> {{name}} </td> <td> {{dob}} </td>
+					</tr>
+					<tr>
+						<td>Avg. Salary</td>
+						<td>{{avg}}</td>
+					</tr>			
+				</tbody>
+			</table>
+			<table class="table table-condensed table-hover table-bordered table-striped">
+				<thead>
+					<tr class="bg-info">
+						<th class="col-md-4" >DOJ</th>
+						<th class="col-md-4">DOE</th>
+						<th class="col-md-4">NCP</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="service in services">
+						<td>{{service.doj}}</td>
+						<td>{{service.doe}}</td>
+						<td>{{service.ncp}}</td>
+					</tr>
+			
+				</tbody>
+			</table>
+			<table class="table table-condensed table-hover table-bordered table-striped">
+				<thead>
+					<tr>
+						<th colspan="4" class="bg-info" >Service Details in Days</th>
+					</tr>
+					<tr>
+						<th class="col-md-3" >Service before 16-11-1995</th>
+						<th class="col-md-3">Service from 16-11-1995 & before 01-09-2014 </th>
+						<th class="col-md-3">Service from 01-09-2014</th>
+						<th class="col-md-3">NCP</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="day in days" ng-class="!$last ? '' : 'bg-success'">
+						<td>{{day.s1}}</td>
+						<td>{{day.s2}}</td>
+						<td>{{day.s3}}</td>
+						<td>{{day.ncp}}</td>
+					</tr>
+			
+				</tbody>
+			</table>
+			<div class="alert alert-success" role="alert" ng-if="total.s1">
+					You have past service of {{total.s1}} days, {{total.s1/365 | number : 1}} years
+			</div>
+			<div class="alert alert-success" role="alert"ng-if="total.s2">
+					You have service between 1995-2014 of {{total.s2}} days, {{total.s2/365 | number : 1}} years
+			</div>
+			<div class="alert alert-success" role="alert" ng-if="total.s3">
+					You have service after 2014 of {{total.s3}} days, {{total.s3/365 | number : 1}} years
+			</div>
+			<div class="alert alert-danger" role="alert" ng-if="(total.s2+total.s3)>7305">
+					Your actual service (after 16-11-1995) is {{total.s2+total.s3}} days or {{(total.s2+total.s3)/365 | number : 1 }} years which is greater than 7305 days or 20 years.
+					Hence, if you opt for pension after the age of 58 years you will be eligible for Weightage benefit
+			</div>
+			
+		</div>
+
+	</div>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" type="text/javascript"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js" type="text/javascript"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js" type="text/javascript"></script>
+	<script src="https://cdn.jsdelivr.net/npm/underscore@1.13.3/underscore-esm-min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+	<script src="luxon.min.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+	var app = angular.module('myApp', ['ngCookies']);
+	app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+		
+		$scope.names = [];
+		let url = new URL(window.location);
+		let searchParams = new URLSearchParams(url.search);
+		$scope.test=searchParams.get('q') || " ";
+		
+		function getAvg(wages) {
+			const total = wages.reduce((acc, c) => acc + c, 0);
+			return total / wages.length;
+		}
+		
+		var getdiffdays = function(d1, d2){
+			d = luxon.Interval.fromDateTimes(d1, d2)
+			return d.length("days")
+		}
+		
+		var getdaterange = function(d) {
+			date1 = luxon.DateTime.fromFormat('16-11-1995', 'dd-MM-yyyy')
+			date2 = luxon.DateTime.fromFormat('01-09-2014', 'dd-MM-yyyy')
+			//console.log("getdiffdays", d.toFormat('dd-MM-yyyy'))
+			//console.log(getdiffdays(d, date1))
+			if(getdiffdays(d, date1)>0){
+				return 1;
+			} else if (getdiffdays(d, date2)>0){
+				return 2;
+			} else {
+				return 3;
+			}
+			return 0
+		}
+		
+		var get3Services = function (doj, doe,ncp) {
+			date1 = luxon.DateTime.fromFormat('16-11-1995', 'dd-MM-yyyy')
+			date2 = luxon.DateTime.fromFormat('01-09-2014', 'dd-MM-yyyy')
+			
+			//console.log(getdaterange(doj),getdaterange(doe))
+			rdoj = getdaterange(doj);
+			rdoe = getdaterange(doe);
+			console.log("doj: ",doj.toFormat('dd-MM-yyyy'),rdoj,"doe: ",doe.toFormat('dd-MM-yyyy'), rdoe)
+			s1 =0
+			s2 =0
+			s3 =0
+			if(rdoj == 1) {
+				if(rdoe==1) {
+				   s1 = getdiffdays(doj, doe)
+				} else if(rdoe==2) {
+					s1 = getdiffdays(doj, date1)
+					s2 = getdiffdays(date1, doe)
+				} else {
+					s1 = getdiffdays(doj, date1)
+					s2 = getdiffdays(date1, date2)
+					s3 = getdiffdays(date2, doe)
+				}
+			} else if(rdoj == 2) {
+				if(rdoe==2) {
+					s2 =getdiffdays(doj, doe)
+				
+				} else {	
+					s2 =getdiffdays(doj, date2)
+					s3 =getdiffdays(date2, doe)
+				}
+			} else {
+				s3= getdiffdays(doj, doe)
+			}
+			console.log(rdoj, rdoe)
+			console.log(s1,s2,s3)
+			return {
+			"s1": s1,
+			"s2": s2,
+			"s3": s3,
+			"ncp": ncp
+			}
+		}
+		
+		
+		var myFunc2 = function (success){
+				$scope.name = success.data['name'];
+				$scope.dob = success.data['dob'];
+				
+				$scope.services = success.data['services'];
+				arr = []
+				for (let i = 0; i < $scope.services.length; i++) {
+					doj = luxon.DateTime.fromFormat($scope.services[i]["doj"], 'dd-MM-yyyy');
+					doe = luxon.DateTime.fromFormat($scope.services[i]["doe"], 'dd-MM-yyyy');
+					ncp = $scope.services[i]["ncp"];
+					x = get3Services(doj, doe,ncp);	
+					arr.push(x)
+				}
+				
+				$scope.total = _.reduce(arr, function(acc, o) {
+					for (var p in o)
+						acc[p] = (p in acc ? acc[p] : 0) + o[p];
+						return acc;
+				}, {});
+				arr.push($scope.total)
+				$scope.days = arr;
+				
+				$scope.avg = getAvg(success.data['60wages']);
+			}
+			
+        $http({ method: 'GET',url: $scope.test })
+			.then(myFunc2,function (error){
+                console.log(error)
+            });
+		
+		$scope.myFunc = function()  {
+			$http({ method: 'GET',url: $scope.test })
+			.then(myFunc2,function (error){
+                console.log(error)
+            });
+		}
+	}]);
+  //]]>
+ </script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
