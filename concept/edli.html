@@ -9,10 +9,10 @@
 		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
 	}
 	.input {
-	background: linear-gradient(#9dd2ea, #8bceec);
+		background: linear-gradient(#9dd2ea, #8bceec);
 	}
 	
-	.input-group, .list-group {
+	.list-group {
 		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
 	}
 	</style>
@@ -39,7 +39,7 @@
 		<div class="row">
 			<div class="col-md-6 col-sm-12  p-2 mt-2">
 				<h3 class="text-center mb-3">EDLI Calculator Input</h3>
-				<form class="shadow">
+				<form class="shadow p-3 rounded">
 					<div class="input-group mb-3">
 						<span class="input-group-text col-5" id="basic-addon1">UAN: </span>
 						<input type="number" maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" ng-model="uan" class="form-control" placeholder="UAN" aria-label="UAN" aria-describedby="basic-addon1">
@@ -52,6 +52,14 @@
 						<span class="input-group-text col-5" id="basic-addon1">Date of Death: </span>
 						<input type="date" ng-model="dod" class="form-control" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
 					</div>
+					<div class="input-group mb-5">
+						<span class="input-group-text col-5" id="basic-addon1">Average Progressive Balance: </span>
+						<input type="number" ng-model="apb" class="form-control" placeholder="apb" aria-label="apb" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group mb-5">
+						<label for="customRange1" class="form-label">Average Progressive Balance:</label>
+						<input type="range" class="form-range" id="customRange1" ng-model="apb" min="0" max="1000000">
+					</div>
 				</form>
 			</div>
 			<div class="col-md-6 col-sm-12 p-2">
@@ -62,7 +70,7 @@
 				</ul>
 				<ul class="list-group mb-3">
 					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Part A Calculation</li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total Progressive Balance: <span>{{tpb}}</span></li>
+					<li ng-if=0 class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total Progressive Balance: <span>{{tpb}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Avg Progressive Balance: <span>{{apb}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Minimum EDLI Amount: <span>{{min_a}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent of above Minimum Amount: <span>{{percent_a}}</span></li>
