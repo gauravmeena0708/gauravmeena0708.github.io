@@ -23,15 +23,23 @@
 	<header class="p-3 bg-info text-white">
 		<div class="container">
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+			  <li><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
+			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension</a></li>
+			  <li><a href="pension2.html?q=1.json" class="nav-link px-2 text-white">Pension 1</a></li>
+			  <li><a href="pension2.html?q=2.json" class="nav-link px-2 text-white">Pension 2</a></li>
+			  <li><a href="pension2.html?q=3.json" class="nav-link px-2 text-white">Pension 3</a></li>
+			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI</a></li>
+			</ul>
 			<h3 class="text-center"> EDLI CALCULATOR</h3>
 		  </div>
 		</div>
 	</header>
     <div class="container-fluid" >
 		<div class="row">
-			<div ng-if=0 class="col-md-6 col-sm-12  bg-info p-2 input mt-2">
+			<div class="col-md-6 col-sm-12  p-2 mt-2">
 				<h3 class="text-center mb-3">EDLI Calculator Input</h3>
-				<form>
+				<form class="shadow">
 					<div class="input-group mb-3">
 						<span class="input-group-text col-5" id="basic-addon1">UAN: </span>
 						<input type="number" maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" ng-model="uan" class="form-control" placeholder="UAN" aria-label="UAN" aria-describedby="basic-addon1">
