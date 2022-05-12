@@ -83,7 +83,7 @@
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Maximum EDLI Amount(from table): <span>{{a_max}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Amount A (Calculated): <span>{{get_amt_a(a_min, a_max, apb, a_perc1)}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount Per(from table): <span>{{a_perc2}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount ({{a_perc2}}*amount ): <span>{{a_perc2*get_amt_a(a_min, a_max, apb, a_perc1)/100}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount ({{a_perc2}}*amount ): <span>{{a_perc2*apb/100}}</span></li>
 					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Amount under Part A(Min+factor: <span>{{get_final_a(a_perc2,a_min, a_max, apb, a_perc1)}}</span></li>
 				</ul>
 				<ul class="list-group mb-3">
@@ -274,7 +274,8 @@
 			}
 		}
 		$scope.get_final_a = function(a_perc2,a_min, a_max, apb, a_perc1){
-			return (1+(a_perc2/100))*$scope.get_amt_a(a_min, a_max, apb, a_perc1)
+			val1 = (1+(a_perc2/100))*$scope.get_amt_a(a_min, a_max, apb, a_perc1)
+			return parseInt(val1);
 		}
 		$scope.get_final_b = function(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min){
 			val1 = ($scope.getmin(avg_wage, b_ceiling)*b_factor) + $scope.get_additional(avg_wage, b_ceiling, b_factor, b_perc)
@@ -286,7 +287,7 @@
 			 return b_min
 			} else {
 			
-				return val1+val2;
+				return parseInt(val1)+parseInt(val2);
 			}
 		}
 		
