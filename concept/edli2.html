@@ -70,7 +70,7 @@
 								<input type="range" class="form-range" id="customRange1" ng-model="apb" min="0" max="1000000">	
 							</div>
 
-							<div class="input-group mb-5">
+							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website.">
 								<span class="input-group-text col-8" id="basic-addon1">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
 								<input type="number" ng-model="avg_wage" class="form-control col-4" placeholder="apb" aria-label="apb" aria-describedby="basic-addon1">
 								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage" min="0" max="{{b_ceiling+1000}}">
@@ -224,7 +224,7 @@
 		limit2 = new Date('2024-04-27');
 		$scope.year = 2020;
 
-		$scope.apb = 1198984;
+		$scope.apb = 0;
 		$scope.a_min_bal = 0;
 		$scope.a_min     = 50000; 
 		$scope.a_max     = 100000; 
