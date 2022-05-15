@@ -57,15 +57,15 @@
 					<div class="card-body">
 						<form>
 							<span class="alert col-5" id="basic-addon1">{{alert}}</span>
-							<div class="input-group mb-5">
+							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Based on date of death the minimum, maximum and other factors of calculation are affected. These are based on Gazette Notifications /circulars issued from time to time. ">
 								<span class="input-group-text col-5" id="basic-addon1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Date of Death : <i class="bi bi-question-circle-fill"></i></span>
 								<input type="date" ng-model="dod" class="form-control" id="dod" ng-change="getParams(list,dod)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
 								<input type="range" ng-model="year" class="form-range" id="customRange1" ng-change="update_date(year)"  min="1976" max="2024">	
 								<div class="invalid-tooltip">Please enter a valid input.</div>
 							</div>
 							
-							<div class="input-group mb-5">
-								<span class="input-group-text col-8" id="basic-addon1">Average Progressive Balance: </span>
+							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Average progressive balance is average of balance in past 12 months. The same is available in the passbook website.">
+								<span class="input-group-text col-8" id="basic-addon1">Average Progressive Balance: <i class="bi bi-question-circle-fill"></i></span>
 								<input type="number" ng-model="apb" class="form-control col-4" placeholder="apb" aria-label="apb" aria-describedby="basic-addon1">
 								<input type="range" class="form-range" id="customRange1" ng-model="apb" min="0" max="1000000">	
 							</div>
@@ -192,6 +192,11 @@
 	function myFunction() {
 		window.print();
 	}
+	
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	  return new bootstrap.Tooltip(tooltipTriggerEl)
+	})
 	
 	var app = angular.module('myApp', ['ngCookies']);
 	app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
