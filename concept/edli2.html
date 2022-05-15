@@ -34,6 +34,22 @@
 		</div>
 	</header>
     <div class="container-fluid">
+		<div class="row">
+			<div class="alert alert-dismissible fade show" role="alert">
+			<ul class="list-group">
+				<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
+				The calculations on this page is based on the data entered by the user. 
+					Hence, the same may differ with the calculations using the data from database. In case of any mismatch, the calculations using the database data will be considered final.
+				
+				</li>
+				<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
+				The EDLI calculation for Date of Death from 08/01/2011 to 27/04/2021 will be done for service rendered in the same establishment only, wherever 12 months or above service is not completed in same establishment.
+				
+				</li>
+			</ul>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
 		<div class="row g-4">
 			<div class="col">
 				<div class="card shadow">
@@ -98,17 +114,7 @@
 						<ul class="list-group mb-3">
 							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Final Benefit (Greater of A or B): <span>{{getmax(get_final_a(a_perc2,a_min, a_max, apb, a_perc1),get_final_b(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min))}}</span></li>
 						</ul>
-						<ul class="list-group mt-2">
-							<li class="list-group-item list-group-item-warning">
-								<i class="bi bi-exclamation-octagon-fill"></i> 
-								The above calculation is based on the data entered by the user. 
-								Hence, the same may differ with the calculations using the data from database. In case of any mismatch, the calculations using the database data will be considered final.
-							</li>
-							<li class="list-group-item list-group-item-warning">
-								<i class="bi bi-exclamation-octagon-fill"></i>
-								The EDLI calculation for Date of Death from 08/01/2011 to 27/04/2021 will be done for service rendered in the same establishment only, wherever 12 months or above service is not completed in same establishment.
-							</li>
-						</ul>
+						
 					</div>
 					<div class="card-footer">
 						<button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
