@@ -269,9 +269,9 @@
 				val2 = avg*factor;
 				val3 = percent*val2/100;
 				if (val2+val3>val1) {
-					return val1-val2;
+					return parseInt(val1)-parseInt(val2);
 				} else {
-					return val3;
+					return parseInt(val3);
 				}
 			}
 		}
@@ -319,7 +319,7 @@
 			if(min>amt){
 				return min;
 			} else {
-				val = min+(percent*(amt-min)/100);
+				val = parseInt(min)+parseInt(percent*(amt-min)/100);
 				if(val>max) {
 					return max;
 				} else {
