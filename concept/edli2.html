@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 	<title>EDLI Calculator</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 	<style>
 	.shadow {
 		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
@@ -20,7 +21,7 @@
 </head>
 
 <body ng-app="myApp" ng-controller="namesCtrl" class="pt-100 pb-100">
-	<header class="p-3 bg-info text-white">
+	<header class="p-1 mb-2 bg-info text-white shadow">
 		<div class="container">
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -32,134 +33,117 @@
 		  </div>
 		</div>
 	</header>
-    <div class="container-fluid" >
-		<div class="row">
-			<div class="col-md-6 col-sm-12  p-2 mt-2">
-				<h3 class="text-center mb-3">EDLI Calculator Input</h3>
-				<form class="shadow p-3 rounded">
-					<div class="input-group mb-3">
-						<span class="input-group-text col-5" id="basic-addon1">UAN: </span>
-						<input type="number" maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" ng-model="uan" class="form-control" placeholder="UAN" aria-label="UAN" aria-describedby="basic-addon1">
+    <div class="container-fluid">
+		<div class="row row-cols-1 row-cols-md-2 g-4">
+			<div class="col">
+				<div class="card shadow">
+					<div class="card-header">EDLI Calculator Input</div>
+					<div class="card-body">
+						<form>
+							<span class="alert col-5" id="basic-addon1">{{alert}}</span>
+							<div class="input-group mb-5">
+								<span class="input-group-text col-5" id="basic-addon1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Date of Death : <i class="bi bi-question-circle-fill"></i></span>
+								<input type="date" ng-model="dod" class="form-control" ng-change="getParams(list,dod)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
+								<div class="invalid-tooltip">Please enter a valid input.</div>
+							</div>
+							
+							<div class="input-group mb-5">
+								<span class="input-group-text col-8" id="basic-addon1">Average Progressive Balance: </span>
+								<input type="number" ng-model="apb" class="form-control col-4" placeholder="apb" aria-label="apb" aria-describedby="basic-addon1">
+								<input type="range" class="form-range" id="customRange1" ng-model="apb" min="0" max="1000000">	
+							</div>
+
+							<div class="input-group mb-5">
+								<span class="input-group-text col-8" id="basic-addon1">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
+								<input type="number" ng-model="avg_wage" class="form-control col-4" placeholder="apb" aria-label="apb" aria-describedby="basic-addon1">
+								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage" min="0" max="{{b_ceiling+1000}}">
+							</div>
+						</form>
 					</div>
-					<span class="alert col-5" id="basic-addon1">{{alert}}</span>
-					<div class="input-group mb-5">
-						<span class="input-group-text col-5" id="basic-addon1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Date of Death : Click Here <i class="bi bi-exclamation-octagon-fill"> </i></span>
-						<input type="date" ng-model="dod" class="form-control" ng-change="getParams(list,dod)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
-					
-					</div>
-					
-					<div class="input-group mb-5">
-						<span class="input-group-text col-5" id="basic-addon1">Average Progressive Balance: </span>
-						<input type="number" ng-model="apb" class="form-control" placeholder="apb" aria-label="apb" aria-describedby="basic-addon1">
-					</div>
-					<div class="input-group mb-5">
-						<label for="customRange1" class="form-label">Average Progressive Balance:</label>
-						<input type="range" class="form-range" id="customRange1" ng-model="apb" min="0" max="1000000">
-					</div>
-					
-					<div class="input-group mb-5">
-						<span class="input-group-text col-5" id="basic-addon1">Average Wages: </span>
-						<input type="number" ng-model="avg_wage" class="form-control" placeholder="apb" aria-label="apb" aria-describedby="basic-addon1">
-					</div>
-					<div class="input-group mb-5">
-						<label for="customRange1" class="form-label">Average Wages in preceding 12 Months (max:{{b_ceiling}}):</label>
-						<input type="range" class="form-range" id="customRange1" ng-model="avg_wage" min="0" max="{{b_ceiling+1000}}">
-					</div>
-					
-				</form>
+				</div>
 			</div>
-			<div class="col-md-6 col-sm-12 p-2">
-				<ul class="list-group mb-3">
-					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">UAN: <span>{{uan}}</span></li>
-					<li ng-if=0 class="list-group-item list-group-item d-flex justify-content-between align-items-center">Name: <span>{{name}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of Death: <span>{{dod | date:'dd-MM-yyyy'}}</span></li>
-				</ul>
-				<ul class="list-group mb-3">
-					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Part A Calculation <i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"> What are these parts?</i></li>
-					<li ng-if=0 class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total Progressive Balance: <span>{{tpb}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Avg Progressive Balance: <span>{{apb}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Minimum EDLI Amount(from table): <span>{{a_min}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent of above Minimum Amount(from table): <span>{{a_perc1}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Maximum EDLI Amount(from table): <span>{{a_max}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Amount A (Calculated): <span>{{get_amt_a(a_min, a_max, apb, a_perc1)}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount Per(from table): <span>{{a_perc2}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount ({{a_perc2}}*amount ): <span>{{a_perc2*apb/100}}</span></li>
-					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Amount under Part A(Min+factor: <span>{{get_final_a(a_perc2,a_min, a_max, apb, a_perc1)}}</span></li>
-				</ul>
-				<ul class="list-group mb-3">
-					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Part B Calculation</li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages: <span>{{avg_wage}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages limit: <span>{{b_ceiling}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages taken for Calculation: <span>{{getmin(avg_wage, b_ceiling)}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Factor: <span>{{b_factor}}</span></li>
-					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center ">EDLI (Avg Wages Calculated*Factor) [B1]: <span>{{ getmin(avg_wage, b_ceiling)*b_factor }}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount (if below limit): <span>{{get_additional(avg_wage, b_ceiling, b_factor, b_perc)}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total till Now: <span>{{(getmin(avg_wage, b_ceiling)*b_factor) + get_additional(avg_wage, b_ceiling, b_factor, b_perc)}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent for Avg Progressive Balance(APB): <span>{{b_perc1}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">APB Benefit: <span>{{b_perc1*apb/100}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Max APB Benefit Allowed: <span>{{b_max}}</span></li>
-					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Minimum Benefit allowed: <span>{{b_min}}</span></li>
-					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Benefit under Part B [B1 + B2]: <span>{{get_final_b(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min) }}</span></li>
-				</ul>
-				
-				<ul class="list-group mb-3">
-					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Final Benefit (Greater of A or B): <span>{{getmax(get_final_a(a_perc2,a_min, a_max, apb, a_perc1),get_final_b(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min))}}</span></li>
-				</ul>
-				<div class="mt-2">
-			<ul class="list-group">
-				<li class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i> The above calculation is based on the data entered by the user. 
-				Hence, the same may differ with the calculations using the data from database. In case of any mismatch, the calculations using the database data will be considered final.
-				</li>
-				<li class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i> The EDLI calculation for Date of Death from 08/01/2011 to 27/04/2021 will be done for service rendered in the same establishment only, wherever 12 months or above service is not completed in same establishment.
-				</li>
-			</ul>
-		</div>
+			<div class="col">
+				<div class="card shadow">
+					<div class="card-header">EDLI Calculator Output</div>
+					<div class="card-body p-3">		
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Part A Calculation <i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"> What are these parts?</i></li>
+							<li ng-if=0 class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total Progressive Balance: <span>{{tpb}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Avg Progressive Balance: <span>{{apb}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Minimum EDLI Amount(from table): <span>{{a_min}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent of above Minimum Amount(from table): <span>{{a_perc1}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Maximum EDLI Amount(from table): <span>{{a_max}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Amount A (Calculated): <span>{{get_amt_a(a_min, a_max, apb, a_perc1)}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount Per(from table): <span>{{a_perc2}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount ({{a_perc2}}*amount ): <span>{{a_perc2*apb/100}}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Amount under Part A(Min+factor: <span>{{get_final_a(a_perc2,a_min, a_max, apb, a_perc1)}}</span></li>
+						</ul>
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Part B Calculation</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages: <span>{{avg_wage}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages limit: <span>{{b_ceiling}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages taken for Calculation: <span>{{getmin(avg_wage, b_ceiling)}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Factor: <span>{{b_factor}}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center ">EDLI (Avg Wages Calculated*Factor) [B1]: <span>{{ getmin(avg_wage, b_ceiling)*b_factor }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount (if below limit): <span>{{get_additional(avg_wage, b_ceiling, b_factor, b_perc)}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total till Now: <span>{{(getmin(avg_wage, b_ceiling)*b_factor) + get_additional(avg_wage, b_ceiling, b_factor, b_perc)}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent for Avg Progressive Balance(APB): <span>{{b_perc1}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">APB Benefit: <span>{{b_perc1*apb/100}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Max APB Benefit Allowed: <span>{{b_max}}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Minimum Benefit allowed: <span>{{b_min}}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Benefit under Part B [B1 + B2]: <span>{{get_final_b(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min) }}</span></li>
+						</ul>
+						
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Final Benefit (Greater of A or B): <span>{{getmax(get_final_a(a_perc2,a_min, a_max, apb, a_perc1),get_final_b(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min))}}</span></li>
+						</ul>
+						<ul class="list-group mt-2">
+							<li class="list-group-item list-group-item-warning">
+								<i class="bi bi-exclamation-octagon-fill"></i> 
+								The above calculation is based on the data entered by the user. 
+								Hence, the same may differ with the calculations using the data from database. In case of any mismatch, the calculations using the database data will be considered final.
+							</li>
+							<li class="list-group-item list-group-item-warning">
+								<i class="bi bi-exclamation-octagon-fill"></i>
+								The EDLI calculation for Date of Death from 08/01/2011 to 27/04/2021 will be done for service rendered in the same establishment only, wherever 12 months or above service is not completed in same establishment.
+							</li>
+						</ul>
+					</div>
+					<div class="card-footer">
+						<button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="row" style="">
-    <div class="col-sm-3 align-self-start"></div>
-    <div class="col-sm-3 align-self-center">
-      <button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
-    </div>
-    <div class="col-sm-3 align-self-end"></div>
- </div>
-		
 	</div>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">EDLI Calculation based on Date of Death</h5>
+      <div class="modal-header bg-info">
+        <h5 class="modal-title" id="staticBackdropLabel">Eligibility Table - EDLI Calculation based on Date of Death</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="row">
-			<ul class="list-group mb-3 mt-5">
-				<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Eligibility Table</li>
-				<li class="list-group-item list-group-item">
-					<table class="table table-striped table-bordered table-sm">
-						<thead>
-							<tr>
-								<td>Start</td>
-								<td>End</td>
-								<td>Min Balance</td>
-								<td>Part A</td>
-								<td>Part B</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="item in list1">
-								<td>{{item.start}}</td>
-								<td>{{item.end}}</td>
-								<td>{{item.min_balance}}</td>
-								<td>{{item.part_a}}</td>
-								<td>{{item.part_b}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</li>
-			</ul>
-		</div>
+        <table class="table table-striped table-bordered table-sm">
+			<thead>
+				<tr>
+					<th>Start</th>
+					<th>End</th>
+					<th>Min Balance</th>
+					<th>Part A</th>
+					<th>Part B</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in list1">
+					<td>{{item.start}}</td>
+					<td>{{item.end}}</td>
+					<td>{{item.min_balance}}</td>
+					<td>{{item.part_a}}</td>
+					<td>{{item.part_b}}</td>
+				</tr>
+			</tbody>
+		</table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
