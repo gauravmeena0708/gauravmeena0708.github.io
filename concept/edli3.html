@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>EDLI Calculator</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<style>
+	.shadow {
+		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+	}
+	.input {
+		background: linear-gradient(#9dd2ea, #8bceec);
+	}
+	
+	.list-group {
+		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+	}
+	</style>
+
+</head>
+
+<body ng-app="myApp" ng-controller="namesCtrl" class="pt-100 pb-100">
+	<header class="p-3 bg-info text-white">
+		<div class="container">
+		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+			  <li><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
+			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension</a></li>
+			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI</a></li>
+			</ul>
+			<h3 class="text-center">EDLI CALCULATOR</h3>
+		  </div>
+		</div>
+	</header>
+    <div class="container-fluid" >
+		<div class="row">
+			<div class="col-md-6 col-sm-12  p-2 mt-2">
+				<h3 class="text-center mb-3">EDLI Calculator Input</h3>
+				<form class="shadow p-3 rounded">
+					<div class="input-group mb-3">
+						<span class="input-group-text col-5" id="basic-addon1">UAN: </span>
+						<input type="number" maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" ng-model="uan" class="form-control" placeholder="UAN" aria-label="UAN" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group mb-3">
+						<span class="input-group-text col-5" id="basic-addon1">Name: </span>
+						<input type="text" ng-model="name" class="form-control" placeholder="name" aria-label="name" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group mb-5">
+						<span class="input-group-text col-5" id="basic-addon1">Date of Death: <i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Click Here</i></span>
+						<input type="date" ng-model="dod" class="form-control" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group mb-5">
+						<span class="input-group-text col-5" id="basic-addon1">Average Progressive Balance: </span>
+						<input type="number" ng-model="apb" class="form-control" placeholder="apb" aria-label="apb" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group mb-5">
+						<label for="customRange1" class="form-label">Average Progressive Balance:</label>
+						<input type="range" class="form-range" id="customRange1" ng-model="apb" min="0" max="1000000">
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6 col-sm-12 p-2">
+				<ul class="list-group mb-3">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">UAN: <span>{{uan}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Name: <span>{{name}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of Death: <span>{{dod | date:'dd-MM-yyyy'}}</span></li>
+				</ul>
+				<ul class="list-group mb-3">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Part A Calculation</li>
+					<li ng-if=0 class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total Progressive Balance: <span>{{tpb}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Avg Progressive Balance: <span>{{apb}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Minimum EDLI Amount: <span>{{min_a}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent of above Minimum Amount: <span>{{percent_a}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Maximum EDLI Amount: <span>{{max_a}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount: <span>{{additional}}</span></li>
+					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Amount under Part A: <span>{{total}}</span></li>
+				</ul>
+				<ul class="list-group mb-3">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Part B Calculation</li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages: <span>{{wages_avg}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages limit: <span>{{wages_limit}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages taken for Calculation: <span>{{wages_cal}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Factor: <span>{{factor}}</span></li>
+					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center ">EDLI (Avg Wages Calculated*Factor) [B1]: <span>{{ wages_cal*factor }}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount (20% if below limit): <span>{{additional}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent for Avg Progressive Balance(APB): <span>{{percent_b}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">APB Benefit: <span>{{percent_b*apb}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Max APB Benefit Allowed: <span>{{limit_apb}}</span></li>
+					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">APB Benefit eligible [B2]: <span>{{benefit_apb}}</span></li>
+					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Benefit under Part B [B1 + B2]: <span>{{benefit_apb + (wages_cal*factor) }}</span></li>
+				</ul>
+				
+				<ul class="list-group mb-3">
+					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Final Benefit (Greater of A or B): <span>{{benefit_apb + (wages_cal*factor) }}</span></li>
+				</ul>
+				<div class="mt-2">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i> The above calculation is based on the data entered by the user. 
+				Hence, the same may differ with the calculations using the data from database. In case of any mismatch, the calculations using the database data will be considered final.
+				</li>
+				<li class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i> The EDLI calculation for Date of Death from 08/01/2011 to 27/04/2021 will be done for service rendered in the same establishment only, wherever 12 months or above service is not completed in same establishment.
+				</li>
+			</ul>
+		</div>
+			</div>
+		</div>
+		<div class="row" style="">
+    <div class="col-sm-3 align-self-start"></div>
+    <div class="col-sm-3 align-self-center">
+      <button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
+    </div>
+    <div class="col-sm-3 align-self-end"></div>
+ </div>
+		
+	</div>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">EDLI Calculation based on Date of Death</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+			<ul class="list-group mb-3 mt-5">
+				<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Eligibility Table</li>
+				<li class="list-group-item list-group-item">
+					<table class="table table-striped table-bordered table-sm">
+						<thead>
+							<tr>
+								<td>Start</td>
+								<td>End</td>
+								<td>Min Balance</td>
+								<td>Part A</td>
+								<td>Part B</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in list">
+								<td>{{item.start}}</td>
+								<td>{{item.end}}</td>
+								<td>{{item.min_balance}}</td>
+								<td>{{item.part_a}}</td>
+								<td>{{item.part_b}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js" type="text/javascript"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script>
+	function myFunction() {
+		window.print();
+	}
+	
+	var app = angular.module('myApp', ['ngCookies']);
+	app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+		$http({
+			method: 'GET',
+			url: './edli.json'
+		}).then(function (success){
+			$scope.list =success.data;
+			console.log($scope.list);
+		},function (error){
+			console.log(error)
+		});
+		$scope.uan = 100000000000;
+		$scope.dod = new Date('2020-02-16');
+		$scope.name = "John Doe";
+		$scope.tpb = 14387808;
+		$scope.apb = 1198984;
+		$scope.percent_a = 40;
+		$scope.min_a = 50000;
+		$scope.max_a = 100000;
+		$scope.additional =  20000; //20% additional benefit
+		$scope.total = 120000;
+		
+		$scope.wages_avg = 16000;
+		$scope.wages_limit = 15000;
+		$scope.wages_cal = 15000;
+		$scope.factor = 35;
+		$scope.percent_b = 50;
+		$scope.addtional2= 0;
+		$scope.benefit_apb = 175000;
+		$scope.limit_apb = 175000;
+		
+		$http({
+			method: 'GET',
+			url: './edli.json'
+		}).then(function (success){
+			$scope.list =success.data;
+			console.log($scope.list);
+		},function (error){
+			console.log(error)
+		});
+		/*
+		$scope.list = array value
+		*/
+		
+	}]);
+	</script>
+</body>
+</html>
