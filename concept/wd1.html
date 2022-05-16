@@ -1,0 +1,53 @@
+<div class="row">
+			<div class="alert alert-dismissible fade show" role="alert">
+			<ul class="list-group">
+				<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
+				The calculations on this page is based on the data entered by the user. 
+					Hence, the same may differ with the calculations using the data from database. In case of any mismatch, the calculations using the database data will be considered final.
+				
+				</li>
+				<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
+				The Withdrawal Benefit is only applicable where the service is greater than 6 months and less than 9.5 Years </li>
+			</ul>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+		<div class="row g-4">
+			<div class="col">
+				<div class="card shadow">
+					<div class="card-header">Withdrawal Calculator Input</div>
+					<div class="card-body">
+						<form>
+							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution">
+								<span class="input-group-text col-8" id="basic-addon1">Number of Years Contribution: <i class="bi bi-question-circle-fill"></i></span>
+								<input type="number" ng-model="years" class="form-control col-4" placeholder="years" aria-label="years" aria-describedby="basic-addon1">
+								<input type="range" class="form-range" id="customRange1" ng-model="years" min="0" max="9">	
+							</div>
+
+							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Pay payable at cessation of membership">
+								<span class="input-group-text col-8" id="basic-addon1">Pay payable at cessation of membership : </span>
+								<input type="number" ng-model="wage" class="form-control col-4" placeholder="apb"  aria-label="apb" aria-describedby="basic-addon1">
+								<input type="range" class="form-range" id="customRange1" ng-model="wage" min="0" max="{{ceiling}}">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card shadow">
+					<div class="card-header d-flex justify-content-between align-items-center">Withdrawal Benefit Calculator Output : </div>
+					<div class="card-body p-3">		
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Years of Service: <span>{{years}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Proportion of wages: <span>{{list[years-1]}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Wages at Exit: <span>{{wage}}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Withdrawal Benefit: <span>{{list[years-1]*wage}}</span></li>
+						</ul>
+						
+					</div>
+					<div class="card-footer">
+						<button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
+					</div>
+				</div>
+			</div>
+		</div>

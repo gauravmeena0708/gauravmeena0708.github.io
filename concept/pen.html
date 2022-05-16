@@ -1,0 +1,135 @@
+<div class="row bg-light mt-2">
+			<div class="col-sm-6">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-primary">  UAN           : 10XXXXXXXXXX</li>
+					<li class="list-group-item list-group-item">  Name           : John Doe</li>
+					<li class="list-group-item list-group-item">DOB            : XX-XX-1990</li>
+					<li class="list-group-item list-group-item">  No. of Services: 3</li>
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">KYC <i class="bi bi-check-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="KYC is Complete"></i></li>
+					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">E-Nomination  <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="E-nomination under process"></i></li>
+					<li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">Service Transfer <i class="bi bi-x-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="Service transfer yet to be completed"></i></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-sm">
+				  <thead>
+						<tr class="table-primary">
+							<th scope="col">#</th>
+							<th scope="col">Est</th>
+							<th scope="col">DOJ</th>
+							<th scope="col">DOE</th>
+							<th scope="col">NCP2</th>
+							<th scope="col">NCP3</th>
+							<th scope="col" data-bs-toggle="tooltip" data-bs-placement="top" title="Past Service">S1 (days)<i class="bi bi-question-circle-fill"></i></th>
+							<th scope="col" data-bs-toggle="tooltip" data-bs-placement="top" title="Service between 16-11-1995 to 31-08-2014">S2 (days)<i class="bi bi-question-circle-fill"></i></th>
+							<th scope="col" data-bs-toggle="tooltip" data-bs-placement="top" title="Service from 01-09-2014">S3 (days)<i class="bi bi-question-circle-fill"></i></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>M/s XYZ Pvt. Ltd.</td>
+							<td>XX-XX-XXXX</td>
+							<td>XX-XX-XXXX</td>
+							<td>XX</td>
+							<td>XX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>M/s ABC Pvt. Ltd.</td>
+							<td>XX-XX-XXXX</td>
+							<td>XX-XX-XXXX</td>
+							<td>XX</td>
+							<td>XX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>M/s Alpha Pvt. Ltd.</td>
+							<td>XX-XX-XXXX</td>
+							<td>XX-XX-XXXX</td>
+							<td>XX</td>
+							<td>XX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+						</tr>
+						<tr class="fw-bold">
+							<td></td>
+							<td>Total</td>
+							<td>-</td>
+							<td>-</td>
+							<td>XX</td>
+							<td>XX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+							<td>XXX</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row mt-1">
+			<div class="col-3">
+				<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop4"><i class="bi bi-plus-circle-fill"></i> Add Service</button>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="btn-group me-2">
+				<button type="button" class="btn btn-sm btn-outline-secondary active">Member Pension</button>
+				<button type="button" class="btn btn-sm btn-outline-secondary">Short Pension</button>
+				<button type="button" class="btn btn-sm btn-outline-secondary">Family Pension</button>
+				<button type="button" class="btn btn-sm btn-outline-secondary">Withdrawal Benefit</button>
+			</div>
+		</div>
+		<div class="mt-2">
+			<ul class="list-group">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Pension Calculation for service before 16-11-1995 <i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i></li>
+					<li class="list-group-item list-group-item  d-flex justify-content-between align-items-center">Pensionable Service : <span>X Years</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Factor for Calculating from table B  : <span>X.XX</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Salary on 15-11-1995  : <span>XXX/-</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Minimum Pension as per Scheme  : <span>XXX/-</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pension for the period  : <span>XXX/-</span></li>
+			</ul>
+		</div>
+		<div class="mt-2">
+			<ul class="list-group mt-2">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Pension Calculation for service between 16-11-1995 to 31-08-2014<i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"></i></li>
+					<li class="list-group-item list-group-item  d-flex justify-content-between align-items-center">Weightage : <span>0 Years</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pensionable Service for the period (including weightage)  : <span>XX Years</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pensionable Salary for the period  : <span>XXX/-</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pension for the period  : <span>XXX/-</span></li>	
+			</ul>
+		</div>
+		<div class="mt-2">
+			<ul class="list-group">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Pension Calculation for service after 31-08-2014<i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop3"></i></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pensionable Service for the period  : <span>XX Years</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pensionable Salary for the period  : <span>XXX/-</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pension for the period  : <span>XXX/-</span></li>	
+			</ul>
+		</div>
+		
+		<div class="mt-2">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Total Pension  : <span>Rs. XXX</span></li>
+			</ul>
+		</div>
+		<div class="mt-2">
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i> The above calculation is based on the data entered by the user. 
+				Hence, the same may differ with the calculations using the data from database. In case of any mismatch, the calculations using the database data will be considered final.
+				</li>
+			</ul>
+		</div>
