@@ -227,7 +227,8 @@
 		let url = new URL(window.location);
 		let searchParams = new URLSearchParams(url.search);
 		
-		$scope.dod = new Date(searchParams.get('dod')) || new Date('2020-02-16');
+		dod = luxon.DateTime.fromFormat(searchParams.get('dod'), 'dd-MM-yyyy')
+		$scope.dod = new Date(dod ) || new Date('2020-02-16');
 		$scope.apb = parseInt(searchParams.get('apb')) || 0;
 		$scope.avg_wage = parseInt(searchParams.get('avg_wage')) || 15000;
 		
