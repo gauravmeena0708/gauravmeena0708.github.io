@@ -296,7 +296,7 @@
 			if ( date < limit1 || date > limit2) {
 				$scope.alert = "Date out of range of available circulars. Please enter date between 01-08-1976 to 27-04-2024";
 			} else {
-				for (let i = 0; i < list.length; i++) {
+				for (let i = 0; i < list1.length; i++) {
 					$scope.alert = false; 
 					start_date = luxon.DateTime.fromFormat(list[i]['start'], 'dd-MM-yyyy')
 					end_date = luxon.DateTime.fromFormat(list[i]['end'], 'dd-MM-yyyy')
