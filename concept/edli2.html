@@ -279,6 +279,7 @@
 			val1 = (1+(a_perc2/100))*$scope.get_amt_a(a_min, a_max, apb, a_perc1)
 			return parseInt(val1);
 		}
+		
 		$scope.get_final_b = function(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min){
 			val1 = ($scope.getmin(avg_wage, b_ceiling)*b_factor) + $scope.get_additional(avg_wage, b_ceiling, b_factor, b_perc)
 			val2 = b_perc1*apb/100;
@@ -293,6 +294,7 @@
 		}
 		
 		$scope.getParams = function(list, date) {
+			console.log(list)
 			if ( date < limit1 || date > limit2) {
 				$scope.alert = "Date out of range of available circulars. Please enter date between 01-08-1976 to 27-04-2024";
 			} else {
