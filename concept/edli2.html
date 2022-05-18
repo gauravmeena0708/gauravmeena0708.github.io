@@ -226,12 +226,28 @@
 		
 		let url = new URL(window.location);
 		let searchParams = new URLSearchParams(url.search);
+
 		
-		dod = luxon.DateTime.fromFormat(searchParams.get('dod'), 'dd-MM-yyyy')
-		$scope.dod = new Date(dod ) || new Date('2020-02-16');
-		$scope.apb = parseInt(searchParams.get('apb')) || 0;
-		$scope.avg_wage = parseInt(searchParams.get('avg_wage')) || 15000;
+		if (searchParams.has("dod")) {
+			dod = luxon.DateTime.fromFormat(searchParams.get('dod'), 'dd-MM-yyyy');
+			$scope.dod = new Date(dod ) || new Date('2020-02-16');
+		} else {
+			$scope.dod = new Date('2020-02-16');
+		}
 		
+		if (searchParams.has("apb")) {
+			$scope.apb = parseInt(searchParams.get('apb'));
+		} else {
+			$scope.apb = 0;
+		}
+		
+		if (searchParams.has("avg_wage")) {
+			$scope.avg_wage = parseInt(searchParams.get('avg_wage'));
+		} else {
+			$scope.avg_wage = 15000;
+		}
+		
+
 		
 		limit1 = new Date('1976-08-01');
 		limit2 = new Date('2024-04-27');
