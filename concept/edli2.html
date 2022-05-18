@@ -76,12 +76,12 @@
 								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage" min="0" max="{{b_ceiling+1000}}">
 							</div>
 							
-							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website.">
+							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website.">
 								<span class="input-group-text col-8" id="basic-addon1">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
 								<input type="number" ng-model="avg_wage" class="form-control col-4" placeholder="apb" max="{{b_ceiling+1000}}"  aria-label="apb" aria-describedby="basic-addon1">
 								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage" min="0" max="{{b_ceiling+1000}}">
 							</div>
-							<div class="form-check">
+							<div class="form-check mb-5">
 								<input class="form-check-input" ng-model="continuous12" ng-true-value="true" ng-false-value="false" type="checkbox" value="" id="flexCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault">Whether completed 12 Month of Service in Same Establishment? {{continuous12}}</label>
 							</div>
