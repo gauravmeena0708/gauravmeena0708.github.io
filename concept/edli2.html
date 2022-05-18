@@ -366,7 +366,7 @@
 			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
-			console.log($scope.continuous12);
+			console.log(!$scope.continuous12);
 			var final_b = 0
 			if($scope.continuous12){
 				final_b = 0;
