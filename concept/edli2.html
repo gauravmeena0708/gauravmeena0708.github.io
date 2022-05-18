@@ -366,20 +366,23 @@
 			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
-			console.log("false:",$scope.continuous12);
+			console.log("false:",!$scope.continuous12);
 			console.log("true", $scope.continuous12);
 			var final_b = 0
 			if($scope.continuous12==false){
+				console.log("condition passed");
 				final_b = 0;
 				$scope.b = 0;
-			}
-			if(val2>b_max){
-				val2=b_max;
-			}
-			if((val1+val2)<parseInt(b_min)) {
-			 final_b = b_min
 			} else {
-				final_b = parseInt(val1)+parseInt(val2);
+				console.log("condition passed");
+				if(val2>b_max){
+					val2=b_max;
+				}
+				if((val1+val2)<parseInt(b_min)) {
+				 final_b = b_min
+				} else {
+					final_b = parseInt(val1)+parseInt(val2);
+				}
 			}
 			$scope.b = final_b;
 			return final_b;
