@@ -369,7 +369,7 @@
 		
 		$scope.get_amt_a = function (min, max, amt, percent) {
 			if(min>amt){
-				return min;
+				return amt;
 			} else {
 				val = parseInt(min)+parseInt(percent*(amt-min)/100);
 				if(val>max) {
