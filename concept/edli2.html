@@ -260,11 +260,12 @@
 		$scope.a_perc1   = 40; 
 		$scope.a_perc2   = 20; 
 		$scope.b_ceiling = 15000; 
-		$scope.b_factor  = 35; 
+		$scope.b_factor  = 30; 
 		$scope.b_perc    = 0;
 		$scope.b_perc1    = 50;
 		$scope.b_max     = 175000; 
-		$scope.b_min     = 0;
+		$scope.b_min     = 250000;
+		
 		function getDateString(dat) {
 			const d = luxon.DateTime.fromISO(dat.toISOString())
 			return d.toFormat('dd-MM-yyyy')
