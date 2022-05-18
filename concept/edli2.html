@@ -82,7 +82,7 @@
 								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage" min="0" max="{{b_ceiling+1000}}">
 							</div>
 							<div class="form-check mb-5">
-								<input class="form-check-input" ng-model="continuous12" ng-true-value="true" ng-false-value="false" type="checkbox" value="" id="flexCheckDefault">
+								<input class="form-check-input" ng-model="continuous12" ng-true-value="true" ng-false-value="false" ng-change="update()" type="checkbox" value="" id="flexCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault">Whether completed 12 Month of Service in Same Establishment? {{continuous12}}</label>
 							</div>
 						</form>
@@ -120,11 +120,11 @@
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">APB Benefit: <span>{{b_perc1*apb/100}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Max APB Benefit Allowed: <span>{{b_max}}</span></li>
 							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Minimum Benefit allowed: <span>{{b_min}}</span></li>
-							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Benefit under Part B [B1 + B2]: <span>{{get_final_b(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min) }}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Benefit under Part B [B1 + B2]: <span>{{b }}</span></li>
 						</ul>
 						
 						<ul class="list-group mb-3">
-							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Final Benefit (Greater of A or B): <span>{{getmax(get_final_a(a_perc2,a_min, a_max, apb, a_perc1),get_final_b(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min))}}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Final Benefit (Greater of A or B): <span>{{getmax(get_final_a(a_perc2,a_min, a_max, apb, a_perc1),b)}}</span></li>
 						</ul>
 						
 					</div>
@@ -263,6 +263,9 @@
 		limit2 = new Date('2024-04-27');
 		$scope.year = 2020;
 		$scope.continuous12 = true;
+		$scope.a = 0;
+		$scope.b = 0;
+		$scope.final = 0;
 		
 		$scope.a_min_bal = 0;
 		$scope.a_min     = 50000; 
@@ -316,6 +319,32 @@
 			qrcode.makeCode($scope.url);
 		}
 		
+		$scope.get_amt_a = function (min, max, amt, percent) {
+			if(min>amt){
+				return amt;
+			} else {
+				val = parseInt(min)+parseInt(percent*(amt-min)/100);
+				if(val>max) {
+					return max;
+				} else {
+					return val;
+				}
+			}
+		
+		}
+		
+		
+		$scope.get_final_a = function(a_perc2,a_min, a_max, apb, a_perc1){
+			var val1 = $scope.get_amt_a(a_min, a_max, apb, a_perc1)
+			var additional = $scope.a_perc2*val1/100;
+			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+			qrcode.clear(); // clear the code.
+			qrcode.makeCode($scope.url);
+			val3 = Math.round(parseInt(val1)+ parseInt(additional));
+			$scope.a =val3;
+			return val3;
+		}
+		
 		$scope.get_additional = function (avg, ceiling, factor, percent) {
 			var additional = 0
 			if(avg<ceiling) {
@@ -330,15 +359,6 @@
 			}
 			return additional;
 		}
-		$scope.get_final_a = function(a_perc2,a_min, a_max, apb, a_perc1){
-			var val1 = $scope.get_amt_a(a_min, a_max, apb, a_perc1)
-			var additional = $scope.a_perc2*val1/100;
-			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
-			qrcode.clear(); // clear the code.
-			qrcode.makeCode($scope.url);
-			val3 = Math.round(parseInt(val1)+ parseInt(additional));
-			return val3;
-		}
 		
 		$scope.get_final_b = function(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min){
 			val1 = ($scope.getmin(avg_wage, b_ceiling)*b_factor) + $scope.get_additional(avg_wage, b_ceiling, b_factor, b_perc)
@@ -347,17 +367,20 @@
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
 			console.log($scope.continuous12);
+			var final_b = 0
 			if(!$scope.continuous12){
-				return 0;
+				final_b = 0;
 			}
 			if(val2>b_max){
 				val2=b_max;
 			}
 			if((val1+val2)<parseInt(b_min)) {
-			 return b_min
+			 final_b = b_min
 			} else {
-				return parseInt(val1)+parseInt(val2);
+				final_b = parseInt(val1)+parseInt(val2);
 			}
+			$scope.b = final_b;
+			return final_b;
 		}
 		
 		$scope.getParams = function(list, date) {
@@ -384,21 +407,13 @@
 			}
 		}
 		
-		$scope.get_amt_a = function (min, max, amt, percent) {
-			if(min>amt){
-				return amt;
-			} else {
-				val = parseInt(min)+parseInt(percent*(amt-min)/100);
-				if(val>max) {
-					return max;
-				} else {
-					return val;
-				}
-			}
 		
-		}
 		
 		$scope.update = function () {
+			$scope.getParams($scope.list, $scope.dod);
+			$scope.a = $scope.get_final_a($scope.a_perc2,$scope.a_min, $scope.a_max, $scope.apb, $scope.a_perc1);
+			$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min);
+			$scope.final = $scope.getmax(a,b)
 		}
 	}]);
 	</script>
