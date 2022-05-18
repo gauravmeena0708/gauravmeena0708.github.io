@@ -318,12 +318,11 @@
 					additional = parseInt(val3);
 				}
 			}
-			console.log("additional : ",additional);
 			return additional;
 		}
 		$scope.get_final_a = function(a_perc2,a_min, a_max, apb, a_perc1){
 			var val1 = $scope.get_amt_a(a_min, a_max, apb, a_perc1)
-			var additional = $scope.a_perc2*val1;
+			var additional = $scope.a_perc2*val1/100;
 			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
