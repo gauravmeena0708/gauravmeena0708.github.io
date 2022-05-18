@@ -307,18 +307,19 @@
 		}
 		
 		$scope.get_additional = function (avg, ceiling, factor, percent) {
-			if(avg>ceiling){
-				return 0;
-			} else {
+			var additional = 0
+			if(avg<ceiling) {
 				val1 = factor*ceiling;
 				val2 = avg*factor;
 				val3 = percent*val2/100;
 				if (val2+val3>val1) {
-					return parseInt(val1)-parseInt(val2);
+					additional =  parseInt(val1)-parseInt(val2);
 				} else {
-					return parseInt(val3);
+					additional parseInt(val3);
 				}
 			}
+			console.log("additional : ",additional);
+			return additional;
 		}
 		$scope.get_final_a = function(a_perc2,a_min, a_max, apb, a_perc1){
 			var val1 = $scope.get_amt_a(a_min, a_max, apb, a_perc1)
@@ -328,7 +329,7 @@
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
 			val3 = Math.round(parseInt(val1)+ parseInt(additional));
-			console.log(val1, val3, additional);
+			//console.log(val1, val3, additional);
 			return val3;
 		}
 		
