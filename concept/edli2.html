@@ -262,7 +262,7 @@
 		limit1 = new Date('1976-08-01');
 		limit2 = new Date('2024-04-27');
 		$scope.year = 2020;
-		$scope.continuous12 = false;
+		$scope.continuous12 = true;
 		
 		$scope.a_min_bal = 0;
 		$scope.a_min     = 50000; 
@@ -346,6 +346,7 @@
 			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
+			console.log($scope.continuous12);
 			if(!$scope.continuous12){
 				return 0;
 			}
@@ -395,6 +396,9 @@
 				}
 			}
 		
+		}
+		
+		$scope.update = function () {
 		}
 	}]);
 	</script>
