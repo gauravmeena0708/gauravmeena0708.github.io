@@ -76,11 +76,6 @@
 								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage"  ng-change="update()" min="0" max="{{b_ceiling+1000}}">
 							</div>
 							
-							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website.">
-								<span class="input-group-text col-8" id="basic-addon1">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
-								<input type="number" ng-model="avg_wage" class="form-control col-4" ng-change="update()" placeholder="apb" max="{{b_ceiling+1000}}"  aria-label="apb" aria-describedby="basic-addon1">
-								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage" ng-change="update()" min="0" max="{{b_ceiling+1000}}">
-							</div>
 							<div class="form-check mb-5">
 								<input class="form-check-input" ng-model="continuous12" ng-true-value="true" ng-false-value="false" ng-change="update()" type="checkbox" value="" id="flexCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault">Whether completed 12 Month of Service in Same Establishment? {{continuous12}}</label>
@@ -96,7 +91,7 @@
 					<div class="card-body p-3">
 						
 						<ul class="list-group mb-3">
-							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part A = Minimum Amount+ Percent*(APB-Minimum)[subject to Maximum]+Additional_Percent*Amt if maximum not reached">Part A Calculation <i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"> What are these parts?</i></li>
+							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part A = Proportional amount+ Percent*(APB-Proportional)[subject to Maximum]+Additional_Percent*Amt if maximum not reached">Part A Calculation <i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"> What are these parts?</i></li>
 							<li ng-if=0 class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total Progressive Balance: <span>{{tpb}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Avg Progressive Balance: <span>{{apb}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">EDLI Amount to be taken proportional to APB(from table): <span>{{a_min}}</span></li>
@@ -108,7 +103,7 @@
 							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Amount under Part A: <span>{{a}}</span></li>
 						</ul>
 						<ul class="list-group mb-3">
-							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Part B Calculation</li>
+							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part B (If Continuous service conditions are satisfied) = Avg. wages up to ceiling*Factor based on Date of death+ Percent*APB[subject to Maximum]... Subject to minimum amount in case of continuous service" >Part B Calculation</li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages: <span>{{avg_wage}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages limit: <span>{{b_ceiling}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages taken for Calculation: <span>{{getmin(avg_wage, b_ceiling)}}</span></li>
