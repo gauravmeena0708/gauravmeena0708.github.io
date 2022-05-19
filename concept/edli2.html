@@ -38,8 +38,7 @@
 			<div class="alert alert-dismissible fade show" role="alert">
 			<ul class="list-group">
 				<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
-				The calculations on this page is based on the data entered by the user. 
-					Hence, the same may differ with the calculations using the data from database. In case of any mismatch, the calculations using the database data will be considered final.
+				The calculation on this page is based on the data entered by the user. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
 				
 				</li>
 				<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
@@ -70,7 +69,7 @@
 								<input type="range" class="form-range" id="customRange1" ng-model="apb" ng-change="update()" min="0" max="1000000">	
 							</div>
 
-							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website.">
+							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website. If Date-of-Death is 07.04.2022 then wages between 04-20 to 03-21 needs to be taken for average.">
 								<span class="input-group-text col-8" id="basic-addon1">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
 								<input type="number" ng-model="avg_wage" class="form-control col-4" ng-change="update()" placeholder="apb" max="{{b_ceiling+1000}}"  aria-label="apb" aria-describedby="basic-addon1">
 								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage"  ng-change="update()" min="0" max="{{b_ceiling+1000}}">
