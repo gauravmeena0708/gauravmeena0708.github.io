@@ -55,6 +55,11 @@
 									<td>DOE</td>
 									<td>NCP1</td>
 									<td>NCP2</td>
+									<td>Months before 31-08-2014</td>
+									<td>Days before 31-08-2014</td>
+									<td>Months after 31-08-2014</td>
+									<td>Days after 31-08-2014</td>
+									<td>NCP2</td>
 									<td> </td>
 								</tr>
 							</thead>
@@ -64,6 +69,10 @@
 									<td>{{service.doe |  date:'dd-MM-yyyy'}}</td>
 									<td>{{service.ncp1}}</td>
 									<td>{{service.ncp2}}</td>
+									<td>{{service.monthsbefore}}</td>
+									<td>{{service.daysbefore}}</td>
+									<td>{{service.monthsafter-1}}</td>
+									<td>{{service.daysafter}}</td>
 									<td><i class="bi bi-trash" ng-click='removeService($index)'></i></td>
 								</tr>
 							</tbody>
@@ -226,14 +235,15 @@ container fluid div closer
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="luxon.min.js"></script>
 	<script>
 	var app = angular.module('myApp', ['ngCookies']);
 	app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
 		$scope.uan = 100000000000;
 		$scope.name = "John Doe";
 		$scope.dob = new Date('1970-01-01');
-		$scope.doj = new Date('1995-11-16');
-		$scope.doe = new Date('1995-11-17');
+		$scope.doj = new Date('2013-11-16');
+		$scope.doe = new Date('2014-12-17');
 		$scope.availing_date = new Date('1996-01-01');
 		$scope.ncp1 = 0;
 		$scope.ncp2 = 0;
@@ -274,8 +284,48 @@ container fluid div closer
 			}
 			return false;
 		}
-
 		
+		function getDiff(d1, d2, str) {
+			date1= luxon.DateTime.fromJSDate(d1);
+			date2= luxon.DateTime.fromJSDate(d2);
+			const diff = luxon.Interval.fromDateTimes(date1, date2);
+			const diffUnits = diff.count(str);
+			if (diffUnits > 1) {
+			  return diffUnits;
+			} else {
+				return 0;
+			}
+		}
+		
+		function getUnitafter2014(doj,doe, str) {
+			val1 = new Date('2014-08-31');
+			days = 0
+			if (doe > val1) {
+				if(doj > val1) {
+					months = getDiff(doj,doe,str);
+				} else {
+					months = getDiff(val1,doe, str);
+				}			
+			} else {
+				console.log("both DOJ DOE are lesser");
+			}
+			return months;
+		}
+		
+		function getUnitbefore2014(doj,doe, str) {
+			val1 = new Date('2014-08-31');
+			days = 0
+			if (doj < val1) {
+				if(doe < val1) {
+					months = getDiff(doj,doe,str);
+				} else {
+					months = getDiff(doj,val1, str);
+				}			
+			} else {
+				console.log("both DOJ DOE are greater");
+			}
+			return months;
+		}
 		
 		
 		$scope.checkType = function(type){
@@ -291,7 +341,6 @@ container fluid div closer
 			const date1 = dates.slice();
 			dates.push($scope.doj);
 			dates.push($scope.doe);
-			console.log(dates)
 			if(multipleDateRangeOverlaps(dates)){
 				alert("Date range overlapping. returning to previous state");
 				dates = date1.slice();
@@ -306,12 +355,19 @@ container fluid div closer
 				'doj':$scope.doj,
 				'doe':$scope.doe,
 				'ncp1':$scope.ncp1,
-				'ncp2':$scope.ncp2
+				'ncp2':$scope.ncp2,
+				'months2014':0,
+				'days2014':0,
 				};
 				
+				service['monthsbefore'] = getUnitbefore2014($scope.doj, $scope.doe, 'months');
+				service['daysbefore'] = getUnitbefore2014($scope.doj, $scope.doe, 'days');
+				service['monthsafter'] = getUnitafter2014($scope.doj, $scope.doe, 'months');
+				service['daysafter'] = getUnitafter2014($scope.doj, $scope.doe, 'days');
+				
 				$scope.services.push(service);
-				$scope.doj = new Date('1995-11-16');
-				$scope.doe = new Date('1995-11-17');
+				$scope.doj = new Date('2013-11-16');
+				$scope.doe = new Date('2014-12-17');
 				$scope.ncp1 = 0;
 				$scope.ncp2 = 0;
 			}
@@ -324,6 +380,102 @@ container fluid div closer
 				$scope.services.splice(index, 1);
 			}
 		}
+		
+		/*
+				function getAvg(wages) {
+			const total = wages.reduce((acc, c) => acc + c, 0);
+			return total / wages.length;
+		}
+		
+		var getdiffdays = function(d1, d2){
+			d = luxon.Interval.fromDateTimes(d1, d2)
+			return d.length("days")
+		}
+		
+		var getdaterange = function(d) {
+			date1 = luxon.DateTime.fromFormat('16-11-1995', 'dd-MM-yyyy')
+			date2 = luxon.DateTime.fromFormat('01-09-2014', 'dd-MM-yyyy')
+			//console.log("getdiffdays", d.toFormat('dd-MM-yyyy'))
+			//console.log(getdiffdays(d, date1))
+			if(getdiffdays(d, date1)>0){
+				return 1;
+			} else if (getdiffdays(d, date2)>0){
+				return 2;
+			} else {
+				return 3;
+			}
+			return 0
+		}
+		
+		var get3Services = function (doj, doe,ncp) {
+			date1 = luxon.DateTime.fromFormat('16-11-1995', 'dd-MM-yyyy')
+			date2 = luxon.DateTime.fromFormat('01-09-2014', 'dd-MM-yyyy')
+			
+			//console.log(getdaterange(doj),getdaterange(doe))
+			rdoj = getdaterange(doj);
+			rdoe = getdaterange(doe);
+			console.log("doj: ",doj.toFormat('dd-MM-yyyy'),rdoj,"doe: ",doe.toFormat('dd-MM-yyyy'), rdoe)
+			s1 =0
+			s2 =0
+			s3 =0
+			if(rdoj == 1) {
+				if(rdoe==1) {
+				   s1 = getdiffdays(doj, doe)
+				} else if(rdoe==2) {
+					s1 = getdiffdays(doj, date1)
+					s2 = getdiffdays(date1, doe)
+				} else {
+					s1 = getdiffdays(doj, date1)
+					s2 = getdiffdays(date1, date2)
+					s3 = getdiffdays(date2, doe)
+				}
+			} else if(rdoj == 2) {
+				if(rdoe==2) {
+					s2 =getdiffdays(doj, doe)
+				
+				} else {	
+					s2 =getdiffdays(doj, date2)
+					s3 =getdiffdays(date2, doe)
+				}
+			} else {
+				s3= getdiffdays(doj, doe)
+			}
+			console.log(rdoj, rdoe)
+			console.log(s1,s2,s3)
+			return {
+			"s1": s1,
+			"s2": s2,
+			"s3": s3,
+			"ncp": ncp
+			}
+		}
+		
+		
+		var myFunc2 = function (success){
+				$scope.name = success.data['name'];
+				$scope.dob = success.data['dob'];
+				
+				$scope.services = success.data['services'];
+				arr = []
+				for (let i = 0; i < $scope.services.length; i++) {
+					doj = luxon.DateTime.fromFormat($scope.services[i]["doj"], 'dd-MM-yyyy');
+					doe = luxon.DateTime.fromFormat($scope.services[i]["doe"], 'dd-MM-yyyy');
+					ncp = $scope.services[i]["ncp"];
+					x = get3Services(doj, doe,ncp);	
+					arr.push(x)
+				}
+				
+				$scope.total = _.reduce(arr, function(acc, o) {
+					for (var p in o)
+						acc[p] = (p in acc ? acc[p] : 0) + o[p];
+						return acc;
+				}, {});
+				arr.push($scope.total)
+				$scope.days = arr;
+				
+				$scope.avg = getAvg(success.data['60wages']);
+			}
+		*/
 	
 	 }]);
 	</script>
