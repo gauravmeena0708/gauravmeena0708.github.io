@@ -95,10 +95,10 @@
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">EDLI Amount to be taken proportional to APB(from table): <span>{{a_min}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent of above Minimum Amount(from table): <span>{{a_perc1}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Maximum EDLI Amount(from table): <span>{{a_max}}</span></li>
-							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Amount A (Calculated): <span>{{get_amt_a(a_min, a_max, apb, a_perc1)}}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Amount A (Calculated) [A1]: <span>{{get_amt_a(a_min, a_max, apb, a_perc1)}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount Per(from table): <span>{{a_perc2}}</span></li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount ({{a_perc2}}*amount ): <span>{{a_perc2*get_amt_a(a_min, a_max, apb, a_perc1)/100}}</span></li>
-							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Amount under Part A: <span>{{a}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount ({{a_perc2}}*amount ) [A2]: <span>{{a_perc2*get_amt_a(a_min, a_max, apb, a_perc1)/100}}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Amount under Part A=A1+A2: <span>{{a}}</span></li>
 						</ul>
 						<ul class="list-group mb-3">
 							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part B (If Continuous service conditions are satisfied) = Avg. wages up to ceiling*Factor based on Date of death+ Percent*APB[subject to Maximum]... Subject to minimum amount in case of continuous service" >Part B Calculation</li>
