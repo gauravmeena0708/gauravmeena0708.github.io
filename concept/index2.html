@@ -112,8 +112,16 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 	$scope.avg_wage1 = 15000;
 	$scope.avg_wage2 = 6500;
 	$scope.age=58;
+	$scope.weightage = 0;
+	$scope.eligible_service = $scope.actual_service-$scope.total_ncp;
+	//$scope.eligible_service1 = $scope.actual_service-$scope.total_ncp+365*$scope.weightage;
+	$scope.weightage_month = 0;
 	
-	
+	if($scope.age>=58 && $scope.eligible_service>7300){
+		$scope.weightage = 2
+		$scope.eligible_service1 = $scope.actual_service+365*$scope.weightage-$scope.total_ncp;
+		$scope.weightage_month = 24;
+	}
 	$scope.part1 = round((($scope.months1*30 - $scope.ncp1)*$scope.avg_wage1)/(60*30), 2);
 	$scope.part2 = round((($scope.months2*30 - $scope.ncp2)*$scope.avg_wage2)/(60*30), 2);
 	$scope.avg_wage = $scope.part1 + $scope.part2;
@@ -122,14 +130,24 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 	$scope.pension58 = $scope.psal*$scope.pser/(70*365);
 	$scope.pension = $scope.pension58;
 	
+	
 	$scope.update = function () {
+		if($scope.age>=58 && $scope.eligible_service>7300){
+			$scope.weightage = 2
+			$scope.eligible_service1 = $scope.actual_service+365*$scope.weightage-$scope.total_ncp;
+			$scope.weightage_month = 24;
+		} else {
+			$scope.weightage = 0
+			$scope.eligible_service1 = $scope.actual_service+365*$scope.weightage-$scope.total_ncp;
+			$scope.weightage_month = 0;
+		}
 		if($scope.months1<=60 && $scope.months1>0) {
 			$scope.months2 = 60-$scope.months1;
 			$scope.part1 = round((($scope.months1*30 - $scope.ncp1)*$scope.avg_wage1)/(60*30), 2);
 			$scope.part2 = round((($scope.months2*30 - $scope.ncp2)*$scope.avg_wage2)/(60*30), 2);
 			$scope.avg_wage = $scope.part1 + $scope.part2;
 			$scope.psal = $scope.avg_wage;
-			$scope.pser = $scope.actual_service - $scope.total_ncp;
+			$scope.pser = $scope.eligible_service1 - $scope.total_ncp;
 			$scope.pension58 = round($scope.psal*$scope.pser/(70*365),0);
 			earlyPension();
 		} else if ($scope.months1==0){
@@ -138,7 +156,7 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 			$scope.part1 = 0;
 			$scope.avg_wage = $scope.part1 + $scope.part2;
 			$scope.psal = $scope.avg_wage;
-			$scope.pser = $scope.actual_service - $scope.total_ncp;
+			$scope.pser = $scope.eligible_service1 - $scope.total_ncp;
 			$scope.pension58 = round($scope.psal*$scope.pser/(70*365),0);
 			earlyPension();
 		} else {
