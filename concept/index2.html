@@ -114,6 +114,7 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 	$scope.eligible_service = $scope.actual_service-$scope.total_ncp;
 	//$scope.eligible_service1 = $scope.actual_service-$scope.total_ncp+365*$scope.weightage;
 	$scope.weightage_month = 0;
+	$scope.min=1000;
 	
 	if($scope.age>=58 && $scope.eligible_service>7300){
 		$scope.weightage = 2
@@ -126,6 +127,7 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 	$scope.psal = $scope.avg_wage;
 	$scope.pser = $scope.actual_service - $scope.total_ncp;
 	$scope.pension58 = $scope.psal*$scope.pser/(70*365);
+	$scope.pension58min = ($scope.pension58>$scope.min)? $scope.pension58:$scope.min;
 	$scope.pension = $scope.pension58;
 	
 	
@@ -147,6 +149,7 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 			$scope.psal = $scope.avg_wage;
 			$scope.pser = $scope.eligible_service1 - $scope.total_ncp;
 			$scope.pension58 = round($scope.psal*$scope.pser/(70*365),0);
+			$scope.pension58min = ($scope.pension58>$scope.min)? $scope.pension58:$scope.min;
 			earlyPension();
 		} else if ($scope.months1==0){
 			$scope.months2 = 12;
@@ -156,6 +159,7 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 			$scope.psal = $scope.avg_wage;
 			$scope.pser = $scope.eligible_service1 - $scope.total_ncp;
 			$scope.pension58 = round($scope.psal*$scope.pser/(70*365),0);
+			$scope.pension58min = ($scope.pension58>$scope.min)? $scope.pension58:$scope.min;
 			earlyPension();
 		} else {
 			$scope.months2 = 0;
@@ -167,11 +171,11 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 		if($scope.age>58){
 			diff = $scope.age - 58;
 			console.log(diff);
-			$scope.pension = round($scope.pension58*(1+0.04*diff),0);
+			$scope.pension = round($scope.pension58min*(1+0.04*diff),0);
 		} else if($scope.age<58){
 			diff =  58-$scope.age;
 			console.log(diff);
-			$scope.pension = round($scope.pension58*(1-0.04*diff),0);
+			$scope.pension = round($scope.pension58min*(1-0.04*diff),0);
 		} else {
 			$scope.pension = $scope.pension58;
 		}
