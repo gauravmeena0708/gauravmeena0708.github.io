@@ -26,7 +26,7 @@
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 			  <li><a href="index2.html" class="nav-link px-2 text-white">Home(Withdrawal Benefit)</a></li>
-			  <li><a href="#!pension" class="nav-link px-2 text-white">Pension (static)</a></li>
+			  <li><a href="index.html" class="nav-link px-2 text-white">Pension (partially Dynamic)</a></li>
 			  <li><a href="#!a2014" class="nav-link px-2 text-white">After 2014</a></li>
 			  <li><a href="#!b2014" class="nav-link px-2 text-white">Before 2014</a></li>
 			  <li><a href="#!both" class="nav-link px-2 text-white">Both Pension</a></li>
@@ -46,6 +46,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script type="text/javascript" src="luxon.min.js"></script>
+<script type="text/javascript" src="underscore-esm-min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
 <script>
 var app = angular.module("myApp", ["ngRoute","ngCookies"]);
 app.config(function($routeProvider) {
@@ -53,10 +55,6 @@ app.config(function($routeProvider) {
     .when("/", {
         templateUrl : "bothwd.html",
         controller : "bothwdCtrl"
-    })
-	.when("/pension", {
-        templateUrl : "pen.html",
-        controller : "pensionCtrl"
     })
 	.when("/b2014", {
         templateUrl : "b2014.html",
@@ -72,37 +70,10 @@ app.config(function($routeProvider) {
     });
 });
 
-app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
-$(".btn-group > .btn").click(function(){
-    $(".btn-group > .btn").removeClass("active");
-		$(this).addClass("active");
-	});
-	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-	  return new bootstrap.Tooltip(tooltipTriggerEl)
-	})
-
-	new Chart(document.getElementById("bar-chart"), {
-		type: 'bar',
-		data: {
-		  labels: ["58","57","56","55","54","53","52","51"],
-		  datasets: [
-			{
-			  label: "Pension Amount",
-			  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-			  data: [2000,1920,1840,1760,1680,1600,1520,1440]
-			}
-		  ]
-		},
-		options: {
-		  legend: { display: false },
-		  title: {
-			display: true,
-			text: 'Pension amount based on the age it is opted'
-		  }
-		}
-	});
-}]);
+const round = (n, dp) => {
+  const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
+  return Math.round(n * h) / h
+}
 
 app.controller('b2014Ctrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
 	$scope.sum_wage = 78000;
@@ -118,20 +89,50 @@ app.controller('b2014Ctrl', ['$scope','$cookies','$cookieStore', '$http', functi
 }]);
 
 app.controller('a2014Ctrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
-
 	$scope.sum_wage = 78000;
 	$scope.wage_ncp = 12;
 	$scope.actual_service = 3800;
 	$scope.total_ncp = 234;
 	
 	$scope.update =  function () {
-		$scope.pensionable_salary = Math.round($scope.sum_wage*30/(365-$scope.wage_ncp));
+		$scope.pensionable_salary = Math.round($scope.sum_wage*30/(1825-$scope.wage_ncp));
 		$scope.pensionable_service = $scope.actual_service - $scope.total_ncp;
 		$scope.pension = Math.round($scope.pensionable_salary*$scope.pensionable_service/(70*365));
 	}	
 }]);
 
 app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+
+	$scope.months1 = 4;
+	$scope.months2 = 60-$scope.months1;
+	$scope.ncp1 = 0;
+	$scope.ncp2 = 0;
+	$scope.actual_service = 35*365;
+	$scope.total_ncp = 0;
+	$scope.avg_wage1 = 15000;
+	$scope.avg_wage2 = 6500;
+	
+	
+	$scope.part1 = round((($scope.months1*30 - $scope.ncp1)*$scope.avg_wage1)/(60*30), 2);
+	$scope.part2 = round((($scope.months2*30 - $scope.ncp2)*$scope.avg_wage2)/(60*30), 2);
+	$scope.avg_wage = $scope.part1 + $scope.part2;
+	$scope.psal = $scope.avg_wage;
+	$scope.pser = $scope.actual_service - $scope.total_ncp;
+	$scope.pension = $scope.psal*$scope.pser/(70*365);
+	
+	$scope.update = function () {
+		if($scope.months1<60 && $scope.months1>=0) {
+			$scope.months2 = 60-$scope.months1;
+		} else {
+			$scope.months2 = 0;
+		}
+		$scope.part1 = round((($scope.months1*30 - $scope.ncp1)*$scope.avg_wage1)/(60*30), 2);
+		$scope.part2 = round((($scope.months2*30 - $scope.ncp2)*$scope.avg_wage2)/(60*30), 2);
+		$scope.avg_wage = $scope.part1 + $scope.part2;
+		$scope.psal = $scope.avg_wage;
+		$scope.pser = $scope.actual_service - $scope.total_ncp;
+		$scope.pension = $scope.psal*$scope.pser/(70*365);
+	}
 
 }]);
 

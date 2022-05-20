@@ -5,27 +5,39 @@
 					<div class="card-body">
 						<form>
 							<div class="input-group mb-2">
-								<span class="input-group-text col-8" id="basic-addon1">Sum of 60 Month Avg. Wages: <i class="bi bi-question-circle-fill"></i></span>
-								<input type="number" ng-model="sum_wage" class="form-control col-4" ng-change="update()" placeholder="Total wage" aria-label="Average wage" aria-describedby="basic-addon1">
-								<input type="range" class="form-range" id="customRange1" ng-model="sum_wage" ng-change="update()" min="0" max="78000">	
+								<span class="input-group-text col-8" id="basic-addon1">Months from 01-09-2014:</span>
+								<input type="number" ng-model="months1" ng-change="update()" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group mb-2">
+								<span class="input-group-text col-8" id="basic-addon1">Average Wage from 01-09-2014:</span>
+								<input type="number" ng-model="avg_wage1" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group mb-2" ng-show="months2">
+								<span class="input-group-text col-8" id="basic-addon1">NCP days for {{months1}} months from 01-09-2014:</i></span>
+								<input type="number" ng-model="ncp1" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
 							</div>
 
-							<div class="input-group mb-2">
-								<span class="input-group-text col-8" id="basic-addon1">Average Wage NCP : </span>
-								<input type="number" ng-model="wage_ncp" class="form-control col-4" ng-change="update()" placeholder="Average wage NCP"  aria-label="Average wage NCP" aria-describedby="basic-addon1">
-								<input type="range" class="form-range" id="customRange1" ng-model="wage_ncp" ng-change="update()" min="0" max="365">
+							<div class="input-group mb-2 mt-4" ng-show="months2">
+								<span class="input-group-text col-12  d-flex justify-content-between align-items-center" id="basic-addon1">Months before 01-09-2014: <b>{{months2}}</b></span>
 							</div>
 							
-							<div class="input-group mb-2">
-								<span class="input-group-text col-8" id="basic-addon1">Actual Service : </span>
+							<div class="input-group mb-2" ng-show="months2">
+								<span class="input-group-text col-8" id="basic-addon1">Average wage for {{months2}} months before 01-09-2014:</i></span>
+								<input type="number" ng-model="avg_wage2" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group mb-2" ng-show="months2">
+								<span class="input-group-text col-8" id="basic-addon1">NCP days for {{months2}} months before 01-09-2014:</i></span>
+								<input type="number" ng-model="ncp2" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+							
+							<div class="input-group mb-2 mt-4">
+								<span class="input-group-text col-8" id="basic-addon1">Actual Service (in days) : </span>
 								<input type="number" ng-model="actual_service" class="form-control col-4" ng-change="update()" placeholder="Actual Service"  aria-label="Actual Service" aria-describedby="basic-addon1">
-								<input type="range" class="form-range" id="customRange1" ng-model="actual_service" ng-change="update()" min="0" max="9000">
 							</div>
 							
 							<div class="input-group mb-2">
 								<span class="input-group-text col-8" id="basic-addon1">Total NCPs : </span>
 								<input type="number" ng-model="total_ncp" class="form-control col-4" ng-change="update()" placeholder="Total Service"  aria-label="Total Service" aria-describedby="basic-addon1">
-								<input type="range" class="form-range" id="customRange1" ng-model="total_ncp" ng-change="update()" min="0" max="2000">
 							</div>
 						</form>
 					</div>
@@ -36,8 +48,16 @@
 					<div class="card-header d-flex justify-content-between align-items-center">Withdrawal Benefit Calculator Output : </div>
 					<div class="card-body p-3">		
 						<ul class="list-group mb-3">
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pensionable Salary = Wages*30/(365-NCP): <span>{{ pensionable_salary}}</span></li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pensionable Service = Actual Service - Total NCP <span>{{ pensionable_service }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Forumla used for Pensionable Salary: <span>(Months*30-NCP)*(Sum of wages/months)/(60*30-NCP)</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages for {{months2}} months before 2014: <span>{{ avg_wage2 }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">NCP days for {{months2}} months before 2014: <span>{{ ncp2 }}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Pensionable Salary derived for months before 2014: <span>{{ part2 }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages for {{months1}} after 2014: <span>{{ avg_wage1 }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">NCP days for {{months1}} months after 2014: <span>{{ ncp1 }}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Pensionable Salary derived for months after 2014: <span>{{ part1 }}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Net Pensionable Salary: <span>{{ avg_wage }}</span></li>
+			
+							<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Pensionable Service = Actual Service - Total NCP <span>{{ pser }}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pension Formula: <span> Pensionable Salary * Pensionable Service/(70*365)</span></li>
 							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Pension: <span>{{ pension }}</span></li>
 						</ul>
