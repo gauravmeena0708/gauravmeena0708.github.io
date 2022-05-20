@@ -25,8 +25,7 @@
 		<div class="container">
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-			  <li><a href="index2.html" class="nav-link px-2 text-white">Home(Withdrawal Benefit)</a></li>
-			  <li><a href="#!bothwd" class="nav-link px-2 text-white">Both Withdrawal Benefit</a></li>
+			  <li><a href="./" class="nav-link px-2 text-white">Home(Withdrawal Benefit)</a></li>
 			  <li><a href="#!pension" class="nav-link px-2 text-white">Pension (static)</a></li>
 			  <li><a href="#!a2014" class="nav-link px-2 text-white">After 2014</a></li>
 			  <li><a href="#!b2014" class="nav-link px-2 text-white">Before 2014</a></li>
@@ -52,8 +51,8 @@ var app = angular.module("myApp", ["ngRoute","ngCookies"]);
 app.config(function($routeProvider) {
     $routeProvider
     .when("/", {
-        templateUrl : "wd1.html",
-        controller : "wd1Ctrl"
+        templateUrl : "bothwd.html",
+        controller : "bothwdCtrl"
     })
 	.when("/pension", {
         templateUrl : "pen.html",
@@ -70,18 +69,8 @@ app.config(function($routeProvider) {
 	.when("/both", {
         templateUrl : "both.html",
         controller : "bothCtrl"
-    })
-	.when("/bothwd", {
-        templateUrl : "bothwd.html",
-        controller : "bothwdCtrl"
     });
 });
-app.controller('wd1Ctrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
-	$scope.years = 1;
-	$scope.list = [1.02, 1.99, 2.98, 3.99, 5.02, 6.07, 7.13, 8.22, 9.33];
-	$scope.wage= 15000;
-	$scope.ceiling= 15000;
-}]);
 
 app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
 $(".btn-group > .btn").click(function(){
