@@ -123,21 +123,31 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 	$scope.pension = $scope.pension58;
 	
 	$scope.update = function () {
-		if($scope.months1<60 && $scope.months1>=0) {
+		if($scope.months1<=60 && $scope.months1>0) {
 			$scope.months2 = 60-$scope.months1;
+			$scope.part1 = round((($scope.months1*30 - $scope.ncp1)*$scope.avg_wage1)/(60*30), 2);
+			$scope.part2 = round((($scope.months2*30 - $scope.ncp2)*$scope.avg_wage2)/(60*30), 2);
+			$scope.avg_wage = $scope.part1 + $scope.part2;
+			$scope.psal = $scope.avg_wage;
+			$scope.pser = $scope.actual_service - $scope.total_ncp;
+			$scope.pension58 = round($scope.psal*$scope.pser/(70*365),0);
+			earlyPension();
+		} else if ($scope.months1==0){
+			$scope.months2 = 12;
+			$scope.part2 = $scope.avg_wage2*12*30/(360-$scope.ncp2);
+			$scope.part1 = 0;
+			$scope.avg_wage = $scope.part1 + $scope.part2;
+			$scope.psal = $scope.avg_wage;
+			$scope.pser = $scope.actual_service - $scope.total_ncp;
+			$scope.pension58 = round($scope.psal*$scope.pser/(70*365),0);
+			earlyPension();
 		} else {
 			$scope.months2 = 0;
 		}
-		$scope.part1 = round((($scope.months1*30 - $scope.ncp1)*$scope.avg_wage1)/(60*30), 2);
-		$scope.part2 = round((($scope.months2*30 - $scope.ncp2)*$scope.avg_wage2)/(60*30), 2);
-		$scope.avg_wage = $scope.part1 + $scope.part2;
-		$scope.psal = $scope.avg_wage;
-		$scope.pser = $scope.actual_service - $scope.total_ncp;
-		$scope.pension58 = $scope.psal*$scope.pser/(70*365);
-		$scope.earlyPension();
+		
 	}
 	
-	$scope.earlyPension = function(){
+	function earlyPension(){
 		if($scope.age>58){
 			diff = $scope.age - 58;
 			console.log(diff);
@@ -147,7 +157,7 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 			console.log(diff);
 			$scope.pension = round($scope.pension58*(1-0.04*diff),0);
 		} else {
-			$scope.pension = $scope.pensionon58;
+			$scope.pension = $scope.pension58;
 		}
 	}
 
