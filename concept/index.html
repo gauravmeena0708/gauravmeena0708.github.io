@@ -299,32 +299,32 @@ container fluid div closer
 		
 		function getUnitafter2014(doj,doe, str) {
 			val1 = new Date('2014-08-31');
-			days = 0
+			unit = 0
 			if (doe > val1) {
 				if(doj > val1) {
-					months = getDiff(doj,doe,str);
+					unit = getDiff(doj,doe,str);
 				} else {
-					months = getDiff(val1,doe, str);
+					unit = getDiff(val1,doe, str);
 				}			
 			} else {
 				console.log("both DOJ DOE are lesser");
 			}
-			return months;
+			return unit;
 		}
 		
 		function getUnitbefore2014(doj,doe, str) {
 			val1 = new Date('2014-08-31');
-			days = 0
+			unit = 0
 			if (doj < val1) {
 				if(doe < val1) {
-					months = getDiff(doj,doe,str);
+					unit = getDiff(doj,doe,str);
 				} else {
-					months = getDiff(doj,val1, str);
+					unit = getDiff(doj,val1, str);
 				}			
 			} else {
 				console.log("both DOJ DOE are greater");
 			}
-			return months;
+			return unit;
 		}
 		
 		
