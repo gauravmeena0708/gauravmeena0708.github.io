@@ -65,13 +65,13 @@
 							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Average progressive balance is average of balance in past 12 months. The same is available in the passbook website.">
 								<span class="input-group-text col-8" id="basic-addon1">Average Progressive Balance: <i class="bi bi-question-circle-fill"></i></span>
 								<input type="number" ng-model="apb" class="form-control col-4" ng-change="update()" placeholder="apb" aria-label="apb" aria-describedby="basic-addon1">
-								<input type="range" class="form-range" id="customRange1" ng-model="apb" ng-change="update()" min="0" max="1000000">	
+								<input type="range" class="form-range" id="customRange1" ng-model="apb" ng-change="update()" min="0" max="1000000" value="0">	
 							</div>
 
 							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website. If Date-of-Death is 07.04.2022 then wages between 04-20 to 03-21 needs to be taken for average.">
 								<span class="input-group-text col-8" id="basic-addon1">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
 								<input type="number" ng-model="avg_wage" class="form-control col-4" ng-change="update()" placeholder="apb" max="{{b_ceiling+1000}}"  aria-label="apb" aria-describedby="basic-addon1">
-								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage"  ng-change="update()" min="0" max="{{b_ceiling+1000}}">
+								<input type="range" class="form-range" id="customRange1" ng-model="avg_wage"  ng-change="update()" min="0" max="{{b_ceiling+1000}}" value="0">
 							</div>
 							
 							<div class="form-check mb-5">
