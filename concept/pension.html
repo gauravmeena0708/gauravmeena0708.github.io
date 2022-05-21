@@ -163,11 +163,6 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	
 	$scope.update = function () {
 		$scope.eligible_service = $scope.actual_service - $scope.total_ncp;
-		if($scope.eligible_service>3650) {
-			$scope.min=1000;
-		} else {
-			$scope.min=0;
-		}
 		if($scope.age>=58 && $scope.eligible_service>7300){
 			$scope.weightage = 2
 			$scope.eligible_service1 = $scope.actual_service+365*$scope.weightage-$scope.total_ncp;
@@ -199,6 +194,15 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 			earlyPension();
 		} else {
 			$scope.months2 = 0;
+		}
+		
+		if($scope.eligible_service>3650) {
+			$scope.min=1000;
+		} else {
+			$scope.min=0;
+			$scope.pension58 = 0
+			$scope.pension58min = 0
+			earlyPension();
 		}
 		
 	}
