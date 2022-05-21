@@ -133,10 +133,12 @@ app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', functio
 	
 	$scope.update = function () {
 		if($scope.age>=58 && $scope.eligible_service>7300){
+			console.log($scope.eligible_service," is eligible service")
 			$scope.weightage = 2
 			$scope.eligible_service1 = $scope.actual_service+365*$scope.weightage-$scope.total_ncp;
 			$scope.weightage_month = 24;
 		} else {
+			console.log($scope.eligible_service," is eligible service")
 			$scope.weightage = 0
 			$scope.eligible_service1 = $scope.actual_service+365*$scope.weightage-$scope.total_ncp;
 			$scope.weightage_month = 0;
