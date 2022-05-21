@@ -46,12 +46,12 @@
 					</div>
 					
 					<div class="input-group mb-2">
-						<span class="input-group-text col-8" id="basic-addon1">Months from 01-09-2014:</span>
+						<span class="input-group-text col-8" id="basic-addon1">Total Months in 15000 Ceiling for which contribution made [M]:</span>
 						<input type="number" ng-model="months1" ng-change="update()" min="0" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
 					</div>
 					
 					<div class="input-group mb-2" ng-show="months1">
-						<span class="input-group-text col-8" id="basic-addon1">Average Wage from 01-09-2014:</span>
+						<span class="input-group-text col-8" id="basic-addon1">Average Wage for above months:</span>
 						<input type="number" ng-model="avg_wage1" ng-change="update()" max="15000" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
 					</div>
 					
@@ -61,7 +61,7 @@
 					</div>
 
 					<div class="input-group mb-2 mt-4" ng-show="months2">
-						<span class="input-group-text col-12  d-flex justify-content-between align-items-center" id="basic-addon1">Months to be taken for Pensionable Salary before 01-09-2014: <b>{{months2}}</b></span>
+						<span class="input-group-text col-12  d-flex justify-content-between align-items-center" id="basic-addon1">Months to be taken for Pensionable Salary in 6500 Ceiling (60-M): <b>{{months2}}</b></span>
 					</div>
 					
 					<div class="input-group mb-2" ng-show="months2">
