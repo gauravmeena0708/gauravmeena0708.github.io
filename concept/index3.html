@@ -72,7 +72,7 @@
 									<td>{{service.ncp2}}</td>
 									<td>{{service.monthsbefore}}</td>
 									<td>{{service.daysbefore}}</td>
-									<td>{{service.monthsafter-1}}</td>
+									<td>{{service.monthsafter}}</td>
 									<td>{{service.daysafter}}</td>
 									<td><i class="bi bi-trash" ng-click='removeService($index)'></i></td>
 								</tr>
@@ -84,18 +84,18 @@
 						<table class="table table-striped table-bordered table-sm">
 							<thead>
 								<tr>
-									<td>Service before 31-08-2014</td>
-									<td>Service after 31-08-2014</td>
-									<td>NCP before 31-08-2014</td>
-									<td>NCP after 31-08-2014</td>
+									<td>Service before 31-08-2014 (days)</td>
+									<td>Service after 31-08-2014 (days)</td>
+									<td>NCP before 31-08-2014 (days)</td>
+									<td>NCP after 31-08-2014 (days)</td>
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="service in days">
-									<td>{{service.s2}}</td>
-									<td>{{service.s3}}</td>
-									<td>{{service.ncp1}}</td>
-									<td>{{service.ncp2}}</td>
+								<tr id="total">
+									<td>{{total.s2}}</td>
+									<td>{{total.s3}}</td>
+									<td>{{total.ncp1}}</td>
+									<td>{{total.ncp2}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -272,7 +272,14 @@ container fluid div closer
 		$scope.type ='';
 		$scope.services = [];
 		$scope.days=[];
-		dates=[];
+		$scope.total ={
+			"s1": 0,
+			"s2": 0,
+			"s3": 0,
+			"ncp1": 0,
+			"ncp2": 0,
+			}
+		$scope.dates=[];
 		
 		
 		$scope.pensions = [	"Withdrawal Benefit", 
@@ -335,6 +342,7 @@ container fluid div closer
 			if (unit<0) {
 				unit = 0;
 			}
+			console.log(doj,doe,str,unit)
 			return unit;
 		}
 		
@@ -350,7 +358,7 @@ container fluid div closer
 			} else {
 				console.log("both DOJ DOE are greater");
 			}
-			if (unit<0) {
+			if (unit < 0) {
 				unit = 0;
 			}
 			return unit;
@@ -431,32 +439,26 @@ container fluid div closer
 				x = get3Services(doj, doe, ncp1, ncp2);	
 				arr.push(x)
 			}
-			
 			$scope.total = _.reduce(arr, function(acc, o) {
 				for (var p in o)
 					acc[p] = (p in acc ? acc[p] : 0) + o[p];
 					return acc;
 			}, {});
-			arr.push($scope.total)
-			$scope.days = arr;
-			console.log($scope.days);
-			console.log($scope.total);
-			//$scope.avg = getAvg(success.data['60wages']);
 		}
 		
 		$scope.addService = function(){
-			const date1 = dates.slice();
-			dates.push($scope.doj);
-			dates.push($scope.doe);
-			if(multipleDateRangeOverlaps(dates)){
+			const date1 = $scope.dates.slice();
+			$scope.dates.push($scope.doj);
+			$scope.dates.push($scope.doe);
+			if(multipleDateRangeOverlaps($scope.dates)){
 				alert("Date range overlapping. returning to previous state");
-				dates = date1.slice();
+				$scope.dates = date1.slice();
 			} else if ($scope.doj>$scope.doe) {
 				alert("DOJ can not be later than DOE");
-				dates = date1.slice();
+				$scope.dates = date1.slice();
 			} else if ($scope.doj < new Date('1995-11-16')) {
 				alert("Service can not be before EPS 1995 i.e 16-11-1995. The feature for calculation of past service pension will be added soon. ");
-				dates = date1.slice();
+				$scope.dates = date1.slice();
 			} else {
 				var service = {
 				'doj':$scope.doj,
@@ -486,8 +488,13 @@ container fluid div closer
 		}
 		
 		$scope.removeService = function(index) {
+			console.log(index);
+			console.log($scope.dates)
 			if(index >= 0){
+				$scope.dates.splice(index*2, 2);
+				console.log($scope.dates)
 				$scope.services.splice(index, 1);
+				getSummary($scope.services);
 			}
 		}
 		
