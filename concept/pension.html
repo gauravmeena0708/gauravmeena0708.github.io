@@ -166,7 +166,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		if($scope.eligible_service>3650) {
 			$scope.min=1000;
 		} else {
-			$scope.min=1000;
+			$scope.min=0;
 		}
 		if($scope.age>=58 && $scope.eligible_service>7300){
 			$scope.weightage = 2
