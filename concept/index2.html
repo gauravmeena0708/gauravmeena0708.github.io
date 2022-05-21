@@ -54,14 +54,6 @@ app.config(function($routeProvider) {
         templateUrl : "bothwd.html",
         controller : "bothwdCtrl"
     })
-	.when("/b2014", {
-        templateUrl : "b2014.html",
-        controller : "b2014Ctrl"
-    })
-	.when("/a2014", {
-        templateUrl : "a2014.html",
-        controller : "a2014Ctrl"
-    })
 	.when("/both", {
         templateUrl : "both.html",
         controller : "bothCtrl"
@@ -72,32 +64,6 @@ const round = (n, dp) => {
   const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
   return Math.round(n * h) / h
 }
-
-app.controller('b2014Ctrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
-	$scope.sum_wage = 78000;
-	$scope.wage_ncp = 12;
-	$scope.actual_service = 3800;
-	$scope.total_ncp = 234;
-	
-	$scope.update =  function () {
-		$scope.pensionable_salary = Math.round($scope.sum_wage*30/(365-$scope.wage_ncp));
-		$scope.pensionable_service = $scope.actual_service - $scope.total_ncp;
-		$scope.pension = Math.round($scope.pensionable_salary*$scope.pensionable_service/(70*365));
-	}
-}]);
-
-app.controller('a2014Ctrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
-	$scope.sum_wage = 78000;
-	$scope.wage_ncp = 12;
-	$scope.actual_service = 3800;
-	$scope.total_ncp = 234;
-	
-	$scope.update =  function () {
-		$scope.pensionable_salary = Math.round($scope.sum_wage*30/(1825-$scope.wage_ncp));
-		$scope.pensionable_service = $scope.actual_service - $scope.total_ncp;
-		$scope.pension = Math.round($scope.pensionable_salary*$scope.pensionable_service/(70*365));
-	}	
-}]);
 
 app.controller('bothCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
 

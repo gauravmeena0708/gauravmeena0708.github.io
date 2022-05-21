@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Input Page</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<style>
+	.shadow {
+		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+	}
+
+	</style>
+</head>
+
+<body>
+	<header class="p-1 mb-2 bg-info text-white shadow">
+		<div class="container">
+		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+			  <li><a href="index2.html" class="nav-link px-2 text-white">Home(Withdrawal Benefit)</a></li>
+			  <li><a href="index.html" class="nav-link px-2 text-white">Pension Input(partially Dynamic)</a></li>
+			  <li><a href="index2.html#!both" class="nav-link px-2 text-white">Pension Calculator</a></li>
+			  <li><a href="index.html" class="nav-link px-2 text-white">EDLI</a></li>
+			</ul>
+			<h3 class="text-center">CALCULATOR</h3>
+		  </div>
+		</div>
+	</header>
+    <div class="container-fluid" ng-app="myApp" ng-controller="namesCtrl">
+		<div class="row mt-3">
+			<div class="col-md-6 col-sm-12">
+				<ul class="list-group shadow">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Basic Details <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicDetail"><i class="bi bi-pencil-square"></i> Edit </button></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">UAN: <span>{{uan}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Name: <span>{{name}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of Birth: <span>{{dob | date:'dd-MM-yyyy'}}</span></li>
+				</ul>
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<ul class="list-group shadow">
+					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">KYC <i class="bi bi-check-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="KYC is Complete"></i></li>
+					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">E-Nomination  <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="E-nomination under process"></i></li>
+					<li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">Service Transfer <i class="bi bi-x-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="Service transfer yet to be completed"></i></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col">
+				<ul class="list-group mb-3 shadow">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Services</li>
+					<li class="list-group-item list-group-item">
+						<table class="table table-striped table-bordered table-sm">
+							<thead>
+								<tr>
+									<td>DOJ</td>
+									<td>DOE</td>
+									<td>NCP1</td>
+									<td>NCP2</td>
+									<td>Months before 31-08-2014</td>
+									<td>Days before 31-08-2014</td>
+									<td>Months after 31-08-2014</td>
+									<td>Days after 31-08-2014</td>
+									<td>NCP2</td>
+									<td> </td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="service in services">
+									<td>{{service.doj |  date:'dd-MM-yyyy'}}</td>
+									<td>{{service.doe |  date:'dd-MM-yyyy'}}</td>
+									<td>{{service.ncp1}}</td>
+									<td>{{service.ncp2}}</td>
+									<td>{{service.monthsbefore}}</td>
+									<td>{{service.daysbefore}}</td>
+									<td>{{service.monthsafter-1}}</td>
+									<td>{{service.daysafter}}</td>
+									<td><i class="bi bi-trash" ng-click='removeService($index)'></i></td>
+								</tr>
+							</tbody>
+						</table>
+						<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
+					</li>
+					<li class="list-group-item list-group-item">
+						<table class="table table-striped table-bordered table-sm">
+							<thead>
+								<tr>
+									<td>Service before 31-08-2014</td>
+									<td>Service after 31-08-2014</td>
+									<td>NCP before 31-08-2014</td>
+									<td>NCP after 31-08-2014</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="service in days">
+									<td>{{service.s2}}</td>
+									<td>{{service.s3}}</td>
+									<td>{{service.ncp1}}</td>
+									<td>{{service.ncp2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total: <span>{{services.length}} services</span></li>
+				</ul>
+		<form>
+					<div class="input-group mb-3">
+						<span class="input-group-text col-5" id="basic-addon1">Select type of pension: <i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#pensionDesc">Click Here</i></span>
+						<select class="form-select" ng-model="type" aria-label="Default select example" ng-options="pension for pension in pensions">
+						</select>
+					</div>
+					<div class="input-group mb-3" ng-show="checkType(type)">
+						<span class="input-group-text col-5" id="basic-addon1">Pension availing date: </span>
+						<input type="date" ng-model="availing_date" class="form-control" placeholder="avail_date" aria-label="avail_date" aria-describedby="basic-addon1" aria-label="Pension availing date">
+						</select>
+					</div>
+		</form>
+				<ul class="list-group mb-3">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Type of pension: <span>{{type}}</span></li>
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" ng-if="checkType(type)">Availing Date: <span>{{availing_date|  date:'dd-MM-yyyy'}}</span></li>
+				</ul>
+				<div class="col mb-3">
+					<button type="submit" class="btn btn-primary">Calculate</button>
+				</div>
+			</div>
+		</div>
+		
+		
+
+<div class="modal fade" id="basicDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="basicDetail" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="basicDetail">Edit Basic Details</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<form>
+				<div class="input-group mb-3">
+					<span class="input-group-text col-5" id="basic-addon1">UAN: </span>
+					<input type="number" maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" ng-model="uan" class="form-control" placeholder="name" aria-label="name" aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text col-5" id="basic-addon1">Name: </span>
+					<input type="text" ng-model="name" class="form-control" placeholder="name" aria-label="name" aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group mb-5">
+					<span class="input-group-text col-5" id="basic-addon1">DOB: </span>
+					<input type="date" ng-model="dob" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">
+				</div>
+			</form>
+		</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addService" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addService" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="addService">Add Service</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<form>
+					<div class="input-group mb-3 bg-info">
+						<span class="input-group-text col-6">DOJ</span>
+						<input type="date" ng-model ="doj" class="form-control" placeholder="doj" aria-label="doj">
+					</div>
+					<div class="input-group mb-3 bg-light">
+						<span class="input-group-text col-6">DOE</span>
+						<input type="date" ng-model ="doe" class="form-control" placeholder="doe" aria-label="doe">
+					</div>
+					<div class="input-group mb-3 bg-light">
+						<span class="input-group-text col-6">NCP b/w 16-11-1995 to 31-08-2014</span>
+						<input type="number" ng-model ="ncp1" class="form-control" placeholder="NCP1" aria-label="NCP1">
+					</div>
+					<div class="input-group mb-3 bg-light">
+						<span class="input-group-text col-6">NCP from 01-09-2014</span>
+						<input type="number" ng-model ="ncp2" class="form-control" placeholder="NCP2" aria-label="NCP2">
+					</div>
+					<div class="row mb-3">
+						<div class="col-3">
+							<button type="button" class="btn btn-success waves-effect" ng-click="addService()" data-bs-dismiss="modal"><i class="bi bi-plus-circle-fill"></i> Add Service</button>
+						</div>
+					</div>
+			</form>
+		</div>
+    </div>
+  </div>
+</div>
+		
+<div class="modal fade" id="pensionDesc" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pensionDesc" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pensionDesc">Description of various type of Pensions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+			<ul class="list-group mb-1">
+				<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Know Your Pension Type/Eligibility Table</li>
+				<li class="list-group-item list-group-item">
+					<table class="table table-striped table-bordered table-sm">
+						<thead>
+							<tr>
+								<td class="col-8">Pension Payable Due to</td>
+								<td class="col-4">Type</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Member attained Superannuation/attained 58 Years</td>
+								<td>Superannuation</td>
+							</tr>
+							<tr>
+								<td>Member Ceased to be in employment & his/her age is between 50 - 58 years.</td>
+								<td>Reduced Pension</td>
+							</tr>
+							<tr>
+								<td>Member died while in employment</td>
+								<td>Family Pension</td>
+							</tr>
+							<tr>
+								<td>Member died while not in employment</td>
+								<td>Family Pension</td>
+							</tr>
+							<tr>
+								<td>Deferred Pension at 59 or 60 years of age after due permission of office before attaining 58 years.</td>
+								<td>Deferred Pension</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>	
+	
+<!--
+container fluid div closer
+-->
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js" type="text/javascript"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="luxon.min.js"></script>
+	<script type="text/javascript" src="underscore-esm-min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+	<script>
+	var app = angular.module('myApp', ['ngCookies']);
+	app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+		$scope.uan = 100000000000;
+		$scope.name = "John Doe";
+		$scope.dob = new Date('1970-01-01');
+		$scope.doj = new Date('2013-11-16');
+		$scope.doe = new Date('2014-12-17');
+		$scope.availing_date = new Date('1996-01-01');
+		$scope.ncp1 = 0;
+		$scope.ncp2 = 0;
+		$scope.type ='';
+		$scope.services = [];
+		$scope.days=[];
+		dates=[];
+		
+		
+		$scope.pensions = [	"Withdrawal Benefit", 
+							"Superannuation Pension", 
+							"Early Pension", 
+							"Family Pension",
+							"Deferred Pension with Contribution",
+							"Deferred Pension without Contribution"
+					]
+							
+							
+		function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
+			if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
+			if (a_start <= b_end   && b_end   <= a_end) return true; // b ends in a
+			if (b_start <  a_start && a_end   <  b_end) return true; // a in b
+			return false;
+		}
+		
+		function multipleDateRangeOverlaps(dates) {
+			var i, j;
+			if (dates.length % 2 !== 0)
+				throw new TypeError('Arguments length must be a multiple of 2');
+			for (i = 0; i < dates.length - 2; i += 2) {
+				for (j = i + 2; j < dates.length; j += 2) {
+					if (
+						dateRangeOverlaps(
+							dates[i], dates[i+1],
+							dates[j], dates[j+1]
+						)
+					) return true;
+				}
+			}
+			return false;
+		}
+		
+		function getDiff(d1, d2, str) {
+			date1= luxon.DateTime.fromJSDate(d1);
+			date2= luxon.DateTime.fromJSDate(d2);
+			const diff = luxon.Interval.fromDateTimes(date1, date2);
+			const diffUnits = diff.count(str);
+			if (diffUnits > 1) {
+			  return diffUnits;
+			} else {
+				return 0;
+			}
+		}
+		
+		function getUnitafter2014(doj,doe, str) {
+			val1 = new Date('2014-08-31');
+			unit = 0
+			if (doe > val1) {
+				if(doj > val1) {
+					unit = getDiff(doj,doe,str);
+				} else {
+					unit = getDiff(val1,doe, str);
+				}			
+			} else {
+				console.log("both DOJ DOE are lesser");
+			}
+			if (unit<0) {
+				unit = 0;
+			}
+			return unit;
+		}
+		
+		function getUnitbefore2014(doj,doe, str) {
+			val1 = new Date('2014-09-01');
+			unit = 0
+			if (doj < val1) {
+				if(doe < val1) {
+					unit = getDiff(doj,doe,str);
+				} else {
+					unit = getDiff(doj,val1, str);
+				}			
+			} else {
+				console.log("both DOJ DOE are greater");
+			}
+			if (unit<0) {
+				unit = 0;
+			}
+			return unit;
+		}
+		
+		
+		$scope.checkType = function(type){
+			if(type=='Early Pension' || type=='Deferred Pension with Contribution' || type== "Deferred Pension with Contribution") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		var getdiffdays = function(d1, d2){
+			d = luxon.Interval.fromDateTimes(d1, d2)
+			return d.count("days")
+		}
+		
+		var getdaterange = function(d) {
+			date1 = luxon.DateTime.fromFormat('16-11-1995', 'dd-MM-yyyy');
+			date2 = luxon.DateTime.fromFormat('01-09-2014', 'dd-MM-yyyy');
+			if(getdiffdays(d, date1)>0){
+				return 1;
+			} else if (getdiffdays(d, date2)>0){
+				return 2;
+			} else {
+				return 3;
+			}
+			return 0
+		}
+		
+		var get3Services = function (doj, doe, ncp1, ncp2) {
+			date1 = luxon.DateTime.fromFormat('16-11-1995', 'dd-MM-yyyy')
+			date2 = luxon.DateTime.fromFormat('01-09-2014', 'dd-MM-yyyy')
+			rdoj = getdaterange(doj);
+			rdoe = getdaterange(doe);
+			s1 =0
+			s2 =0
+			s3 =0
+			if(rdoj == 1) {
+				if(rdoe==1) {
+				   s1 = getdiffdays(doj, doe)
+				} else if(rdoe==2) {
+					s1 = getdiffdays(doj, date1)
+					s2 = getdiffdays(date1, doe)
+				} else {
+					s1 = getdiffdays(doj, date1)
+					s2 = getdiffdays(date1, date2)
+					s3 = getdiffdays(date2, doe)
+				}
+			} else if(rdoj == 2) {
+				if(rdoe==2) {
+					s2 =getdiffdays(doj, doe)
+				
+				} else {	
+					s2 =getdiffdays(doj, date2)
+					s3 =getdiffdays(date2, doe)
+				}
+			} else {
+				s3= getdiffdays(doj, doe)
+			}
+			return {
+			"s1": s1,
+			"s2": s2,
+			"s3": s3,
+			"ncp1": ncp1,
+			"ncp2": ncp2,
+			}
+		}
+		
+		var getSummary = function (services){
+			arr = []
+			for (let i = 0; i < services.length; i++) {
+				doj = luxon.DateTime.fromJSDate(services[i]["doj"]);
+				doe = luxon.DateTime.fromJSDate(services[i]["doe"]);
+				ncp1 = parseInt(services[i]["ncp1"]);
+				ncp2 = parseInt(services[i]["ncp2"]);
+				x = get3Services(doj, doe, ncp1, ncp2);	
+				arr.push(x)
+			}
+			
+			$scope.total = _.reduce(arr, function(acc, o) {
+				for (var p in o)
+					acc[p] = (p in acc ? acc[p] : 0) + o[p];
+					return acc;
+			}, {});
+			arr.push($scope.total)
+			$scope.days = arr;
+			console.log($scope.days);
+			console.log($scope.total);
+			//$scope.avg = getAvg(success.data['60wages']);
+		}
+		
+		$scope.addService = function(){
+			const date1 = dates.slice();
+			dates.push($scope.doj);
+			dates.push($scope.doe);
+			if(multipleDateRangeOverlaps(dates)){
+				alert("Date range overlapping. returning to previous state");
+				dates = date1.slice();
+			} else if ($scope.doj>$scope.doe) {
+				alert("DOJ can not be later than DOE");
+				dates = date1.slice();
+			} else if ($scope.doj < new Date('1995-11-16')) {
+				alert("Service can not be before EPS 1995 i.e 16-11-1995. The feature for calculation of past service pension will be added soon. ");
+				dates = date1.slice();
+			} else {
+				var service = {
+				'doj':$scope.doj,
+				'doe':$scope.doe,
+				'ncp1':$scope.ncp1,
+				'ncp2':$scope.ncp2,
+				'months2014':0,
+				'days2014':0,
+				};
+				
+				service['monthsbefore'] = getUnitbefore2014($scope.doj, $scope.doe, 'months');
+				service['daysbefore'] = getUnitbefore2014($scope.doj, $scope.doe, 'days');
+				service['monthsafter'] = getUnitafter2014($scope.doj, $scope.doe, 'months');
+				service['daysafter'] = getUnitafter2014($scope.doj, $scope.doe, 'days');
+				
+				$scope.services.push(service);
+				
+				getSummary($scope.services);
+				
+				$scope.doj = new Date('2013-11-16');
+				$scope.doe = new Date('2014-12-17');
+				$scope.ncp1 = 0;
+				$scope.ncp2 = 0;
+			}
+			
+			
+		}
+		
+		$scope.removeService = function(index) {
+			if(index >= 0){
+				$scope.services.splice(index, 1);
+			}
+		}
+		
+
+
+		
+	 }]);
+	</script>
+</body>
+</html>
