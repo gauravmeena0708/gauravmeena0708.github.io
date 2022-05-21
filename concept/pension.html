@@ -163,6 +163,11 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	
 	$scope.update = function () {
 		$scope.eligible_service = $scope.actual_service - $scope.total_ncp;
+		if($scope.eligible_service>3650) {
+			$scope.min=1000;
+		} else {
+			$scope.min=1000;
+		}
 		if($scope.age>=58 && $scope.eligible_service>7300){
 			$scope.weightage = 2
 			$scope.eligible_service1 = $scope.actual_service+365*$scope.weightage-$scope.total_ncp;
