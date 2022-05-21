@@ -35,17 +35,17 @@
 					
 					<div class="input-group mb-2" ng-show="months2">
 						<span class="input-group-text col-8" id="basic-addon1">NCP days for {{ months2 }} months before 01-09-2014:</i></span>
-						<input type="number" ng-model="ncp2" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+						<input type="number" ng-model="ncp2" class="form-control col-4" placeholder="NCP for Avg wage before 2014" aria-label="NCP for Avg wage before 2014" aria-describedby="NCP for Avg wage before 2014">
 					</div>
 					
 					<div class="input-group mb-2 mt-4">
 						<span class="input-group-text col-8" id="basic-addon1">Actual Service (in days) : </span>
-						<input type="number" ng-model="actual_service" class="form-control col-4" ng-change="update()" placeholder="Actual Service"  aria-label="Actual Service" aria-describedby="basic-addon1">
+						<input type="number" ng-model="actual_service" ng-change="update()" class="form-control col-4" placeholder="Actual Service"  aria-label="Actual Service" aria-describedby="basic-addon1">
 					</div>
 					
 					<div class="input-group mb-2">
 						<span class="input-group-text col-8" id="basic-addon1">Total NCPs : </span>
-						<input type="number" ng-model="total_ncp" class="form-control col-4" ng-change="update()" placeholder="Total Service"  aria-label="Total Service" aria-describedby="basic-addon1">
+						<input type="number" ng-model="total_ncp" class="form-control col-4" ng-change="update()" placeholder="Total NCP"  aria-label="Total NCP" aria-describedby="basic-addon1">
 					</div>
 				</form>
 			</div>
@@ -67,7 +67,7 @@
 					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Net Pensionable Salary: <span>{{ avg_wage }}</span></li>
 				</ul>
 				<ul class="list-group mb-3">
-					<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Actual Service<span>{{ actual_service}}</span></li>
+					<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Actual Service<span>{{ actual_service }}</span></li>
 					<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Total NCP<span>{{ total_ncp}}</span></li>
 					<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Eligible Service<span>{{ eligible_service}}</span></li>
 					<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Weightage <span>{{ weightage }} Years</span></li>
