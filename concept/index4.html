@@ -115,30 +115,30 @@
 		<div class="row mt-2" ng-if="eligibility==2">
 			<div class="col">
 				<div class="card shadow">
-					<div class="card-header d-flex justify-content-between align-items-center">Average wages : </div>
+					<div class="card-header d-flex justify-content-between align-items-center">Average wages/Wages at Exit and Corresponding NCPs: </div>
 					<div class="card-body p-3">		
 						<form>
-							<div class="input-group mb-2" ng-show="months2">
-								<span class="input-group-text col-8" id="basic-addon1">Average Wage for {{ months2 }} latest months in 1500 wage ceiling (after 01-09-2014):</span>
-								<input type="number" ng-model="avg_wage2" ng-change="update()" max="15000" class="form-control col-4" placeholder="Average wage in 15000 ceiling" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							<div class="input-group mb-2" ng-show="service.months2">
+								<span class="input-group-text col-8" id="basic-addon1">Average Wage for {{ service.months2 }} latest months in 1500 wage ceiling (after 01-09-2014):</span>
+								<input type="number" ng-model="service.avg_wage2" ng-change="updatePension()" max="15000" class="form-control col-4" placeholder="Average wage in 15000 ceiling" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
 							</div>
-							<div class="input-group mb-2" ng-show="months2">
-								<span class="input-group-text col-8" id="basic-addon1">NCP days for above {{ months2 }} months from 01-09-2014:</i></span>
-								<input type="number" ng-model="ncp2" ng-change="update()" class="form-control col-4" placeholder="NCP for Avg wage after 01-09-2014" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							<div class="input-group mb-2" ng-show="service.months2">
+								<span class="input-group-text col-8" id="basic-addon1">NCP days for above {{ service.months2 }} months from 01-09-2014:</i></span>
+								<input type="number" ng-model="service.ncp2" ng-change="updatePension()" class="form-control col-4" placeholder="NCP for Avg wage after 01-09-2014" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
 							</div>
-							<div class="input-group mb-2" ng-show="months1">
-								<span class="input-group-text col-8" id="basic-addon1">Avg. wage for {{months1}} months in 6500 wage ceiling (before 01-09-2014):</i></span>
-								<input type="number" ng-model="avg_wage1" max="6500" class="form-control col-4" placeholder="Average wage in 6500 ceiling" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							<div class="input-group mb-2" ng-show="service.months1">
+								<span class="input-group-text col-8" id="basic-addon1">Avg. wage for {{service.months1}} months in 6500 wage ceiling (before 01-09-2014):</i></span>
+								<input type="number" ng-model="service.avg_wage1" ng-change="updatePension()" max="6500" class="form-control col-4" placeholder="Average wage in 6500 ceiling" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
 							</div>
 					
-							<div class="input-group mb-2" ng-show="months1">
-								<span class="input-group-text col-8" id="basic-addon1">NCP days for {{ months1 }} months before 01-09-2014:</i></span>
-								<input type="number" ng-model="ncp1" class="form-control col-4" placeholder="NCP for Avg wage before 01-09-2014" aria-label="NCP for Avg wage before 2014" aria-describedby="NCP for Avg wage before 2014">
+							<div class="input-group mb-2" ng-show="service.months1">
+								<span class="input-group-text col-8" id="basic-addon1">NCP days for {{ service.months1 }} months before 01-09-2014:</i></span>
+								<input type="number" ng-model="service.ncp1" ng-change="updatePension()" class="form-control col-4" placeholder="NCP for Avg wage before 01-09-2014" aria-label="NCP for Avg wage before 2014" aria-describedby="NCP for Avg wage before 2014">
 							</div>
 						</form>
 					</div>
 					<div class="card-footer">
-						<button type="button" class="btn btn-danger align-self-center" onclick="updatePension()">Update</button>
+						<button type="button" class="btn btn-danger align-self-center" ng-click="updatePension()">Update</button>
 					</div>
 				</div>
 			</div>
@@ -327,245 +327,6 @@ container fluid div closer
 	<script type="text/javascript" src="luxon.min.js"></script>
 	<script type="text/javascript" src="underscore-esm-min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
-	<script>
-	function myFunction() {
-		window.print();
-	}
-	
-	const round = (n, dp) => {
-		const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
-		return Math.round(n * h) / h
-	}
-	var app = angular.module('myApp', ['ngCookies']);
-	app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
-	
-		/*
-		Defining constants
-		*/
-		const MIN = 1000;
-		const CEILING1 = 6500;
-		const CEILING2 = 15000;
-		const CEILING1_DATE = new Date('1995-11-16');
-		const CEILING2_DATE = new Date('2014-09-01')
-		/*
-			Basic Details: Gets updated through Modal box and calls for a function update;
-		*/
-		$scope.basic = {
-			'uan':100000000000,
-			'name': "John Doe",
-			'dob': new Date('1970-01-01'),
-			'availing_date':new Date(),	
-			'age':0,
-			'dod':0
-		};
-		$scope.updateBasic= function(){
-			$scope.basic.age = getDiff($scope.basic.dob,$scope.basic.availing_date, "years",0)
-		}
-		$scope.updateBasic();
-		
-		
-		$scope.dates=[];
-		$scope.services=[];
-		$scope.actual_service = 0;
-		$scope.eligible_service = 0;
-		$scope.months1 = 0;
-		$scope.months2 = 0;
-		
-		$scope.service_input  = {
-			'doj': new Date('2013-11-16'),
-			'doe': new Date('2014-12-17'),
-			'ncp1':0,
-			'ncp2':0
-		}
-		
-		
-		
-		function getDiff(d1, d2, str, withbool=1) {
-			date1= luxon.DateTime.fromJSDate(d1);
-			date2= luxon.DateTime.fromJSDate(d2);
-			var interval = luxon.Interval.fromDateTimes(date1, date2);
-			var diffUnits = 0;
-			if(!withbool){
-				diffUnits = Math.floor(interval.length(str));
-				return diffUnits>=1?diffUnits:0;
-			} else {
-				diffUnits = interval.count(str);
-				return diffUnits>=1?diffUnits:0;
-			}
-		}
-		
-		function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
-			if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
-			if (a_start <= b_end   && b_end   <= a_end) return true; // b ends in a
-			if (b_start <  a_start && a_end   <  b_end) return true; // a in b
-			return false;
-		}
-		
-		function multipleDateRangeOverlaps(dates) {
-			var i, j;
-			if (dates.length % 2 !== 0)
-				throw new TypeError('Arguments length must be a multiple of 2');
-			for (i = 0; i < dates.length - 2; i += 2) {
-				for (j = i + 2; j < dates.length; j += 2) {
-					if (
-						dateRangeOverlaps(
-							dates[i], dates[i+1],
-							dates[j], dates[j+1]
-						)
-					) return true;
-				}
-			}
-			return false;
-		}
-		
-		function getCeilingDuration(doj,doe, str,before=1) {
-			unit = 0
-			if(before){
-				console.log("before");
-				if (doj >= CEILING2_DATE) {
-					console.log("both DOJ DOE are greater");			
-				} else {
-					if(doe < CEILING2_DATE) {
-						unit = getDiff(doj,doe,str);
-					} else {
-						unit = getDiff(doj, CEILING2_DATE, str);
-					}
-				}
-			} else {
-				if (doe < CEILING2_DATE) {
-					console.log("both DOJ DOE are lesser");			
-				} else {
-					if(doj >= CEILING2_DATE) {
-						unit = getDiff(doj,doe,str);
-					} else {
-						unit = getDiff(CEILING2_DATE, doe, str);
-					}
-				}
-			}
-			return unit>=1?unit:0;
-		}
-		
-		function updateEligibilityMsg(){
-			if($scope.basic.age<50 && $scope.dod===0){
-				$scope.eligibility = 0;
-				$scope.eligibilityMsg = "A member should be atleast 50 years of age for becoming eligible for Pension.";
-			}
-			if($scope.total.length===0){
-				$scope.eligibility = 0;
-				$scope.eligibilityMsg = "You have not added any service. please add Service.";
-				return 0;
-			} else {
-				if($scope.eligible_service <180 ) {
-					$scope.eligibility = 0;
-					$scope.eligibilityMsg = "Your Eligible Servce is less than 180 days(6 Months). You are not eligible for WB or Pension";
-				} else if($scope.eligible_service >= 180 && $scope.eligible_service<3420 ){
-					$scope.eligibility = 1;
-					$scope.eligibilityMsg = "Your Eligible Servce is more than than 0.5 Years but less than 9.5 Years. You are eligible for WB but not for pension.";
-				} else {
-					$scope.eligibility = 2;
-					$scope.eligibilityMsg = "Your Eligible Servce is more than than 9.5 Years. You are eligible for pension but not for WB.";
-				}
-			}
-		}
-		
-		function getTotal() {
-			total = _.reduce($scope.services, function(acc, o) {
-					for (var p in o)
-						acc[p] = (p in acc ? acc[p] : 0) + o[p];
-						return acc;
-					}, {});
-			$scope.months2 = total.monthsafter>60?60:total.monthsafter;
-			$scope.months1 = 60-$scope.months2;
-			
-			$scope.actual_service = total.daysbefore+total.daysafter;
-			$scope.eligible_service = $scope.actual_service-total.ncp1-total.ncp2;
-			return total;
-		}
-		
-		$scope.addService = function(){
-			var doj = $scope.service_input.doj;
-			var doe = $scope.service_input.doe;
-			var ncp1 = $scope.service_input.ncp1;
-			var ncp2 = $scope.service_input.ncp2;
-			
-			const date1 = $scope.dates.slice();
-			$scope.dates.push(doj);
-			$scope.dates.push(doe);
-			
-			if(multipleDateRangeOverlaps($scope.dates)){
-				alert("Date range overlapping. returning to previous state");
-				$scope.dates = date1.slice();
-			} else if (doj>doe) {
-				alert("DOJ can not be later than DOE");
-				$scope.dates = date1.slice();
-			} else if (doj < CEILING1_DATE) {
-				alert("This calculator is not designed for service before EPS 1995 i.e 16-11-1995.");
-				$scope.dates = date1.slice();
-			} else {
-				var service = {
-				'doj':doj,
-				'doe':doe,
-				'ncp1':ncp1,
-				'ncp2':ncp2,
-				'monthsbefore':getCeilingDuration(doj,doe,'months',1),
-				'monthsafter':getCeilingDuration(doj,doe,'months',0),
-				'daysbefore':getCeilingDuration(doj,doe,'days',1),
-				'daysafter':getCeilingDuration(doj,doe,'days',0)
-				};
-				
-				$scope.services.push(service);
-				$scope.total = getTotal();
-				updateEligibilityMsg();
-				console.log($scope.total)
-			}
-		}
-		
-		$scope.removeService = function(index) {
-			if(index >= 0){
-				$scope.dates.splice(index*2, 2);
-				$scope.services.splice(index, 1);
-				$scope.total = getTotal();
-				updateEligibilityMsg();
-			}
-		}
-		
-		$scope.eligibility = 0;
-		$scope.eligibilityMsg="You have not added any service. PLease add service to check eligibility."
-		
-	/*
-		//////
-		$scope.months1 = 0;
-		$scope.months2 = 60-$scope.months1;
-		$scope.ncp1 = 0;
-		$scope.ncp2 = 0;
-		$scope.actual_service = 0;
-		$scope.total_ncp = 0;
-		$scope.avg_wage1 = 15000;
-		$scope.avg_wage2 = 6500;
-		$scope.age=57;
-		$scope.weightage = 0;
-		$scope.eligible_service = $scope.actual_service - $scope.total_ncp;
-		$scope.eligible_service1 = $scope.actual_service-$scope.total_ncp+365*$scope.weightage;
-		$scope.weightage_month = 0;
-		//
-		$scope.pensions = [	"Withdrawal Benefit", 
-							"Superannuation Pension", 
-							"Early Pension", 
-							"Family Pension",
-							"Deferred Pension with Contribution",
-							"Deferred Pension without Contribution"
-					]
-
-		$scope.checkType = function(type){
-			if(type=='Early Pension' || type=='Deferred Pension with Contribution' || type== "Deferred Pension with Contribution") {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	*/
-		
-	 }]);
-	</script>
+	<script type="text/javascript" src="script.js"></script>
 </body>
 </html>
