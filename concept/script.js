@@ -112,7 +112,6 @@ const myFunction = function () {
 			function getCeilingDuration(doj,doe, str,before=1) {
 				unit = 0
 				if(before){
-					console.log("before");
 					if (doj >= CEILING2_DATE) {
 						console.log("both DOJ DOE are greater");			
 					} else {
@@ -136,7 +135,7 @@ const myFunction = function () {
 				return unit>=1?unit:0;
 			}
 			
-			function updateEligibilityMsg(){
+			function updateEligibility(){
 				if($scope.basic.age<50 && $scope.dod===0){
 					$scope.eligibility = 0;
 					$scope.eligibilityMsg = "A member should be atleast 50 years of age for becoming eligible for Pension.";
@@ -149,12 +148,16 @@ const myFunction = function () {
 					if($scope.eligible_service <180 ) {
 						$scope.eligibility = 0;
 						$scope.eligibilityMsg = "Your Eligible Servce is less than 180 days(6 Months). You are not eligible for WB or Pension";
-					} else if($scope.eligible_service >= 180 && $scope.eligible_service<3420 ){
+					} else if($scope.service.eligible >= 180 && $scope.service.eligible<3420 ){
 						$scope.eligibility = 1;
 						$scope.eligibilityMsg = "Your Eligible Servce is more than than 0.5 Years but less than 9.5 Years. You are eligible for WB but not for pension.";
-					} else {
+					} else if($scope.service.eligible >= 180 && $scope.service.eligible<3420 ){
 						$scope.eligibility = 2;
 						$scope.eligibilityMsg = "Your Eligible Servce is more than than 9.5 Years. You are eligible for pension but not for WB.";
+					} else {
+						$scope.eligibility = 0;
+						$scope.eligibilityMsg =  "Your service details does not fullfill any of the conditions please update the same."
+						
 					}
 				}
 			}
@@ -165,7 +168,6 @@ const myFunction = function () {
 							acc[p] = (p in acc ? acc[p] : 0) + o[p];
 							return acc;
 						}, {});
-
 					$scope.service['actual']=total.daysbefore+total.daysafter;
 					$scope.service['eligible']= total.daysbefore+total.daysafter-total.ncp1-total.ncp2;
 					$scope.service['months1']= total.monthsafter>60?0:60-total.monthsafter;
@@ -209,8 +211,7 @@ const myFunction = function () {
 					
 					$scope.services.push(service);
 					$scope.total = getTotal();
-					updateEligibilityMsg();
-					console.log($scope.total)
+					updateEligibility();
 				}
 			}
 			
@@ -219,7 +220,7 @@ const myFunction = function () {
 					$scope.dates.splice(index*2, 2);
 					$scope.services.splice(index, 1);
 					$scope.total = getTotal();
-					updateEligibilityMsg();
+					updateEligibility();
 				}
 			}
 			
@@ -246,19 +247,16 @@ const myFunction = function () {
 					earlyPension();
 				}
 				if($scope.service.months2<=60 && $scope.service.months2>0) {
-					console.log("case1")
 					$scope.service.months1 = 60-$scope.service.months2;
 					$scope.pension.part1 = round((($scope.service.months1*30 - $scope.service.ncp1)*$scope.service.avg_wage1)/(60*30), 2);
 					$scope.pension.part2 = round((($scope.service.months2*30 - $scope.service.ncp2)*$scope.service.avg_wage2)/(60*30), 2);
 					$scope.pension.avg_wage = $scope.pension.part1 + $scope.pension.part2;
 					$scope.pension.psal = $scope.pension.part1 + $scope.pension.part2;//$scope.pension.avg_wage;
-					console.log($scope.pension.psal);
 					$scope.pension.pser = $scope.service.eligible1 - $scope.service.total_ncp;
 					$scope.pension.pension58 = round($scope.pension.psal*$scope.pension.pser/(70*365),0);
 					$scope.pension.pension58min = ($scope.pension.pension58>$scope.min)? $scope.pension.pension58:$scope.min;
 					earlyPension();
 				} else if ($scope.service.months2==0){
-					console.log("case2");
 					$scope.service.months1 = 12;
 					$scope.pension.part1 = $scope.avg_wage2*12*30/(360-$scope.ncp2);
 					$scope.part2 = 0;
@@ -269,7 +267,6 @@ const myFunction = function () {
 					$scope.pension.pension58min = ($scope.pension.pension58>$scope.min)? $scope.pension.pension58:$scope.min;
 					earlyPension();
 				} else {
-					console.log("case3")
 					$scope.months2 = 0;
 				}
 				
@@ -283,7 +280,6 @@ const myFunction = function () {
 					$scope.pension.final_amt = round($scope.pension.pension58min*(1+0.04*diff),0);
 				} else if($scope.basic.age<58){
 					diff =  58-$scope.basic.age;
-					console.log(diff);
 					$scope.pension.final_amt = round($scope.pension.pension58min*(1-0.04*diff),0);
 				} else {
 					$scope.pension.final_amt = $scope.pension.pension58;
