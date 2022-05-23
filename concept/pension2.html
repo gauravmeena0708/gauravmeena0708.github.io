@@ -112,7 +112,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="row mt-2" ng-if="eligibility==1">
+		<div class="row mt-2" ng-show="eligibility==1">
 			<div class="col">
 				<div class="card shadow">
 					<div class="card-header">Withdrawal Calculator Input</div>
@@ -121,7 +121,7 @@
 							<div ng-show="alert" class="warning">{{alert}}</div>
 							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution before 01-09-2014">
 								<span class="input-group-text col-9" id="basic-addon1">Number of Years Contribution in ceiling 6500:</span>
-								<input type="number" ng-model="years1" class="form-control col-4" ng-change="updateWB()" placeholder="years1" aria-label="years1" aria-describedby="basic-addon1">
+								<input type="number" ng-model="years1" class="form-control col-4" ng-change="updateWB()" placeholder="years1" aria-label="years1" aria-describedby="basic-addon1" readonly>
 							</div>
 
 							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Pay payable at cessation of membership">
@@ -131,7 +131,7 @@
 							
 							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution before 01-09-2014">
 								<span class="input-group-text col-9" id="basic-addon1">Number of Years Contribution in ceiling 15000:</span>
-								<input type="number" ng-model="years2" class="form-control col-4" ng-change="updateWB()" placeholder="years2" aria-label="years2" aria-describedby="basic-addon1">
+								<input type="number" ng-model="years2" class="form-control col-4" ng-change="updateWB()" placeholder="years2" aria-label="years2" aria-describedby="basic-addon1" readonly>
 							</div>
 							
 							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution">
@@ -139,12 +139,12 @@
 								<input type="number" ng-model="wage2" class="form-control col-4" placeholder="wage2" ng-change="updateWB()" aria-label="wage2" aria-describedby="basic-addon1">
 							</div>
 						</form>
-						<button type="button" class="btn btn-info align-self-center" ng-click="updateWB()">Update</button>
+						<button ng-if=0 type="button" class="btn btn-info align-self-center" ng-click="updateWB()">Update</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row mt-2" ng-if="eligibility==1">
+		<div class="row mt-2" ng-show="eligibility==1">
 			<div class="col">
 				<div class="card shadow">
 					<div class="card-header d-flex justify-content-between align-items-center">Withdrawal Benefit Calculator Output : </div>

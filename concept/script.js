@@ -154,7 +154,11 @@ const myFunction = function () {
 						$scope.eligibilityMsg = "Your Eligible Servce is more than than 0.5 Years but less than 9.5 Years. You are eligible for WB but not for pension.";
 					} else if($scope.service.eligible > 3420 ){
 						$scope.eligibility = 2;
-						$scope.eligibilityMsg = "Your Eligible Servce is more than than 9.5 Years. You are eligible for pension but not for WB.";
+						if($scope.basic.age<58){
+							$scope.eligibilityMsg = "Your Eligible Servce is more than than 9.5 Years. But age on Date of opting pension is less than 58 years. Hence, you are eligible for Early Pension";
+						} else {
+							$scope.eligibilityMsg = "Your Eligible Servce is more than than 9.5 Years. and age on Date of opting pension is more than 58 years. Hence, you are eligible for Superannuation Pension";
+						}
 					} else {
 						$scope.eligibility = 0;
 						$scope.eligibilityMsg =  "Your service details does not fullfill any of the conditions please update the same."
@@ -178,7 +182,7 @@ const myFunction = function () {
 					$scope.service['total_ncp']=total.ncp2+total.ncp1;
 					$scope.years1 = round((total.daysbefore-total.ncp1)/365,2);
 					$scope.years2 = round((total.daysafter-total.ncp2)/365,2);
-					updateWB();
+					$scope.updateWB();
 				return total;
 			}
 			
@@ -294,34 +298,34 @@ const myFunction = function () {
 			/*
 			variables and calculation for WB
 			*/
-	$scope.years1 = 1;
-	$scope.years2 = 1;
-	$scope.list = [1.02, 1.99, 2.98, 3.99, 5.02, 6.07, 7.13, 8.22, 9.33];
-	$scope.wage1= 6500;
-	$scope.wage2= 15000;
-	$scope.ceiling1= 6500;
-	$scope.ceiling2= 15000;
+			$scope.years1 = 1;
+			$scope.years2 = 1;
+			$scope.list = [1.02, 1.99, 2.98, 3.99, 5.02, 6.07, 7.13, 8.22, 9.33];
+			$scope.wage1= 6500;
+			$scope.wage2= 15000;
+			$scope.ceiling1= 6500;
+			$scope.ceiling2= 15000;
+			
+			$scope.years = $scope.years1 + $scope.years2;
+			val = Math.round($scope.years);
+			console.log(val)
+			$scope.factor = $scope.list[val-1];
+			$scope.avg_wage = (($scope.years1*$scope.wage1)+($scope.years2*$scope.wage2))/$scope.years;
+			$scope.amount = 0;
 	
-	$scope.years = $scope.years1 + $scope.years2;
-	val = Math.round($scope.years);
-	console.log(val)
-	$scope.factor = $scope.list[val-1];
-	$scope.avg_wage = (($scope.years1*$scope.wage1)+($scope.years2*$scope.wage2))/$scope.years;
-	$scope.amount = 0;
-	
-	$scope.updateWB = function() {
-		if($scope.years>9.5){
-			$scope.alert = "The total years of service should be greater than 0.5 and less than 9.5"
-		} else {
-			$scope.alert = false;
-		}
-		$scope.years = $scope.years1 + $scope.years2;
-		console.log("167");
-		$scope.avg_wage = (($scope.years1*$scope.wage1)+($scope.years2*$scope.wage2))/$scope.years;
-		console.log("169")
-		val = Math.round($scope.years);
-		$scope.factor = $scope.list[val-1]||0;
-		$scope.amount = Math.round($scope.factor*$scope.avg_wage);
-	}
+			$scope.updateWB = function() {
+				if($scope.years>9.5){
+					$scope.alert = "The total years of service should be greater than 0.5 and less than 9.5"
+				} else {
+					$scope.alert = false;
+				}
+				$scope.years = $scope.years1 + $scope.years2;
+				console.log($scope.years)
+				$scope.avg_wage = (($scope.years1*$scope.wage1)+($scope.years2*$scope.wage2))/$scope.years;
+				console.log($scope.avg_wage)
+				val = Math.round($scope.years);
+				$scope.factor = $scope.list[val-1]||0;
+				$scope.amount = Math.round($scope.factor*$scope.avg_wage);
+			}
 			
 		 }]);
