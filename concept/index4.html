@@ -115,6 +115,37 @@
 		<div class="row mt-2" ng-if="eligibility==2">
 			<div class="col">
 				<div class="card shadow">
+					<div class="card-header d-flex justify-content-between align-items-center">Average wages : </div>
+					<div class="card-body p-3">		
+						<form>
+							<div class="input-group mb-2" ng-show="months2">
+								<span class="input-group-text col-8" id="basic-addon1">Average Wage for {{ months2 }} latest months in 1500 wage ceiling (after 01-09-2014):</span>
+								<input type="number" ng-model="avg_wage2" ng-change="update()" max="15000" class="form-control col-4" placeholder="Average wage in 15000 ceiling" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group mb-2" ng-show="months2">
+								<span class="input-group-text col-8" id="basic-addon1">NCP days for above {{ months2 }} months from 01-09-2014:</i></span>
+								<input type="number" ng-model="ncp2" ng-change="update()" class="form-control col-4" placeholder="NCP for Avg wage after 01-09-2014" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group mb-2" ng-show="months1">
+								<span class="input-group-text col-8" id="basic-addon1">Avg. wage for {{months1}} months in 6500 wage ceiling (before 01-09-2014):</i></span>
+								<input type="number" ng-model="avg_wage1" max="6500" class="form-control col-4" placeholder="Average wage in 6500 ceiling" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+					
+							<div class="input-group mb-2" ng-show="months1">
+								<span class="input-group-text col-8" id="basic-addon1">NCP days for {{ months1 }} months before 01-09-2014:</i></span>
+								<input type="number" ng-model="ncp1" class="form-control col-4" placeholder="NCP for Avg wage before 01-09-2014" aria-label="NCP for Avg wage before 2014" aria-describedby="NCP for Avg wage before 2014">
+							</div>
+						</form>
+					</div>
+					<div class="card-footer">
+						<button type="button" class="btn btn-danger align-self-center" onclick="updatePension()">Update</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2" ng-if="eligibility==2">
+			<div class="col">
+				<div class="card shadow">
 					<div class="card-header d-flex justify-content-between align-items-center">Calculator Output : </div>
 					<div class="card-body p-3">		
 						<ul class="list-group mb-3">
@@ -147,7 +178,7 @@
 						
 					</div>
 					<div class="card-footer">
-						
+					
 					</div>
 				</div>
 			</div>
@@ -337,6 +368,9 @@ container fluid div closer
 		$scope.services=[];
 		$scope.actual_service = 0;
 		$scope.eligible_service = 0;
+		$scope.months1 = 0;
+		$scope.months2 = 0;
+		
 		$scope.service_input  = {
 			'doj': new Date('2013-11-16'),
 			'doe': new Date('2014-12-17'),
@@ -440,6 +474,9 @@ container fluid div closer
 						acc[p] = (p in acc ? acc[p] : 0) + o[p];
 						return acc;
 					}, {});
+			$scope.months2 = total.monthsafter>60?60:total.monthsafter;
+			$scope.months1 = 60-$scope.months2;
+			
 			$scope.actual_service = total.daysbefore+total.daysafter;
 			$scope.eligible_service = $scope.actual_service-total.ncp1-total.ncp2;
 			return total;
@@ -475,6 +512,7 @@ container fluid div closer
 				'daysbefore':getCeilingDuration(doj,doe,'days',1),
 				'daysafter':getCeilingDuration(doj,doe,'days',0)
 				};
+				
 				$scope.services.push(service);
 				$scope.total = getTotal();
 				updateEligibilityMsg();
