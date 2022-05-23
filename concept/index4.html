@@ -112,7 +112,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="row mt-2" ng-if="eligibility">
+		<div class="row mt-2" ng-if="eligibility==2">
 			<div class="col">
 				<div class="card shadow">
 					<div class="card-header d-flex justify-content-between align-items-center">Calculator Output : </div>
@@ -147,9 +147,14 @@
 						
 					</div>
 					<div class="card-footer">
-						<button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
+						
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col">
+				<button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
 			</div>
 		</div>
 		
@@ -292,6 +297,10 @@ container fluid div closer
 	<script type="text/javascript" src="underscore-esm-min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
 	<script>
+	function myFunction() {
+		window.print();
+	}
+	
 	const round = (n, dp) => {
 		const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
 		return Math.round(n * h) / h
@@ -404,6 +413,7 @@ container fluid div closer
 		
 		function updateEligibilityMsg(){
 			if($scope.basic.age<50 && $scope.dod===0){
+				$scope.eligibility = 0;
 				$scope.eligibilityMsg = "A member should be atleast 50 years of age for becoming eligible for Pension.";
 			}
 			if($scope.total.length===0){
@@ -412,15 +422,15 @@ container fluid div closer
 				return 0;
 			} else {
 				if($scope.eligible_service <180 ) {
+					$scope.eligibility = 0;
 					$scope.eligibilityMsg = "Your Eligible Servce is less than 180 days(6 Months). You are not eligible for WB or Pension";
 				} else if($scope.eligible_service >= 180 && $scope.eligible_service<3420 ){
+					$scope.eligibility = 1;
 					$scope.eligibilityMsg = "Your Eligible Servce is more than than 0.5 Years but less than 9.5 Years. You are eligible for WB but not for pension.";
 				} else {
+					$scope.eligibility = 2;
 					$scope.eligibilityMsg = "Your Eligible Servce is more than than 9.5 Years. You are eligible for pension but not for WB.";
-				
 				}
-				
-				
 			}
 		}
 		
@@ -434,6 +444,7 @@ container fluid div closer
 			$scope.eligible_service = $scope.actual_service-total.ncp1-total.ncp2;
 			return total;
 		}
+		
 		$scope.addService = function(){
 			var doj = $scope.service_input.doj;
 			var doe = $scope.service_input.doe;
