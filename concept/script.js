@@ -287,4 +287,38 @@ const myFunction = function () {
 					$scope.pension.final_amt = $scope.pension.pension58;
 				}
 			}
+			
+			/*
+			variables and calculation for WB
+			*/
+			$scope.years1 = 1;
+	$scope.years2 = 1;
+	$scope.list = [1.02, 1.99, 2.98, 3.99, 5.02, 6.07, 7.13, 8.22, 9.33];
+	$scope.wage1= 6500;
+	$scope.wage2= 15000;
+	$scope.ceiling1= 6500;
+	$scope.ceiling2= 15000;
+	
+	$scope.years = $scope.years1 + $scope.years2;
+	val = Math.round($scope.years);
+	console.log(val)
+	$scope.factor = $scope.list[val-1];
+	$scope.avg_wage = (($scope.years1*$scope.wage1)+($scope.years2*$scope.wage2))/$scope.years;
+	$scope.amount = 0;
+	
+	$scope.updateWB = function() {
+		if($scope.years>9.5){
+			$scope.alert = "The total years of service should be greater than 0.5 and less than 9.5"
+		} else {
+			$scope.alert = false;
+		}
+		$scope.years = $scope.years1 + $scope.years2;
+		console.log("167");
+		$scope.avg_wage = (($scope.years1*$scope.wage1)+($scope.years2*$scope.wage2))/$scope.years;
+		console.log("169")
+		val = Math.round($scope.years);
+		$scope.factor = $scope.list[val-1]||0;
+		$scope.amount = Math.round($scope.factor*$scope.avg_wage);
+	}
+			
 		 }]);

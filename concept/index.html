@@ -140,7 +140,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	$scope.avg_wage = (($scope.years1*$scope.wage1)+($scope.years2*$scope.wage2))/$scope.years;
 	$scope.amount = 0;
 	
-	$scope.update = function() {
+	$scope.updateWB = function() {
 		if($scope.years>9.5){
 			$scope.alert = "The total years of service should be greater than 0.5 and less than 9.5"
 		} else {
