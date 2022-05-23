@@ -154,6 +154,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		$scope.factor = $scope.list[val-1]||0;
 		$scope.amount = Math.round($scope.factor*$scope.avg_wage);
 	}
+	$scope.updateWB();
 	
 }]);
 
