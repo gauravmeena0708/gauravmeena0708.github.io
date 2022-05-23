@@ -139,6 +139,7 @@ const myFunction = function () {
 				if($scope.basic.age<50 && $scope.dod===0){
 					$scope.eligibility = 0;
 					$scope.eligibilityMsg = "A member should be atleast 50 years of age for becoming eligible for Pension.";
+					return 0;
 				}
 				if($scope.total.length===0){
 					$scope.eligibility = 0;
@@ -151,7 +152,7 @@ const myFunction = function () {
 					} else if($scope.service.eligible >= 180 && $scope.service.eligible<3420 ){
 						$scope.eligibility = 1;
 						$scope.eligibilityMsg = "Your Eligible Servce is more than than 0.5 Years but less than 9.5 Years. You are eligible for WB but not for pension.";
-					} else if($scope.service.eligible >= 180 && $scope.service.eligible<3420 ){
+					} else if($scope.service.eligible > 3420 ){
 						$scope.eligibility = 2;
 						$scope.eligibilityMsg = "Your Eligible Servce is more than than 9.5 Years. You are eligible for pension but not for WB.";
 					} else {
@@ -212,6 +213,7 @@ const myFunction = function () {
 					$scope.services.push(service);
 					$scope.total = getTotal();
 					updateEligibility();
+					$scope.updatePension();
 				}
 			}
 			
