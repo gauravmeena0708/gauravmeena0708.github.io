@@ -176,6 +176,9 @@ const myFunction = function () {
 					$scope.service['ncp1']=total.ncp1;
 					$scope.service['ncp2']=total.ncp2;
 					$scope.service['total_ncp']=total.ncp2+total.ncp1;
+					$scope.years1 = round((total.daysbefore-total.ncp1)/365,2);
+					$scope.years2 = round((total.daysafter-total.ncp2)/365,2);
+					updateWB();
 				return total;
 			}
 			
@@ -291,7 +294,7 @@ const myFunction = function () {
 			/*
 			variables and calculation for WB
 			*/
-			$scope.years1 = 1;
+	$scope.years1 = 1;
 	$scope.years2 = 1;
 	$scope.list = [1.02, 1.99, 2.98, 3.99, 5.02, 6.07, 7.13, 8.22, 9.33];
 	$scope.wage1= 6500;
