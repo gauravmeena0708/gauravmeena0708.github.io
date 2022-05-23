@@ -168,8 +168,8 @@ const myFunction = function () {
 
 					$scope.service['actual']=total.daysbefore+total.daysafter;
 					$scope.service['eligible']= total.daysbefore+total.daysafter-total.ncp1-total.ncp2;
-					$scope.service['months1']= total.monthsafter>60?60:total.monthsafter;
-					$scope.service['months2']= total.monthsafter>60?0:60-total.monthsafter;
+					$scope.service['months1']= total.monthsafter>60?0:60-total.monthsafter;
+					$scope.service['months2']= total.monthsafter>60?60:total.monthsafter;
 					$scope.service['ncp1']=total.ncp1;
 					$scope.service['ncp2']=total.ncp2;
 					$scope.service['total_ncp']=total.ncp2+total.ncp1;
@@ -237,19 +237,28 @@ const myFunction = function () {
 					$scope.service.eligible1 = $scope.service.actual+365*$scope.pension.weightage-$scope.service.total_ncp;
 					$scope.pension.weightage_month = 24;
 				}
+				if($scope.service.eligible>3650) {
+					$scope.min=MIN;
+				} else {
+					$scope.min=0;
+					$scope.pension.pension58 = 0
+					$scope.pension.pension58min = 0
+					earlyPension();
+				}
 				if($scope.service.months2<=60 && $scope.service.months2>0) {
 					console.log("case1")
 					$scope.service.months1 = 60-$scope.service.months2;
 					$scope.pension.part1 = round((($scope.service.months1*30 - $scope.service.ncp1)*$scope.service.avg_wage1)/(60*30), 2);
 					$scope.pension.part2 = round((($scope.service.months2*30 - $scope.service.ncp2)*$scope.service.avg_wage2)/(60*30), 2);
-					$scope.pension.avg_wage = $scope.part1 + $scope.part2;
-					$scope.pension.psal = $scope.pension.avg_wage;
+					$scope.pension.avg_wage = $scope.pension.part1 + $scope.pension.part2;
+					$scope.pension.psal = $scope.pension.part1 + $scope.pension.part2;//$scope.pension.avg_wage;
+					console.log($scope.pension.psal);
 					$scope.pension.pser = $scope.service.eligible1 - $scope.service.total_ncp;
 					$scope.pension.pension58 = round($scope.pension.psal*$scope.pension.pser/(70*365),0);
 					$scope.pension.pension58min = ($scope.pension.pension58>$scope.min)? $scope.pension.pension58:$scope.min;
 					earlyPension();
 				} else if ($scope.service.months2==0){
-					console.log("case2")
+					console.log("case2");
 					$scope.service.months1 = 12;
 					$scope.pension.part1 = $scope.avg_wage2*12*30/(360-$scope.ncp2);
 					$scope.part2 = 0;
@@ -260,23 +269,17 @@ const myFunction = function () {
 					$scope.pension.pension58min = ($scope.pension.pension58>$scope.min)? $scope.pension.pension58:$scope.min;
 					earlyPension();
 				} else {
+					console.log("case3")
 					$scope.months2 = 0;
 				}
 				
-				if($scope.eligible_service>3650) {
-					$scope.min=MIN;
-				} else {
-					$scope.min=0;
-					$scope.pension.pension58 = 0
-					$scope.pension.pension58min = 0
-					earlyPension();
-				}
+				
 			}
 			
 			function earlyPension(){
 				if($scope.basic.age>58){
-					diff = $scope.basic.age - 58;
-					console.log(diff);
+					val = $scope.basic.age - 58
+					diff = val>2?2:val;
 					$scope.pension.final_amt = round($scope.pension.pension58min*(1+0.04*diff),0);
 				} else if($scope.basic.age<58){
 					diff =  58-$scope.basic.age;
