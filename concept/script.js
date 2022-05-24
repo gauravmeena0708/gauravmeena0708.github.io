@@ -256,7 +256,7 @@ const myFunction = function () {
 					earlyPension();
 				}
 				if($scope.service.months2<=60 && $scope.service.months2>0) {
-					$scope.service.months1 = 60-$scope.service.months2;
+					$scope.service.months1 = 60-$scope.service.months2>0?60-$scope.service.months2:0;
 					$scope.pension.part1 = round((($scope.service.months1*30 - $scope.service.ncp1)*$scope.service.avg_wage1)/(60*30), 2);
 					$scope.pension.part2 = round((($scope.service.months2*30 - $scope.service.ncp2)*$scope.service.avg_wage2)/(60*30), 2);
 					$scope.pension.avg_wage = $scope.pension.part1 + $scope.pension.part2;
