@@ -1,228 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Calculator</title>
-	<!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<title>Pension Calculator</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 	<style>
 	.shadow {
 		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
 	}
-	.input {
-		background: linear-gradient(#9dd2ea, #8bceec);
-	}
-	
-	.list-group {
-		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
-	}
-	</style>
 
+	</style>
 </head>
 
-<body ng-app="myApp" ng-controller="namesCtrl" class="pt-100 pb-100">
+<body>
 	<header class="p-1 mb-2 bg-info text-white shadow">
 		<div class="container">
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-			  <li><a href="index.html" class="nav-link px-2 text-white">Home(Withdrawal Benefit)</a></li>
-			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li>
-			  <li><a href="edli2.html" class="nav-link px-2 text-white">EDLI</a></li>
+			  <li><a href="index2.html" class="nav-link px-2 text-white">Home(Withdrawal Benefit)</a></li>
+			  <li><a href="index.html" class="nav-link px-2 text-white">Pension Input(partially Dynamic)</a></li>
+			  <li><a href="index2.html#!both" class="nav-link px-2 text-white">Pension Calculator</a></li>
+			  <li><a href="index.html" class="nav-link px-2 text-white">EDLI</a></li>
 			</ul>
 			<h3 class="text-center">CALCULATOR</h3>
 		  </div>
 		</div>
 	</header>
-    <div class="container-fluid">
-	<div class="row g-4">
-	<div class="col-md-6">
-		<div class="card shadow">
-			<div class="card-header">Base Information</div>
-			<div class="card-body">
-				<form>
-					<div class="input-group mb-2">
-						<span class="input-group-text col-8" id="basic-addon1">Age on Date of option:</span>
-						<input type="number" ng-model="age" ng-change="update()" class="form-control col-4" min="50" max="60" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
-					</div>
-					
-					<div class="input-group mb-2">
-						<span class="input-group-text col-8" id="basic-addon1">Total Months in 15000 Ceiling for which contribution made [M]:</span>
-						<input type="number" ng-model="months1" ng-change="update()" min="0" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
-					</div>
-					
-					<div class="input-group mb-2" ng-show="months1">
-						<span class="input-group-text col-8" id="basic-addon1">Average Wage for above months:</span>
-						<input type="number" ng-model="avg_wage1" ng-change="update()" max="15000" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
-					</div>
-					
-					<div class="input-group mb-2" ng-show="months1">
-					<span class="input-group-text col-8" id="basic-addon1">NCP days for {{ months1 }} months from 01-09-2014:</i></span>
-						<input type="number" ng-model="ncp1" ng-change="update()" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
-					</div>
-
-					<div class="input-group mb-2 mt-4" ng-show="months2">
-						<span class="input-group-text col-12  d-flex justify-content-between align-items-center" id="basic-addon1">Months to be taken for Pensionable Salary in 6500 Ceiling (60-M): <b>{{months2}}</b></span>
-					</div>
-					
-					<div class="input-group mb-2" ng-show="months2">
-						<span class="input-group-text col-8" id="basic-addon1">Avg. wage for {{months2}} months before 01-09-2014:</i></span>
-						<input type="number" ng-model="avg_wage2" max="6500" class="form-control col-4" placeholder="Total wage" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
-					</div>
-					
-					<div class="input-group mb-2" ng-show="months2">
-						<span class="input-group-text col-8" id="basic-addon1">NCP days for {{ months2 }} months before 01-09-2014:</i></span>
-						<input type="number" ng-model="ncp2" class="form-control col-4" placeholder="NCP for Avg wage before 2014" aria-label="NCP for Avg wage before 2014" aria-describedby="NCP for Avg wage before 2014">
-					</div>
-					
-					<div class="input-group mb-2 mt-4">
-						<span class="input-group-text col-8" id="basic-addon1">Actual Service (in days) : </span>
-						<input type="number" ng-model="actual_service" ng-change="update()" class="form-control col-4" placeholder="Actual Service"  aria-label="Actual Service" aria-describedby="basic-addon1">
-					</div>
-					
-					<div class="input-group mb-2">
-						<span class="input-group-text col-8" id="basic-addon1">Total NCPs : </span>
-						<input type="number" ng-model="total_ncp" class="form-control col-4" ng-change="update()" placeholder="Total NCP"  aria-label="Total NCP" aria-describedby="basic-addon1">
-					</div>
-				</form>
+    <div class="container-fluid" ng-app="myApp" ng-controller="namesCtrl">
+		<div class="row mt-3">
+			<div class="col-md-6 col-sm-12">
+				<ul class="list-group shadow">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Basic Details <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicDetail"><i class="bi bi-pencil-square"></i> Edit </button></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">UAN: <span>{{basic.uan}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Name: <span>{{basic.name}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of Birth: <span>{{basic.dob | date:'dd-MM-yyyy'}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pension Availing Date: <span>{{basic.availing_date | date:'dd-MM-yyyy'}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Age on Pension Availing Date: <span>{{basic.age}}</span></li>
+				</ul>
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<ul class="list-group shadow">
+					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">KYC <i class="bi bi-check-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="KYC is Complete"></i></li>
+					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">E-Nomination  <i class="bi bi-exclamation-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="E-nomination under process"></i></li>
+					<li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">Service Transfer <i class="bi bi-x-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="Service transfer yet to be completed"></i></li>
+				</ul>
 			</div>
 		</div>
-	</div>
-
-	<div class="col">
-		<div class="card shadow">
-			<div class="card-header d-flex justify-content-between align-items-center">Calculator Output : </div>
-			<div class="card-body p-3">		
-				<ul class="list-group mb-3">
-					<li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">Pensionable Salary Calculation</li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-if=0>Forumla used for Pensionable Salary: <span>(Months*30-NCP)*(Sum of wages/months)/(60*30-NCP)</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="months2">Average Wages for {{months2}} months before 2014: <span>{{ avg_wage2 }}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="months2">NCP days for {{months2}} months before 2014: <span>{{ ncp2 }}</span></li>
-					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center" ng-show="months1">Weighted Pensionable Salary derived for months before 2014: <span>{{ part2 }}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="months1">Average Wages for {{months1}} after 2014: <span>{{ avg_wage1 }}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="months1">NCP days for {{months1}} months after 2014: <span>{{ ncp1 }}</span></li>
-					<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center" ng-show="months1">Pensionable Salary derived for months after 2014: <span>{{ part1 }}</span></li>
-					<li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">Net Pensionable Salary: <span>{{ avg_wage }}</span></li>
+		<div class="row mt-2">
+			<div class="col">
+				<ul class="list-group mb-3 shadow">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Services</li>
+					<li class="list-group-item list-group-item">
+						<table class="table table-striped table-bordered table-sm">
+							<thead>
+								<tr>
+									<td>DOJ</td>
+									<td>DOE</td>
+									<td>NCP1</td>
+									<td>NCP2</td>
+									<td>Months before 31-08-2014</td>
+									<td>Days before 31-08-2014</td>
+									<td>Months after 31-08-2014</td>
+									<td>Days after 31-08-2014</td>
+									<td> </td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="service in services">
+									<td>{{service.doj |  date:'dd-MM-yyyy'}}</td>
+									<td>{{service.doe |  date:'dd-MM-yyyy'}}</td>
+									<td>{{service.ncp1}}</td>
+									<td>{{service.ncp2}}</td>
+									<td>{{service.monthsbefore}}</td>
+									<td>{{service.daysbefore}}</td>
+									<td>{{service.monthsafter}}</td>
+									<td>{{service.daysafter}}</td>
+									<td><i class="bi bi-trash" ng-click='removeService($index)'></i></td>
+								</tr>
+							</tbody>
+						</table>
+						<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
+					</li>
+					<li class="list-group-item list-group-item">
+						<table class="table table-striped table-bordered table-sm">
+							<thead>
+								<tr>
+									<td>Service before 31-08-2014 (Months)</td>
+									<td>Service after 31-08-2014 (Months)</td>
+									<td>Service before 31-08-2014 (days)</td>
+									<td>Service after 31-08-2014 (days)</td>
+									<td>NCP before 31-08-2014 (days)</td>
+									<td>NCP after 31-08-2014 (days)</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="total">
+									<td>{{total.monthsbefore}}</td>
+									<td>{{total.monthsafter}}</td>
+									<td>{{total.daysbefore}}</td>
+									<td>{{total.daysafter}}</td>
+									<td>{{total.ncp1}}</td>
+									<td>{{total.ncp2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total: <span>{{services.length}} services</span></li>
+					<li class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i> Information: {{eligibilityMsg}}</li>
+					<li class="list-group-item list-group-item-warning"ng-if="actual_service"><i class="bi bi-exclamation-octagon-fill"></i> Your Actual service is: {{actual_service}} days</li>
+					<li class="list-group-item list-group-item-warning"ng-if="actual_service"><i class="bi bi-exclamation-octagon-fill"></i> Your eligible service is: {{eligible_service}} days</li>
 				</ul>
-				<ul class="list-group mb-3">
-					<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Pensionable Service Calculation</li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Actual Service<span>{{ actual_service }}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total NCP<span>{{ total_ncp}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Eligible Service<span>{{ eligible_service}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Weightage <span>{{ weightage }} Years</span></li>
-					<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Pensionable Service(Eligible Service for benefit) <span>{{ eligible_service1 }}</span></li>
-				</ul>
-				<ul class="list-group mb-3">
-					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Pension Calculation</li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pension Formula: <span> Pensionable Salary * Pensionable Service/(70*365)</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Calculated Pension if Opted on 58 Years: <span>{{ pension58 }}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Min. Pension: <span>1000</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Calculated Pension if Opted on 58 Years after minimum: <span>{{ pension58min }}</span></li>
-					<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Calculated Pension on Opted Date: <span>{{ pension }}</span></li>
-				</ul>
-				
 			</div>
-			<div class="card-footer">
+		</div>
+		<div class="row mt-2" ng-show="eligibility==1">
+			<div class="col">
+				<div class="card shadow">
+					<div class="card-header">Withdrawal Calculator Input</div>
+					<div class="card-body">
+						<form>
+							<div ng-show="alert" class="warning">{{alert}}</div>
+							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution before 01-09-2014">
+								<span class="input-group-text col-9" id="basic-addon1">Number of Years Contribution in ceiling 6500:</span>
+								<input type="number" ng-model="years1" class="form-control col-4" ng-change="updateWB()" placeholder="years1" aria-label="years1" aria-describedby="basic-addon1" readonly>
+							</div>
+
+							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Pay payable at cessation of membership">
+								<span class="input-group-text col-9" id="basic-addon1">Wages on Exit/Date of notification in Wage Ceiling 6500: </span>
+								<input type="number" ng-model="wage1" class="form-control col-4" ng-change="updateWB()" placeholder="wage1"  aria-label="wage1" aria-describedby="basic-addon1">
+							</div>
+							
+							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution before 01-09-2014">
+								<span class="input-group-text col-9" id="basic-addon1">Number of Years Contribution in ceiling 15000:</span>
+								<input type="number" ng-model="years2" class="form-control col-4" ng-change="updateWB()" placeholder="years2" aria-label="years2" aria-describedby="basic-addon1" readonly>
+							</div>
+							
+							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution">
+								<span class="input-group-text col-9" id="basic-addon1">Wages on Date of Exit:</span>
+								<input type="number" ng-model="wage2" class="form-control col-4" placeholder="wage2" ng-change="updateWB()" aria-label="wage2" aria-describedby="basic-addon1">
+							</div>
+						</form>
+						<button ng-if=0 type="button" class="btn btn-info align-self-center" ng-click="updateWB()">Update</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2" ng-show="eligibility==1">
+			<div class="col">
+				<div class="card shadow">
+					<div class="card-header d-flex justify-content-between align-items-center">Withdrawal Benefit Calculator Output : </div>
+					<div class="card-body p-3">		
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Years of Service (ceiling limit 6500) [Y1]: <span>{{years1}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Wages at on date of notification [W1]: <span>{{wage1}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Years of Service (ceiling limit 15000) [Y2]: <span>{{years2}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Wages at on date of Exit [W2]: <span>{{wage2}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Formula for Avg Wages: <span>(Y1*W1+Y2*W2)/Y1+Y2</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages: <span>{{avg_wage}}</span></li>
+							
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Proportion of wages: <span>{{ factor }}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Withdrawal Benefit: <span>{{ amount }}</span></li>
+						</ul>
+						
+					</div>
+					<div class="card-footer">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2" ng-if="eligibility==2">
+			<div class="col">
+				<div class="card shadow">
+					<div class="card-header d-flex justify-content-between align-items-center">Average wages/Wages at Exit and Corresponding NCPs: </div>
+					<div class="card-body p-3">		
+						<form>
+							<div class="input-group mb-2" ng-show="service.months2">
+								<span class="input-group-text col-8" id="basic-addon1">Average Wage for {{ service.months2 }} latest months in 1500 wage ceiling (after 01-09-2014):</span>
+								<input type="number" ng-model="service.avg_wage2" ng-change="updatePension()" max="15000" class="form-control col-4" placeholder="Average wage in 15000 ceiling" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group mb-2" ng-show="service.months2">
+								<span class="input-group-text col-8" id="basic-addon1">NCP days for above {{ service.months2 }} months from 01-09-2014:</i></span>
+								<input type="number" ng-model="service.ncp2" ng-change="updatePension()" class="form-control col-4" placeholder="NCP for Avg wage after 01-09-2014" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+							<div class="input-group mb-2" ng-show="service.months1">
+								<span class="input-group-text col-8" id="basic-addon1">Avg. wage for {{service.months1}} months in 6500 wage ceiling (before 01-09-2014):</i></span>
+								<input type="number" ng-model="service.avg_wage1" ng-change="updatePension()" max="6500" class="form-control col-4" placeholder="Average wage in 6500 ceiling" aria-label="Months in 15000 Ceiling" aria-describedby="basic-addon1">
+							</div>
+					
+							<div class="input-group mb-2" ng-show="service.months1">
+								<span class="input-group-text col-8" id="basic-addon1">NCP days for {{ service.months1 }} months before 01-09-2014:</i></span>
+								<input type="number" ng-model="service.ncp1" ng-change="updatePension()" class="form-control col-4" placeholder="NCP for Avg wage before 01-09-2014" aria-label="NCP for Avg wage before 2014" aria-describedby="NCP for Avg wage before 2014">
+							</div>
+						</form>
+					</div>
+					<div class="card-footer">
+						<button type="button" class="btn btn-danger align-self-center" ng-click="updatePension()">Update</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2" ng-if="eligibility==2">
+			<div class="col">
+				<div class="card shadow">
+					<div class="card-header d-flex justify-content-between align-items-center">Calculator Output : </div>
+					<div class="card-body p-3">		
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">Pensionable Salary Calculation</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-if=0>Forumla used for Pensionable Salary: <span>(Months*30-NCP)*(Sum of wages/months)/(60*30-NCP)</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="service.months1">Average Wages for {{service.months1}} months before 2014: <span>{{ service.avg_wage1 }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="service.months1">NCP days for {{service.months1}} months before 2014: <span>{{ service.ncp1 }}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center" ng-show="service.months1">Weighted Pensionable Salary derived for months before 2014: <span>{{ pension.part1 }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="service.months2">Average Wages for {{service.months2}} after 2014: <span>{{ service.avg_wage2}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="service.months2">NCP days for {{service.months2}} months after 2014: <span>{{ service.ncp2 }}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center" ng-show="service.months2">Pensionable Salary derived for months after 2014: <span>{{ pension.part2 }}</span></li>
+							<li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">Net Pensionable Salary: <span>{{ pension.psal }}</span></li>
+						</ul>
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Pensionable Service Calculation</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Actual Service<span>{{ service.actual }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total NCP<span>{{ service.total_ncp}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Eligible Service<span>{{ service.eligible}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Weightage <span>{{ pension.weightage }} Years</span></li>
+							<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Pensionable Service(Eligible Service for benefit) <span>{{ service.eligible1 }}</span></li>
+						</ul>
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Pension Calculation</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pension Formula: <span> Pensionable Salary * Pensionable Service/(70*365)</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Calculated Pension if Opted on 58 Years: <span>{{ pension.pension58 }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Min. Pension: <span>1000</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Calculated Pension if Opted on 58 Years after minimum: <span>{{ pension.pension58min }}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Calculated Pension on Opted Date: <span>{{ pension.final_amt }}</span></li>
+						</ul>
+						
+					</div>
+					<div class="card-footer">
+					
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col">
 				<button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
 			</div>
 		</div>
-	</div>
+		
+		
+
+<div class="modal fade" id="basicDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="basicDetail" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="basicDetail">Edit Basic Details</h5>
+			<button type="button" class="btn-close" ng-click="updateBasic()" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<form>
+				<div class="input-group mb-3">
+					<span class="input-group-text col-5" id="basic-addon1">UAN: </span>
+					<input type="number" maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" ng-model="basic.uan" class="form-control" placeholder="name" aria-label="name" aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text col-5" id="basic-addon1">Name: </span>
+					<input type="text" ng-model="basic.name" class="form-control" placeholder="name" aria-label="name" aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text col-5" id="basic-addon1">DOB: </span>
+					<input type="date" ng-model="basic.dob" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group">
+					<span class="input-group-text col-5" id="basic-addon1">Pension Availing/Opting Date: </span>
+					<input type="date" ng-model="basic.availing_date" class="form-control" placeholder="Availing Date" aria-label="Availing Date" aria-describedby="basic-addon1">
+				</div>
+			</form>
+		</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" ng-click="updateBasic()" data-bs-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
 </div>
-	</div>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js" type="text/javascript"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script type="text/javascript" src="luxon.min.js"></script>
-<script type="text/javascript" src="underscore-esm-min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
-<script>
-const round = (n, dp) => {
-  const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
-  return Math.round(n * h) / h
-}
 
-var app = angular.module('myApp', ['ngCookies']);
-app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
-
-	$scope.months1 = 4;
-	$scope.months2 = 60-$scope.months1;
-	$scope.ncp1 = 0;
-	$scope.ncp2 = 0;
-	$scope.actual_service = 35*365;
-	$scope.total_ncp = 0;
-	$scope.avg_wage1 = 15000;
-	$scope.avg_wage2 = 6500;
-	$scope.age=57;
-	$scope.weightage = 0;
-	$scope.eligible_service = $scope.actual_service - $scope.total_ncp;
-	$scope.eligible_service1 = $scope.actual_service-$scope.total_ncp+365*$scope.weightage;
-	$scope.weightage_month = 0;
-	$scope.min=1000;
+<div class="modal fade" id="addService" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addService" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="addService">Add Service</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<form>
+					<div class="input-group mb-3 bg-info">
+						<span class="input-group-text col-6">DOJ</span>
+						<input type="date" ng-model ="service_input.doj" class="form-control" placeholder="doj" aria-label="doj">
+					</div>
+					<div class="input-group mb-3 bg-light">
+						<span class="input-group-text col-6">DOE</span>
+						<input type="date" ng-model ="service_input.doe" class="form-control" placeholder="doe" aria-label="doe">
+					</div>
+					<div class="input-group mb-3 bg-light">
+						<span class="input-group-text col-6">NCP b/w 16-11-1995 to 31-08-2014</span>
+						<input type="number" ng-model ="service_input.ncp1" class="form-control" placeholder="NCP1" aria-label="NCP1">
+					</div>
+					<div class="input-group mb-3 bg-light">
+						<span class="input-group-text col-6">NCP from 01-09-2014</span>
+						<input type="number" ng-model ="service_input.ncp2" class="form-control" placeholder="NCP2" aria-label="NCP2">
+					</div>
+					<div class="row mb-3">
+						<div class="col-3">
+							<button type="button" class="btn btn-success waves-effect" ng-click="addService()" data-bs-dismiss="modal"><i class="bi bi-plus-circle-fill"></i> Add Service</button>
+						</div>
+					</div>
+			</form>
+		</div>
+    </div>
+  </div>
+</div>
+		
+<div class="modal fade" id="pensionDesc" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pensionDesc" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pensionDesc">Description of various type of Pensions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+			<ul class="list-group mb-1">
+				<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Know Your Pension Type/Eligibility Table</li>
+				<li class="list-group-item list-group-item">
+					<table class="table table-striped table-bordered table-sm">
+						<thead>
+							<tr>
+								<td class="col-8">Pension Payable Due to</td>
+								<td class="col-4">Type</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Member attained Superannuation/attained 58 Years</td>
+								<td>Superannuation</td>
+							</tr>
+							<tr>
+								<td>Member Ceased to be in employment & his/her age is between 50 - 58 years.</td>
+								<td>Reduced Pension</td>
+							</tr>
+							<tr>
+								<td>Member died while in employment</td>
+								<td>Family Pension</td>
+							</tr>
+							<tr>
+								<td>Member died while not in employment</td>
+								<td>Family Pension</td>
+							</tr>
+							<tr>
+								<td>Deferred Pension at 59 or 60 years of age after due permission of office before attaining 58 years.</td>
+								<td>Deferred Pension</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>	
 	
-	$scope.update = function () {
-		$scope.eligible_service = $scope.actual_service - $scope.total_ncp;
-		if($scope.age>=58 && $scope.eligible_service>7300){
-			$scope.weightage = 2
-			$scope.eligible_service1 = $scope.actual_service+365*$scope.weightage-$scope.total_ncp;
-			$scope.weightage_month = 24;
-		} else {
-			$scope.weightage = 0
-			$scope.eligible_service1 = $scope.actual_service+365*$scope.weightage-$scope.total_ncp;
-			$scope.weightage_month = 0;
-		}
-		if($scope.months1<=60 && $scope.months1>0) {
-			$scope.months2 = 60-$scope.months1;
-			$scope.part1 = round((($scope.months1*30 - $scope.ncp1)*$scope.avg_wage1)/(60*30), 2);
-			$scope.part2 = round((($scope.months2*30 - $scope.ncp2)*$scope.avg_wage2)/(60*30), 2);
-			$scope.avg_wage = $scope.part1 + $scope.part2;
-			$scope.psal = $scope.avg_wage;
-			$scope.pser = $scope.eligible_service1 - $scope.total_ncp;
-			$scope.pension58 = round($scope.psal*$scope.pser/(70*365),0);
-			$scope.pension58min = ($scope.pension58>$scope.min)? $scope.pension58:$scope.min;
-			earlyPension();
-		} else if ($scope.months1==0){
-			$scope.months2 = 12;
-			$scope.part2 = $scope.avg_wage2*12*30/(360-$scope.ncp2);
-			$scope.part1 = 0;
-			$scope.avg_wage = $scope.part1 + $scope.part2;
-			$scope.psal = $scope.avg_wage;
-			$scope.pser = $scope.eligible_service1 - $scope.total_ncp;
-			$scope.pension58 = round($scope.psal*$scope.pser/(70*365),0);
-			$scope.pension58min = ($scope.pension58>$scope.min)? $scope.pension58:$scope.min;
-			earlyPension();
-		} else {
-			$scope.months2 = 0;
-		}
-		
-		if($scope.eligible_service>3650) {
-			$scope.min=1000;
-		} else {
-			$scope.min=0;
-			$scope.pension58 = 0
-			$scope.pension58min = 0
-			earlyPension();
-		}
-		
-	}
-	$scope.update();
-	function earlyPension(){
-		if($scope.age>58){
-			diff = $scope.age - 58;
-			console.log(diff);
-			$scope.pension = round($scope.pension58min*(1+0.04*diff),0);
-		} else if($scope.age<58){
-			diff =  58-$scope.age;
-			console.log(diff);
-			$scope.pension = round($scope.pension58min*(1-0.04*diff),0);
-		} else {
-			$scope.pension = $scope.pension58;
-		}
-	}
-
-}]);
-
-</script>
+<!--
+container fluid div closer
+-->
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js" type="text/javascript"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="luxon.min.js"></script>
+	<script type="text/javascript" src="underscore-esm-min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+	<script type="text/javascript" src="script.js"></script>
 </body>
 </html>
