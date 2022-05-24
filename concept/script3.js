@@ -300,7 +300,7 @@ const myFunction = function () {
 			*/
 			$scope.years1 = 1;
 			$scope.years2 = 1;
-			const LIST = [1.02, 1.99, 2.98, 3.99, 5.02, 6.07, 7.13, 8.22, 9.33];
+			$scope.list = [1.02, 1.99, 2.98, 3.99, 5.02, 6.07, 7.13, 8.22, 9.33];
 			$scope.wage1= 6500;
 			$scope.wage2= 15000;
 			$scope.ceiling1= 6500;
@@ -309,7 +309,7 @@ const myFunction = function () {
 			$scope.years = $scope.years1 + $scope.years2;
 			val = Math.round($scope.years);
 			console.log(val)
-			$scope.factor = LIST[val-1];
+			$scope.factor = $scope.list[val-1];
 			$scope.avg_wage = (($scope.years1*$scope.wage1)+($scope.years2*$scope.wage2))/$scope.years;
 			$scope.amount = 0;
 	
@@ -323,8 +323,8 @@ const myFunction = function () {
 				console.log($scope.years)
 				$scope.avg_wage = (($scope.years1*$scope.wage1)+($scope.years2*$scope.wage2))/$scope.years;
 				console.log($scope.avg_wage)
-				val = round($scope.years);
-				$scope.factor = LIST[val-1]||0;
+				val = Math.round($scope.years);
+				$scope.factor = $scope.list[val-1]||0;
 				$scope.amount = Math.round($scope.factor*$scope.avg_wage);
 			}
 			
