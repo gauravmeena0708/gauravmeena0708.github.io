@@ -26,7 +26,8 @@ const SUPERANNUATION_DEFAULT = {
 	"psalary":0,
 	"pension1":0,
 	"pension2":0,
-	"pension3":0
+	"pension3":0,
+	"last_wage":0
 }
 
 const WB_DEFAULT = {
@@ -202,7 +203,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	function updateEligibility() {
 		console.log('eligibility called');
 		console.log($scope.basic.age,$scope.services.length,$scope.service.eligible, $scope.basic.dod);
-		if($scope.total.length ==0) {
+		if($scope.services.length ==0) {
 			$scope.eligibility = 0;
 			$scope.eligibilityMsg = "You have not added any service. please add Service.";
 		} else if($scope.basic.dod) {
@@ -351,6 +352,13 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		}
 	}
 	
+	$scope.familyPension = function(){
+		console.log("family pension called")
+		$scope.pension.pension4 = 123;
+		$scope.pension.pension5= Math.max($scope.pension.min, $scope.pension.pension3, $scope.pension.pension4)
+		console.log($scope.pension.min, $scope.pension.pension3, $scope.pension.pension4)
+	}
+	
 	$scope.update = function() {
 		console.log("update called")
 		console.log($scope.total, $scope.service);
@@ -359,6 +367,9 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		updateEligibility();		
 		$scope.WB_update();
 		$scope.update_Superannuation();
+		if($scope.basic.dod){
+			$scope.familyPension();
+		}
 		
 	}
 	
