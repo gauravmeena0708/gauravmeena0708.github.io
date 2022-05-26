@@ -230,7 +230,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 				$scope.eligibility = 1;
 				$scope.eligibilityMsg = "You are eligible for withdrawal benefit below is the calculator for Withdrawal benefit.";
 			}
-		} else if($scope.basic>=58){
+		} else if($scope.basic.age>=58){
 			if($scope.service.eligible<180) {
 				$scope.eligibility = 0;
 				$scope.eligibilityMsg = "You are not eligible for any benefit as your service is less than 180 days.";
