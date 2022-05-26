@@ -120,25 +120,25 @@
 							<div ng-show="alert" class="warning">{{alert}}</div>
 							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution before 01-09-2014">
 								<span class="input-group-text col-9" id="basic-addon1">Number of Years Contribution in ceiling 6500:</span>
-								<input type="number" ng-model="WB.years1" class="form-control col-4" ng-change="WB_update()" placeholder="years1" aria-label="years1" aria-describedby="basic-addon1" readonly>
+								<input type="number" ng-model="WB.years1" class="form-control col-4" ng-change="update()" placeholder="years1" aria-label="years1" aria-describedby="basic-addon1" readonly>
 							</div>
 
 							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Pay payable at cessation of membership">
 								<span class="input-group-text col-9" id="basic-addon1">Wages on Exit/Date of notification in Wage Ceiling 6500: </span>
-								<input type="number" ng-model="WB.wage1" class="form-control col-4" ng-change="WB_update()" placeholder="wage1"  aria-label="wage1" aria-describedby="basic-addon1">
+								<input type="number" ng-model="WB.wage1" class="form-control col-4" ng-change="update()" placeholder="wage1"  aria-label="wage1" aria-describedby="basic-addon1">
 							</div>
 							
 							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution before 01-09-2014">
 								<span class="input-group-text col-9" id="basic-addon1">Number of Years Contribution in ceiling 15000:</span>
-								<input type="number" ng-model="WB.years2" class="form-control col-4" ng-change="WB_update()" placeholder="years2" aria-label="years2" aria-describedby="basic-addon1" readonly>
+								<input type="number" ng-model="WB.years2" class="form-control col-4" ng-change="update()" placeholder="years2" aria-label="years2" aria-describedby="basic-addon1" readonly>
 							</div>
 							
 							<div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Number of years of contribution">
 								<span class="input-group-text col-9" id="basic-addon1">Wages on Date of Exit:</span>
-								<input type="number" ng-model="WB.wage2" class="form-control col-4" placeholder="wage2" ng-change="WB_update()" aria-label="wage2" aria-describedby="basic-addon1">
+								<input type="number" ng-model="WB.wage2" class="form-control col-4" placeholder="wage2" ng-change="update()" aria-label="wage2" aria-describedby="basic-addon1">
 							</div>
 						</form>
-						<button ng-if=0 type="button" class="btn btn-info align-self-center" ng-click="WB_update()">Update</button>
+						<button ng-if=0 type="button" class="btn btn-info align-self-center" ng-click="update()">Update</button>
 					</div>
 				</div>
 			</div>
@@ -176,11 +176,11 @@
 							</div>
 							<div class="input-group mb-2">
 								<span class="input-group-text col-8" id="basic-addon1">Sum of Wage for {{pension.total_month_psal}} latest months[MAX:60*15000]:</span>
-								<input type="number" ng-model="pension.total_wage_psal" ng-change="update_Superannuation()" max="900000" class="form-control col-4" placeholder="Total wage for pensionable Salary" aria-label="Total wage for pensionable Salary" aria-describedby="basic-addon1">
+								<input type="number" ng-model="pension.total_wage_psal" ng-change="update()" max="900000" class="form-control col-4" placeholder="Total wage for pensionable Salary" aria-label="Total wage for pensionable Salary" aria-describedby="basic-addon1">
 							</div>
 							<div class="input-group mb-2">
 								<span class="input-group-text col-8" id="basic-addon1">NCP days for above {{pension.total_month_psal}}:</i></span>
-								<input type="number" ng-model="pension.total_ncp_psal" ng-change="update_Superannuation()" class="form-control col-4" placeholder="Total NCP for pensionable Salary" aria-label="Total NCP for pensionable Salary" aria-describedby="basic-addon1">
+								<input type="number" ng-model="pension.total_ncp_psal" ng-change="update()" class="form-control col-4" placeholder="Total NCP for pensionable Salary" aria-label="Total NCP for pensionable Salary" aria-describedby="basic-addon1">
 							</div>
 						</form>
 					</div>
@@ -263,7 +263,7 @@
 			</form>
 		</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" ng-click="updateBasic()" data-bs-dismiss="modal">Submit</button>
+        <button type="button" class="btn btn-secondary" ng-click="update()" data-bs-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>

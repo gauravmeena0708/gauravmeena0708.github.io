@@ -168,14 +168,12 @@ function get_deferredPension(age,amount) {
 }
 
 function get_psalary(wage_sum, ncp, bool=0){
-	console.log(wage_sum, ncp, bool)
 	var total = bool<1?365:1825;
 	var denom = total-ncp;
 	return denom>0?round(wage_sum*30/denom):0;
 }
 
 function get_pension(days1,days2,ncp1,ncp2,psal){
-	console.log(days1,days2,ncp1,ncp2,psal)
 	if((days1-ncp1)<0 || (days2-ncp2)<0) {
 		return 0;
 	} else {
@@ -195,70 +193,77 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	
 	//function to call if basic details are changed
 	$scope.updateBasic= function(){
-		$scope.basic.age = getDiff($scope.basic.dob,$scope.basic.availing_date, "years",0)
+		console.log($scope.basic.dob,$scope.basic.availing_date);
+		$scope.basic.age = getDiff($scope.basic.dob,$scope.basic.availing_date, "years",0);
+		console.log($scope.basic.dob,$scope.basic.availing_date);
+		console.log($scope.basic.age)
 	}
-	
-	
-	
-	//declarations and functions related to service
-	
 
-	
-	
-	
-	
-	
-	
-	
-	function updateEligibility(){
-		if($scope.basic.age<50 && $scope.dod===0){
-			$scope.eligibility = 0;
-			$scope.eligibilityMsg = "A member should be atleast 50 years of age for becoming eligible for Pension.";
-			return 0;
-		}
-		if($scope.total.length===0){
+	function updateEligibility() {
+		console.log('eligibility called');
+		console.log($scope.basic.age,$scope.services.length,$scope.service.eligible, $scope.basic.dod);
+		if($scope.total.length ==0) {
 			$scope.eligibility = 0;
 			$scope.eligibilityMsg = "You have not added any service. please add Service.";
-			return 0;
-		} else {
-			if($scope.eligible_service <180 ) {
+		} else if($scope.basic.dod) {
+			$scope.eligibility = 3;
+			$scope.eligibilityMsg = "You are eligible for Family Pension.";
+		} else if($scope.basic.age<50) {
+			if($scope.service.eligible<180) {
 				$scope.eligibility = 0;
-				$scope.eligibilityMsg = "Your Eligible Servce is less than 180 days(6 Months). You are not eligible for WB or Pension";
-			} else if($scope.service.eligible >= 180 && $scope.service.eligible<3420 ){
+				$scope.eligibilityMsg = "You are not eligible for any benefit as your service is less than 180 days. You may however transfer your service to new account to add service.";
+			} else if($scope.service.eligible>3420) {
+				$scope.eligibility = 0;
+				$scope.eligibilityMsg = "You are not eligible for as your service is more than 9.5 Years(3420) but age is less than 50 years. You may apply for scheme certificate or transfer the service to future establishment.";
+			} else if($scope.service.eligible>=180 && $scope.service.eligible<=3420) {
 				$scope.eligibility = 1;
-				$scope.eligibilityMsg = "Your Eligible Servce is more than than 0.5 Years but less than 9.5 Years. You are eligible for WB but not for pension.";
-			} else if($scope.service.eligible > 3420 ){
-				$scope.eligibility = 2;
-				if($scope.basic.age<58){
-					$scope.eligibilityMsg = "Your Eligible Servce is more than than 9.5 Years. But age on Date of opting pension is less than 58 years. Hence, you are eligible for Early Pension";
-				} else {
-					$scope.eligibilityMsg = "Your Eligible Servce is more than than 9.5 Years. and age on Date of opting pension is more than 58 years. Hence, you are eligible for Superannuation Pension";
-				}
-			} else {
+				$scope.eligibilityMsg = "You are eligible for withdrawal benefit below is the calculator for Withdrawal benefit. However, it is advised that the service may be transferred to new establishment to become eligible for pension.";
+			}
+		} else if($scope.basic.age>=50 && $scope.basic.age<58) {
+			if($scope.service.eligible<180) {
 				$scope.eligibility = 0;
-				$scope.eligibilityMsg =  "Your service details does not fullfill any of the conditions please update the same."
-				
+				$scope.eligibilityMsg = "You are not eligible for any benefit as your service is less than 180 days.";
+			} else if($scope.service.eligible>3420) {
+				$scope.eligibility = 2;
+				$scope.eligibilityMsg = "You are eligible for Early Pension. However, it is advised to apply for pension after attaining the age of 58 to avoid reduced pension.";
+			} else if($scope.service.eligible>=180 && $scope.service.eligible<=3420) {
+				$scope.eligibility = 1;
+				$scope.eligibilityMsg = "You are eligible for withdrawal benefit below is the calculator for Withdrawal benefit.";
+			}
+		} else if($scope.basic>=58){
+			if($scope.service.eligible<180) {
+				$scope.eligibility = 0;
+				$scope.eligibilityMsg = "You are not eligible for any benefit as your service is less than 180 days.";
+			} else if($scope.service.eligible>3420) {
+				$scope.eligibility = 2;
+				$scope.eligibilityMsg = "You are eligible for Pension.";
+			} else if($scope.service.eligible>=180 && $scope.service.eligible<=3420) {
+				$scope.eligibility = 1;
+				$scope.eligibilityMsg = "You are eligible for withdrawal benefit below is the calculator for Withdrawal benefit.";
 			}
 		}
+		console.log($scope.basic.age,$scope.services.length,$scope.service.eligible, $scope.basic.dod);
+		console.log($scope.eligibility);
+		console.log($scope.eligibilityMsg);
 	}
 	
 	function getTotal() {
-		total = _.reduce($scope.services, function(acc, o) {
+		var total = _.reduce($scope.services, function(acc, o) {
 				for (var p in o)
 					acc[p] = (p in acc ? acc[p] : 0) + o[p];
 					return acc;
 				}, {});
-			$scope.service['actual']=total.daysbefore+total.daysafter;
-			$scope.service['eligible']= total.daysbefore+total.daysafter-total.ncp1-total.ncp2;
-			$scope.service['months1']= total.monthsafter>60?0:60-total.monthsafter;
-			$scope.service['months2']= total.monthsafter>60?60:total.monthsafter;
-			$scope.service['ncp1']=total.ncp1;
-			$scope.service['ncp2']=total.ncp2;
-			$scope.service['total_ncp']=total.ncp2+total.ncp1;
-			$scope.years1 = round((total.daysbefore-total.ncp1)/365,2);
-			$scope.years2 = round((total.daysafter-total.ncp2)/365,2);
-			$scope.WB_update();
-			//$scope.update_Superannuation();
+		$scope.service.actual=total.daysbefore+total.daysafter;
+		var eligible = total.daysbefore+total.daysafter-total.ncp1-total.ncp2;
+		$scope.service.eligible= eligible>0?eligible:0;
+		$scope.service.months1= total.monthsafter>60?0:60-total.monthsafter;
+		$scope.service.months2= total.monthsafter>60?60:total.monthsafter;
+		$scope.service.ncp1=total.ncp1;
+		$scope.service.ncp2=total.ncp2;
+		$scope.service.total_ncp=total.ncp2+total.ncp1;
+		$scope.years1 = round((total.daysbefore-total.ncp1)/365,2);
+		$scope.years2 = round((total.daysafter-total.ncp2)/365,2);
+		console.log("getTotal called", $scope.service.eligible);
 		return total;
 	}
 	
@@ -294,20 +299,18 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 			};
 			
 			$scope.services.push(service);
-			$scope.total = getTotal();
-			$scope.update_Superannuation();
-			updateEligibility();
-			
+			//$scope.total = getTotal();
+			$scope.update();	
 		}
 	}
 	
 	$scope.removeService = function(index) {
+		console.log("remove called");
 		if(index >= 0){
 			$scope.dates.splice(index*2, 2);
 			$scope.services.splice(index, 1);
-			$scope.total = getTotal();
-			$scope.update_Superannuation();
-			updateEligibility();
+			//$scope.total = getTotal();
+			$scope.update();	
 		}
 	}
 	
@@ -348,21 +351,29 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		}
 	}
 	
+	$scope.update = function() {
+		console.log("update called")
+		console.log($scope.total, $scope.service);
+		$scope.total=getTotal();
+		$scope.updateBasic();
+		updateEligibility();		
+		$scope.WB_update();
+		$scope.update_Superannuation();
+		
+	}
+	
 	$scope.initiatilize = function (){
 		$scope.basic = BASIC_DEFAULT;
 		$scope.dates=[];
 		$scope.services=[];
 		$scope.service = SERVICE_DEFAULT;
 		$scope.service_input  = SERVICE_INPUT_DEFAULT;
-		
 		$scope.WB = WB_DEFAULT;
 		$scope.pension = SUPERANNUATION_DEFAULT;
 		$scope.total=TOTAL_DEFAULT;
 		
-		
-		$scope.updateBasic();
-		$scope.WB_update();
-		$scope.update_Superannuation();
-	}
+		$scope.update()
+	}	
+	
 	$scope.initiatilize();
  }]);
