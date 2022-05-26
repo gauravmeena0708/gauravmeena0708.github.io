@@ -26,15 +26,16 @@
 		</div>
 	</header>
     <div class="container-fluid" ng-app="myApp" ng-controller="namesCtrl">
-		<div class="row mt-3">
+		<div class="row mt-3 mb-2">
 			<div class="col-md-6 col-sm-12">
 				<ul class="list-group shadow">
 					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Basic Details <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicDetail"><i class="bi bi-pencil-square"></i> Edit </button></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">UAN: <span>{{basic.uan}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Name: <span>{{basic.name}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of Birth: <span>{{basic.dob | date:'dd-MM-yyyy'}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pension Availing Date: <span>{{basic.availing_date | date:'dd-MM-yyyy'}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Age on Pension Availing Date: <span>{{basic.age}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-if="basic.dod">Date of Death: <span>{{basic.availing_date | date:'dd-MM-yyyy'}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-if="!basic.dod">Pension Availing Date: <span>{{basic.availing_date | date:'dd-MM-yyyy'}}</span></li>
+					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-if="!basic.dod">Age on Pension Availing Date: <span>{{basic.age}}</span></li>
 				</ul>
 			</div>
 			<div class="col-md-6 col-sm-12">
@@ -111,6 +112,22 @@
 				</ul>
 			</div>
 		</div>
+		<div class="row" ng-if="eligibility==3">
+			<div class="col-12 mt-3">
+				<div class="card shadow">
+					<div class="card-header">Death Case Input</div>
+					<div class="card-body">
+					</div>
+				</div>
+			</div>
+			<div class="col-12 mt-3">
+				<div class="card shadow">
+					<div class="card-header">Death Case Output</div>
+					<div class="card-body">
+					</div>
+				</div>
+			</div>
+		</div>			
 		<div class="row" ng-if="eligibility==1">
 			<div class="col-12 mt-3">
 				<div class="card shadow">
@@ -258,8 +275,13 @@
 					<span class="input-group-text col-5" id="basic-addon1">DOB: </span>
 					<input type="date" ng-model="basic.dob" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">
 				</div>
+				<div class="form-check mb-3">
+					<input class="form-check-input" ng-model="basic.dod" ng-true-value="1" ng-false-value="0" ng-change="update()" type="checkbox" value="" id="flexCheckDefault">
+					<label class="form-check-label" for="flexCheckDefault">Whether it is a death case? {{basic.dod}}</label>
+				</div>
 				<div class="input-group">
-					<span class="input-group-text col-5" id="basic-addon1">Pension Availing/Opting Date: </span>
+					<span class="input-group-text col-5" id="basic-addon1" ng-if="basic.dod">Date of death: </span>
+					<span class="input-group-text col-5" id="basic-addon1" ng-if="!basic.dod">Pension Availing/Opting Date: </span>
 					<input type="date" ng-model="basic.availing_date" class="form-control" placeholder="Availing Date" aria-label="Availing Date" aria-describedby="basic-addon1">
 				</div>
 			</form>
