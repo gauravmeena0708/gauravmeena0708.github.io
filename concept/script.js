@@ -262,8 +262,10 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		$scope.service.ncp1=total.ncp1;
 		$scope.service.ncp2=total.ncp2;
 		$scope.service.total_ncp=total.ncp2+total.ncp1;
-		$scope.years1 = round((total.daysbefore-total.ncp1)/365,2);
-		$scope.years2 = round((total.daysafter-total.ncp2)/365,2);
+		days1 = total.daysbefore>total.ncp1?total.daysbefore-total.ncp1:0;
+		days2 = total.daysafter>total.ncp2?total.daysafter-total.ncp2:0;
+		$scope.years1 = round(days1/365,2);
+		$scope.years2 = round(days2/365,2);
 		console.log("getTotal called", $scope.service.eligible);
 		return total;
 	}
