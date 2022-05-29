@@ -47,8 +47,8 @@ const SERVICE_DEFAULT = {
 	'eligible1':0,
 	'months1': 0,
 	'months2': 0,
-	'avg_wage1':6500,
-	'avg_wage2':15000,
+	'avg_wage1':CEILING1,
+	'avg_wage2':CEILING2,
 	'ncp1':0,
 	'ncp2':0,
 	'total_ncp':0
@@ -71,7 +71,8 @@ const TOTAL_DEFAULT = {
 	'daysbefore':0,
 	'daysafter':0
 }
-const TABLE_B = [0,1.02, 1.99, 2.98, 3.99, 5.02, 6.07, 7.13, 8.22, 9.33];
+
+
 
 const download = function () {
 	window.print();
@@ -87,7 +88,7 @@ function get_WB_Wage(year1,year2,wage1,wage2) {
 };
 			
 function get_WB_Factor(years) {
-	return TABLE_B[years]||0
+	return TABLED[years]||0
 };
 
 function getDiff(d1, d2, str, withbool=1) {
@@ -188,21 +189,47 @@ function get_pension(days1,days2,ncp1,ncp2,psal){
 	}
 }
 
+function findElement(data, attr, value, retattr){
+	var found = data.find(function(element) {
+		return element[attr] == value;
+	});
+	return found[retattr]?found[retattr]:0;
+}
+
+function getWageC(wage, dod) {
+	var val =0;
 	
+	if(wage<=300){
+		val =300;
+	} else if(wage>=CEILING1 && dod< CEILING2_DATE) {
+		console.log(wage,dod, CEILING2_DATE);
+		val = CEILING1;
+	} else if(wage>=CEILING2) {
+		val = CEILING2;
+	} else {
+		val = Math.round(wage / 50) * 50
+	}
+	
+	return val;
+}
+
+
+var TABLEB = [];
+var TABLEC = [];
+var TABLED = [];
+
 var app = angular.module('myApp', ['ngCookies']);
-app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {	
+app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+
 	
 	//function to call if basic details are changed
 	$scope.updateBasic= function(){
-		console.log($scope.basic.dob,$scope.basic.availing_date);
 		$scope.basic.age = getDiff($scope.basic.dob,$scope.basic.availing_date, "years",0);
-		console.log($scope.basic.dob,$scope.basic.availing_date);
-		console.log($scope.basic.age)
 	}
 
+		
 	function updateEligibility() {
 		console.log('eligibility called');
-		console.log($scope.basic.age,$scope.services.length,$scope.service.eligible, $scope.basic.dod);
 		if($scope.services.length ==0) {
 			$scope.eligibility = 0;
 			$scope.eligibilityMsg = "You have not added any service. please add Service.";
@@ -243,9 +270,6 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 				$scope.eligibilityMsg = "You are eligible for withdrawal benefit below is the calculator for Withdrawal benefit.";
 			}
 		}
-		console.log($scope.basic.age,$scope.services.length,$scope.service.eligible, $scope.basic.dod);
-		console.log($scope.eligibility);
-		console.log($scope.eligibilityMsg);
 	}
 	
 	function getTotal() {
@@ -266,7 +290,6 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		days2 = total.daysafter>total.ncp2?total.daysafter-total.ncp2:0;
 		$scope.years1 = round(days1/365,2);
 		$scope.years2 = round(days2/365,2);
-		console.log("getTotal called", $scope.service.eligible);
 		return total;
 	}
 	
@@ -308,7 +331,6 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	}
 	
 	$scope.removeService = function(index) {
-		console.log("remove called");
 		if(index >= 0){
 			$scope.dates.splice(index*2, 2);
 			$scope.services.splice(index, 1);
@@ -355,15 +377,14 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	}
 	
 	$scope.familyPension = function(){
-		console.log("family pension called")
-		$scope.pension.pension4 = 123;
+		val = getWageC($scope.pension.last_wage,$scope.dod)
+		found = findElement(TABLEC,"salary",val,"pension");
+		$scope.pension.pension4 = found;
 		$scope.pension.pension5= Math.max($scope.pension.min, $scope.pension.pension3, $scope.pension.pension4)
-		console.log($scope.pension.min, $scope.pension.pension3, $scope.pension.pension4)
 	}
 	
 	$scope.update = function() {
 		console.log("update called")
-		console.log($scope.total, $scope.service);
 		$scope.total=getTotal();
 		$scope.updateBasic();
 		updateEligibility();		
@@ -387,6 +408,16 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		
 		$scope.update()
 	}	
+	$http({
+		method: 'GET',
+		url: './data.json'
+	}).then(function (success){
+		TABLEB = success.data.TABLEB;	
+		TABLEC = success.data.TABLEC;
+		TABLED = success.data.TABLED;
+	},function (error){
+		console.log(error)
+	});
 	
-	$scope.initiatilize();
+	
  }]);
