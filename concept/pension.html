@@ -232,7 +232,7 @@
 								<input type="number" ng-model="pension.wage95" ng-change="update()" class="form-control col-4" placeholder="Salary as on 16-11-1995" aria-label="Salary as on 16-11-1995" aria-describedby="basic-addon1">
 							</div>
 							<div class="form-check mb-3" ng-if="total.days95">
-								<input class="form-check-input" ng-model="pension.greater" ng-true-value="1" ng-false-value="0" ng-change="update()" type="checkbox" value="" id="flexCheckDefault">
+								<input class="form-check-input" ng-model="pension.greater" ng-true-value="1" ng-false-value="0" ng-change="update()" type="checkbox" value="" id="flexCheckDefault" readonly>
 								<label class="form-check-label" for="flexCheckDefault">Whether wages on 16-11-1995 greater than Rs.2500? {{pension.greater}}</label>
 							</div>
 						</form>
