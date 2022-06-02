@@ -194,11 +194,11 @@ function get_psalary(wage_sum, ncp, bool=0){
 	return denom>0?round(wage_sum*30/denom):0;
 }
 
-function get_pension(days1,days2,ncp1,ncp2,psal){
+function get_pension(days1,days2,ncp1,ncp2,psal,wt){
 	if((days1-ncp1)<0 || (days2-ncp2)<0) {
 		return 0;
 	} else {
-		eligible1 = days1-ncp1;
+		eligible1 = days1-ncp1+365*wt;
 		eligible2 = days2-ncp2;
 		p1 = eligible1*6500/(70*365);
 		p2 = eligible2*psal/(70*365);
@@ -382,7 +382,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		$scope.pension.total_month_psal = $scope.service.months2>0?60:12;
 		
 		$scope.pension.psalary = get_psalary($scope.pension.total_wage_psal,$scope.pension.total_ncp_psal,$scope.total.daysafter);
-		$scope.pension.pension1 = get_pension($scope.total.daysbefore,$scope.total.daysafter,$scope.total.ncp1,$scope.total.ncp2,$scope.pension.psalary);
+		$scope.pension.pension1 = get_pension($scope.total.daysbefore,$scope.total.daysafter,$scope.total.ncp1,$scope.total.ncp2,$scope.pension.psalary,$scope.pension.weightage);
 		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
 		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension2);
 	}
