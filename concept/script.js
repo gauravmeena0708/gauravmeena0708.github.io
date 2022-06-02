@@ -297,8 +297,8 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 					acc[p] = (p in acc ? acc[p] : 0) + o[p];
 					return acc;
 				}, {});
-		$scope.service.actual=total.daysbefore+total.daysafter - ((total.yearsbefore+total.yearsafter)/4);
-		var eligible = total.daysbefore+total.daysafter-total.ncp1-total.ncp2;
+		$scope.service.actual=total.daysbefore+total.daysafter - round((total.yearsbefore+total.yearsafter)/4);
+		var eligible = total.daysbefore+total.daysafter-total.ncp1-total.ncp2- round((total.yearsbefore+total.yearsafter)/4);
 		$scope.service.eligible= eligible>0?eligible:0;
 		$scope.service.months1= total.monthsafter>60?0:60-total.monthsafter;
 		$scope.service.months2= total.monthsafter>60?60:total.monthsafter;
