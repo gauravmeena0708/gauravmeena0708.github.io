@@ -342,7 +342,7 @@
 			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
-			val3 = Math.round(+val1)+ Math.round(+additional);
+			val3 = Math.round(parseFloat(val1)+ parseFloat(additional));
 			$scope.a =val3;
 			return val3;
 		}
@@ -381,7 +381,7 @@
 				if((val1+val2)<parseInt(b_min)) {
 				 final_b = b_min
 				} else {
-					final_b = parseInt(Math.round(val1))+parseInt(Math.round(val2));
+					final_b = Math.round(parseFloat(val1)+parseFloat(val2));
 				}
 			}
 			$scope.b = final_b;
