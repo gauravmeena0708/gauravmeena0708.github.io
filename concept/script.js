@@ -324,9 +324,6 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		} else if (doj<$scope.basic.dob) {
 			alert("DOJ can not be earlier than DOB");
 			$scope.dates = date1.slice();
-		} else if (doe>$scope.basic.dod) {
-			alert("DOE can not be later than Date of Death.");
-			$scope.dates = date1.slice();
 		} else if (doj<date71) {
 			alert("DOJ can not be less than Family pension scheme date.");
 			$scope.dates = date1.slice();
