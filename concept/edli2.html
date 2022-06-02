@@ -319,6 +319,7 @@
 			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
+			$scope.update();
 		}
 		
 		$scope.get_amt_a = function (min, max, amt, percent) {
