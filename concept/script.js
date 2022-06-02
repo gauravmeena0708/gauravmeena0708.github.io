@@ -297,7 +297,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 					acc[p] = (p in acc ? acc[p] : 0) + o[p];
 					return acc;
 				}, {});
-		$scope.service.actual=total.daysbefore+total.daysafter;
+		$scope.service.actual=total.daysbefore+total.daysafter - ((total.yearsbefore+total.yearsafter)/4);
 		var eligible = total.daysbefore+total.daysafter-total.ncp1-total.ncp2;
 		$scope.service.eligible= eligible>0?eligible:0;
 		$scope.service.months1= total.monthsafter>60?0:60-total.monthsafter;
@@ -345,6 +345,8 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 				'monthsbefore':getCeilingDuration(doj,doe,'months',1),
 				'monthsafter':getCeilingDuration(doj,doe,'months',0),
 				'daysbefore':getCeilingDuration(doj,doe,'days',1),
+				'yearsbefore':getCeilingDuration(doj,doe,'years',1),
+				'yearsafter':getCeilingDuration(doj,doe,'years',0),
 				'daysafter':getCeilingDuration(doj,doe,'days',0)
 			};
 			
