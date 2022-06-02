@@ -147,9 +147,17 @@ function getCeilingDuration(doj,doe, str, before=1) {
 			console.log("both DOJ DOE are greater");			
 		} else {
 			if(doe < CEILING2_DATE) {
-				unit = getDiff(doj,doe,str);
+				if(doj<CEILING1_DATE) {
+					unit = getDiff(CEILING1_DATE, doe, str);
+				} else {
+					unit = getDiff(doj,doe,str);
+				}
 			} else {
-				unit = getDiff(doj, CEILING2_DATE, str);
+				if(doj<CEILING1_DATE) {
+					unit = getDiff(CEILING1_DATE, CEILING2_DATE, str);
+				} else {
+					unit = getDiff(doj, CEILING2_DATE, str);
+				}
 			}
 		}
 	} else {
