@@ -76,8 +76,8 @@
 							
 							<div class="form-check mb-5">
 								<input class="form-check-input" ng-model="continuous12" ng-true-value="true" ng-false-value="false" ng-change="update()" type="checkbox" value="" id="flexCheckDefault">
-								<label class="form-check-label" for="flexCheckDefault" ng-if="dod<limit3">Whether completed 12 Month of Service in Same Establishment(last service)? {{continuous12}}</label>
-								<label class="form-check-label" for="flexCheckDefault" ng-if="dod>limit3">Whether completed 12 Month of Service in same or multiple Establishments? {{continuous12}}</label>
+								<label class="form-check-label" for="flexCheckDefault" ng-if="dod<limit3">Whether completed continuous 12 months service is same establishment(last service)? {{continuous12}}</label>
+								<label class="form-check-label" for="flexCheckDefault" ng-if="dod>limit3">Whether completed continuous 12 months service (not necessarily in same est)? {{continuous12}}</label>
 							</div>
 						</form>
 						<div id="qrcode"></div>
