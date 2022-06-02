@@ -379,7 +379,7 @@
 				if((val1+val2)<parseInt(b_min)) {
 				 final_b = b_min
 				} else {
-					final_b = parseInt(val1)+parseInt(val2);
+					final_b = parseInt(Math.round(val1))+parseInt(Math.round(val2));
 				}
 			}
 			$scope.b = final_b;
