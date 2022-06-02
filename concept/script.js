@@ -371,7 +371,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	$scope.update_Superannuation = function(){
 		$scope.pension.total_month_psal=$scope.total.daysafter?60:12;
 		$scope.pension.eligible = $scope.service.actual - $scope.service.total_ncp;
-		if($scope.basic.age>=58 && $scope.pension.eligible>7300){
+		if($scope.basic.age>=58 && $scope.pension.eligible+$scope.total.days95>7300){
 			$scope.pension.weightage = 2;	
 		} else {
 			$scope.pension.weightage = 0;
