@@ -60,10 +60,10 @@ const SERVICE_DEFAULT = {
 }
 	
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('1977-09-28'),
-	'doe': new Date('2011-04-03'),
+	'doj': new Date('2018-01-01'),
+	'doe': new Date('2022-02-10'),
 	'ncp1':0,
-	'ncp2':0
+	'ncp2':156
 }
 
 const TOTAL_DEFAULT = {
@@ -313,10 +313,13 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	}
 	
 	$scope.addService = function(){
+		
 		var doj = $scope.service_input.doj;
 		var doe = $scope.service_input.doe;
 		var ncp1 = $scope.service_input.ncp1;
 		var ncp2 = $scope.service_input.ncp2;
+		var res = (doe - doj) / 1000 / 60 / 60 / 24;
+		console.log(res);
 		var date71 = new Date("1971-03-04");
 		
 		var date1 = $scope.dates.slice();
