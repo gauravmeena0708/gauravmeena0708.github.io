@@ -140,7 +140,7 @@ function getCeilingDuration(doj,doe, str, before=1) {
 		if(doj>CEILING2_DATE){
 			unit = 0;
 		} else {
-			unit = getDiff(doj, CEILING1_DATE, str);
+			unit = getDiff(doj, CEILING1_DATE, str)-1;
 		}	
 	} else if(before==1){
 		if (doj >= CEILING2_DATE) {
@@ -154,9 +154,9 @@ function getCeilingDuration(doj,doe, str, before=1) {
 				}
 			} else {
 				if(doj<CEILING1_DATE) {
-					unit = getDiff(CEILING1_DATE, CEILING2_DATE, str);
+					unit = getDiff(CEILING1_DATE, CEILING2_DATE, str)-1;
 				} else {
-					unit = getDiff(doj, CEILING2_DATE, str);
+					unit = getDiff(doj, CEILING2_DATE, str)-1;
 				}
 			}
 		}
