@@ -244,6 +244,8 @@ function get_pension(days1,days2,ncp1,ncp2,psal,wt){
 }
 
 function findElement(data, attr, value, retattr){
+	console.log(value);
+	console.log(data);
 	var found = data.find(function(element) {
 		return element[attr] == value;
 	});
