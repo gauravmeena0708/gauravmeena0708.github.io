@@ -122,18 +122,21 @@ function getDiff(d1, d2, str, withbool=1) {
 function get_pensionable_days(doj,doe){
 	date0= new Date('1995-11-16');
 	days=0
-	if(doj>=date0){
-		date1= luxon.DateTime.fromJSDate(doj);
-		date2= luxon.DateTime.fromJSDate(doe);
-		var interval = luxon.Interval.fromDateTimes(date1, date2);
-		Y = Math.floor(interval.length('Years'));
-		M = Math.floor(interval.length('Months')%12);
-		date3 = date1.plus({months: Math.floor(interval.length('Months'))})
-		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
-		d2=interval2.length('Days');
-		days=(Y*365)+(M*30)+d2+1;
-		console.log(Y, M,days,d2);
+	if(doj<date0){
+		doj=date0;
 	}
+	
+	date1= luxon.DateTime.fromJSDate(doj);
+	date2= luxon.DateTime.fromJSDate(doe);
+	var interval = luxon.Interval.fromDateTimes(date1, date2);
+	Y = Math.floor(interval.length('Years'));
+	M = Math.floor(interval.length('Months')%12);
+	date3 = date1.plus({months: Math.floor(interval.length('Months'))})
+	var interval2 = luxon.Interval.fromDateTimes(date3, date2);
+	d2=interval2.length('Days');
+	days=(Y*365)+(M*30)+d2+1;
+	console.log(Y, M,days,d2);
+
 	return days;
 };
 
