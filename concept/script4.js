@@ -128,6 +128,7 @@ function get_pensionable_days(doj,doe){
 		var interval = luxon.Interval.fromDateTimes(date1, date2);
 		Y = Math.floor(interval.length('Years'));
 		M = Math.floor(interval.length('Months')%12);
+		date3 = date1.plus({months: Math.floor(interval.length('Months'))})
 		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
 		d2=interval2.length('Days');
 		days=(Y*365)+(M*30)+d2+1;
