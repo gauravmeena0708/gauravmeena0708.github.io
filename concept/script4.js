@@ -450,7 +450,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	
 	
 	function get_wage95(days, bool) {
-		years95= Math.Ceil(days/365);
+		years95= Math.ceil(days/365);
 		TABLEE=[[80,95,120,150],[85,105,135,170]];
 		if(years95<12) {
 			return TABLEE[bool][0];
