@@ -60,8 +60,8 @@ const SERVICE_DEFAULT = {
 }
 	
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('1997-10-07'),
-	'doe': new Date('2014-08-31'),
+	'doj': new Date('2018-01-01'),
+	'doe': new Date('2022-02-10'),
 	'ncp1':0,
 	'ncp2':156
 }
@@ -100,30 +100,6 @@ function getDiff(d1, d2, str, withbool=1) {
 	date1= luxon.DateTime.fromJSDate(d1);
 	date2= luxon.DateTime.fromJSDate(d2);
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
-	if(str=="days") {
-		Y = Math.floor(interval.length('Years'));
-		M = Math.floor(interval.length('Months')%12);
-		D = Math.floor(interval.length('Days')%30);
-		//console.log("Y,M,D:",Y,M,D);
-		y1 = d1.getYear();
-		y2 = d2.getYear();
-		m1 = d1.getMonth();
-		m2 = d2.getMonth();
-		day1 = d1.getDay();
-		day2 = d2.getDay();
-		if(day2
-		if (m2<m1) {
-			years= years<0?0:years;
-		}
-		years = d2.getYear()-d1.getYear();
-		
-		//console.log(years);
-		months = d2.getMonth()-d1.getMonth()-(years*12);
-		months = months<0?0:months;
-		console.log(years,months);
-		console.log(d2.getYear(),d1.getYear(),d2.getMonth(),d1.getMonth())
-		
-	}
 	var diffUnits = 0;
 	if(!withbool){
 		diffUnits = Math.floor(interval.length(str));
@@ -198,14 +174,9 @@ function getCeilingDuration(doj,doe, str, before=1) {
 	return unit>=1?unit:0;
 }
 
-function get_earlyPension(age, amount,ad) {
+function get_earlyPension(age, amount) {
 	diff = 58 - age;
-	date1 = new Date('2008-11-26');
-	if(ad<date1){
-		deduction = round(amount*0.03*diff);
-	} else {
 	deduction = round(amount*0.04*diff);
-	}
 	early_pension = amount-deduction;
 
 	return early_pension>0?early_pension:0;
@@ -416,7 +387,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		$scope.pension.psalary = get_psalary($scope.pension.total_wage_psal,$scope.pension.total_ncp_psal,$scope.total.daysafter);
 		$scope.pension.pension1 = get_pension($scope.total.daysbefore,$scope.total.daysafter,$scope.total.ncp1,$scope.total.ncp2,$scope.pension.psalary,$scope.pension.weightage);
 		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
-		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension2, $scope.basic.availing_date);
+		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension2);
 	}
 	
 	$scope.WB_update = function() {
