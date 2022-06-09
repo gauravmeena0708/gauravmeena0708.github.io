@@ -111,7 +111,7 @@ function getDiff(d1, d2, str, withbool=1) {
 		m2 = d2.getMonth();
 		day1 = d1.getDay();
 		day2 = d2.getDay();
-		if(day2
+		//if(day2
 		if (m2<m1) {
 			years= years<0?0:years;
 		}
