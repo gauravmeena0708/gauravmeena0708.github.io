@@ -267,7 +267,31 @@ function getWageC(wage, dod) {
 	return val;
 }
 
+function get_wage95(days, bool) {
+	years95= Math.ceil(days/365);
+	TABLEE=[[80,95,120,150],[85,105,135,170]];
+	if(years95<12) {
+		return TABLEE[bool][0];
+	} else if(years95>=12 && years95<=15){
+		return TABLEE[bool][1];
+	} else if(years95>15 && years95<=19){
+		return TABLEE[bool][2];
+	} else if(years95>19){
+		return TABLEE[bool][3];
+	} else {
+		return 0;
+	}
+}
 
+function get_factor95(dob) {
+	ageon95 = getCeilingDuration(dob,CEILING1_DATE,'years',2);
+	console.log(ageon95)
+	yearsto58 = 59 - ageon95;
+	years = yearsto58>34?34:yearsto58;
+	factor = findElement(TABLEB, "years", years, "factor");
+	return factor;
+}
+	
 var TABLEB = [];
 var TABLEC = [];
 var TABLED = [];
@@ -448,30 +472,6 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		$scope.pension.pension5= Math.max($scope.pension.min, $scope.pension.pension3, $scope.pension.pension4)
 	}
 	
-	
-	function get_wage95(days, bool) {
-		years95= Math.ceil(days/365);
-		TABLEE=[[80,95,120,150],[85,105,135,170]];
-		if(years95<12) {
-			return TABLEE[bool][0];
-		} else if(years95>=12 && years95<=15){
-			return TABLEE[bool][1];
-		} else if(years95>15 && years95<=19){
-			return TABLEE[bool][2];
-		} else if(years95>19){
-			return TABLEE[bool][3];
-		} else {
-			return 0;
-		}
-	}
-	
-	function get_factor95(dob) {
-		ageon95 = getCeilingDuration(dob,CEILING1_DATE,'years',2);
-		yearsto58 = 59 - ageon95;
-		years = yearsto58>34?34:yearsto58;
-		factor = findElement(TABLEB, "years", years, "factor");
-		return factor;
-	}
 	$scope.update_past = function(){
 		$scope.pension.wage95 = get_wage95($scope.total.days95,$scope.pension.greater);
 		$scope.pension.factor = get_factor95($scope.basic.dob)
