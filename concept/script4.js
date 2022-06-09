@@ -60,8 +60,8 @@ const SERVICE_DEFAULT = {
 }
 	
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('2018-01-01'),
-	'doe': new Date('2022-02-10'),
+	'doj': new Date('1997-10-07'),
+	'doe': new Date('2014-08-31'),
 	'ncp1':0,
 	'ncp2':156
 }
@@ -100,6 +100,15 @@ function getDiff(d1, d2, str, withbool=1) {
 	date1= luxon.DateTime.fromJSDate(d1);
 	date2= luxon.DateTime.fromJSDate(d2);
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
+	if(str=="days") {
+		Y = Math.floor(interval.length('Years'));
+		M = Math.floor(interval.length('Months')%12);
+		D = Math.floor(interval.length('Days')%30);
+		
+		days=(Y*365)+(M*30)+D
+		console.log(Y, M, D,days)
+		
+	}
 	var diffUnits = 0;
 	if(!withbool){
 		diffUnits = Math.floor(interval.length(str));
@@ -174,9 +183,14 @@ function getCeilingDuration(doj,doe, str, before=1) {
 	return unit>=1?unit:0;
 }
 
-function get_earlyPension(age, amount) {
+function get_earlyPension(age, amount,ad) {
 	diff = 58 - age;
+	date1 = new Date('2008-11-26');
+	if(ad<date1){
+		deduction = round(amount*0.03*diff);
+	} else {
 	deduction = round(amount*0.04*diff);
+	}
 	early_pension = amount-deduction;
 
 	return early_pension>0?early_pension:0;
@@ -387,7 +401,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		$scope.pension.psalary = get_psalary($scope.pension.total_wage_psal,$scope.pension.total_ncp_psal,$scope.total.daysafter);
 		$scope.pension.pension1 = get_pension($scope.total.daysbefore,$scope.total.daysafter,$scope.total.ncp1,$scope.total.ncp2,$scope.pension.psalary,$scope.pension.weightage);
 		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
-		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension2);
+		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension2, $scope.basic.availing_date);
 	}
 	
 	$scope.WB_update = function() {
