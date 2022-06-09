@@ -188,21 +188,17 @@ function get_deferredPension(age,amount) {
 	return (diff>2||diff<0)?amount:deferred_pension;
 }
 
-function get_psalary(wage_sum, ncp, bool=0){
-	var total = bool<1?365:1825;
-	var denom = total-ncp;
-	return denom>0?round(wage_sum*30/denom):0;
-}
 
 function get_pension(days1,days2,ncp1,ncp2,psal,wt){
 	if((days1-ncp1)<0 || (days2-ncp2)<0) {
 		return 0;
 	} else {
-		eligible1 = days1-ncp1+365*wt;
+		eligible1 = days1-ncp1+(365*wt);
 		eligible2 = days2-ncp2;
+		console.log(eligible1,eligible2);
 		p1 = eligible1*6500/(70*365);
 		p2 = eligible2*psal/(70*365);
-		
+		console.log(p1,p2,p1+p2);
 		pension = round(p1+p2);
 		return pension;
 	}
@@ -239,7 +235,13 @@ var TABLED = [];
 
 var app = angular.module('myApp', ['ngCookies']);
 app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
-
+	$scope.past = 5;
+	$scope.pensionable1=6844;
+	$scope.pensionable2=1998;
+	$scope.pSal = 14666;
+	$scope.ncp1=0;
+	$scope.ncp2=0;
+	$scope.past_pension= 0;
 	
 	//function to call if basic details are changed
 	$scope.updateBasic= function(){
@@ -249,13 +251,15 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		
 	function updateEligibility() {
 		console.log('eligibility called');
-		if($scope.services.length ==0) {
+		$scope.service.eligible = $scope.pensionable1 + $scope.pensionable2;
+		if($scope.past ==0 && $scope.pensionable1==0 && $scope.pensionable2==0) {
 			$scope.eligibility = 0;
 			$scope.eligibilityMsg = "You have not added any service. please add Service.";
 		} else if($scope.basic.dod) {
 			$scope.eligibility = 3;
 			$scope.eligibilityMsg = "You are eligible for Family Pension.";
 		} else if($scope.basic.age<50) {
+			$scope.service.eligible = $scope.pensionable1 + $scope.pensionable2;
 			if($scope.service.eligible<180) {
 				$scope.eligibility = 0;
 				$scope.eligibilityMsg = "You are not eligible for any benefit as your service is less than 180 days. You may however transfer your service to new account to add service.";
@@ -291,90 +295,12 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		}
 	}
 	
-	function getTotal() {
-		var total = _.reduce($scope.services, function(acc, o) {
-				for (var p in o)
-					acc[p] = (p in acc ? acc[p] : 0) + o[p];
-					return acc;
-				}, {});
-		$scope.service.actual=total.daysbefore+total.daysafter - round((total.yearsbefore+total.yearsafter)/4);
-		var eligible = total.daysbefore+total.daysafter-total.ncp1-total.ncp2- round((total.yearsbefore+total.yearsafter)/4);
-		$scope.service.eligible= eligible>0?eligible:0;
-		$scope.service.months1= total.monthsafter>60?0:60-total.monthsafter;
-		$scope.service.months2= total.monthsafter>60?60:total.monthsafter;
-		$scope.service.ncp1=total.ncp1;
-		$scope.service.ncp2=total.ncp2;
-		$scope.service.total_ncp=total.ncp2+total.ncp1;
-		days1 = total.daysbefore>total.ncp1?total.daysbefore-total.ncp1:0;
-		days2 = total.daysafter>total.ncp2?total.daysafter-total.ncp2:0;
-		$scope.years1 = round(days1/365,2);
-		$scope.years2 = round(days2/365,2);
-		return total;
-	}
-	
-	$scope.addService = function(){
-		
-		var doj = $scope.service_input.doj;
-		var doe = $scope.service_input.doe;
-		var ncp1 = $scope.service_input.ncp1;
-		var ncp2 = $scope.service_input.ncp2;
-		var res = (doe - doj) / 1000 / 60 / 60 / 24;
-		console.log(res);
-		var date71 = new Date("1971-03-04");
-		
-		var date1 = $scope.dates.slice();
-		$scope.dates.push(doj);
-		$scope.dates.push(doe);
-		
-		if(multipleDateRangeOverlaps($scope.dates)){
-			alert("Date range overlapping. returning to previous state");
-			$scope.dates = date1.slice();
-		} else if (doj>doe) {
-			alert("DOJ can not be later than DOE");
-			$scope.dates = date1.slice();
-		} else if (doj<$scope.basic.dob) {
-			alert("DOJ can not be earlier than DOB");
-			$scope.dates = date1.slice();
-		} else if (doj<date71) {
-			alert("DOJ can not be less than Family pension scheme date.");
-			$scope.dates = date1.slice();
-		} else {
-			var service = {
-				'doj':doj,
-				'doe':doe,
-				'ncp1':ncp1,
-				'ncp2':ncp2,
-				'days95':getCeilingDuration(doj,doe,'days',2),
-				'monthsbefore':getCeilingDuration(doj,doe,'months',1),
-				'monthsafter':getCeilingDuration(doj,doe,'months',0),
-				'daysbefore':getCeilingDuration(doj,doe,'days',1),
-				'yearsbefore':getCeilingDuration(doj,doe,'years',1),
-				'yearsafter':getCeilingDuration(doj,doe,'years',0),
-				'daysafter':getCeilingDuration(doj,doe,'days',0)
-			};
-			
-			$scope.services.push(service);
-			//$scope.total = getTotal();
-			$scope.update();	
-		}
-	}
-	
-	$scope.removeService = function(index) {
-		if(index >= 0){
-			$scope.dates.splice(index*2, 2);
-			$scope.services.splice(index, 1);
-			//$scope.total = getTotal();
-			$scope.update();	
-		}
-	}
-	
 	$scope.eligibility = 0;
 	$scope.eligibilityMsg="You have not added any service. PLease add service to check eligibility."
 	
 	$scope.update_Superannuation = function(){
-		$scope.pension.total_month_psal=$scope.total.daysafter?60:12;
-		$scope.pension.eligible = $scope.service.actual - $scope.service.total_ncp;
-		if($scope.basic.age>=58 && $scope.pension.eligible+$scope.total.days95>7300){
+		$scope.pension.eligible = $scope.pensionable1+$scope.pensionable2;
+		if($scope.basic.age>=58 && ($scope.pension.eligible+($scope.past*365))>7300){
 			$scope.pension.weightage = 2;	
 		} else {
 			$scope.pension.weightage = 0;
@@ -382,12 +308,10 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		$scope.pension.eligible_WB= $scope.pension.eligible+365*$scope.pension.weightage;
 		
 		$scope.pension.min= $scope.pension.eligible>3650? MIN:0;
-		$scope.pension.total_month_psal = $scope.service.months2>0?60:12;
 		
-		$scope.pension.psalary = get_psalary($scope.pension.total_wage_psal,$scope.pension.total_ncp_psal,$scope.total.daysafter);
-		$scope.pension.pension1 = get_pension($scope.total.daysbefore,$scope.total.daysafter,$scope.total.ncp1,$scope.total.ncp2,$scope.pension.psalary,$scope.pension.weightage);
-		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
-		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension2);
+		$scope.pension1 = get_pension($scope.pensionable1,$scope.pensionable2,$scope.ncp1,$scope.ncp2,$scope.pSal,$scope.pension.weightage);
+		$scope.pension2 = $scope.pension1>MIN?$scope.pension1:MIN;
+		$scope.pension3 = get_earlyPension($scope.basic.age,$scope.pension2);
 	}
 	
 	$scope.WB_update = function() {
@@ -413,8 +337,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	}
 	
 	
-	function get_wage95(days, bool) {
-		years95= round(days/365,0);
+	function get_wage95(years95, bool) {
 		TABLEE=[[80,95,120,150],[85,105,135,170]];
 		if(years95<12) {
 			return TABLEE[bool][0];
@@ -437,15 +360,13 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		return factor;
 	}
 	$scope.update_past = function(){
-		$scope.pension.wage95 = get_wage95($scope.total.days95,$scope.pension.greater);
+		$scope.pension.wage95 = get_wage95($scope.past,$scope.pension.greater);
 		$scope.pension.factor = get_factor95($scope.basic.dob)
-		//yearsto58=58$scope.basic.age
-		$scope.pension.past_pension = round($scope.pension.wage95*$scope.pension.factor,0);
+		$scope.past_pension = round($scope.pension.wage95*$scope.pension.factor,0);
 	}
 	
 	$scope.update = function() {
 		console.log("update called")
-		$scope.total=getTotal();
 		$scope.updateBasic();
 		updateEligibility();		
 		$scope.WB_update();
