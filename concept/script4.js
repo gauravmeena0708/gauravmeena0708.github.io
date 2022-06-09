@@ -107,7 +107,7 @@ function getDiff(d1, d2, str, withbool=1) {
 		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
 		d2=interval2.length('Days');
 		days=(Y*365)+(M*30)+d2+1;
-		console.log(Y, M, D,days,d2)
+		console.log(Y, M,days,d2)
 		return days;
 	}
 	var diffUnits = 0;
@@ -131,7 +131,7 @@ function get_pensionable_days(doj,doe){
 		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
 		d2=interval2.length('Days');
 		days=(Y*365)+(M*30)+d2+1;
-		console.log(Y, M, D,days,d2);
+		console.log(Y, M,days,d2);
 	}
 	return days;
 };
