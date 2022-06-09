@@ -103,7 +103,6 @@ function getDiff(d1, d2, str, withbool=1) {
 	if(str=="days") {
 		Y = Math.floor(interval.length('Years'));
 		M = Math.floor(interval.length('Months')%12);
-		D = Math.floor(interval.length('Days')%30);
 		date3 = date1.plus({months: Math.floor(interval.length('Months'))})
 		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
 		d2=interval2.length('Days');
@@ -119,6 +118,22 @@ function getDiff(d1, d2, str, withbool=1) {
 		diffUnits = interval.count(str);
 		return diffUnits>=1?diffUnits:0;
 	}
+};
+function get_pensionable_days(doj,doe){
+	date0= new Date('1995-11-16');
+	days=0
+	if(doj>=date0){
+		date1= luxon.DateTime.fromJSDate(doj);
+		date2= luxon.DateTime.fromJSDate(doe);
+		var interval = luxon.Interval.fromDateTimes(date1, date2);
+		Y = Math.floor(interval.length('Years'));
+		M = Math.floor(interval.length('Months')%12);
+		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
+		d2=interval2.length('Days');
+		days=(Y*365)+(M*30)+d2+1;
+		console.log(Y, M, D,days,d2);
+	}
+	return days;
 };
 
 function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
@@ -363,11 +378,12 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 				'days95':getCeilingDuration(doj,doe,'days',2),
 				'monthsbefore':getCeilingDuration(doj,doe,'months',1),
 				'monthsafter':getCeilingDuration(doj,doe,'months',0),
+				'pensionabledays':get_pensionable_days(doj,doe),
 				'daysbefore':getCeilingDuration(doj,doe,'days',1),
 				'yearsbefore':getCeilingDuration(doj,doe,'years',1),
-				'yearsafter':getCeilingDuration(doj,doe,'years',0),
-				'daysafter':getCeilingDuration(doj,doe,'days',0)
+				'yearsafter':getCeilingDuration(doj,doe,'years',0)
 			};
+			service['daysafter']=service['pensionabledays']-service['daysbefore'];
 			
 			$scope.services.push(service);
 			//$scope.total = getTotal();
