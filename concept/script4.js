@@ -106,8 +106,8 @@ function getDiff(d1, d2, str, withbool=1) {
 		D = Math.floor(interval.length('Days')%30);
 		date3 = date1.plus({months: Math.floor(interval.length('Months'))})
 		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
-		d2=interval2.length('Days')+1;
-		days=(Y*365)+(M*30)+D
+		d2=interval2.length('Days');
+		days=(Y*365)+(M*30)+d2
 		console.log(Y, M, D,days, date3,d2)
 		
 	}
