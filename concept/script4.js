@@ -454,11 +454,11 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		TABLEE=[[80,95,120,150],[85,105,135,170]];
 		if(years95<12) {
 			return TABLEE[bool][0];
-		} else if(years95>=12 && years95<16){
+		} else if(years95>=12 && years95<=15){
 			return TABLEE[bool][1];
-		} else if(years95>=16 && years95<20){
+		} else if(years95>15 && years95<=19){
 			return TABLEE[bool][2];
-		} else if(years95>=20){
+		} else if(years95>19){
 			return TABLEE[bool][3];
 		} else {
 			return 0;
