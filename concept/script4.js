@@ -109,7 +109,7 @@ function getDiff(d1, d2, str, withbool=1) {
 		d2=interval2.length('Days');
 		days=(Y*365)+(M*30)+d2
 		console.log(Y, M, D,days, date3,d2)
-		
+		return days;
 	}
 	var diffUnits = 0;
 	if(!withbool){
