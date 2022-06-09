@@ -60,10 +60,10 @@ const SERVICE_DEFAULT = {
 }
 	
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('1997-10-07'),
-	'doe': new Date('2014-08-31'),
-	'ncp1':0,
-	'ncp2':156
+	'doj': new Date('1995-11-16'),
+	'doe': new Date('2020-02-29'),
+	'ncp1':12,
+	'ncp2':10
 }
 
 const TOTAL_DEFAULT = {
@@ -104,7 +104,7 @@ function getDiff(d1, d2, str, withbool=1) {
 		Y = Math.floor(interval.length('Years'));
 		M = Math.floor(interval.length('Months')%12);
 		D = Math.floor(interval.length('Days')%30);
-		date3 = date1.plus({days: interval.length('Months')})
+		date3 = date1.plus({months: interval.length('Months')})
 		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
 		d2=interval2.length('Days')+1;
 		days=(Y*365)+(M*30)+D
