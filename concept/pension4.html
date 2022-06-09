@@ -247,7 +247,7 @@
 					<div class="card-header d-flex justify-content-between align-items-center">Calculator Output : </div>
 					<div class="card-body p-3">
 						<ul class="list-group mb-3" ng-if="pension.past_pension">
-							<li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">Past Pension Calculation</li>
+							<li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">Past Pension Calculation <span data-bs-toggle="modal" data-bs-target="#pastPension">?</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total Days before 16-11-1995 [D]: <span>{{total.days95}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Basic Wage: <span>{{ pension.wage95 }}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Factor: <span>{{ pension.factor }}</span></li>
@@ -424,7 +424,99 @@
     </div>
   </div>
 </div>	
-	
+
+<div class="modal fade" id="pastPension" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pastPension" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pastPension">Fundamentals for calculation of pension for past service</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        	<section>
+				<span>It Consists of two parts:-</span>
+				<ol>
+					<li><strong>"Basic Pension" for the past service, accrued as on 16-11-95.</strong> <br/>
+					Para 12(3)(b) of the Scheme presecribes the amount of pension that stood accrued to the employees for their FPF membership till 15-11-95.
+					</li>
+					<li><strong>"Appreciated value of the Basic Pension" arrived at by multiplication of "Factor" of "Table B"</strong><br/>
+					which is related to number of years remaining in achieving the age of 58 years.
+					</li>
+				</ol>
+			</section>
+			<section>
+				<h5>Table for "Basic Pension" for past service</h5>
+				<table class="table table-sm table-bordered">
+					<thead>
+						<tr>
+							<th rowspan=2 class="col-6">If the years of "past service" (FPF membership period) up to 16.11.95 has been</th>
+							<th colspan=2 class="col-6">Amount of basic pension for the past service benefit will be based on salary of employee. if the salary on 15.11.95 was: </th>
+						</tr>
+						<tr>
+							<th>Up to Rs. 2500</th>
+							<th>Rs. 2501 and above</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1 to 11 years</td>
+							<td>Rs. 80 Per Month</td>
+							<td>Rs. 85 Per Month</td>
+						</tr>
+						<tr>
+							<td>12 to 15 years</td>
+							<td>Rs. 95 Per Month</td>
+							<td>Rs. 105 Per Month</td>
+						</tr>
+						<tr>
+							<td>16 to 19 years</td>
+							<td>Rs. 120 Per Month</td>
+							<td>Rs. 135 Per Month</td>
+						</tr>
+						<tr>
+							<td>20 to 24 years</td>
+							<td>Rs. 150 Per Month</td>
+							<td>Rs. 170 Per Month</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			<section>
+				<h5>Table for "Factor" for "Table B"</h5>
+				<span>Factor for computation of past service benefit under the ceased family pension scheme for existing members on exit from the employment</span>
+				<table class="table table-sm table-bordered">
+					<thead>
+						<tr>
+							<th class="col-6">Years less than(period between 16-11-1995 and Date of exit.</th>
+							<th class="col-6">Factor</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>1.039</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>1.122</td>
+						</tr>
+						<tr>
+							<td>...</td>
+							<td>...</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			<section>
+				<h4>Past Service Benefit = Basic Pension * Factor</h4>
+			</section>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>		
 	<!--
 	container fluid div closer
 	-->
