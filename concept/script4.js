@@ -288,7 +288,7 @@ function get_wage95(days, bool) {
 function get_factor95(dob) {
 	ageon95 = getCeilingDuration(dob,CEILING1_DATE,'years',2);
 	console.log(ageon95)
-	yearsto58 = 59 - ageon95;
+	yearsto58 = 58 - ageon95;
 	years = yearsto58>34?34:yearsto58;
 	factor = findElement(TABLEB, "years", years, "factor");
 	return factor;
