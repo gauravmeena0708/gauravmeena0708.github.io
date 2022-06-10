@@ -1,273 +1,242 @@
-{
+[
 	{
 		"name": "Admin",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Cash",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Pension",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Vigilance",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "CSD",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Caretaker",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Pension",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "CPIO",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "CAPIO",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Coordination",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Accounts",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Compliance",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Recovery",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Damages",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "IW",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Official Languages",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Legal",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "PAC",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "PRO",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Inward",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Despatch",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "OLRE",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Publicity",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Exemption",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Nodal Officer E-Court",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Ndoal Officer CSD",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Nodal Officer IBBI",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Nodal Officer LIMBS",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Nodal Officer for HR Software",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	},
 	{
 		"name": "Nodal Officer for E-Office",
-		"work": [
-		{"task_name":"ABC",
-		"task_count":3,
-		"individual_time":60
-		}
-		]
+		"work": [{
+			"task_name": "ABC",
+			"task_count": 3,
+			"individual_time": 60
+		}]
 	}
-	
-}
+]
