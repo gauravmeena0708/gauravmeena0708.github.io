@@ -47,7 +47,8 @@
 			url: './work.json'
 		}).then(function (success){
 			console.log("json downloaded");
-			worklist = success.data;	
+			$scope.worklist = success.data;
+			console.log($scope.worklist);
 		},function (error){
 			console.log(error)
 		});
