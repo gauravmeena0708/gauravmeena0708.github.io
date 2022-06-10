@@ -126,10 +126,10 @@ function getDiff(d1, d2, str, withbool=1) {
 	}
 	var diffUnits = 0;
 	if(!withbool){
-		diffUnits = Math.floor(interval.length(str));
+		diffUnits = Math.floor(interval.length(str))+1;
 		return diffUnits>=1?diffUnits:0;
 	} else {
-		diffUnits = interval.count(str);
+		diffUnits = interval.count(str)+1;
 		return diffUnits>=1?diffUnits:0;
 	}
 };
