@@ -314,9 +314,9 @@
 		
 		$scope.update_date = function (year) {
 			$scope.dod.setYear(year);
-			$scope.getParams($scope.list, $scope.dod);
 			const d = luxon.DateTime.fromISO($scope.dod.toISOString())
 			$scope.dod = new Date(d);
+			$scope.getParams($scope.list, $scope.dod);
 			$scope.update();
 			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 			qrcode.clear(); // clear the code.
