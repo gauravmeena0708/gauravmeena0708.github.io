@@ -126,7 +126,6 @@
 					</div>
 					<div class="card-footer">
 						<button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
-						<button type="button" class="btn btn-success align-self-center" ng-click="update()">Update</button>
 					</div>
 				</div>
 			</div>
@@ -413,9 +412,9 @@
 						$scope.b_min     = list[i]['b_min'];	
 					}
 				}
-			$scope.a = $scope.get_final_a($scope.a_perc2,$scope.a_min, $scope.a_max, $scope.apb, $scope.a_perc1);
-			$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min);
-			$scope.final = $scope.getmax($scope.a,$scope.b);
+				$scope.a = $scope.get_final_a($scope.a_perc2,$scope.a_min, $scope.a_max, $scope.apb, $scope.a_perc1);
+				$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min);
+				$scope.final = $scope.getmax($scope.a,$scope.b);
 			}
 		}
 		
