@@ -206,10 +206,10 @@
 		window.print();
 	}
 	
-	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-	  return new bootstrap.Tooltip(tooltipTriggerEl)
-	})
+	  return new bootstrap.Tooltip(tooltipTriggerEl);
+	});
 	
 	
 	var app = angular.module('myApp', ['ngCookies']);
@@ -220,7 +220,7 @@
 		}).then(function (success){
 			$scope.list =success.data;
 		},function (error){
-			console.log(error)
+			console.log(error);
 		});
 		
 		$http({
@@ -229,7 +229,7 @@
 		}).then(function (success){
 			$scope.list1 =success.data;
 		},function (error){
-			console.log(error)
+			console.log(error);
 		});
 		
 		$scope.uan = 100000000000;
@@ -239,7 +239,7 @@
 
 		
 		if (searchParams.has("dod")) {
-			dod = luxon.DateTime.fromFormat(searchParams.get('dod'), 'dd-MM-yyyy');
+			var dod = luxon.DateTime.fromFormat(searchParams.get('dod'), 'dd-MM-yyyy');
 			$scope.dod = new Date(dod ) || new Date('2020-02-16');
 		} else {
 			$scope.dod = new Date('2020-02-16');
@@ -259,8 +259,8 @@
 		
 
 		
-		limit1 = new Date('1976-08-01');
-		limit2 = new Date('2024-04-27');
+		var limit1 = new Date('1976-08-01');
+		var limit2 = new Date('2024-04-27');
 		$scope.limit3 = new Date('2021-04-29');
 		$scope.year = 2020;
 		$scope.continuous12 = true;
@@ -282,8 +282,8 @@
 		$scope.sumb = 0;
 		
 		function getDateString(dat) {
-			const d = luxon.DateTime.fromISO(dat.toISOString())
-			return d.toFormat('dd-MM-yyyy')
+			const d = luxon.DateTime.fromISO(dat.toISOString());
+			return d.toFormat('dd-MM-yyyy');
 		}
 		$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 		var qrcode = new QRCode("qrcode", {
@@ -313,18 +313,18 @@
 		
 		$scope.update_date = function (year) {
 			$scope.dod.setYear(year);
-			const d = luxon.DateTime.fromISO($scope.dod.toISOString())
+			const d = luxon.DateTime.fromISO($scope.dod.toISOString());
 			$scope.dod = new Date(d);
 			$scope.getParams($scope.list, $scope.dod);
 			$scope.update();
 			
-		}
+		};
 		
 		$scope.get_amt_a = function (min, max, amt, percent) {
 			if(min>amt){
 				return amt;
 			} else {
-				val = parseInt(min)+parseInt(percent*(amt-min)/100);
+				var val = parseInt(min)+parseInt(percent*(amt-min)/100);
 				if(val>max) {
 					return max;
 				} else {
@@ -332,23 +332,23 @@
 				}
 			}
 		
-		}
+		};
 		
 		
 		$scope.get_final_a = function(a_perc2,a_min, a_max, apb, a_perc1){
-			var val1 = $scope.get_amt_a(a_min, a_max, apb, a_perc1)
+			var val1 = $scope.get_amt_a(a_min, a_max, apb, a_perc1);
 			var additional = $scope.a_perc2*val1/100;
-			val3 = Math.round(parseFloat(val1)+ parseFloat(additional));
+			var val3 = Math.round(parseFloat(val1)+ parseFloat(additional));
 			$scope.a =val3;
 			return val3;
-		}
+		};
 		
 		$scope.get_additional = function (avg, ceiling, factor, percent) {
-			var additional = 0
+			var additional = 0;
 			if(avg<ceiling) {
-				val1 = factor*ceiling;
-				val2 = avg*factor;
-				val3 = percent*val2/100;
+				var val1 = factor*ceiling;
+				var val2 = avg*factor;
+				var val3 = percent*val2/100;
 				if (val2+val3>val1) {
 					additional =  parseInt(val1)-parseInt(val2);
 				} else {
@@ -356,15 +356,15 @@
 				}
 			}
 			return additional;
-		}
+		};
 		
 		$scope.get_final_b = function(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min){
-			val1 = ($scope.getmin(avg_wage, b_ceiling)*b_factor) + $scope.get_additional(avg_wage, b_ceiling, b_factor, b_perc)
-			val2 = b_perc1*apb/100;
+			var val1 = ($scope.getmin(avg_wage, b_ceiling)*b_factor) + $scope.get_additional(avg_wage, b_ceiling, b_factor, b_perc);
+			var val2 = b_perc1*apb/100;
 			$scope.sumb=val1+val2;
 
 			console.log("continuous value: ", $scope.continuous12);
-			var final_b = 0
+			var final_b = 0;
 			if($scope.continuous12==false){
 				final_b = 0;
 			} else {
@@ -372,7 +372,7 @@
 					val2=b_max;
 				}
 				if((val1+val2)<parseInt(b_min)) {
-				 final_b = b_min
+				 final_b = b_min;
 				} else {
 					final_b = Math.round(parseFloat(val1)+parseFloat(val2));
 				}
@@ -385,10 +385,11 @@
 			if ( date < limit1 || date > limit2) {
 				$scope.alert = "Date out of range of available circulars. Please enter date between 01-08-1976 to 27-04-2024";
 			} else {
+        var start_date, end_date;
 				for (let i = 0; i < list.length; i++) {
 					$scope.alert = false; 
-					start_date = luxon.DateTime.fromFormat(list[i]['start'], 'dd-MM-yyyy')
-					end_date = luxon.DateTime.fromFormat(list[i]['end'], 'dd-MM-yyyy')
+					start_date = luxon.DateTime.fromFormat(list[i]['start'], 'dd-MM-yyyy');
+					end_date = luxon.DateTime.fromFormat(list[i]['end'], 'dd-MM-yyyy');
 					if(date>= start_date && date<= end_date){
 						console.log(list[i],date);
 						$scope.a_min_bal = list[i]['a_min_bal'];
@@ -407,7 +408,7 @@
 				$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min);
 				$scope.final = $scope.getmax($scope.a,$scope.b);
 			}
-		}
+		};
 		
 		
 		
@@ -416,7 +417,7 @@
 			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
-		}
+		};
 	}]);
 	</script>
 </body>
