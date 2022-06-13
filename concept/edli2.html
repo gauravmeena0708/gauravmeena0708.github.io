@@ -57,8 +57,8 @@
 							<span class="alert col-5" ng-if=0 id="basic-addon1">{{alert}}</span>
 							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Based on date of death the minimum, maximum and other factors of calculation are affected. These are based on Gazette Notifications /circulars issued from time to time. ">
 								<span class="input-group-text col-5" id="basic-addon1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Date of Death : <i class="bi bi-question-circle-fill"></i></span>
-								<input type="date" ng-model="dod" class="form-control" id="dod" ng-change="update_date()" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
-								<input type="range" ng-model="year" class="form-range" id="customRange1" ng-change="update_date()"  min="1976" max="2024">	
+								<input type="date" ng-model="dod" class="form-control" id="dod" ng-change="getParams(list,dod)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
+								<input type="range" ng-model="year" class="form-range" id="customRange1" ng-change="update_date(year)"  min="1976" max="2024">	
 								<div class="invalid-tooltip">Please enter a valid input.</div>
 							</div>
 							
@@ -220,7 +220,6 @@
 			url: './edli2.json'
 		}).then(function (success){
 			$scope.list =success.data;
-			$scope.update();
 		},function (error){
 			console.log(error)
 		});
@@ -235,7 +234,7 @@
 		});
 		
 		$scope.uan = 100000000000;
-		$scope.dod=new Date();
+		
 		let url = new URL(window.location);
 		let searchParams = new URLSearchParams(url.search);
 
@@ -313,8 +312,8 @@
 			}
 		}
 		
-		$scope.update_date = function () {
-			$scope.dod.setYear($scope.year);
+		$scope.update_date = function (year) {
+			$scope.dod.setYear(year);
 			const d = luxon.DateTime.fromISO($scope.dod.toISOString())
 			$scope.dod = new Date(d);
 			$scope.getParams($scope.list, $scope.dod);
@@ -414,6 +413,9 @@
 						$scope.b_min     = list[i]['b_min'];	
 					}
 				}
+			$scope.a = $scope.get_final_a($scope.a_perc2,$scope.a_min, $scope.a_max, $scope.apb, $scope.a_perc1);
+			$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min);
+			$scope.final = $scope.getmax($scope.a,$scope.b);
 			}
 		}
 		
@@ -421,9 +423,6 @@
 		
 		$scope.update = function () {
 			$scope.getParams($scope.list, $scope.dod);
-			$scope.a = $scope.get_final_a($scope.a_perc2,$scope.a_min, $scope.a_max, $scope.apb, $scope.a_perc1);
-			$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min);
-			$scope.final = $scope.getmax($scope.a,$scope.b)
 		}
 	}]);
 	</script>
