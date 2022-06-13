@@ -57,7 +57,7 @@
 							<span class="alert col-5" ng-if=0 id="basic-addon1">{{alert}}</span>
 							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Based on date of death the minimum, maximum and other factors of calculation are affected. These are based on Gazette Notifications /circulars issued from time to time. ">
 								<span class="input-group-text col-5" id="basic-addon1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Date of Death : <i class="bi bi-question-circle-fill"></i></span>
-								<input type="date" ng-model="dod" class="form-control" id="dod" ng-change="getParams(list,dod)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
+								<input type="date" ng-model="dod" class="form-control" id="dod" ng-change="update_date(year)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
 								<input type="range" ng-model="year" class="form-range" id="customRange1" ng-change="update_date(year)"  min="1976" max="2024">	
 								<div class="invalid-tooltip">Please enter a valid input.</div>
 							</div>
@@ -317,10 +317,10 @@
 			const d = luxon.DateTime.fromISO($scope.dod.toISOString())
 			$scope.dod = new Date(d);
 			$scope.getParams($scope.list, $scope.dod);
-			$scope.update();
 			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
+			$scope.update();
 			
 		}
 		
