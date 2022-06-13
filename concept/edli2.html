@@ -393,16 +393,16 @@
 					end_date = luxon.DateTime.fromFormat(list[i].end, 'dd-MM-yyyy');
 					if(date>= start_date && date<= end_date){
 						console.log(list[i],date);
-						$scope.a_min_bal = list[i]['a_min_bal'];
-						$scope.a_min     = parseInt(list[i]['a_min']);
+						$scope.a_min_bal = list[i].a_min_bal;
+						$scope.a_min     = parseInt(list[i].a_min);
 						$scope.a_max     = list[i]['a_max'];
-						$scope.a_perc1   = list[i]['a_perc1'];
-						$scope.a_perc2   = list[i]['a_perc2'];
-						$scope.b_ceiling = parseInt(list[i]['b_ceiling']);
-						$scope.b_factor  = list[i]['b_factor'];
-						$scope.b_perc    = list[i]['b_perc'];
-						$scope.b_max     = list[i]['b_max'];
-						$scope.b_min     = list[i]['b_min'];	
+						$scope.a_perc1   = list[i].a_perc1;
+						$scope.a_perc2   = list[i].a_perc2;
+						$scope.b_ceiling = parseInt(list[i].b_ceiling);
+						$scope.b_factor  = list[i].b_factor;
+						$scope.b_perc    = list[i].b_perc;
+						$scope.b_max     = list[i].b_max;
+						$scope.b_min     = list[i].b_min;	
 					}
 				}
 				$scope.a = $scope.get_final_a($scope.a_perc2,$scope.a_min, $scope.a_max, $scope.apb, $scope.a_perc1);
