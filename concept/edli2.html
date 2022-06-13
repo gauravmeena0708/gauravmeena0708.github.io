@@ -389,8 +389,8 @@
         var start_date, end_date;
 				for (let i = 0; i < list.length; i++) {
 					$scope.alert = false; 
-					start_date = luxon.DateTime.fromFormat(list[i]['start'], 'dd-MM-yyyy');
-					end_date = luxon.DateTime.fromFormat(list[i]['end'], 'dd-MM-yyyy');
+					start_date = luxon.DateTime.fromFormat(list[i].start, 'dd-MM-yyyy');
+					end_date = luxon.DateTime.fromFormat(list[i].end, 'dd-MM-yyyy');
 					if(date>= start_date && date<= end_date){
 						console.log(list[i],date);
 						$scope.a_min_bal = list[i]['a_min_bal'];
