@@ -220,6 +220,7 @@
 			url: './edli2.json'
 		}).then(function (success){
 			$scope.list =success.data;
+			$scope.update();
 		},function (error){
 			console.log(error)
 		});
