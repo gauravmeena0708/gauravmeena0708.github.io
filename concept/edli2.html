@@ -316,9 +316,6 @@
 			const d = luxon.DateTime.fromISO($scope.dod.toISOString())
 			$scope.dod = new Date(d);
 			$scope.getParams($scope.list, $scope.dod);
-			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
-			qrcode.clear(); // clear the code.
-			qrcode.makeCode($scope.url);
 			$scope.update();
 			
 		}
@@ -341,9 +338,6 @@
 		$scope.get_final_a = function(a_perc2,a_min, a_max, apb, a_perc1){
 			var val1 = $scope.get_amt_a(a_min, a_max, apb, a_perc1)
 			var additional = $scope.a_perc2*val1/100;
-			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
-			qrcode.clear(); // clear the code.
-			qrcode.makeCode($scope.url);
 			val3 = Math.round(parseFloat(val1)+ parseFloat(additional));
 			$scope.a =val3;
 			return val3;
@@ -368,11 +362,8 @@
 			val1 = ($scope.getmin(avg_wage, b_ceiling)*b_factor) + $scope.get_additional(avg_wage, b_ceiling, b_factor, b_perc)
 			val2 = b_perc1*apb/100;
 			$scope.sumb=val1+val2;
-			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
-			qrcode.clear(); // clear the code.
-			qrcode.makeCode($scope.url);
-			console.log("false:",!$scope.continuous12);
-			console.log("true", $scope.continuous12);
+
+			console.log("continuous value: ", $scope.continuous12);
 			var final_b = 0
 			if($scope.continuous12==false){
 				final_b = 0;
@@ -422,6 +413,9 @@
 		
 		$scope.update = function () {
 			$scope.getParams($scope.list, $scope.dod);
+			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+			qrcode.clear(); // clear the code.
+			qrcode.makeCode($scope.url);
 		}
 	}]);
 	</script>
