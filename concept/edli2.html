@@ -302,7 +302,7 @@
 			} else {
 				return b;
 			}
-		}
+		};
 		
 		$scope.getmax = function(a,b) {
 			if(a<b){
@@ -310,7 +310,7 @@
 			} else {
 				return a;
 			}
-		}
+		};
 		
 		$scope.update_date = function (year) {
 			$scope.dod.setYear(year);
@@ -380,7 +380,7 @@
 			}
 			$scope.b = final_b;
 			return final_b;
-		}
+		};
 		
 		$scope.getParams = function(list, date) {
 			if ( date < limit1 || date > limit2) {
