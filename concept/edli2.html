@@ -313,7 +313,7 @@
 			}
 		}
 		
-		$scope.update_date = function (year) {
+		$scope.update_date = function (year=$scope.year) {
 			$scope.dod.setYear(year);
 			const d = luxon.DateTime.fromISO($scope.dod.toISOString())
 			$scope.dod = new Date(d);
