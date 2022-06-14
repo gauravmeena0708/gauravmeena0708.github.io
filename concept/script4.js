@@ -97,13 +97,18 @@ function get_WB_Factor(years) {
 };
 
 function getDiff(d1, d2, str, withbool=1) {
+	
 	date1= luxon.DateTime.fromJSDate(d1);
 	date2= luxon.DateTime.fromJSDate(d2);
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
 	if(str=="days") {
 		Y = Math.floor(interval.length('Years'));
 		M = Math.floor(interval.length('Months')%12);
-		date3 = date1.plus({months: Math.floor(interval.length('Months'))})
+		
+		months_to_add=Math.floor(interval.length('Months'));
+		console.log(date1);
+		console.log(months_to_add);
+		date3 = date1.plus({months: months_to_add})
 		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
 		d2=interval2.length('Days');
 		days=(Y*365)+(M*30)+d2+1;
@@ -167,7 +172,7 @@ function multipleDateRangeOverlaps(dates) {
 function getCeilingDuration(doj,doe, str, before=1) {
 	unit = 0
 	if(before==2) {
-		if(doj>CEILING2_DATE){
+		if(doj>CEILING1_DATE){
 			unit = 0;
 		} else {
 			unit = getDiff(doj, CEILING1_DATE, str)-1;
@@ -386,7 +391,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		var date1 = $scope.dates.slice();
 		$scope.dates.push(doj);
 		$scope.dates.push(doe);
-		
+		console.log(doj,doe);
 		if(multipleDateRangeOverlaps($scope.dates)){
 			alert("Date range overlapping. returning to previous state");
 			$scope.dates = date1.slice();
