@@ -227,13 +227,13 @@
 								<span class="input-group-text col-8" id="basic-addon1">NCP days for above {{pension.total_month_psal}}:</i></span>
 								<input type="number" ng-model="pension.total_ncp_psal" ng-change="update()" class="form-control col-4" placeholder="Total NCP for pensionable Salary" aria-label="Total NCP for pensionable Salary" aria-describedby="basic-addon1">
 							</div>
-							<div class="input-group mb-2" ng-if="total.days95">
+							<!--<div class="input-group mb-2" ng-if="total.days95">
 								<span class="input-group-text col-8" id="basic-addon1">Salary as on 16-11-1995:</i></span>
 								<input type="number" ng-model="pension.wage95" ng-change="update()" class="form-control col-4" placeholder="Salary as on 16-11-1995" aria-label="Salary as on 16-11-1995" aria-describedby="basic-addon1" readonly>
-							</div>
+							</div>-->
 							<div class="form-check mb-3" ng-if="total.days95">
-								<input class="form-check-input" ng-model="pension.greater" ng-true-value="1" ng-false-value="0" ng-change="update()" type="checkbox" value="" id="flexCheckDefault">
-								<label class="form-check-label" for="flexCheckDefault">Whether wages on 16-11-1995 greater than Rs.2500? {{pension.greater}}</label>
+								<input class="form-check-input" ng-model="pension.greater" ng-true-value="true" ng-false-value="0" ng-change="update()" type="checkbox" value="" id="flexCheckDefault">
+								<label class="form-check-label" for="flexCheckDefault">Whether wages on 16-11-1995 greater than Rs.2500? {{pension.greater?"True":"False"}}</label>
 							</div>
 						</form>
 					</div>
