@@ -480,10 +480,17 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 	}
 	
 	$scope.update_past = function(){
-		$scope.pension.wage95 = get_wage95($scope.total.days95,$scope.pension.greater);
-		$scope.pension.factor = get_factor95($scope.basic.dob)
-		//yearsto58=58$scope.basic.age
-		$scope.pension.past_pension = round($scope.pension.wage95*$scope.pension.factor,0);
+		if($scope.total.days95) {
+			$scope.pension.wage95 = get_wage95($scope.total.days95,$scope.pension.greater);
+			$scope.pension.factor = get_factor95($scope.basic.dob)
+			//yearsto58=58$scope.basic.age
+			$scope.pension.past_pension = round($scope.pension.wage95*$scope.pension.factor,0);
+		} else {
+			$scope.pension.wage95 = 0;
+			$scope.pension.factor = 0;
+			//yearsto58=58$scope.basic.age
+			$scope.pension.past_pension = 0;
+		}
 	}
 	
 	$scope.update = function() {
