@@ -231,7 +231,7 @@ function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 
 function get_deferredPension(age,amount) {
 	diff = age- 58;
-	deferred_pension = round(amount*(1+(0.4*diff)),0);
+	deferred_pension = round(amount*Math.pow(1+0.04,diff),0);
 	return (diff>2||diff<0)?amount:deferred_pension;
 }
 
