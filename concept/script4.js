@@ -219,15 +219,13 @@ function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 	} else {
 		amount=pension1;
 	}
-	if(ad<date1){
+	if(availing_date<date1){
 		deduction = round(amount*0.03*diff);
 	} else {
 		deduction = round(amount*0.04*diff);
 	}
 	
-	
 	early_pension = pension2-deduction;
-
 	return early_pension>0?early_pension:0;
 }
 
