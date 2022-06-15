@@ -235,6 +235,7 @@ function get_psalary(wage_sum, ncp, bool=0){
 }
 
 function get_pension(days1,days2,ncp1,ncp2,psal,wt){
+	console.log(days1,days2,ncp1,ncp2,psal,wt);
 	if((days1-ncp1)<0 || (days2-ncp2)<0) {
 		return 0;
 	} else if(days2==0){
