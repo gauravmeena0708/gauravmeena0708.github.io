@@ -209,15 +209,23 @@ function getCeilingDuration(doj,doe, str, before=1) {
 	return unit>=1?unit:0;
 }
 
-function get_earlyPension(age, amount,ad) {
+function get_earlyPension(age, pension1, pension2, amount, ad) {
 	diff = 58 - age;
 	date1 = new Date('2008-11-26');
+	
+	if(pension1==pension2){
+		amount=pension2;
+	} else {
+		amount=pension1;
+	}
 	if(ad<date1){
 		deduction = round(amount*0.03*diff);
 	} else {
-	deduction = round(amount*0.04*diff);
+		deduction = round(amount*0.04*diff);
 	}
-	early_pension = amount-deduction;
+	
+	
+	early_pension = pension2-deduction;
 
 	return early_pension>0?early_pension:0;
 }
@@ -461,7 +469,7 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
 		$scope.pension.psalary = get_psalary($scope.pension.total_wage_psal,$scope.pension.total_ncp_psal,$scope.total.daysafter);
 		$scope.pension.pension1 = get_pension($scope.total.daysbefore,$scope.total.daysafter,$scope.total.ncp1,$scope.total.ncp2,$scope.pension.psalary,$scope.pension.weightage);
 		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
-		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension2, $scope.basic.availing_date);
+		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
 	}
 	
 	$scope.WB_update = function() {
