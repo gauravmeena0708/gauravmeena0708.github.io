@@ -220,9 +220,9 @@ function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 		amount=pension1;
 	}
 	if(availing_date<date1){
-		deduction = round(amount*Math.pow(1-0.03,diff));
+		deduction = round(amount*Math.pow(0.03,diff));
 	} else {
-		deduction = round(amount*Math.pow(1-0.04,diff));
+		deduction = round(amount*Math.pow(0.04,diff));
 	}
 	
 	early_pension = pension2-deduction;
