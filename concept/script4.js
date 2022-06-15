@@ -16,8 +16,8 @@ const BASIC_DEFAULT =  {
 
 const SUPERANNUATION_DEFAULT = {
 	"total_month_psal":60,
-	"total_wage_psal":60*15000,
-	"total_ncp_psal":0,
+	"total_wage_psal":6070,
+	"total_ncp_psal":30,
 	"weightage":0,
 	"eligible":0,
 	"eligible_WB":0,
