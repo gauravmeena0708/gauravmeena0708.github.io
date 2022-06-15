@@ -230,7 +230,8 @@ function get_deferredPension(age,amount) {
 
 function get_psalary(wage_sum, ncp, bool=0){
 	var total = bool<1?365:1825;
-	var denom = total-ncp;
+	var total1= bool<1?360:1800;
+	var denom = ncp?total-ncp:total1;
 	return denom>0?round(wage_sum*30/denom):0;
 }
 
