@@ -237,6 +237,11 @@ function get_psalary(wage_sum, ncp, bool=0){
 function get_pension(days1,days2,ncp1,ncp2,psal,wt){
 	if((days1-ncp1)<0 || (days2-ncp2)<0) {
 		return 0;
+	} else if(day2==0){
+		eligible1=eligible1 = days1-ncp1+365*wt;
+		p1 = eligible1*psal/(70*365);
+		pension = round(p1);
+		return pension;
 	} else {
 		eligible1 = days1-ncp1+365*wt;
 		eligible2 = days2-ncp2;
