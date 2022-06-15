@@ -7,8 +7,8 @@ const CEILING2_DATE = new Date('2014-09-01');
 const BASIC_DEFAULT =  {
 	'uan':100000000000,
 	'name': "John Doe",
-	'dob': new Date('1962-08-10'),
-	'availing_date':new Date('2020-08-10'),	
+	'dob': new Date('1967-09-01'),
+	'availing_date':new Date('2017-09-01'),	
 	'age':0,
 	'dod':0,
 	'dod_date':new Date()
@@ -60,10 +60,10 @@ const SERVICE_DEFAULT = {
 }
 	
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('1980-08-01'),
-	'doe': new Date('2020-02-29'),
-	'ncp1':12,
-	'ncp2':10
+	'doj': new Date('1997-09-01'),
+	'doe': new Date('2012-01-31'),
+	'ncp1':1102,
+	'ncp2':0
 }
 
 const TOTAL_DEFAULT = {
