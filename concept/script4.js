@@ -209,8 +209,9 @@ function getCeilingDuration(doj,doe, str, before=1) {
 	return unit>=1?unit:0;
 }
 
-function get_earlyPension(age, pension1, pension2, amount, ad) {
+function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 	diff = 58 - age;
+	console.log(diff);
 	date1 = new Date('2008-11-26');
 	
 	if(pension1==pension2){
