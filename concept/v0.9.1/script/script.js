@@ -317,8 +317,8 @@ var TABLEB = [];
 var TABLEC = [];
 var TABLED = [];
 
-var app = angular.module('myApp', ['ngCookies']);
-app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+var app = angular.module('pensionApp', ['ngCookies']);
+app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
 
 	
 	//function to call if basic details are changed

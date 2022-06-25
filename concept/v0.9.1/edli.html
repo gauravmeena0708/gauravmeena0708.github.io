@@ -3,8 +3,8 @@
 <head>
 	<title>EDLI Calculator</title>
 	<!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-icons.css">
 	<style>
 	.shadow {
 		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
@@ -20,7 +20,7 @@
 
 </head>
 
-<body ng-app="myApp" ng-controller="namesCtrl" class="pt-100 pb-100">
+<body ng-app="edliApp" ng-controller="edliCtrl" class="pt-100 pb-100">
 	<header class="p-1 mb-2 bg-info text-white shadow">
 		<div class="container">
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -38,8 +38,7 @@
 			<div class="alert alert-dismissible fade show" role="alert">
 			<ul class="list-group">
 				<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
-				The calculation on this page is based on the data entered by the user. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
-				
+					The calculation on this page is only illustrative and based on the data entered by the user. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
 				</li>
 				<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
 				Preceding months - Example: If Date-of-Death is 07.04.2022 then wages and progressive balance between 04-21 to 03-22 needs to be taken for calculation of Average wages and average progressive balance.
@@ -89,7 +88,6 @@
 						
 						<ul class="list-group mb-3">
 							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part A = Proportional amount+ Percent*(APB-Proportional)[subject to Maximum]+Additional_Percent*Amt if maximum not reached">Part A Calculation <i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"> What are these parts?</i></li>
-							<li ng-if=0 class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total Progressive Balance: <span>{{tpb}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Avg Progressive Balance: <span>{{apb}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">EDLI Amount to be taken proportional to APB(from table): <span>{{a_min}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent of above Minimum Amount(from table): <span>{{a_perc1}}</span></li>
@@ -191,14 +189,14 @@
     </div>
   </div>
 </div>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" type="text/javascript"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js" type="text/javascript"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js" type="text/javascript"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="luxon.min.js"></script>
-	<script type="text/javascript" src="qrcode.min.js"></script>
+	<script type="text/javascript"  src="./script/angular.min.js"></script>
+	<script type="text/javascript"  src="./script/angular-cookies.js"></script>
+	<script type="text/javascript"  src="./script/angular-route.js"></script>
+	<script type="text/javascript"  src="./script/jquery-3.3.1.slim.min.js"></script>
+	<script type="text/javascript"  src="./script/popper.min.js"></script>
+	<script type="text/javascript"  src="./script/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript"  src="./script/luxon.min.js"></script>
+	<script type="text/javascript"  src="./script/qrcode.min.js"></script>
 	<script>
 	// jshint esversion: 6
 	function myFunction() {
@@ -211,8 +209,8 @@
 	});
 	
 	
-	var app = angular.module('myApp', ['ngCookies']);
-	app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+	var app = angular.module('edliApp', ['ngCookies']);
+	app.controller('edliCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
 		$http({
 			method: 'GET',
 			url: './edli2.json'
@@ -231,7 +229,6 @@
 			console.log(error);
 		});
 		
-		$scope.uan = 100000000000;
 		
 		let url = new URL(window.location);
 		let searchParams = new URLSearchParams(url.search);
@@ -284,6 +281,7 @@
 			const d = luxon.DateTime.fromISO(dat.toISOString());
 			return d.toFormat('dd-MM-yyyy');
 		}
+		
 		$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
 		var qrcode = new QRCode("qrcode", {
 			text: $scope.url,
