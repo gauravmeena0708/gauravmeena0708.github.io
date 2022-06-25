@@ -97,7 +97,7 @@
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount ({{a_perc2}}*amount ) [A2]: <span>{{a_perc2*get_amt_a(a_min, a_max, apb, a_perc1)/100}}</span></li>
 							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Amount under Part A=A1+A2: <span>{{a}}</span></li>
 						</ul>
-						<ul class="list-group mb-3">
+						<ul class="list-group mb-3" ng-if="continuous12">
 							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part B (If Continuous service conditions are satisfied) = Avg. wages up to ceiling*Factor based on Date of death+ Percent*APB[subject to Maximum]... Subject to minimum amount in case of continuous service" >Part B Calculation</li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages: <span>{{avg_wage}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages limit: <span>{{b_ceiling}}</span></li>
@@ -113,6 +113,10 @@
 							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">[B1+B2+B3]: <span>{{sumb}}</span></li>
 							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Minimum Benefit allowed: <span>{{b_min}}</span></li>
 							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Benefit under Part B [Max of B1+B2+B3, Min]: <span>{{b}}</span></li>
+						</ul>
+						<ul class="list-group mb-3" ng-if="!continuous12">
+							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part B (If Continuous service conditions are satisfied) = Avg. wages up to ceiling*Factor based on Date of death+ Percent*APB[subject to Maximum]... Subject to minimum amount in case of continuous service" >Part B Calculation</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Part B if Continuous service condition not satisfied: <span>0</span></li>
 						</ul>
 						
 						<ul class="list-group mb-3">
