@@ -111,7 +111,7 @@
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent for Avg Progressive Balance(APB): <span>{{b_perc1}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">APB Benefit [B2]: <span>{{b_perc1*apb/100}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Max APB Benefit Allowed: <span>{{b_max}}</span></li>
-							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">APB Benefit to be Added [B3]: <span>{{getmax(b_perc1*apb/100,b_max)}}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">APB Benefit to be Added [B3]: <span>{{getmin(b_perc1*apb/100,b_max)}}</span></li>
 							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">[B1+B2+B3]: <span>{{sumb}}</span></li>
 							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Minimum Benefit allowed: <span>{{b_min}}</span></li>
 							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Benefit under Part B [Max of B1+B2+B3, Min]: <span>{{b}}</span></li>
@@ -241,8 +241,8 @@
 			var dod = luxon.DateTime.fromFormat(searchParams.get('dod'), 'dd-MM-yyyy');
 			$scope.dod = new Date(dod ) || new Date('2020-02-16');
 		} else {
-			$scope.dod = new Date('2020-02-16');
 		}
+			$scope.dod = new Date('2020-02-16');
 		
 		if (searchParams.has("apb")) {
 			$scope.apb = parseInt(searchParams.get('apb'));
@@ -369,6 +369,7 @@
 			} else {
 				if(val2>b_max){
 					val2=b_max;
+					$scope.sumb=val1+val2;
 				}
 				if((val1+val2)<parseInt(b_min)) {
 				 final_b = b_min;
