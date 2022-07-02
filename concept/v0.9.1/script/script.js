@@ -301,6 +301,7 @@ function get_wage95(days, bool) {
 	} else {
 		val = 0;
 	}
+	console.log("Basic Table:",TABLE_BASIC);
 	console.log(val, TABLE_BASIC[years95]);
 	return val;
 }
