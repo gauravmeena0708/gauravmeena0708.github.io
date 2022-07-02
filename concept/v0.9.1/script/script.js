@@ -288,21 +288,8 @@ function getWageC(wage, dod) {
 
 function get_wage95(days, bool) {
 	years95= Math.ceil(days/365);
-	var val=0;
-	TABLEE=[[80,95,120,150],[85,105,135,170]];
-	if(years95<12) {
-		val = TABLEE[bool][0];
-	} else if(years95>=12 && years95<=15){
-		val = TABLEE[bool][1];
-	} else if(years95>15 && years95<=19){
-		val = TABLEE[bool][2];
-	} else if(years95>19){
-		val = TABLEE[bool][3];
-	} else {
-		val = 0;
-	}
-	console.log("Basic Table:",TABLE_BASIC);
-	console.log(val, TABLE_BASIC[years95]);
+	years95>19?20:years95;
+	var val = TABLE_BASIC[years95][bool+1];
 	return val;
 }
 
