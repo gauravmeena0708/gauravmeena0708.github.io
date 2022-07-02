@@ -39,8 +39,6 @@
 			<div class="col-md-6 col-sm-12">
 				<ul class="list-group shadow">
 					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Basic Details <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicDetail"><i class="bi bi-pencil-square"></i> Edit </button></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">UAN: <span>{{basic.uan}}</span></li>
-					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Name: <span>{{basic.name}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of Birth: <span>{{basic.dob | date:'dd-MM-yyyy'}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-if="basic.dod">Date of Death: <span>{{basic.availing_date | date:'dd-MM-yyyy'}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-if="!basic.dod">Pension Availing Date: <span>{{basic.availing_date | date:'dd-MM-yyyy'}}</span></li>
@@ -315,14 +313,6 @@
 		</div>
 		<div class="modal-body">
 			<form>
-				<div class="input-group mb-3">
-					<span class="input-group-text col-5" id="basic-addon1">UAN: </span>
-					<input type="number" maxlength="10" pattern="\d{10}" title="Please enter exactly 10 digits" ng-model="basic.uan" class="form-control" placeholder="name" aria-label="name" aria-describedby="basic-addon1">
-				</div>
-				<div class="input-group mb-3">
-					<span class="input-group-text col-5" id="basic-addon1">Name: </span>
-					<input type="text" ng-model="basic.name" class="form-control" placeholder="name" aria-label="name" aria-describedby="basic-addon1">
-				</div>
 				<div class="input-group mb-3">
 					<span class="input-group-text col-5" id="basic-addon1">DOB: </span>
 					<input type="date" ng-model="basic.dob" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">

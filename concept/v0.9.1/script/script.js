@@ -5,8 +5,6 @@ const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
 
 const BASIC_DEFAULT =  {
-	'uan':100000000000,
-	'name': "John Doe",
 	'dob': new Date('1967-09-01'),
 	'availing_date':new Date('2017-09-01'),	
 	'age':0,
@@ -290,18 +288,21 @@ function getWageC(wage, dod) {
 
 function get_wage95(days, bool) {
 	years95= Math.ceil(days/365);
+	var val=0;
 	TABLEE=[[80,95,120,150],[85,105,135,170]];
 	if(years95<12) {
-		return TABLEE[bool][0];
+		val = TABLEE[bool][0];
 	} else if(years95>=12 && years95<=15){
-		return TABLEE[bool][1];
+		val = TABLEE[bool][1];
 	} else if(years95>15 && years95<=19){
-		return TABLEE[bool][2];
+		val = TABLEE[bool][2];
 	} else if(years95>19){
-		return TABLEE[bool][3];
+		val = TABLEE[bool][3];
 	} else {
-		return 0;
+		val = 0;
 	}
+	console.log(val, TABLE_BASIC[years95]);
+	return val;
 }
 
 function get_factor95(dob) {
@@ -316,6 +317,7 @@ function get_factor95(dob) {
 var TABLEB = [];
 var TABLEC = [];
 var TABLED = [];
+var TABLE_BASIC=[];
 
 var app = angular.module('pensionApp', ['ngCookies']);
 app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
@@ -532,7 +534,8 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.total=TOTAL_DEFAULT;
 		
 		$scope.update()
-	}	
+	}
+	
 	$http({
 		method: 'GET',
 		url: './data.json'
@@ -541,6 +544,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		TABLEB = success.data.TABLEB;	
 		TABLEC = success.data.TABLEC;
 		TABLED = success.data.TABLED;
+		TABLE_BASIC = success.data.TABLE_BASIC_PENSION;
 		$scope.initiatilize();
 	},function (error){
 		console.log(error)
