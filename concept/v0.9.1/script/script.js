@@ -235,31 +235,35 @@ function get_psalary(wage_sum, ncp, bool=0){
 }
 
 function get_pension(days1,days2,ncp1,ncp2,psal,wt){
-	log("get_pension:(days1,days2, ncp1, ncp2,psal, wt)",[days1,days2,ncp1,ncp2,psal,wt]);
-	if((days1-ncp1)<0 || (days2-ncp2)<0) {
-		return 0;
+	var pension=0;
+	if(!days1 && !days2){
+		pension = 0;
+	} else if((days1-ncp1)<0 || (days2-ncp2)<0) {
+		pension = 0;
 	} else if(days2==0){
 		eligible1=eligible1 = days1-ncp1+365*wt;
 		p1 = eligible1*psal/(70*365);
 		pension = round(p1);
-		return pension;
 	} else {
 		eligible1 = days1-ncp1+365*wt;
 		eligible2 = days2-ncp2;
 		p1 = eligible1*6500/(70*365);
 		p2 = eligible2*psal/(70*365);
-		
 		pension = round(p1+p2);
-		return pension;
 	}
+	if(pension) {
+		log("get_pension:(days1,days2, ncp1, ncp2,psal, wt, pension)",[days1,days2,ncp1,ncp2,psal,wt,pension]);
+	}
+	return pension;
 }
 
 function findElement(data, attr, value, retattr){
-	log("findElement Called:(value,data)", [value,data]);
 	var found = data.find(function(element) {
 		return element[attr] == value;
 	});
-	return found[retattr]?found[retattr]:0;
+	var val = found[retattr]?found[retattr]:0;
+	log("findElement Called:(attr,value,retattr,value)", [attr,value,retattr,val]);
+	return val;
 }
 
 function getWageC(wage, dod) {
@@ -287,18 +291,21 @@ function get_wage95(days, bool) {
 
 function get_factor95(dob) {
 	ageon95 = getCeilingDuration(dob,CEILING1_DATE,'years',2);
-	log("get_factor95:ageon95",[ageon95])
 	yearsto58 = 58 - ageon95;
 	years = yearsto58>34?34:yearsto58;
 	factor = findElement(TABLEB, "years", years, "factor");
+	log("get_factor95:(dob,ageon95,yearsto58,factor)",[dob,ageon95,yearsto58,factor])
 	return factor;
 }
 
 function log(str, array) {
 	console.log("Log:", str,":")
-	for (const item of array) {
+	let text = array.join();
+	if(array.length) console.log(text);
+	/*for (const item of array) {
 		console.log(item);
 	}
+	*/
 }
 	
 var TABLEB = [];
@@ -503,7 +510,6 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		if($scope.basic.dod){
 			$scope.familyPension();
 		}
-		
 	}
 	
 	$scope.initiatilize = function (){
