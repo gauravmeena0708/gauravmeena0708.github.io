@@ -8,7 +8,7 @@ const BASIC_DEFAULT =  {
 	'dob': new Date('1988-04-07'),
 	'availing_date':new Date('2021-02-01'),	
 	'age':0,
-	'dod':1,
+	'dod':0,
 	'dod_date':new Date('2021-02-01'),
 	'doe':0
 };
