@@ -98,16 +98,13 @@ function getDiff(d1, d2, str, withbool=1) {
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
 	if(str=="days") {
 		Y = Math.floor(interval.length('Years'));
-		M = Math.floor(interval.length('Months')%12);
-		
+		M = Math.floor(interval.length('Months')%12);	
 		months_to_add=Math.floor(interval.length('Months'));
-		console.log(date1);
-		console.log(months_to_add);
 		date3 = date1.plus({months: months_to_add})
 		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
 		d2=interval2.length('Days');
 		days=(Y*365)+(M*30)+d2+1;
-		console.log(Y, M,days,d2)
+		log("getDiff Called",[Y, M,days,d2])
 		return days;
 	}
 	var diffUnits = 0;
@@ -135,7 +132,7 @@ function get_pensionable_days(doj,doe){
 	var interval2 = luxon.Interval.fromDateTimes(date3, date2);
 	d2=interval2.length('Days');
 	days=(Y*365)+(M*30)+d2+1;
-	console.log(Y, M,days,d2);
+	log("get_pensionable_days called",[Y, M,days,d2]);
 
 	return days;
 };
@@ -174,7 +171,7 @@ function getCeilingDuration(doj,doe, str, before=1) {
 		}	
 	} else if(before==1){
 		if (doj >= CEILING2_DATE) {
-			console.log("both DOJ DOE are greater");			
+			log("Get Ceiling duration: both DOJ DOE are greater",[]);			
 		} else {
 			if(doe < CEILING2_DATE) {
 				if(doj<CEILING1_DATE) {
@@ -192,7 +189,7 @@ function getCeilingDuration(doj,doe, str, before=1) {
 		}
 	} else {
 		if (doe < CEILING2_DATE) {
-			console.log("both DOJ DOE are lesser");			
+			log("Get Ceiling duration: both DOJ DOE are lesser",[]);			
 		} else {
 			if(doj >= CEILING2_DATE) {
 				unit = getDiff(doj,doe,str);
@@ -206,7 +203,7 @@ function getCeilingDuration(doj,doe, str, before=1) {
 
 function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 	diff = 58 - age;
-	console.log(diff);
+	log("get_earlyPension: diff", [diff]);
 	date1 = new Date('2008-11-26');
 	
 	if(pension1==pension2){
@@ -238,7 +235,7 @@ function get_psalary(wage_sum, ncp, bool=0){
 }
 
 function get_pension(days1,days2,ncp1,ncp2,psal,wt){
-	console.log(days1,days2,ncp1,ncp2,psal,wt);
+	log("get_pension:(days1,days2, ncp1, ncp2,psal, wt)",[days1,days2,ncp1,ncp2,psal,wt]);
 	if((days1-ncp1)<0 || (days2-ncp2)<0) {
 		return 0;
 	} else if(days2==0){
@@ -258,8 +255,7 @@ function get_pension(days1,days2,ncp1,ncp2,psal,wt){
 }
 
 function findElement(data, attr, value, retattr){
-	console.log(value);
-	console.log(data);
+	log("findElement Called:(value,data)", [value,data]);
 	var found = data.find(function(element) {
 		return element[attr] == value;
 	});
@@ -271,7 +267,7 @@ function getWageC(wage, dod) {
 	if(wage<=300){
 		val =300;
 	} else if(wage>=CEILING1 && dod< CEILING2_DATE) {
-		console.log(wage,dod, CEILING2_DATE);
+		log("getWageC called:(wage,dod,CEILING2_DATE)",[wage,dod, CEILING2_DATE]);
 		val = CEILING1;
 	} else if(wage>=CEILING2) {
 		val = CEILING2;
@@ -285,18 +281,24 @@ function getWageC(wage, dod) {
 function get_wage95(days, bool) {
 	years95= Math.ceil(days/365);
 	years95= years95>19?20:years95;
-	console.log(TABLE_BASIC);
 	var val = TABLE_BASIC[years95][bool+1];
 	return val;
 }
 
 function get_factor95(dob) {
 	ageon95 = getCeilingDuration(dob,CEILING1_DATE,'years',2);
-	console.log(ageon95)
+	log("get_factor95:ageon95",[ageon95])
 	yearsto58 = 58 - ageon95;
 	years = yearsto58>34?34:yearsto58;
 	factor = findElement(TABLEB, "years", years, "factor");
 	return factor;
+}
+
+function log(str, array) {
+	console.log("Log:", str,":")
+	for (const item of array) {
+		console.log(item);
+	}
 }
 	
 var TABLEB = [];
@@ -310,12 +312,12 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	
 	//function to call if basic details are changed
 	$scope.updateBasic= function(){
+		log('updateBasic called',[]);
 		$scope.basic.age = getDiff($scope.basic.dob,$scope.basic.availing_date, "years",0);
 	}
-
-		
+	
 	function updateEligibility() {
-		console.log('eligibility called');
+		log('updateEligibility called',[]);
 		if($scope.services.length ==0) {
 			$scope.eligibility = 0;
 			$scope.eligibilityMsg = "You have not added any service. please add Service.";
@@ -386,7 +388,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		var ncp1 = $scope.service_input.ncp1;
 		var ncp2 = $scope.service_input.ncp2;
 		var date71 = new Date("1971-03-04");
-		console.log("Add Service: (DOJ, DOE): ",doj,doe);
+		log("Add Service Called: (DOJ, DOE): ",[doj,doe]);
 		var date1 = $scope.dates.slice();
 		$scope.dates.push(doj);
 		$scope.dates.push(doe);
@@ -482,18 +484,16 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		if($scope.total.days95) {
 			$scope.pension.wage95 = get_wage95($scope.total.days95,$scope.pension.greater);
 			$scope.pension.factor = get_factor95($scope.basic.dob)
-			//yearsto58=58$scope.basic.age
 			$scope.pension.past_pension = round($scope.pension.wage95*$scope.pension.factor,0);
 		} else {
 			$scope.pension.wage95 = 0;
 			$scope.pension.factor = 0;
-			//yearsto58=58$scope.basic.age
 			$scope.pension.past_pension = 0;
 		}
 	}
 	
 	$scope.update = function() {
-		console.log("update called")
+		log("update called",[])
 		$scope.total=getTotal();
 		$scope.updateBasic();
 		updateEligibility();		
@@ -523,14 +523,14 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		method: 'GET',
 		url: './data.json'
 	}).then(function (success){
-		console.log("json downloaded");
+		log("json downloaded",[]);
 		TABLEB = success.data.TABLEB;	
 		TABLEC = success.data.TABLEC;
 		TABLED = success.data.TABLED;
 		TABLE_BASIC = success.data.TABLE_BASIC_PENSION;
 		$scope.initiatilize();
 	},function (error){
-		console.log(error)
+		log(error,[])
 	});
 	
 	
