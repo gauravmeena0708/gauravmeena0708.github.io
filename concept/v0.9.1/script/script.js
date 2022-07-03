@@ -5,11 +5,11 @@ const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
 
 const BASIC_DEFAULT =  {
-	'dob': new Date('1963-08-21'),
-	'availing_date':new Date('2021-08-21'),	
+	'dob': new Date('1988-04-07'),
+	'availing_date':new Date('2021-02-01'),	
 	'age':0,
-	'dod':0,
-	'dod_date':new Date('2021-08-21'),
+	'dod':1,
+	'dod_date':new Date('2021-02-01'),
 	'doe':0
 };
 
