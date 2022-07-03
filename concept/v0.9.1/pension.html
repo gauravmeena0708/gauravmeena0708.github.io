@@ -35,8 +35,8 @@
 				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			</div>
 		</div>
-		<div class="row mt-3 mb-2">
-			<div class="col-md-6 col-sm-12">
+		<div class="row mb-2">
+			<div class="col-6 col-sm-12">
 				<ul class="list-group shadow">
 					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Basic Details <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicDetail"><i class="bi bi-pencil-square"></i> Edit </button></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of Birth: <span>{{basic.dob | date:'dd-MM-yyyy'}}</span></li>
@@ -151,6 +151,12 @@
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Minimum Pension [B]: <span>{{ pension.min }}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Pension amount as per Table C [C]: <span>{{ pension.pension4 }}</span></li>
 							<li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">Eligible Widow Pension [D= Maximum of (A,B,C)]: <span>{{ pension.pension5 }}</span></li>
+						</ul>
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-warning">Amount of Children Pension = 25% of widow/widower pensionsubject to MIn. of 
+							Rs. 150/- per child max. to two children at a time.</li>
+							<li class="list-group-item list-group-item-warning">Amount of Orphan Pension   = 75% of widow/widower pensionsubject to MIn. of 
+							Rs. 250/- per child max. to two children at a time.</li>
 						</ul>
 					</div>
 				</div>

@@ -75,8 +75,6 @@ const TOTAL_DEFAULT = {
 	'daysafter':0
 }
 
-
-
 const download = function () {
 	window.print();
 };
@@ -94,8 +92,7 @@ function get_WB_Factor(years) {
 	return TABLED[years]||0
 };
 
-function getDiff(d1, d2, str, withbool=1) {
-	
+function getDiff(d1, d2, str, withbool=1) {	
 	date1= luxon.DateTime.fromJSDate(d1);
 	date2= luxon.DateTime.fromJSDate(d2);
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
@@ -271,7 +268,6 @@ function findElement(data, attr, value, retattr){
 
 function getWageC(wage, dod) {
 	var val =0;
-	
 	if(wage<=300){
 		val =300;
 	} else if(wage>=CEILING1 && dod< CEILING2_DATE) {
@@ -288,7 +284,8 @@ function getWageC(wage, dod) {
 
 function get_wage95(days, bool) {
 	years95= Math.ceil(days/365);
-	years95>19?20:years95;
+	years95= years95>19?20:years95;
+	console.log(TABLE_BASIC);
 	var val = TABLE_BASIC[years95][bool+1];
 	return val;
 }
@@ -388,14 +385,12 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		var doe = $scope.service_input.doe;
 		var ncp1 = $scope.service_input.ncp1;
 		var ncp2 = $scope.service_input.ncp2;
-		var res = (doe - doj) / 1000 / 60 / 60 / 24;
-		console.log(res);
 		var date71 = new Date("1971-03-04");
-		
+		console.log("Add Service: (DOJ, DOE): ",doj,doe);
 		var date1 = $scope.dates.slice();
 		$scope.dates.push(doj);
 		$scope.dates.push(doe);
-		console.log(doj,doe);
+		
 		if(multipleDateRangeOverlaps($scope.dates)){
 			alert("Date range overlapping. returning to previous state");
 			$scope.dates = date1.slice();
