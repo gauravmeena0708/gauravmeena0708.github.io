@@ -5,11 +5,11 @@ const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
 
 const BASIC_DEFAULT =  {
-	'dob': new Date('1962-04-15'),
-	'availing_date':new Date('2022-04-15'),	
+	'dob': new Date('1963-08-21'),
+	'availing_date':new Date('2021-08-21'),	
 	'age':0,
 	'dod':0,
-	'dod_date':new Date('2022-04-14'),
+	'dod_date':new Date('2021-08-21'),
 	'doe':0
 };
 
@@ -59,10 +59,10 @@ const SERVICE_DEFAULT = {
 }
 	
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('1989-08-22'),
-	'doe': new Date('2022-04-14'),
-	'ncp1':0,
-	'ncp2':0
+	'doj': new Date('1989-03-01'),
+	'doe': new Date('2021-08-20'),
+	'ncp1':5,
+	'ncp2':7
 }
 
 const TOTAL_DEFAULT = {
