@@ -5,17 +5,18 @@ const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
 
 const BASIC_DEFAULT =  {
-	'dob': new Date('1967-09-01'),
-	'availing_date':new Date('2017-09-01'),	
+	'dob': new Date('1962-04-15'),
+	'availing_date':new Date('2022-04-15'),	
 	'age':0,
 	'dod':0,
-	'dod_date':new Date()
+	'dod_date':new Date('2022-04-14'),
+	'doe':0
 };
 
 const SUPERANNUATION_DEFAULT = {
 	"total_month_psal":60,
-	"total_wage_psal":6070,
-	"total_ncp_psal":30,
+	"total_wage_psal":900000,
+	"total_ncp_psal":0,
 	"weightage":0,
 	"eligible":0,
 	"eligible_WB":0,
@@ -25,7 +26,7 @@ const SUPERANNUATION_DEFAULT = {
 	"pension1":0,
 	"pension2":0,
 	"pension3":0,
-	"last_wage":0,
+	"last_wage":15000,
 	'greater':0
 }
 
@@ -58,9 +59,9 @@ const SERVICE_DEFAULT = {
 }
 	
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('1997-09-01'),
-	'doe': new Date('2012-01-31'),
-	'ncp1':1102,
+	'doj': new Date('1989-08-22'),
+	'doe': new Date('2022-04-14'),
+	'ncp1':0,
 	'ncp2':0
 }
 
@@ -289,9 +290,12 @@ function get_wage95(days, bool) {
 	return val;
 }
 
-function get_factor95(dob) {
+function get_factor95(dob,doe) {
+	log("get_factor95:(dob,doe)",[dob,doe]);
 	ageon95 = getCeilingDuration(dob,CEILING1_DATE,'years',2);
-	yearsto58 = 58 - ageon95;
+	ageondoe= getDiff(dob, doe, 'years')-1;
+	log("get_factor95:(ageon95,ageondoe)",[ageon95,ageondoe]);
+	yearsto58 = ageondoe - ageon95;
 	years = yearsto58>34?34:yearsto58;
 	factor = findElement(TABLEB, "years", years, "factor");
 	log("get_factor95:(dob,ageon95,yearsto58,factor)",[dob,ageon95,yearsto58,factor])
@@ -413,6 +417,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			alert("DOJ can not be less than Family pension scheme date.");
 			$scope.dates = date1.slice();
 		} else {
+			$scope.basic.doe=doe>$scope.basic.doe?doe:$scope.basic.doe;
 			var service = {
 				'doj':doj,
 				'doe':doe,
@@ -484,13 +489,13 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		val = getWageC($scope.pension.last_wage,$scope.dod)
 		found = findElement(TABLEC,"salary",val,"pension");
 		$scope.pension.pension4 = found;
-		$scope.pension.pension5= Math.max($scope.pension.min, $scope.pension.pension3, $scope.pension.pension4)
+		$scope.pension.pension5= Math.max($scope.pension.min, $scope.pension.pension2, $scope.pension.pension4)
 	}
 	
 	$scope.update_past = function(){
 		if($scope.total.days95) {
 			$scope.pension.wage95 = get_wage95($scope.total.days95,$scope.pension.greater);
-			$scope.pension.factor = get_factor95($scope.basic.dob)
+			$scope.pension.factor = get_factor95($scope.basic.dob,$scope.basic.doe)
 			$scope.pension.past_pension = round($scope.pension.wage95*$scope.pension.factor,0);
 		} else {
 			$scope.pension.wage95 = 0;
