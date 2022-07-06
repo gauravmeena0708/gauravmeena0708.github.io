@@ -5,11 +5,11 @@ const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
 
 const BASIC_DEFAULT =  {
-	'dob': new Date('1988-04-07'),
-	'availing_date':new Date('2021-02-01'),	
+	'dob': new Date('1983-12-25'),
+	'availing_date':new Date('2022-04-21'),	
 	'age':0,
 	'dod':0,
-	'dod_date':new Date('2021-02-01'),
+	'dod_date':new Date('2022-04-21'),
 	'doe':0
 };
 
@@ -59,10 +59,10 @@ const SERVICE_DEFAULT = {
 }
 	
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('1989-03-01'),
-	'doe': new Date('2021-08-20'),
-	'ncp1':5,
-	'ncp2':7
+	'doj': new Date('2012-07-25'),
+	'doe': new Date('2021-10-30'),
+	'ncp1':0,
+	'ncp2':181
 }
 
 const TOTAL_DEFAULT = {
@@ -80,9 +80,15 @@ const download = function () {
 	window.print();
 };
 	
-const round = (n, dp) => {
+const round = (n, dp,bool=0) => {
+	var val=0
 	const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
-	return Math.round(n * h) / h
+	if (bool) {
+		val= Math.floor(n * h) / h;
+	} else {
+		val = Math.round(n * h) / h;
+	}
+	return val;
 };
 		
 function get_WB_Wage(year1,year2,wage1,wage2) {
@@ -388,7 +394,8 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		days1 = total.daysbefore>total.ncp1?total.daysbefore-total.ncp1:0;
 		days2 = total.daysafter>total.ncp2?total.daysafter-total.ncp2:0;
 		$scope.years1 = round(days1/365,2);
-		$scope.years2 = round(days2/365,2);
+		$scope.years2 = round(days2/365,2,1);
+		log("get Total:(days1,days2,years1,years2,yearsbefore, yearsafter):",[days1,days2,$scope.years1,$scope.years2,total.yearsbefore,total.yearsafter]);
 		return total;
 	}
 	
