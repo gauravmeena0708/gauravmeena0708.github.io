@@ -55,24 +55,36 @@ app.controller('namesCtrl', ['$scope','$cookies','$cookieStore', '$http', functi
  }]);
  
 var arr = [
-	['2012-12-01','2014-08-31',1.74,0], 
+	['2012-12-01','2014-08-31',1.74,0],
+	['2012-12-01','2022-01-31',9.2,0],
 	['2014-09-01','2022-01-31',7.42,0],
 	['2012-07-25','2014-08-31',2.10,0],
+	['2012-07-25','2021-10-30',8.75,181],
 	['2014-09-01','2021-10-30',6.66,181],
 	['2014-09-01','2021-12-28',7.27,15]
 	
 	
+	
+	
 ];
 
-/*
-['2012-12-01','2014-08-31',1.74,0],   		//1Y-10M-0D
-	['2014-09-01','2022-01-31',7.42,0], 	//7Y-4M
-	['2012-07-25','2014-08-31',2.10,0],     //2Y-1M-6D     
-	['2014-09-01','2021-10-30',6.66,181],   //7Y-10M - 6M-1D=7Y-3M-29D
-	['2014-09-01','2021-12-28',7.27,15]
-['2012-07-25','2021-10-30',181,'8Y-9M-9D'],
-['2012-12-01','2022-01-31',0,'9Y-2M-0D']
-*/
+
+function getDiff1(d1, d2, str,ncp) {	
+	date1= luxon.DateTime.fromJSDate(d1);
+	date2= luxon.DateTime.fromJSDate(d2);
+	var interval = luxon.Interval.fromDateTimes(date1, date2);
+	if(str=="days") {
+		Y = Math.floor(interval.length('Years'));
+		M = Math.floor(interval.length('Months')%12);	
+		months_to_add=Math.floor(interval.length('Months'));
+		date3 = date1.plus({months: months_to_add})
+		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
+		d2=interval2.length('Days');
+		days=(Y*365)+(M*30)+d2+1;
+		//console.log("getDiff Called",[Y, M,days,d2])
+		return round((days-ncp)/365,2);
+	}
+};
 function dateDiff(d1,d2) {
 	var y1 = luxon.DateTime.fromJSDate(d1);
 	var y2 = luxon.DateTime.fromJSDate(d2);
@@ -87,7 +99,10 @@ function dateDiff(d1,d2) {
 for(let i of arr){
 	D1 =  new Date(i[0]);
 	D2 =  new Date(i[1]);
-	x1 = dateDiff(D1,D2);
+	//x1 = dateDiff(D1,D2);
+	//console.log("should be",i[2])
+	x1 = getDiff1(D1,D2,'days',i[3])
+    console.log("should be, is: ", i[2], x1)
 }
 	</script>
 </body>

@@ -35,6 +35,7 @@ const WB_DEFAULT = {
 	"wage2":CEILING2,
 	"years1":0,
 	"years2":0,
+	"years_total":0,
 	"avg_wage":0,
 	"years" :0,
 	"factor":0,
@@ -83,12 +84,7 @@ const download = function () {
 const round = (n, dp,bool=0) => {
 	var val=0
 	const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
-	//todo: remove need of bool
-	if (bool) {
-		val= Math.floor(n * h) / h;
-	} else {
-		val = Math.round(n * h) / h;
-	}
+	val= Math.floor(n * h) / h;
 	return val;
 };
 		
@@ -231,7 +227,7 @@ function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 
 function get_deferredPension(age,amount) {
 	diff = age- 58;
-	deferred_pension = round(amount*Math.pow(1+0.04,diff),0);
+	deferred_pension = round(amount*Math.pow(1+0.04,diff));
 	return (diff>2||diff<0)?amount:deferred_pension;
 }
 
@@ -394,8 +390,9 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.service.total_ncp=total.ncp2+total.ncp1;
 		days1 = total.daysbefore>total.ncp1?total.daysbefore-total.ncp1:0;
 		days2 = total.daysafter>total.ncp2?total.daysafter-total.ncp2:0;
+		$scope.years_total=round((total.pensionabledays-total.ncp1-total.ncp2)/365,2);
 		$scope.years1 = round(days1/365,2);
-		$scope.years2 = round(days2/365,2,1);
+		$scope.years2 = round(days2/365,2);
 		log("get Total:(days1,days2,years1,years2,yearsbefore, yearsafter):",[days1,days2,$scope.years1,$scope.years2,total.yearsbefore,total.yearsafter]);
 		return total;
 	}
@@ -442,7 +439,6 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			service['daysafter']=service['pensionabledays']-service['daysbefore'];
 			
 			$scope.services.push(service);
-			//$scope.total = getTotal();
 			$scope.update();	
 		}
 	}
@@ -451,7 +447,6 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		if(index >= 0){
 			$scope.dates.splice(index*2, 2);
 			$scope.services.splice(index, 1);
-			//$scope.total = getTotal();
 			$scope.update();	
 		}
 	}
@@ -480,7 +475,8 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	
 	$scope.WB_update = function() {
 		$scope.WB.years1 = $scope.years1;
-		$scope.WB.years2 = $scope.years2;
+		$scope.WB.years_total=$scope.years_total;
+		$scope.WB.years2 = $scope.WB.years_total -$scope.years1;
 		$scope.WB.years = round($scope.WB.years1 + $scope.WB.years2);
 		
 		if($scope.WB.years>9||$scope.WB.years<=0){
