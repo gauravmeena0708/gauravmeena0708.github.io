@@ -84,7 +84,11 @@ const download = function () {
 const round = (n, dp,bool=0) => {
 	var val=0
 	const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
-	val= Math.floor(n * h) / h;
+	if (bool) {
+		val= Math.floor(n * h) / h;
+	} else {
+		val = Math.round(n * h) / h;
+	}
 	return val;
 };
 		
@@ -227,7 +231,7 @@ function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 
 function get_deferredPension(age,amount) {
 	diff = age- 58;
-	deferred_pension = round(amount*Math.pow(1+0.04,diff));
+	deferred_pension = round(amount*Math.pow(1+0.04,diff),0);
 	return (diff>2||diff<0)?amount:deferred_pension;
 }
 
