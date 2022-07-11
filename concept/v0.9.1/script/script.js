@@ -84,11 +84,7 @@ const download = function () {
 const round = (n, dp,bool=0) => {
 	var val=0
 	const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
-	if (bool) {
-		val= Math.floor(n * h) / h;
-	} else {
-		val = Math.round(n * h) / h;
-	}
+	val = Math.round(n * h) / h;
 	return val;
 };
 		
