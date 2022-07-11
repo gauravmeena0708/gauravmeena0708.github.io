@@ -227,7 +227,7 @@ function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 
 function get_deferredPension(age,amount) {
 	diff = age- 58;
-	deferred_pension = round(amount*Math.pow(1+0.04,diff),0);
+	deferred_pension = round(amount*Math.pow(1+0.04,diff));
 	return (diff>2||diff<0)?amount:deferred_pension;
 }
 
@@ -500,7 +500,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		if($scope.total.days95) {
 			$scope.pension.wage95 = get_wage95($scope.total.days95,$scope.pension.greater);
 			$scope.pension.factor = get_factor95($scope.basic.dob,$scope.basic.doe)
-			$scope.pension.past_pension = round($scope.pension.wage95*$scope.pension.factor,0);
+			$scope.pension.past_pension = round($scope.pension.wage95*$scope.pension.factor);
 		} else {
 			$scope.pension.wage95 = 0;
 			$scope.pension.factor = 0;
