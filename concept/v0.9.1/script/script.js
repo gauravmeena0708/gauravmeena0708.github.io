@@ -27,7 +27,7 @@ const SUPERANNUATION_DEFAULT = {
 	"pension2":0,
 	"pension3":0,
 	"last_wage":15000,
-	'greater':0
+	'greater':1
 }
 
 const WB_DEFAULT = {
