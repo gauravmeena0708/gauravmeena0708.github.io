@@ -5,17 +5,17 @@ const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
 
 const BASIC_DEFAULT =  {
-	'dob': new Date('1983-12-25'),
-	'availing_date':new Date('2022-04-21'),	
+	'dob': new Date('1963-12-25'),
+	'availing_date':new Date('2021-12-25'),	
 	'age':0,
 	'dod':0,
-	'dod_date':new Date('2022-04-21'),
+	'dod_date':new Date('2021-12-25'),
 	'doe':0
 };
 
 const SUPERANNUATION_DEFAULT = {
 	"total_month_psal":60,
-	"total_wage_psal":900000,
+	"total_wage_psal":597247,
 	"total_ncp_psal":0,
 	"weightage":0,
 	"eligible":0,
@@ -60,10 +60,10 @@ const SERVICE_DEFAULT = {
 }
 	
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('2012-07-25'),
-	'doe': new Date('2021-10-30'),
-	'ncp1':0,
-	'ncp2':181
+	'doj': new Date('1990-02-01'),
+	'doe': new Date('2018-11-01'),
+	'ncp1':8,
+	'ncp2':46
 }
 
 const TOTAL_DEFAULT = {
