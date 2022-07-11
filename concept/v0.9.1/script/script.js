@@ -387,6 +387,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.service.months2= total.monthsafter>60?60:total.monthsafter;
 		$scope.service.ncp1=total.ncp1;
 		$scope.service.ncp2=total.ncp2;
+		log("get Total: total ncp1 total ncp2:",total.ncp1,total.ncp2);
 		$scope.service.total_ncp=total.ncp2+total.ncp1;
 		days1 = total.daysbefore>total.ncp1?total.daysbefore-total.ncp1:0;
 		days2 = total.daysafter>total.ncp2?total.daysafter-total.ncp2:0;
