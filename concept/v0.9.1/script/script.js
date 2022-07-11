@@ -61,7 +61,7 @@ const SERVICE_DEFAULT = {
 	
 const SERVICE_INPUT_DEFAULT = {
 	'doj': new Date('1990-02-01'),
-	'doe': new Date('2018-11-01'),
+	'doe': new Date('2018-12-01'),
 	'ncp1':8,
 	'ncp2':46
 }
@@ -298,7 +298,9 @@ function get_factor95(dob,doe) {
 	ageon95 = getCeilingDuration(dob,CEILING1_DATE,'years',2);
 	ageondoe= getDiff(dob, doe, 'years')-1;
 	log("get_factor95:(ageon95,ageondoe)",[ageon95,ageondoe]);
-	yearsto58 = ageondoe - ageon95;
+	yearstodoe = ageondoe - ageon95;
+	yearsto58 = 59 - ageon95;
+	yearsto58 = yearstodoe>yearsto58?yearstodoe:yearsto58;
 	years = yearsto58>34?34:yearsto58;
 	factor = findElement(TABLEB, "years", years, "factor");
 	log("get_factor95:(dob,ageon95,yearsto58,factor)",[dob,ageon95,yearsto58,factor])
@@ -387,7 +389,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.service.months2= total.monthsafter>60?60:total.monthsafter;
 		$scope.service.ncp1=total.ncp1;
 		$scope.service.ncp2=total.ncp2;
-		log("get Total: total ncp1 total ncp2:",total.ncp1,total.ncp2);
+		log("get Total: total ncp1 total ncp2:",[total.ncp1,total.ncp2]);
 		$scope.service.total_ncp=total.ncp2+total.ncp1;
 		days1 = total.daysbefore>total.ncp1?total.daysbefore-total.ncp1:0;
 		days2 = total.daysafter>total.ncp2?total.daysafter-total.ncp2:0;
@@ -438,7 +440,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 				'yearsafter':getCeilingDuration(doj,doe,'years',0)
 			};
 			service['daysafter']=service['pensionabledays']-service['daysbefore'];
-			
+			log("addService:(daysbefore, daysafter, pensionabledays,ncp1,ncp2):",[service['daysbefore'],service['daysafter'],service['pensionabledays'],ncp1,ncp2])
 			$scope.services.push(service);
 			$scope.update();	
 		}
