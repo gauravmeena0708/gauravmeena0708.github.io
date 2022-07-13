@@ -238,7 +238,7 @@
 			return d.toFormat('dd-MM-yyyy');
 		}
 		
-		$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+		$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage+"&continous12="+$scope.continuous12;
 		var qrcode = new QRCode("qrcode", {
 			text: $scope.url,
 			width: 128,
@@ -326,7 +326,7 @@
 		$scope.update_continuous=function(continuous12){
 			$scope.continuous12= continuous12;
 			$scope.getParams($scope.list, $scope.dod,continuous12);
-			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage+"&continous12="+$scope.continuous12;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
 		};
@@ -388,7 +388,7 @@
 		
 		$scope.update = function () {
 			$scope.getParams($scope.list, $scope.dod);
-			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage+"&continous12="+$scope.continuous12;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
 		};
