@@ -105,7 +105,7 @@
 							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Additional Amount (if below limit) [B2]: <span>{{get_additional(avg_wage, b_ceiling, b_factor, b_perc)}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total till Now: <span>{{(getmin(avg_wage, b_ceiling)*b_factor) + get_additional(avg_wage, b_ceiling, b_factor, b_perc)}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent for Avg Progressive Balance(APB): <span>{{b_perc1}}</span></li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">APB Benefit [B2]: <span>{{b_perc1*apb/100}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">APB Benefit [B2]: <span>{{(b_perc*apb/100)}}</span></li>
 							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Max APB Benefit Allowed: <span>{{b_max}}</span></li>
 							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">APB Benefit to be Added [B3]: <span>{{getmin(b_perc1*apb/100,b_max)}}</span></li>
 							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">[B1+B2+B3]: <span>{{sumb}}</span></li>
@@ -365,7 +365,7 @@
 					}
 				}
 				$scope.a = $scope.get_final_a($scope.a_perc2,$scope.a_min, $scope.a_max, $scope.apb, $scope.a_perc1);
-				$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min, $scope.continuous12);
+				$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc, $scope.apb, $scope.b_max, $scope.b_min, $scope.continuous12);
 				$scope.final = $scope.getmax($scope.a,$scope.b);
 			}
 		};
