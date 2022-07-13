@@ -47,14 +47,14 @@
 					<div class="card-body">
 						<form>
 							<span class="alert col-5" ng-if=0 id="basic-addon1">{{alert}}</span>
-							<div class="input-group mb-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Based on date of death the minimum, maximum and other factors of calculation are affected. These are based on Gazette Notifications /circulars issued from time to time. ">
-								<span class="input-group-text col-5">Date of Death : <i class="bi bi-question-circle-fill"></i></span>
-								<input type="date" ng-model="dod" class="form-control" id="dod" ng-change="getParams(list,dod)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
+							<div class="input-group mb-2">
+								<span class="input-group-text col-8" data-bs-toggle="tooltip" data-bs-placement="top" title="Based on date of death the minimum, maximum and other factors of calculation are affected. These are based on Gazette Notifications /circulars issued from time to time. ">Date of Death : <i class="bi bi-question-circle-fill"></i></span>
+								<input type="date" ng-model="dod" class="form-control col-4" id="dod" ng-change="getParams(list,dod)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
 								<div class="invalid-tooltip">Please enter a valid input.</div>
 							</div>
 							
-							<div class="input-group mb-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Average progressive balance is average of balance in past 12 months. The same is available in the passbook website.">
-								<span class="input-group-text col-8" id="basic-addon1">Average Progressive Balance: <i class="bi bi-question-circle-fill"></i></span>
+							<div class="input-group mb-2" >
+								<span class="input-group-text col-8" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="top" title="Average progressive balance is average of balance in past 12 months. The same is available in the passbook website.">Average Progressive Balance: <i class="bi bi-question-circle-fill"></i></span>
 								<input type="number" ng-model="apb" class="form-control col-4" ng-change="update()" placeholder="Average Progressive Balance" aria-label="Average Progressive Balance" aria-describedby="basic-addon1">
 							</div>
 							
@@ -64,8 +64,8 @@
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod>=limit3">Whether completed continuous 12 months service (not necessarily in same est)?</label>
 							</div>
 							
-							<div class="input-group mb-2" ng-show="(continuous12 && b_factor)" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website. If Date-of-Death is 07.04.2022 then wages between 04-20 to 03-21 needs to be taken for average.">
-								<span class="input-group-text col-8" id="basic-addon1">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
+							<div class="input-group mb-2" ng-show="(continuous12 && b_factor)">
+								<span class="input-group-text col-8" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website. If Date-of-Death is 07.04.2022 then wages between 04-20 to 03-21 needs to be taken for average.">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
 								<input type="number" ng-model="avg_wage" class="form-control col-4" ng-change="update()" placeholder="Average Wage" max="{{b_ceiling+1000}}"  aria-label="Average Wage" aria-describedby="basic-addon1">
 							</div>
 			
@@ -80,7 +80,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-12">
+			<div class="col-sm-12" ng-show="output">
 				<div class="card shadow">
 					<div class="card-header d-flex justify-content-between align-items-center">EDLI Calculator Output : <span>Date of Death: {{dod | date:'dd-MM-yyyy'}}</span></div>
 					<div class="card-body p-3">
@@ -247,6 +247,17 @@
 			colorLight : "#ffffff",
 			correctLevel : QRCode.CorrectLevel.H
 		});
+		
+		$scope.reset = function(){
+			$scope.continuous12=DEFAULT.continuous12;
+			$('#continuous').prop('checked', false); 
+			$scope.dod = DEFAULT_DOD;
+			$scope.apb = DEFAULT.apb;
+			$scope.avg_wage = DEFAULT.avg_wage;
+			$scope.output=DEFAULT.output;
+			$scope.update();
+			
+		}
 		
 		$scope.getmin = function(a,b) {
 			if(a<b){
