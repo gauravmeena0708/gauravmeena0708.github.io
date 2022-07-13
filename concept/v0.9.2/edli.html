@@ -5,18 +5,7 @@
 	<!-- CSS only -->
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/bootstrap-icons.css">
-	<style>
-	.shadow {
-		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
-	}
-	.input {
-		background: linear-gradient(#9dd2ea, #8bceec);
-	}
-	
-	.list-group {
-		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
-	}
-	</style>
+	<link rel="stylesheet" href="./css/style.css">
 
 </head>
 
@@ -35,16 +24,20 @@
 	</header>
     <div class="container-fluid">
 		<div class="row">
-			<div class="alert alert-dismissible fade show" role="alert">
-			<ul class="list-group">
-				<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
-					The calculation on this page is only illustrative and based on the data entered by the user. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
-				</li>
-				<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
-				Preceding months - Example: If Date-of-Death is 07.04.2022 then wages and progressive balance between 04-21 to 03-22 needs to be taken for calculation of Average wages and average progressive balance.
-				</li>
-			</ul>
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			<div class="col-md-10">
+				<div class="alert fade show" role="alert">
+					<ul class="list-group">
+						<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
+							The calculation on this page is only illustrative and based on the data entered by the user. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
+						</li>
+						<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
+						Preceding months - Example: If Date-of-Death is 07.04.2022 then wages and progressive balance between 04-21 to 03-22 needs to be taken for calculation of Average wages and average progressive balance.
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-2 py-4">
+				<div id="qrcode"></div>
 			</div>
 		</div>
 		<div class="row g-4">
@@ -77,7 +70,6 @@
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod>=limit3">Whether completed continuous 12 months service (not necessarily in same est)? {{continuous12}}</label>
 							</div>
 						</form>
-						<div id="qrcode"></div>
 					</div>
 				</div>
 			</div>
