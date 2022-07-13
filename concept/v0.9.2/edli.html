@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>EDLI Calculator</title>
+	<!-- CSS only -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-icons.css">
+	<style>
+	.shadow {
+		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+	}
+	.input {
+		background: linear-gradient(#9dd2ea, #8bceec);
+	}
+	
+	.list-group {
+		box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+	}
+	</style>
+
+</head>
+
+<body ng-app="edliApp" ng-controller="edliCtrl" class="pt-100 pb-100">
+	<header class="p-1 mb-2 bg-info text-white shadow">
+		<div class="container">
+		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+			  <li><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
+			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li>
+			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI</a></li>
+			</ul>
+			<h3 class="text-center">CALCULATOR</h3>
+		  </div>
+		</div>
+	</header>
+    <div class="container-fluid">
+		<div class="row">
+			<div class="alert alert-dismissible fade show" role="alert">
+			<ul class="list-group">
+				<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
+					The calculation on this page is only illustrative and based on the data entered by the user. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
+				</li>
+				<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
+				Preceding months - Example: If Date-of-Death is 07.04.2022 then wages and progressive balance between 04-21 to 03-22 needs to be taken for calculation of Average wages and average progressive balance.
+				</li>
+			</ul>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+		<div class="row g-4">
+			<div class="col-md-6 col-sm-12">
+				<div class="card shadow">
+					<div class="card-header">EDLI Calculator Input</div>
+					<div class="card-body">
+						<form>
+							<span class="alert col-5" ng-if=0 id="basic-addon1">{{alert}}</span>
+							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Based on date of death the minimum, maximum and other factors of calculation are affected. These are based on Gazette Notifications /circulars issued from time to time. ">
+								<span class="input-group-text col-5" id="basic-addon1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Date of Death : <i class="bi bi-question-circle-fill"></i></span>
+								<input type="date" ng-model="dod" class="form-control" id="dod" ng-change="getParams(list,dod)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
+								<input type="range" ng-model="year" class="form-range" id="customRange1" ng-change="update_date(year)"  min="1976" max="2024">	
+								<div class="invalid-tooltip">Please enter a valid input.</div>
+							</div>
+							
+							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Average progressive balance is average of balance in past 12 months. The same is available in the passbook website.">
+								<span class="input-group-text col-8" id="basic-addon1">Average Progressive Balance: <i class="bi bi-question-circle-fill"></i></span>
+								<input type="number" ng-model="apb" class="form-control col-4" ng-change="update()" placeholder="Average Progressive Balance" aria-label="Average Progressive Balance" aria-describedby="basic-addon1">
+							</div>
+
+							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website. If Date-of-Death is 07.04.2022 then wages between 04-20 to 03-21 needs to be taken for average.">
+								<span class="input-group-text col-8" id="basic-addon1">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
+								<input type="number" ng-model="avg_wage" class="form-control col-4" ng-change="update()" placeholder="Average Wage" max="{{b_ceiling+1000}}"  aria-label="Average Wage" aria-describedby="basic-addon1">
+							</div>
+							
+							<div class="form-check mb-5">
+								<input class="form-check-input" ng-model="continuous12" ng-true-value="true" ng-false-value="false" ng-change="update()" type="checkbox" value="" id="flexCheckDefault">
+								<label class="form-check-label" for="flexCheckDefault" ng-if="dod<limit3">Whether completed continuous 12 months service is same establishment(last service)? {{continuous12}}</label>
+								<label class="form-check-label" for="flexCheckDefault" ng-if="dod>=limit3">Whether completed continuous 12 months service (not necessarily in same est)? {{continuous12}}</label>
+							</div>
+						</form>
+						<div id="qrcode"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<div class="card shadow">
+					<div class="card-header d-flex justify-content-between align-items-center">EDLI Calculator Output : <span>Date of Death: {{dod | date:'dd-MM-yyyy'}}</span></div>
+					<div class="card-body p-3">
+						
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part A = Proportional amount+ Percent*(APB-Proportional)[subject to Maximum]+Additional_Percent*Amt if maximum not reached">Part A Calculation <i class="bi bi-question-circle-fill" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"> What are these parts?</i></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Avg Progressive Balance: <span>{{apb}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">EDLI Amount to be taken proportional to APB(from table): <span>{{a_min}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent of above Minimum Amount(from table): <span>{{a_perc1}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Maximum EDLI Amount(from table): <span>{{a_max}}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Amount A (Calculated) [A1]: <span>{{get_amt_a(a_min, a_max, apb, a_perc1)}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount Per(from table): <span>{{a_perc2}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Additional Amount ({{a_perc2}}*amount ) [A2]: <span>{{a_perc2*get_amt_a(a_min, a_max, apb, a_perc1)/100}}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Amount under Part A=A1+A2: <span>{{a}}</span></li>
+						</ul>
+						<ul class="list-group mb-3" ng-if="continuous12 && b_factor">
+							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part B (If Continuous service conditions are satisfied) = Avg. wages up to ceiling*Factor based on Date of death+ Percent*APB[subject to Maximum]... Subject to minimum amount in case of continuous service" >Part B Calculation</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages: <span>{{avg_wage}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages limit: <span>{{b_ceiling}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Average Wages taken for Calculation: <span>{{getmin(avg_wage, b_ceiling)}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Factor: <span>{{b_factor}}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center ">EDLI (Avg Wages Calculated*Factor) [B1]: <span>{{ getmin(avg_wage, b_ceiling)*b_factor }}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Additional Amount (if below limit) [B2]: <span>{{get_additional(avg_wage, b_ceiling, b_factor, b_perc)}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total till Now: <span>{{(getmin(avg_wage, b_ceiling)*b_factor) + get_additional(avg_wage, b_ceiling, b_factor, b_perc)}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Percent for Avg Progressive Balance(APB): <span>{{b_perc1}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">APB Benefit [B2]: <span>{{b_perc1*apb/100}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Max APB Benefit Allowed: <span>{{b_max}}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">APB Benefit to be Added [B3]: <span>{{getmin(b_perc1*apb/100,b_max)}}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">[B1+B2+B3]: <span>{{sumb}}</span></li>
+							<li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">Minimum Benefit allowed: <span>{{b_min}}</span></li>
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Total Benefit under Part B [Max of B1+B2+B3, Min]: <span>{{b}}</span></li>
+						</ul>
+						<ul class="list-group mb-3" ng-if="!continuous12 || !b_factor">
+							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part B (If Continuous service conditions are satisfied) = Avg. wages up to ceiling*Factor based on Date of death+ Percent*APB[subject to Maximum]... Subject to minimum amount in case of continuous service" >Part B Calculation</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Part B if Continuous service condition not satisfied or Date of Death is before 08-01-2011: <span>0</span></li>
+						</ul>
+						
+						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">Final Benefit (Greater of A or B): <span>{{final}}</span></li>
+						</ul>
+						
+					</div>
+					<div class="card-footer">
+						<button type="button" class="btn btn-danger align-self-center" onclick="myFunction()">Download</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h5 class="modal-title" id="staticBackdropLabel">Eligibility Table - EDLI Calculation based on Date of Death</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-bordered table-sm">
+			<thead>
+				<tr>
+					<th>Start</th>
+					<th>End</th>
+					<th>Min Balance</th>
+					<th>Part A</th>
+					<th>Part B</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in list1">
+					<td>{{item.start}}</td>
+					<td>{{item.end}}</td>
+					<td>{{item.min_balance}}</td>
+					<td>{{item.part_a}}</td>
+					<td>{{item.part_b}}</td>
+				</tr>
+			</tbody>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">What is these parts and factors?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        EDLI Calculation is very different from other scheme calculation. As it is a Deposit linked scheme, the average progressive balance or APB is one importtant factor.
+		APB is average of total balance in 12(n) months prior to date of death(-any withdrawals). <br/><br/>
+		The other factors are decided based on circulars issued from time to time and the applicability of the circular is based on date of death. 
+		Hence, two major variables in EDLI calculation are Average Progressive Balance and Date of Death.
+		Based on Date of death many factors are decided such as Minimum, Maximum, percentage of APB to be taken etc.
+		
+		<h4>What are the parts - Part A and Part B?</h4>
+		EDLI amount calculation is done by two formulas and the member is eligible for the amount whichever is greater. You may check the table and relavent circulars by clicking link given in input form.
+		<br/>
+		Part A = Proportional amount+ Percent*(APB-Proportional)[subject to Maximum]+Additional_Percent*Amt if maximum not reached
+		<br/>
+		Part B (If Continuous service conditions are satisfied) = Avg. wages up to ceiling*Factor based on Date of death+ Percent*APB[subject to Maximum]... Subject to minimum amount in case of continuous service conditions"
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+	<script type="text/javascript"  src="./script/angular.min.js"></script>
+	<script type="text/javascript"  src="./script/angular-cookies.js"></script>
+	<script type="text/javascript"  src="./script/angular-route.js"></script>
+	<script type="text/javascript"  src="./script/jquery-3.3.1.slim.min.js"></script>
+	<script type="text/javascript"  src="./script/popper.min.js"></script>
+	<script type="text/javascript"  src="./script/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript"  src="./script/luxon.min.js"></script>
+	<script type="text/javascript"  src="./script/qrcode.min.js"></script>
+	<script>
+	// jshint esversion: 6
+	function myFunction() {
+		window.print();
+	}
+	
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	  return new bootstrap.Tooltip(tooltipTriggerEl);
+	});
+	
+	
+	var app = angular.module('edliApp', ['ngCookies']);
+	app.controller('edliCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+		$http({
+			method: 'GET',
+			url: './edli2.json'
+		}).then(function (success){
+			$scope.list =success.data;
+		},function (error){
+			console.log(error);
+		});
+		
+		$http({
+			method: 'GET',
+			url: './edli1.json'
+		}).then(function (success){
+			$scope.list1 =success.data;
+		},function (error){
+			console.log(error);
+		});
+		
+		
+		let url = new URL(window.location);
+		let searchParams = new URLSearchParams(url.search);
+
+		
+		if (searchParams.has("dod")) {
+			var dod = luxon.DateTime.fromFormat(searchParams.get('dod'), 'dd-MM-yyyy');
+			$scope.dod = new Date(dod ) || new Date('2020-02-16');
+		} else {
+			$scope.dod = new Date('2020-02-16');
+		}
+		
+		if (searchParams.has("apb")) {
+			$scope.apb = parseInt(searchParams.get('apb'));
+		} else {
+			$scope.apb = 7000;
+		}
+		
+		if (searchParams.has("avg_wage")) {
+			$scope.avg_wage = parseInt(searchParams.get('avg_wage'));
+		} else {
+			$scope.avg_wage = 15000;
+		}
+		
+
+		
+		var limit1 = new Date('1976-08-01');
+		var limit2 = new Date('2024-04-27');
+		$scope.limit3 = new Date('2021-04-29');
+		$scope.year = 2020;
+		$scope.continuous12 = true;
+		$scope.a = 0;
+		$scope.b = 0;
+		$scope.final = 0;
+		
+		$scope.a_min_bal = 0;
+		$scope.a_min     = 50000; 
+		$scope.a_max     = 100000; 
+		$scope.a_perc1   = 40; 
+		$scope.a_perc2   = 20; 
+		$scope.b_ceiling = 15000; 
+		$scope.b_factor  = 30; 
+		$scope.b_perc    = 0;
+		$scope.b_perc1    = 50;
+		$scope.b_max     = 175000; 
+		$scope.b_min     = 250000;
+		$scope.sumb = 0;
+		
+		function getDateString(dat) {
+			const d = luxon.DateTime.fromISO(dat.toISOString());
+			return d.toFormat('dd-MM-yyyy');
+		}
+		
+		$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+		var qrcode = new QRCode("qrcode", {
+			text: $scope.url,
+			width: 128,
+			height: 128,
+			colorDark : "#000000",
+			colorLight : "#ffffff",
+			correctLevel : QRCode.CorrectLevel.H
+		});
+		
+		$scope.getmin = function(a,b) {
+			if(a<b){
+				return a;
+			} else {
+				return b;
+			}
+		};
+		
+		$scope.getmax = function(a,b) {
+		    console.log("a,b: ",a,b);
+			if(a<b){
+				return b;
+			} else {
+				return a;
+			}
+		};
+		
+		$scope.update_date = function (year) {
+			$scope.dod.setYear(year);
+			const d = luxon.DateTime.fromISO($scope.dod.toISOString());
+			$scope.dod = new Date(d);
+			$scope.getParams($scope.list, $scope.dod);
+			$scope.update();
+			
+		};
+		
+		$scope.get_amt_a = function (min, max, amt, percent) {
+			if(min>amt){
+				return amt;
+			} else {
+				var val = parseInt(min)+parseInt(percent*(amt-min)/100);
+				if(val>max) {
+					return max;
+				} else {
+					return val;
+				}
+			}
+		
+		};
+		
+		
+		$scope.get_final_a = function(a_perc2,a_min, a_max, apb, a_perc1){
+			var val1 = $scope.get_amt_a(a_min, a_max, apb, a_perc1);
+			var additional = $scope.a_perc2*val1/100;
+			var val3 = Math.round(parseFloat(val1)+ parseFloat(additional));
+			$scope.a =val3;
+			return val3;
+		};
+		
+		$scope.get_additional = function (avg, ceiling, factor, percent) {
+			var additional = 0;
+			if(avg<ceiling) {
+				var val1 = factor*ceiling;
+				var val2 = avg*factor;
+				var val3 = percent*val2/100;
+				if (val2+val3>val1) {
+					additional =  parseInt(val1)-parseInt(val2);
+				} else {
+					additional = parseInt(val3);
+				}
+			}
+			return additional;
+		};
+		
+		$scope.get_final_b = function(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min){
+			var val1 = ($scope.getmin(avg_wage, b_ceiling)*b_factor) + $scope.get_additional(avg_wage, b_ceiling, b_factor, b_perc);
+			var val2 = b_perc1*apb/100;
+			$scope.sumb=val1+val2;
+
+			console.log("continuous value: ", $scope.continuous12);
+			var final_b = 0;
+			if($scope.continuous12==false){
+				final_b = 0;
+			} else {
+				if(val2>b_max){
+					val2=b_max;
+				}
+				if((val1+val2)<parseInt(b_min)) {
+				 final_b = b_min;
+				} else {
+					final_b = Math.round(parseFloat(val1)+parseFloat(val2));
+				}
+			}
+			$scope.b = final_b;
+			return final_b;
+		};
+		
+		$scope.getParams = function(list, date) {
+			if ( date < limit1 || date > limit2) {
+				$scope.alert = "Date out of range of available circulars. Please enter date between 01-08-1976 to 27-04-2024";
+			} else {
+        var start_date, end_date;
+				for (let i = 0; i < list.length; i++) {
+					$scope.alert = false; 
+					start_date = luxon.DateTime.fromFormat(list[i].start, 'dd-MM-yyyy');
+					end_date = luxon.DateTime.fromFormat(list[i].end, 'dd-MM-yyyy');
+					if(date>= start_date && date<= end_date){
+						console.log(list[i],date);
+						$scope.a_min_bal = list[i].a_min_bal;
+						$scope.a_min     = parseInt(list[i].a_min);
+						$scope.a_max     = list[i].a_max;
+						$scope.a_perc1   = list[i].a_perc1;
+						$scope.a_perc2   = list[i].a_perc2;
+						$scope.b_ceiling = parseInt(list[i].b_ceiling);
+						$scope.b_factor  = list[i].b_factor;
+						$scope.b_perc    = list[i].b_perc;
+						$scope.b_max     = list[i].b_max;
+						$scope.b_min     = list[i].b_min;	
+					}
+				}
+				$scope.a = $scope.get_final_a($scope.a_perc2,$scope.a_min, $scope.a_max, $scope.apb, $scope.a_perc1);
+				$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min);
+				$scope.final = $scope.getmax($scope.a,$scope.b);
+			}
+		};
+		
+		
+		
+		$scope.update = function () {
+			$scope.getParams($scope.list, $scope.dod);
+			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+			qrcode.clear(); // clear the code.
+			qrcode.makeCode($scope.url);
+		};
+	}]);
+	</script>
+</body>
+</html>
