@@ -315,8 +315,10 @@
 		};
 		
 		$scope.get_final_b = function(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min, continuous12){
+			console.log("Get Final B: continous: ",continuous12);
 			var val1 = ($scope.getmin(avg_wage, b_ceiling)*b_factor) + $scope.get_additional(avg_wage, b_ceiling, b_factor, b_perc);
 			var val2 = b_perc1*apb/100;
+			console.log("val2,apb,b_perc1:",val2,b_perc1,apb);
 			$scope.sumb=val1+val2;
 
 			console.log("continuous value: ", continuous12);
@@ -330,7 +332,9 @@
 				if((val1+val2)<parseInt(b_min)) {
 				 final_b = b_min;
 				} else {
+					console.log("Final B,val1,val2: ", final_b,val1,val2);
 					final_b = Math.round(parseFloat(val1)+parseFloat(val2));
+					console.log("Final B: ", final_b);
 				}
 			}
 			$scope.b = final_b;
@@ -361,7 +365,7 @@
 					}
 				}
 				$scope.a = $scope.get_final_a($scope.a_perc2,$scope.a_min, $scope.a_max, $scope.apb, $scope.a_perc1);
-				$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min, continuous12);
+				$scope.b = $scope.get_final_b($scope.avg_wage, $scope.b_ceiling, $scope.b_factor, $scope.b_perc, $scope.b_perc1, $scope.apb, $scope.b_max, $scope.b_min, $scope.continuous12);
 				$scope.final = $scope.getmax($scope.a,$scope.b);
 			}
 		};
