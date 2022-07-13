@@ -10,7 +10,6 @@ const BASIC_DEFAULT =  {
 	'availing_date':new Date('2021-12-25'),	
 	'age':0,
 	'dod':0,
-	'dod_date':new Date('2021-12-25'),
 	'doe':0
 };
 
@@ -31,17 +30,6 @@ const SUPERANNUATION_DEFAULT = {
 	'greater':1
 }
 
-const WB_DEFAULT = {
-	"wage1":CEILING1,
-	"wage2":CEILING2,
-	"years1":0,
-	"years2":0,
-	"years_total":0,
-	"avg_wage":0,
-	"years" :0,
-	"factor":0,
-	"amount":0
-};
 
 const SERVICE_DEFAULT = {
 	'actual':0,
@@ -87,14 +75,6 @@ const round = (n, dp,bool=0) => {
 	const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
 	val = Math.round(n * h) / h;
 	return val;
-};
-		
-function get_WB_Wage(year1,year2,wage1,wage2) {
-	return round(((year1*wage1)+(year2*wage2))/(year1+year2))
-};
-			
-function get_WB_Factor(years) {
-	return TABLED[years]||0
 };
 
 function getDiff(d1, d2, str, withbool=1) {	
@@ -271,43 +251,6 @@ function findElement(data, attr, value, retattr){
 	return val;
 }
 
-function getWageC(wage, dod) {
-	var val =0;
-	if(wage<=300){
-		val =300;
-	} else if(wage>=CEILING1 && dod< CEILING2_DATE) {
-		log("getWageC called:(wage,dod,CEILING2_DATE)",[wage,dod, CEILING2_DATE]);
-		val = CEILING1;
-	} else if(wage>=CEILING2) {
-		val = CEILING2;
-	} else {
-		val = Math.round(wage / 50) * 50
-	}
-	
-	return val;
-}
-
-function get_wage95(days, bool) {
-	years95= Math.ceil(days/365);
-	years95= years95>19?20:years95;
-	var val = TABLE_BASIC[years95][bool+1];
-	return val;
-}
-
-function get_factor95(dob,doe) {
-	log("get_factor95:(dob,doe)",[dob,doe]);
-	ageon95 = getCeilingDuration(dob,CEILING1_DATE,'years',2);
-	ageondoe= getDiff(dob, doe, 'years')-1;
-	log("get_factor95:(ageon95,ageondoe)",[ageon95,ageondoe]);
-	yearstodoe = ageondoe - ageon95;
-	yearsto58 = 59 - ageon95;
-	yearsto58 = yearstodoe>yearsto58?yearstodoe:yearsto58;
-	years = yearsto58>34?34:yearsto58;
-	factor = findElement(TABLEB, "years", years, "factor");
-	log("get_factor95:(dob,ageon95,yearsto58,factor)",[dob,ageon95,yearsto58,factor])
-	return factor;
-}
-
 function log(str, array) {
 	console.log("Log:", str,":")
 	let text = array.join();
@@ -478,38 +421,17 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	}
 	
 	$scope.WB_update = function() {
-		$scope.WB.years1 = $scope.years1;
-		$scope.WB.years_total=$scope.years_total;
-		$scope.WB.years2 = $scope.WB.years_total -$scope.years1;
-		$scope.WB.years = round($scope.WB.years1 + $scope.WB.years2);
+		console.log("WB");
 		
-		if($scope.WB.years>9||$scope.WB.years<=0){
-			$scope.alert = "The total years of service should be greater than 0.5 and less than 9.5"
-		} else {
-			$scope.alert = false;
-			$scope.WB.avg_wage = get_WB_Wage($scope.WB.years1,$scope.WB.years2,$scope.WB.wage1,$scope.WB.wage2);
-			$scope.WB.factor = get_WB_Factor($scope.WB.years);
-			$scope.WB.amount = round($scope.WB.factor*$scope.WB.avg_wage);
-		}
 	}
 	
 	$scope.familyPension = function(){
-		val = getWageC($scope.pension.last_wage,$scope.dod)
-		found = findElement(TABLEC,"salary",val,"pension");
-		$scope.pension.pension4 = found;
-		$scope.pension.pension5= Math.max($scope.pension.min, $scope.pension.pension2, $scope.pension.pension4)
+		console.log("Family");
 	}
 	
 	$scope.update_past = function(){
-		if($scope.total.days95) {
-			$scope.pension.wage95 = get_wage95($scope.total.days95,$scope.pension.greater);
-			$scope.pension.factor = get_factor95($scope.basic.dob,$scope.basic.doe)
-			$scope.pension.past_pension = round($scope.pension.wage95*$scope.pension.factor);
-		} else {
-			$scope.pension.wage95 = 0;
-			$scope.pension.factor = 0;
-			$scope.pension.past_pension = 0;
-		}
+		console.log("PAST");
+		
 	}
 	
 	$scope.update = function() {
@@ -517,12 +439,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.total=getTotal();
 		$scope.updateBasic();
 		updateEligibility();		
-		$scope.WB_update();
-		$scope.update_past();
 		$scope.update_Superannuation();
-		if($scope.basic.dod){
-			$scope.familyPension();
-		}
 	}
 	
 	$scope.initiatilize = function (){
@@ -531,7 +448,6 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.services=[];
 		$scope.service = SERVICE_DEFAULT;
 		$scope.service_input  = SERVICE_INPUT_DEFAULT;
-		$scope.WB = WB_DEFAULT;
 		$scope.pension = SUPERANNUATION_DEFAULT;
 		$scope.total=TOTAL_DEFAULT;
 		
