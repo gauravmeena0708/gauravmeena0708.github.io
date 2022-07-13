@@ -55,9 +55,8 @@
 						<form>
 							<span class="alert col-5" ng-if=0 id="basic-addon1">{{alert}}</span>
 							<div class="input-group mb-5" data-bs-toggle="tooltip" data-bs-placement="top" title="Based on date of death the minimum, maximum and other factors of calculation are affected. These are based on Gazette Notifications /circulars issued from time to time. ">
-								<span class="input-group-text col-5" id="basic-addon1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Date of Death : <i class="bi bi-question-circle-fill"></i></span>
+								<span class="input-group-text col-5" id="basic-addon1">Date of Death : <i class="bi bi-question-circle-fill"></i></span>
 								<input type="date" ng-model="dod" class="form-control" id="dod" ng-change="getParams(list,dod)" placeholder="dod" aria-label="dod" aria-describedby="basic-addon1">
-								<input type="range" ng-model="year" class="form-range" id="customRange1" ng-change="update_date(year)"  min="1976" max="2024">	
 								<div class="invalid-tooltip">Please enter a valid input.</div>
 							</div>
 							
@@ -67,12 +66,12 @@
 							</div>
 							
 							<div class="form-check mb-5" ng-if="b_factor">
-								<input class="form-check-input" ng-model="continuous12" ng-true-value="true" ng-false-value="false" ng-change="update()" type="checkbox" value="" id="flexCheckDefault">
+								<input class="form-check-input" ng-click="update_continuous()" type="checkbox" value="" id="flexCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod<limit3">Whether completed continuous 12 months service is same establishment(last service)? {{continuous12}}</label>
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod>=limit3">Whether completed continuous 12 months service (not necessarily in same est)? {{continuous12}}</label>
 							</div>
 							
-							<div class="input-group mb-5" ng-if="continuous12 && b_factor" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website. If Date-of-Death is 07.04.2022 then wages between 04-20 to 03-21 needs to be taken for average.">
+							<div class="input-group mb-5" ng-if="(continuous12 && b_factor)" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website. If Date-of-Death is 07.04.2022 then wages between 04-20 to 03-21 needs to be taken for average.">
 								<span class="input-group-text col-8" id="basic-addon1">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
 								<input type="number" ng-model="avg_wage" class="form-control col-4" ng-change="update()" placeholder="Average Wage" max="{{b_ceiling+1000}}"  aria-label="Average Wage" aria-describedby="basic-addon1">
 							</div>
@@ -118,7 +117,7 @@
 						</ul>
 						<ul class="list-group mb-3" ng-if="!continuous12 || !b_factor">
 							<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Part B (If Continuous service conditions are satisfied) = Avg. wages up to ceiling*Factor based on Date of death+ Percent*APB[subject to Maximum]... Subject to minimum amount in case of continuous service" >Part B Calculation</li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Part B if Continuous service condition not satisfied or Date of Death is before 08-01-2011: <span>0</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Part B if Continuous service condition not satisfied or if Date of Death is before 08-01-2011: <span>0</span></li>
 						</ul>
 						
 						<ul class="list-group mb-3">
@@ -133,41 +132,6 @@
 			</div>
 		</div>
 	</div>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header bg-info">
-        <h5 class="modal-title" id="staticBackdropLabel">Eligibility Table - EDLI Calculation based on Date of Death</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <table class="table table-striped table-bordered table-sm">
-			<thead>
-				<tr>
-					<th>Start</th>
-					<th>End</th>
-					<th>Min Balance</th>
-					<th>Part A</th>
-					<th>Part B</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="item in list1">
-					<td>{{item.start}}</td>
-					<td>{{item.end}}</td>
-					<td>{{item.min_balance}}</td>
-					<td>{{item.part_a}}</td>
-					<td>{{item.part_b}}</td>
-				</tr>
-			</tbody>
-		</table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -222,6 +186,7 @@
 			url: './edli2.json'
 		}).then(function (success){
 			$scope.list =success.data;
+			$scope.update();
 		},function (error){
 			console.log(error);
 		});
@@ -242,9 +207,9 @@
 		
 		if (searchParams.has("dod")) {
 			var dod = luxon.DateTime.fromFormat(searchParams.get('dod'), 'dd-MM-yyyy');
-			$scope.dod = new Date(dod ) || new Date('2020-02-16');
+			$scope.dod = new Date(dod ) || new Date();
 		} else {
-			$scope.dod = new Date('2020-02-16');
+			$scope.dod = new Date();
 		}
 		
 		if (searchParams.has("apb")) {
@@ -264,8 +229,7 @@
 		var limit1 = new Date('1976-08-01');
 		var limit2 = new Date('2024-04-27');
 		$scope.limit3 = new Date('2021-04-29');
-		$scope.year = 2020;
-		$scope.continuous12 = true;
+		$scope.continuous12 = false;
 		$scope.a = 0;
 		$scope.b = 0;
 		$scope.final = 0;
@@ -315,14 +279,15 @@
 			}
 		};
 		
-		$scope.update_date = function (year) {
-			$scope.dod.setYear(year);
-			const d = luxon.DateTime.fromISO($scope.dod.toISOString());
-			$scope.dod = new Date(d);
-			$scope.getParams($scope.list, $scope.dod);
+		$scope.update_continuous = function(){
+			if ($scope.continuous12==false) {
+				$scope.continuous12 = true;
+			} else {
+				$scope.continuous12 = false;
+			}
 			$scope.update();
-			
-		};
+		}
+		
 		
 		$scope.get_amt_a = function (min, max, amt, percent) {
 			if(min>amt){
@@ -422,6 +387,8 @@
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
 		};
+		
+		
 	}]);
 	</script>
 </body>
