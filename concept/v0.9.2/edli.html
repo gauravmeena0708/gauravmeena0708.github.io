@@ -58,8 +58,8 @@
 								<input type="number" ng-model="apb" class="form-control col-4" ng-change="update()" placeholder="Average Progressive Balance" aria-label="Average Progressive Balance" aria-describedby="basic-addon1">
 							</div>
 							
-							<div class="form-check mb-2" ng-if="b_factor">
-								<input class="form-check-input" ng-click="update_continuous()" type="checkbox" value="" id="flexCheckDefault">
+							<div class="form-check form-switch">
+								<input class="form-check-input" ng-model="continuous12" type="checkbox" id="flexSwitchCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod<limit3">Whether completed continuous 12 months service is same establishment(last service)? {{continuous12}}</label>
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod>=limit3">Whether completed continuous 12 months service (not necessarily in same est)? {{continuous12}}</label>
 							</div>
@@ -72,7 +72,7 @@
 						
 					</div>
 					<div class="card-footer">
-						<button type="button" class="btn btn-success align-self-center" ng-click="output=true">Show Output</button>
+						<button type="button" class="btn btn-success align-self-center" ng-click="output=true">Show Calculation</button>
 						<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">Reset</button>
 					</div>
 				</div>
