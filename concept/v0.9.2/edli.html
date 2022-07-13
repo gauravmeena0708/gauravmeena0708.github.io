@@ -323,6 +323,14 @@
 			return additional;
 		};
 		
+		$scope.update_continuous=function(continuous12){
+			$scope.continuous12= continuous12;
+			$scope.getParams($scope.list, $scope.dod,continuous12);
+			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+			qrcode.clear(); // clear the code.
+			qrcode.makeCode($scope.url);
+		};
+		
 		$scope.get_final_b = function(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min){
 			var val1 = ($scope.getmin(avg_wage, b_ceiling)*b_factor) + $scope.get_additional(avg_wage, b_ceiling, b_factor, b_perc);
 			var val2 = b_perc1*apb/100;
