@@ -1,6 +1,7 @@
 const MIN = 1000;
 const CEILING1 = 6500;
 const CEILING2 = 15000;
+const CEILING0_DATE = new Date("1971-03-04");
 const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
 
@@ -406,7 +407,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		var doe = $scope.service_input.doe;
 		var ncp1 = $scope.service_input.ncp1;
 		var ncp2 = $scope.service_input.ncp2;
-		var date71 = new Date("1971-03-04");
+		var date71 = CEILING0_DATE;
 		log("Add Service Called: (DOJ, DOE): ",[doj,doe]);
 		var date1 = $scope.dates.slice();
 		$scope.dates.push(doj);
@@ -422,7 +423,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			alert("DOJ can not be earlier than DOB");
 			$scope.dates = date1.slice();
 		} else if (doj<date71) {
-			alert("DOJ can not be less than Family pension scheme date.");
+			alert("DOJ can not be less than 16-11-1995");
 			$scope.dates = date1.slice();
 		} else {
 			$scope.basic.doe=doe>$scope.basic.doe?doe:$scope.basic.doe;
