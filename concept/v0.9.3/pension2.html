@@ -36,10 +36,12 @@
 					<div class="card-header">Pension Calculator Input</div>
 					<div class="card-body">
 						<ul class="list-group mb-3">
+							<li class="list-group-item list-group-item-warning" ng-if="basic.alert"><i class="bi bi-exclamation-octagon-fill"></i> {{basic.alert}}</li>
+							
 							<li class="list-group-item">
 								<form>
 									<div class="input-group mb-1">
-										<span class="input-group-text col-5" id="basic-addon1">DOB: </span>
+										<span class="input-group-text col-5" id="basic-addon1">Date Of Birth: </span>
 										<input type="date" ng-model="basic.dob" ng-change="update_Basic()" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">
 									</div>
 									<div class="input-group mb-1">
@@ -147,6 +149,7 @@
 const MIN = 1000;
 const CEILING1 = 6500;
 const CEILING2 = 15000;
+const MIN_DOB = luxon.DateTime.fromJSDate(new Date('2005-05-01')).minus({years: 58}).toJSDate()
 const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');	
 const BASIC_DEFAULT = {
@@ -361,8 +364,20 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	}
 	
 	$scope.update_Basic = function(){
-		$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
-		$scope.basic.date58 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
+		if($scope.basic.dob<MIN_DOB) {
+			$scope.basic.alert = "DOB can not be earlier than 01-05-1947.";
+		} else if ($scope.basic.dob > new Date()){
+			$scope.basic.alert = "DOB can not be later than current date.";	
+		} else {
+			$scope.basic.alert = 0;
+			/*if($scope.basic.availing_date > luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate()) {
+				$scope.basic.availing_date = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
+			}
+			*/
+			$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
+			$scope.basic.date58 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
+		}
+		
 	}
 	
 	$scope.update_Superannuation = function(){
