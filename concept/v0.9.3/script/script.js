@@ -350,23 +350,25 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		var doe = $scope.service_input.doe;
 		var ncp1 = $scope.service_input.ncp1;
 		var ncp2 = $scope.service_input.ncp2;
-		var date71 = CEILING0_DATE;
 		log("Add Service Called: (DOJ, DOE): ",[doj,doe]);
 		var date1 = $scope.dates.slice();
 		$scope.dates.push(doj);
 		$scope.dates.push(doe);
 		
 		if(multipleDateRangeOverlaps($scope.dates)){
-			alert("Date range overlapping. returning to previous state");
+			alert("Date range overlapping. Returning to previous state");
 			$scope.dates = date1.slice();
 		} else if (doj>doe) {
-			alert("DOJ can not be later than DOE");
+			alert("DOJ can not be later than DOE. Returning to previous state");
 			$scope.dates = date1.slice();
 		} else if (doj<$scope.basic.dob) {
-			alert("DOJ can not be earlier than DOB");
+			alert("DOJ can not be earlier than DOB. Returning to previous state");
 			$scope.dates = date1.slice();
-		} else if (doj<date71) {
-			alert("DOJ can not be less than 16-11-1995");
+		} else if (doj<CEILING1_DATE) {
+			alert("DOJ can not be less than 16-11-1995.Returning to previous state.");
+			$scope.dates = date1.slice();
+		} else if(getCeilingDuration(doj,doe,'days',1)<ncp1 || get_pensionable_days(doj,doe)<(ncp1+ncp2) || getCeilingDuration(doj,doe,'days',0)<ncp2){
+			alert("NCP can not be more than service days.Returning to previous state.");
 			$scope.dates = date1.slice();
 		} else {
 			$scope.basic.doe=doe>$scope.basic.doe?doe:$scope.basic.doe;
