@@ -42,16 +42,10 @@
 								<form>
 									<div class="input-group mb-1">
 										<span class="input-group-text col-5" id="basic-addon1">Date Of Birth: </span>
-										<input type="date" ng-model="basic.dob" ng-change="update_Basic()" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">
-									</div>
-									<div class="input-group mb-1">
-										<span class="input-group-text col-5" id="basic-addon1">Pension Availing Date: </span>
-										<input type="date" ng-model="basic.availing_date" ng-change="update_Basic()" class="form-control" placeholder="availing_date" aria-label="availing_date" aria-describedby="basic-addon1">
+										<input type="date" ng-model="basic.dob" ng-change="updateBasic()" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">
 									</div>
 								</form>
 							</li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Age on Pension Availing Date: <span>{{basic.age}}</span></li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of attaining 58 Years: <span>{{basic.date58 | date:'dd/MM/yyyy' }}</span></li>
 							<li class="list-group-item">
 								<table class="table table-striped table-bordered table-sm">
 									<thead>
@@ -74,19 +68,36 @@
 									</tbody>
 								</table>
 								<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
-								
+								<ul class="list-group mb-3 shadow">
+									<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total: <span>{{services.length}} services</span></li>
+									<li class="list-group-item list-group-item-warning" ng-if="eligibilityMsg"><i class="bi bi-exclamation-octagon-fill"></i> {{"Information: "+ eligibilityMsg}}</li>
+									<li class="list-group-item list-group-item-warning" ng-if="actual_service"><i class="bi bi-exclamation-octagon-fill"></i> Your Actual service is: {{actual_service}} days</li>
+									<li class="list-group-item list-group-item-warning" ng-if="eligible_service"><i class="bi bi-exclamation-octagon-fill"></i> Your eligible service is: {{eligible_service}} days</li>
+								</ul>
 							</li>
-						</ul>
-						<br/><br/>
+							
+							<li class="list-group-item">
+								<form>
+									<div class="input-group mb-1">
+										<span class="input-group-text col-5" id="basic-addon1">Pension Availing Date/Date of Option: </span>
+										<input type="date" ng-model="basic.availing_date" ng-change="update_Basic()" class="form-control" placeholder="availing_date" aria-label="availing_date" aria-describedby="basic-addon1">
+									</div>
+								</form>
+							</li>
+							<li class="list-group-item list-group-item-warning" ng-if="basic.agealert"><i class="bi bi-exclamation-octagon-fill"></i> {{basic.agealert}}</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Age on Pension Availing Date: <span>{{basic.age}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of attaining 58 Years: <span>{{basic.date58 | date:'dd/MM/yyyy' }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="basic.doe">Date of Exit (EPS): <span>{{basic.doe | date:'dd/MM/yyyy' }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="basic.doe">Age on Date of Exit(EPS): <span>{{basic.agedoe}}</span></li>
 						
+						</ul>	
 					</div>
-					<div class="card-footer">
-						<ul class="list-group mb-3 shadow">
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total: <span>{{services.length}} services</span></li>
-							<li class="list-group-item list-group-item-warning" ng-show="eligibilityMsg"><i class="bi bi-exclamation-octagon-fill"></i> {{"Information: "+ eligibilityMsg}}</li>
-							<li class="list-group-item list-group-item-warning" ng-if="actual_service"><i class="bi bi-exclamation-octagon-fill"></i> Your Actual service is: {{actual_service}} days</li>
-							<li class="list-group-item list-group-item-warning" ng-if="eligible_service"><i class="bi bi-exclamation-octagon-fill"></i> Your eligible service is: {{eligible_service}} days</li>
-						</ul>
+					<div class="card-footer d-flex justify-content-between align-items-center">
+						Pension Benefit: {{}}
+						<span>
+							<button type="button" class="btn btn-success align-self-center" ng-click="output=true">Show Calculation</button>
+							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">Reset</button>
+						</span>
 					</div>
 				</div>
 			</div>
@@ -137,7 +148,8 @@
 	</div>
 	<script type="text/javascript" src="./script/angular.min.js"></script>
 	<script type="text/javascript" src="./script/angular-cookies.js"></script>
-	<script type="text/javascript" src="./script/angular-route.js"></script>
+	<script type="text/javascript" src="./script/angular-route.js"></script>	
+	<script type="text/javascript" src="./script/underscore-esm-min.js"></script>
 	<script type="text/javascript" src="./script/jquery-3.3.1.slim.min.js"></script>
 	<script type="text/javascript" src="./script/popper.min.js"></script>
 	<script type="text/javascript" src="./script/bootstrap.bundle.min.js"></script>
@@ -157,7 +169,8 @@ const BASIC_DEFAULT = {
 	'availing_date':new Date(),
 	'age':58,
 	'date58':new Date(),
-	'doe': new Date(),
+	'doe': 0,
+	'agedoe':0
 }
 
 const SERVICE_INPUT_DEFAULT = {
@@ -214,10 +227,9 @@ const TOTAL_DEFAULT = {
 
 function getDays (date1, date2, withEndDate=1) {
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
-	var date1_modified = date1.plus({
-		months: Math.floor(interval.length('Months'))
-		});
+	var date1_modified = date1.plus({months: Math.floor(interval.length('Months'))});
 	var interval2 = luxon.Interval.fromDateTimes(date1_modified, date2);
+	
 	return (
 			(Math.floor(interval.length('Years'))*365)+
 			(Math.floor(interval.length('Months')%12)*30)+
@@ -305,19 +317,23 @@ function multipleDateRangeOverlaps(dates) {
 	return false;
 }
 
-function checkServiceValidity(service, dob){
+function validateService(service, dob){
 	if(typeof(service.doj)!="object" || typeof(service.doe)!="object" || typeof(service.ncp1) !="number" || typeof(service.ncp2) !="number") {
-		log("checkServiceValidity:",["Type not matching."]);
+		log("validateService:",["Type not matching."]);
 		return 0;
-	} if(service.doj>service.doe) {
-		log("checkServiceValidity:",["DOJ can not be after DOE."]);
+	} else if(service.doj>service.doe) {
+		log("validateService:",["DOJ can not be after DOE."]);
 		return 0;
 	} else if (service.doj<CEILING1_DATE) {
-		log("checkServiceValidity:",["DOJ can not be less than 16-11-1995."]);
+		log("validateService:",["DOJ can not be less than 16-11-1995."]);
 		return 0;
 	} else if(service.doj<dob) {
-		log("checkServiceValidity:",["DOJ can not be earlier than DOB."]);
+		log("validateService:",["DOJ can not be earlier than DOB."]);
 		return 0;
+	} else if(service.doe>=new Date('2016-04-25') && getDifference(service.dob,service.doe,'Years',"both")>60) {
+		log("validateService:",["DOE can not be more than age 60."]);
+	} else if(service.doe<new Date('2016-04-25') && getDifference(service.dob,service.doe,'Years',"both")>58) {
+		log("validateService:",["DOE can not be more than age 58."]);
 	} else {
 		var daysbefore   = getDifference(service.doj,service.doe,'Days',"before");
 		var daysafter    = getDifference(service.doj,service.doe,'Days',"after");
@@ -340,30 +356,40 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	
 	$scope.update = function() {
 		log("update called",[])
-		$scope.total=getTotal();
-		$scope.update_Basic();
+		$scope.total=updateTotal();
+		console.log($scope.total);
+		$scope.updateBasic();
 		updateEligibility();		
-		$scope.update_Superannuation();
+		$scope.updateSuperannuation();
 	}
 	
 	$scope.reset = function () {
 		$scope.dates=[];
 		$scope.services=[];
+		//$scope.basic.doe=0;
 		$scope.service = SERVICE_DEFAULT;
 		$scope.service_input  = SERVICE_INPUT_DEFAULT;
 		$scope.pension = SUPERANNUATION_DEFAULT;
 		$scope.total=TOTAL_DEFAULT;
 		$scope.basic = BASIC_DEFAULT;
+		$scope.basic.doe=0;
+		$scope.updateBasic();
 		$scope.update()
 	}
 	
-	function getTotal() {
+	function updateTotal() {
+		var total = _.reduce($scope.services, function(acc, o) {
+				for (var p in o)
+					acc[p] = (p in acc ? acc[p] : 0) + o[p];
+					return acc;
+				}, {});
+		return total;
 	}
 	
 	function updateEligibility(){
 	}
 	
-	$scope.update_Basic = function(){
+	$scope.updateBasic = function(){
 		if($scope.basic.dob<MIN_DOB) {
 			$scope.basic.alert = "DOB can not be earlier than 01-05-1947.";
 		} else if ($scope.basic.dob > new Date()){
@@ -375,12 +401,22 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			}
 			*/
 			$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
+			if($scope.basic.age>60 && $scope.basic.doe>new Date('2016-04-25')){
+				$scope.basic.agealert="Date of pension option can not be chosen beyond age 60 for DOE from 2016-04-25."
+				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
+			} else if($scope.basic.age>58){
+				$scope.basic.agealert="Date of pension option can not be chosen beyond age 58 for DOE before 2016-04-25.";
+				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
+			} else {
+				$scope.basic.agealert=0;
+			}
+			$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
 			$scope.basic.date58 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
 		}
 		
 	}
 	
-	$scope.update_Superannuation = function(){
+	$scope.updateSuperannuation = function(){
 	}
 	
 	$scope.update_ncp = function () {
@@ -398,13 +434,14 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.dates.push(doj);
 		$scope.dates.push(doe);
 		
-		if(!checkServiceValidity($scope.service_input, $scope.basic.dob)) {
+		if(!validateService($scope.service_input, $scope.basic.dob)) {
 			alert("Invalid Service Details. Returning to previous state.");
 			$scope.dates = date1.slice();
 		} else if(multipleDateRangeOverlaps($scope.dates)){
 			alert("Date range overlapping. Returning to previous state");
 			$scope.dates = date1.slice();
 		} else {
+			$scope.basic.doe=doe>$scope.basic.doe?doe:$scope.basic.doe;
 			var monthsbefore     = getDifference(doj,doe,'Months',"before");
 			var monthsafter      = getDifference(doj,doe,'Months',"after");
 			var yearsbefore      = getDifference(doj,doe,'Years',"before");
@@ -433,6 +470,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 				'daystotal':daystotal	
 			}
 			$scope.basic.doe=doe>$scope.basic.doe?doe:$scope.basic.doe;
+			$scope.basic.agedoe = getDifference($scope.basic.dob,$scope.basic.doe,'Years',"both");
 			console.log(service);
 			log("addService:(daysbefore, daysafter, daystotal,ncp1,ncp2):",[service['daysbefore'],service['daysafter'],service['daystotal'],ncp1,ncp2])
 			$scope.services.push(service);
