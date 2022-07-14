@@ -124,13 +124,13 @@
 						<span class="input-group-text col-6">DOE</span>
 						<input type="date" ng-model ="service_input.doe" ng-change="update_ncp()" class="form-control" placeholder="doe" aria-label="doe">
 					</div>
-					<div class="input-group mb-3 bg-light">
+					<div class="input-group mb-3 bg-light" ng-show="service_input.ncp1edit">
 						<span class="input-group-text col-6">NCP b/w 16-11-1995 to 31-08-2014</span>
-						<input type="number" ng-model ="service_input.ncp1" class="form-control" placeholder="NCP1" aria-label="NCP1">
+						<input type="number" ng-model ="service_input.ncp1"  class="form-control" placeholder="NCP1" aria-label="NCP1">
 					</div>
-					<div class="input-group mb-3 bg-light">
+					<div class="input-group mb-3 bg-light" ng-show="service_input.ncp2edit">
 						<span class="input-group-text col-6">NCP from 01-09-2014</span>
-						<input type="number" ng-model ="service_input.ncp2" class="form-control" placeholder="NCP2" aria-label="NCP2">
+						<input type="number" ng-model ="service_input.ncp2"  class="form-control" placeholder="NCP2" aria-label="NCP2">
 					</div>
 					<div class="row mb-3">
 						<div class="col-3">
@@ -177,7 +177,9 @@ const SERVICE_INPUT_DEFAULT = {
 	'doj': new Date('1995-11-16'),
 	'doe': new Date('2018-12-01'),
 	'ncp1':8,
-	'ncp2':46
+	'ncp2':46,
+	'ncp1edit':1,
+	'ncp2edit':1
 }
 
 const SERVICE_DEFAULT = {
@@ -318,10 +320,21 @@ function multipleDateRangeOverlaps(dates) {
 }
 
 function validateService(service, dob){
+	
 	if(typeof(service.doj)!="object" || typeof(service.doe)!="object" || typeof(service.ncp1) !="number" || typeof(service.ncp2) !="number") {
 		log("validateService:",["Type not matching."]);
 		return 0;
-	} else if(service.doj>service.doe) {
+	} else {
+		//alert(getDifference(dob,service.doe,'Years',"both")>60)
+		var lastdate=0;
+		if(service.doe>=new Date('2016-04-25')){
+			lastdate = luxon.DateTime.fromJSDate(dob).plus({years: 60}).toJSDate();
+		} else {
+			lastdate = luxon.DateTime.fromJSDate(dob).plus({years: 58}).toJSDate();
+		}
+		log("validateService:lastdate",[lastdate]);
+	}
+	if(service.doj>service.doe) {
 		log("validateService:",["DOJ can not be after DOE."]);
 		return 0;
 	} else if (service.doj<CEILING1_DATE) {
@@ -330,10 +343,10 @@ function validateService(service, dob){
 	} else if(service.doj<dob) {
 		log("validateService:",["DOJ can not be earlier than DOB."]);
 		return 0;
-	} else if(service.doe>=new Date('2016-04-25') && getDifference(service.dob,service.doe,'Years',"both")>60) {
-		log("validateService:",["DOE can not be more than age 60."]);
-	} else if(service.doe<new Date('2016-04-25') && getDifference(service.dob,service.doe,'Years',"both")>58) {
-		log("validateService:",["DOE can not be more than age 58."]);
+	} else if(service.doe>lastdate) {
+		console.log(service.doe,lastdate,service.doe>lastdate)
+		log("validateService:",["DOE can not be more than age 60/58."]);
+		return 0;
 	} else {
 		var daysbefore   = getDifference(service.doj,service.doe,'Days',"before");
 		var daysafter    = getDifference(service.doj,service.doe,'Days',"after");
@@ -357,7 +370,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	$scope.update = function() {
 		log("update called",[])
 		$scope.total=updateTotal();
-		console.log($scope.total);
+		console.log("updateTotal",$scope.total);
 		$scope.updateBasic();
 		updateEligibility();		
 		$scope.updateSuperannuation();
@@ -406,7 +419,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
 			} else if($scope.basic.age>58){
 				$scope.basic.agealert="Date of pension option can not be chosen beyond age 58 for DOE before 2016-04-25.";
-				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
+				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
 			} else {
 				$scope.basic.agealert=0;
 			}
@@ -420,6 +433,18 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	}
 	
 	$scope.update_ncp = function () {
+		if($scope.service_input.doj>CEILING2_DATE) {
+			$scope.service_input.ncp1=0;
+			$scope.service_input.ncp1edit=0;
+		} else {
+			$scope.service_input.ncp1edit=1;
+		}
+		if($scope.service_input.doe<CEILING2_DATE) {
+			$scope.service_input.ncp2=0;
+			$scope.service_input.ncp2edit=0;
+		} else {
+			$scope.service_input.ncp2edit=1;
+		}
 	
 	}
 	
