@@ -332,10 +332,9 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		} else if (doj<$scope.basic.dob) {
 			alert("DOJ can not be earlier than DOB. Returning to previous state");
 			$scope.dates = date1.slice();
-		/*} else if (doj<CEILING1_DATE) {
+		} else if (doj<CEILING1_DATE) {
 			alert("DOJ can not be less than 16-11-1995.Returning to previous state.");
 			$scope.dates = date1.slice();
-			*/
 		} else if(getDifference(doj,doe,'Days',"before")<ncp1 || getDifference(doj,doe,'Days')<(ncp1+ncp2) || getDifference(doj,doe,'Days',"after")<ncp2){
 			log("NCP mismatch",[getDifference(doj,doe,'Days',"before"),getDifference(doj,doe,'Days')<(ncp1+ncp2),getDifference(doj,doe,'Days',"after")]);
 			alert("NCP can not be more than service days.Returning to previous state.");
