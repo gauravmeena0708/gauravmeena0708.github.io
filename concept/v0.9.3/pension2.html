@@ -176,44 +176,16 @@ const BASIC_DEFAULT = {
 const SERVICE_INPUT_DEFAULT = {
 	'doj': new Date('1995-11-16'),
 	'doe': new Date('2018-12-01'),
-	'ncp1':8,
-	'ncp2':46,
+	'ncp1':0,
+	'ncp2':0,
 	'ncp1edit':1,
 	'ncp2edit':1
 }
 
-const SERVICE_DEFAULT = {
-	'actual':0,
-	'eligible': 0,
-	'eligible1':0,
-	'months1': 0,
-	'months2': 0,
-	'avg_wage1':CEILING1,
-	'avg_wage2':CEILING2,
-	'ncp1':0,
-	'ncp2':0,
-	'days95':0,
-	'total_ncp':0,
-	'wage95':0,
-	'factor':0,
-	'past_pension':0
-}
+
 
 const SUPERANNUATION_DEFAULT = {
-	"total_month_psal":60,
-	"total_wage_psal":597247,
-	"total_ncp_psal":0,
-	"weightage":0,
-	"eligible":0,
-	"eligible_WB":0,
-	"min":0,
-	"pservice":0,
-	"psalary":15000,
-	"pension1":0,
-	"pension2":0,
-	"pension3":0,
-	"last_wage":15000,
-	'greater':1
+	"pension":0
 }
 
 const TOTAL_DEFAULT = {
@@ -370,23 +342,20 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	$scope.update = function() {
 		log("update called",[])
 		$scope.total=updateTotal();
-		console.log("updateTotal",$scope.total);
 		$scope.updateBasic();
 		updateEligibility();		
 		$scope.updateSuperannuation();
 	}
-	
-	$scope.reset = function () {
+	$scope.resetService = function() {
 		$scope.dates=[];
 		$scope.services=[];
-		//$scope.basic.doe=0;
 		$scope.service = SERVICE_DEFAULT;
 		$scope.service_input  = SERVICE_INPUT_DEFAULT;
 		$scope.pension = SUPERANNUATION_DEFAULT;
 		$scope.total=TOTAL_DEFAULT;
-		$scope.basic = BASIC_DEFAULT;
-		$scope.basic.doe=0;
-		$scope.updateBasic();
+	}
+	$scope.reset = function () {
+		$scope.resetBasic();
 		$scope.update()
 	}
 	
@@ -402,6 +371,12 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	function updateEligibility(){
 	}
 	
+	$scope.resetBasic = function (){
+		$scope.basic = BASIC_DEFAULT;
+		$scope.basic.doe=0;
+		$scope.resetService();
+		//$scope.updateBasic();
+	}
 	$scope.updateBasic = function(){
 		if($scope.basic.dob<MIN_DOB) {
 			$scope.basic.alert = "DOB can not be earlier than 01-05-1947.";
@@ -409,17 +384,16 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			$scope.basic.alert = "DOB can not be later than current date.";	
 		} else {
 			$scope.basic.alert = 0;
-			/*if($scope.basic.availing_date > luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate()) {
-				$scope.basic.availing_date = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
-			}
-			*/
+			$scope.basic.doe=0;
 			$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
-			if($scope.basic.age>60 && $scope.basic.doe>new Date('2016-04-25')){
+			if($scope.basic.doe>new Date('2016-04-25')){
 				$scope.basic.agealert="Date of pension option can not be chosen beyond age 60 for DOE from 2016-04-25."
 				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
+				$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
 			} else if($scope.basic.age>58){
 				$scope.basic.agealert="Date of pension option can not be chosen beyond age 58 for DOE before 2016-04-25.";
 				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
+				$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
 			} else {
 				$scope.basic.agealert=0;
 			}
@@ -445,7 +419,6 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		} else {
 			$scope.service_input.ncp2edit=1;
 		}
-	
 	}
 	
 	$scope.addService = function(){
