@@ -35,33 +35,46 @@
 				<div class="card shadow">
 					<div class="card-header">Pension Calculator Input</div>
 					<div class="card-body">
-						<form>
-							<div class="input-group mb-3">
-								<span class="input-group-text col-5" id="basic-addon1">DOB: </span>
-								<input type="date" ng-model="basic.dob" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">
-							</div>
-						</form>
-						<table class="table table-striped table-bordered table-sm">
-							<thead>
-								<tr>
-									<td>DOJ</td>
-									<td>DOE</td>
-									<td>NCP1</td>
-									<td>NCP2</td>
-									<td></td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="service in services">
-									<td>{{service.doj |  date:'dd-MM-yyyy'}}</td>
-									<td>{{service.doe |  date:'dd-MM-yyyy'}}</td>
-									<td>{{service.ncp1}}</td>
-									<td>{{service.ncp2}}</td>
-									<td><i class="bi bi-trash" ng-click='removeService($index)'></i></td>
-								</tr>
-							</tbody>
-						</table>
-						<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
+						<ul class="list-group mb-3">
+							<li class="list-group-item">
+								<form>
+									<div class="input-group mb-1">
+										<span class="input-group-text col-5" id="basic-addon1">DOB: </span>
+										<input type="date" ng-model="basic.dob" ng-change="update_Basic()" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">
+									</div>
+									<div class="input-group mb-1">
+										<span class="input-group-text col-5" id="basic-addon1">Pension Availing Date: </span>
+										<input type="date" ng-model="basic.availing_date" ng-change="update_Basic()" class="form-control" placeholder="availing_date" aria-label="availing_date" aria-describedby="basic-addon1">
+									</div>
+								</form>
+							</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Age on Pension Availing Date: <span>{{basic.age}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of attaining 58 Years: <span>{{basic.date58 | date:'dd/MM/yyyy' }}</span></li>
+							<li class="list-group-item">
+								<table class="table table-striped table-bordered table-sm">
+									<thead>
+										<tr>
+											<td>DOJ</td>
+											<td>DOE</td>
+											<td>NCP1</td>
+											<td>NCP2</td>
+											<td></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="service in services">
+											<td>{{service.doj |  date:'dd-MM-yyyy'}}</td>
+											<td>{{service.doe |  date:'dd-MM-yyyy'}}</td>
+											<td>{{service.ncp1}}</td>
+											<td>{{service.ncp2}}</td>
+											<td><i class="bi bi-trash" ng-click='removeService($index)'></i></td>
+										</tr>
+									</tbody>
+								</table>
+								<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
+								
+							</li>
+						</ul>
 						<br/><br/>
 						
 					</div>
@@ -92,11 +105,11 @@
 			<form>
 					<div class="input-group mb-3 bg-info">
 						<span class="input-group-text col-6">DOJ</span>
-						<input type="date" ng-model ="service_input.doj" class="form-control" placeholder="doj" aria-label="doj">
+						<input type="date" ng-model ="service_input.doj" ng-change="update_ncp()" class="form-control" placeholder="doj" aria-label="doj">
 					</div>
 					<div class="input-group mb-3 bg-light">
 						<span class="input-group-text col-6">DOE</span>
-						<input type="date" ng-model ="service_input.doe" class="form-control" placeholder="doe" aria-label="doe">
+						<input type="date" ng-model ="service_input.doe" ng-change="update_ncp()" class="form-control" placeholder="doe" aria-label="doe">
 					</div>
 					<div class="input-group mb-3 bg-light">
 						<span class="input-group-text col-6">NCP b/w 16-11-1995 to 31-08-2014</span>
@@ -138,6 +151,9 @@ const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');	
 const BASIC_DEFAULT = {
 	'dob': luxon.DateTime.fromJSDate(new Date()).minus({years: 58}).toJSDate(),
+	'availing_date':new Date(),
+	'age':58,
+	'date58':new Date(),
 	'doe': new Date(),
 }
 
@@ -216,27 +232,44 @@ function getDifference(d1, d2, unit="Days", period="both", withEndDate=1) {
 	//return -1 if any error
 	
 	if(period=="before" && d2>CEILING2_DATE) {
-		d2= new Date('2014-08-31');
-		if(d1<CEILING2_DATE) d1=CEILING1_DATE;
+		d2= CEILING2_DATE;
+		if(d1<CEILING1_DATE) {
+			d1=CEILING1_DATE;
+		} else if(d1>CEILING2_DATE){
+			d1= CEILING2_DATE;
+		}
 	} else if(period=="after" && d1<CEILING2_DATE) {
 		d1= CEILING2_DATE;
+		if(d2<CEILING2_DATE){
+			d2= CEILING2_DATE;
+		}
 	}
+	if(d1==d2) return 0;
 	date1= luxon.DateTime.fromJSDate(d1);
 	date2= luxon.DateTime.fromJSDate(d2);
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
-	if (interval.invalid || !['Years','Months','Days'].includes(unit) || !["both","before","after"].includes(period) || ![0,1].includes(withEndDate)){
+	if (interval.invalid) {
+		console.log(interval);
+		log("getDifference1: Error:",["Invalid Input"])
+		return -1;
+	} else if(!['Years','Months','Days'].includes(unit) || !["both","before","after"].includes(period) || ![0,1].includes(withEndDate)){
 		log("getDifference: Error:",["Invalid Input"])
 		return -1;
 	} else {
+		console.log(interval);
 		log("getDifference:",[date1,date2,unit,period,withEndDate]);
 	}
 	
+	
 	if(unit=="Days") {
-		return getDays (date1, date2, withEndDate);
+		days = getDays (date1, date2, withEndDate);
+		log("Days",[days])
+		return days;
 	} else if (unit=="Years" || unit=="Months") {
 		interval = luxon.Interval.fromDateTimes(date1, date2.plus({'days':1}));
 		return Math.floor(interval.length(unit));
 	} 
+	
 	return -1;
 }
 function log(str, array) {
@@ -269,6 +302,28 @@ function multipleDateRangeOverlaps(dates) {
 	return false;
 }
 
+function checkServiceValidity(service, dob){
+	if(typeof(service.doj)!="object" || typeof(service.doe)!="object" || typeof(service.ncp1) !="number" || typeof(service.ncp2) !="number") {
+		log("checkServiceValidity:",["Type not matching."]);
+		return 0;
+	} if(service.doj>service.doe) {
+		log("checkServiceValidity:",["DOJ can not be after DOE."]);
+		return 0;
+	} else if (service.doj<CEILING1_DATE) {
+		log("checkServiceValidity:",["DOJ can not be less than 16-11-1995."]);
+		return 0;
+	} else if(service.doj<dob) {
+		log("checkServiceValidity:",["DOJ can not be earlier than DOB."]);
+		return 0;
+	} else {
+		var daysbefore   = getDifference(service.doj,service.doe,'Days',"before");
+		var daysafter    = getDifference(service.doj,service.doe,'Days',"after");
+		if (daysbefore<service.ncp1 || daysafter<service.ncp2 || (daysbefore+daysafter)<(service.ncp1+service.ncp2)) 
+			return 0;
+		return 1;
+	}
+}
+
 var app = angular.module('pensionApp', ['ngCookies']);
 app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
 	
@@ -283,7 +338,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	$scope.update = function() {
 		log("update called",[])
 		$scope.total=getTotal();
-		$scope.updateBasic();
+		$scope.update_Basic();
 		updateEligibility();		
 		$scope.update_Superannuation();
 	}
@@ -305,11 +360,16 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	function updateEligibility(){
 	}
 	
-	$scope.updateBasic = function(){
-		
+	$scope.update_Basic = function(){
+		$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
+		$scope.basic.date58 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
 	}
 	
 	$scope.update_Superannuation = function(){
+	}
+	
+	$scope.update_ncp = function () {
+	
 	}
 	
 	$scope.addService = function(){
@@ -323,38 +383,41 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.dates.push(doj);
 		$scope.dates.push(doe);
 		
-		if(multipleDateRangeOverlaps($scope.dates)){
+		if(!checkServiceValidity($scope.service_input, $scope.basic.dob)) {
+			alert("Invalid Service Details. Returning to previous state.");
+			$scope.dates = date1.slice();
+		} else if(multipleDateRangeOverlaps($scope.dates)){
 			alert("Date range overlapping. Returning to previous state");
 			$scope.dates = date1.slice();
-		} else if (doj>doe) {
-			alert("DOJ can not be later than DOE. Returning to previous state");
-			$scope.dates = date1.slice();
-		} else if (doj<$scope.basic.dob) {
-			alert("DOJ can not be earlier than DOB. Returning to previous state");
-			$scope.dates = date1.slice();
-		} else if (doj<CEILING1_DATE) {
-			alert("DOJ can not be less than 16-11-1995.Returning to previous state.");
-			$scope.dates = date1.slice();
-		} else if(getDifference(doj,doe,'Days',"before")<ncp1 || getDifference(doj,doe,'Days')<(ncp1+ncp2) || getDifference(doj,doe,'Days',"after")<ncp2){
-			log("NCP mismatch",[getDifference(doj,doe,'Days',"before"),getDifference(doj,doe,'Days')<(ncp1+ncp2),getDifference(doj,doe,'Days',"after")]);
-			alert("NCP can not be more than service days.Returning to previous state.");
-			$scope.dates = date1.slice();
 		} else {
+			var monthsbefore     = getDifference(doj,doe,'Months',"before");
+			var monthsafter      = getDifference(doj,doe,'Months',"after");
+			var yearsbefore      = getDifference(doj,doe,'Years',"before");
+			var yearsafter       = getDifference(doj,doe,'Years',"after");
+			var daysbefore       = getDifference(doj,doe,'Days',"before");
+			var daysafter        = getDifference(doj,doe,'Days',"after");
+			var daystotal        = daysbefore+daysafter;
+			var date58           = $scope.basic.date58;
+			date58               = doe>date58?date58:doe;
+			var daysbefore_age58 = getDifference(doj,date58,'Days',"before");
+			var daysafter_age58  = getDifference(doj,date58,'Days',"after");
+			var daystotal_age58   = daysbefore_age58+daysafter_age58;
+			
+			log("AddService:(DOJ,DOE,NCP1,NCP2,Y1,Y2,M1,M2,D1,D2,D_Total)",[doj,doe,ncp1,ncp2,yearsbefore,yearsafter,monthsbefore,monthsafter,daysbefore,daysafter,daystotal]);
 			var service = {
 				'doj':doj,
 				'doe':doe,
 				'ncp1':ncp1,
 				'ncp2':ncp2,
-				'monthsbefore':getDifference(doj,doe,'Months',"before"),
-				'monthsafter':getDifference(doj,doe,'Months',"after"),
-				'yearsbefore':getDifference(doj,doe,'Years',"before"),
-				'yearsafter':getDifference(doj,doe,'Years',"after"),
-				'daysbefore':getDifference(doj,doe,'Days',"before"),
-				'daysafter':getDifference(doj,doe,'Days',"after")
-				
+				'monthsbefore':monthsbefore,
+				'monthsafter':monthsafter,
+				'yearsbefore':yearsbefore,
+				'yearsafter':yearsafter,
+				'daysbefore':daysbefore,
+				'daysafter':daysafter,
+				'daystotal':daystotal	
 			}
 			$scope.basic.doe=doe>$scope.basic.doe?doe:$scope.basic.doe;
-			service['daystotal']=service['daysbefore']+service['daysafter'];
 			console.log(service);
 			log("addService:(daysbefore, daysafter, daystotal,ncp1,ncp2):",[service['daysbefore'],service['daysafter'],service['daystotal'],ncp1,ncp2])
 			$scope.services.push(service);
