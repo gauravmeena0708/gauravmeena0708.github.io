@@ -40,14 +40,7 @@
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-if="!basic.dod">Pension Availing Date: <span>{{basic.availing_date | date:'dd-MM-yyyy'}}</span></li>
 					<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-if="!basic.dod">Age on Pension Availing Date: <span>{{basic.age}}</span></li>
 				</ul>
-			</div>
-		</div>
-		<div class="row mt-3">
-			<div class="col">
-				<ul class="list-group mb-3 shadow">
-					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Services</li>
-					<li class="list-group-item list-group-item">
-						<table class="table table-striped table-bordered table-sm">
+				<table class="table table-striped table-bordered table-sm">
 							<thead>
 								<tr>
 									<td>DOJ</td>
@@ -78,6 +71,14 @@
 							</tbody>
 						</table>
 						<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
+					
+			</div>
+		</div>
+		<div class="row mt-3">
+			<div class="col">
+				<ul class="list-group mb-3 shadow">
+					<li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">Services</li>
+					<li class="list-group-item list-group-item">
 					</li>
 					<li class="list-group-item list-group-item">
 						<table class="table table-striped table-bordered table-sm">
