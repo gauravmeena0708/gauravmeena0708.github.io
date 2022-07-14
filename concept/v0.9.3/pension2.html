@@ -149,7 +149,6 @@
 	<script type="text/javascript" src="./script/angular.min.js"></script>
 	<script type="text/javascript" src="./script/angular-cookies.js"></script>
 	<script type="text/javascript" src="./script/angular-route.js"></script>	
-	<script type="text/javascript" src="./script/underscore-esm-min.js"></script>
 	<script type="text/javascript" src="./script/jquery-3.3.1.slim.min.js"></script>
 	<script type="text/javascript" src="./script/popper.min.js"></script>
 	<script type="text/javascript" src="./script/bootstrap.bundle.min.js"></script>
@@ -243,7 +242,7 @@ function getDifference(d1, d2, unit="Days", period="both", withEndDate=1) {
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
 	if (interval.invalid) {
 		console.log(interval);
-		log("getDifference1: Error:",["Invalid Input"])
+		log("getDifference1: Error:",["Invalid Input",date1,date2,d1,d2])
 		return -1;
 	} else if(!['Years','Months','Days'].includes(unit) || !["both","before","after"].includes(period) || ![0,1].includes(withEndDate)){
 		log("getDifference: Error:",["Invalid Input"])
@@ -353,28 +352,41 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	
 	$scope.removeService = function(index) {
 		if(index >= 0){
-			//$scope.dates.splice(index*2, 2);
+			$scope.dates.splice(index*2, 2);
 			$scope.services.splice(index, 1);
 			$scope.update();	
 		}
 	}
 	
 	$scope.update = function() {
-		log("update called",[])
-		$scope.total=updateTotal();
+		log("update called",[]);
 		//$scope.updateBasic();
+		$scope.total=updateTotal();
+
 		updateEligibility();		
 		$scope.updateSuperannuation();
 	}
 	
 	
 	function updateTotal() {
-		var total = _.reduce($scope.services, function(acc, o) {
+		var total = $scope.services.reduce(function(acc, o) {
 				for (var p in o)
 					acc[p] = (p in acc ? acc[p] : 0) + o[p];
 					return acc;
 				}, {});
-		console.log("--total:",total);
+		if($scope.services.length) {
+			var x= $scope.services.reduce((a, b) => (a.doe > b.doe ? a : b));
+			var y= $scope.services.reduce((a, b) => (a.doj < b.doj ? a : b));
+			total.doe=x.doe;
+			total.doj=x.doj;
+			
+		} else {
+			total.doe=0;
+			total.doj=0;
+		}
+		$scope.basic.doe=total.doe;
+		$scope.basic.agedoe = getDifference($scope.basic.dob,$scope.basic.doe,'Years',"both");
+		console.log("total:",total);
 		return total;
 	}
 	
@@ -391,7 +403,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			$scope.basic.agealert="Date of pension option can not be chosen beyond age 60 for DOE from 2016-04-25."
 			$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
 			$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
-		} else if($scope.basic.age>=date60){
+		} else if($scope.basic.age>=date58){
 			$scope.basic.agealert="Date of pension option can not be chosen beyond age 58 for DOE before 2016-04-25.";
 			$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
 			$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
@@ -475,10 +487,10 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 				'daysafter':daysafter,
 				'daystotal':daystotal	
 			}
-			$scope.basic.doe=doe>$scope.basic.doe?doe:$scope.basic.doe;
-			$scope.basic.agedoe = getDifference($scope.basic.dob,$scope.basic.doe,'Years',"both");
+			
 			$scope.services.push(service);
-			$scope.updateBasic();	
+			$scope.availingDate();	
+			$scope.update();
 		}
 	}
 	
