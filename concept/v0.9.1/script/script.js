@@ -225,8 +225,13 @@ function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 	return early_pension>0?early_pension:0;
 }
 
-function get_deferredPension(age,amount) {
+function get_deferredPension(age,pension1, pension2) {
 	diff = age- 58;
+	if(pension1==pension2){
+		amount=pension2;
+	} else {
+		amount=pension1;
+	}
 	deferred_pension = round(amount*Math.pow(1+0.04,diff));
 	return (diff>2||diff<0)?amount:deferred_pension;
 }
@@ -476,10 +481,11 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
 		if($scope.basic.age<58 && $scope.basic.age>49){
 			$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
-		} else if(($scope.basic.age==59 || $scope.basic.age==60) && (1)){
-			console.log($scope.basic.doe);
-			console.log($scope.basic.doe);
-			$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
+		} else if(($scope.basic.age>=59) && ($scope.basic.doe>new Date('25-04-2016'))){
+			if($scope.basic.age>60) $scope.basic.age=60;
+			$scope.pension.pension3 = get_deferredPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
+		} else {
+			$scope.pension.pension3=0;
 		}
 	}
 	

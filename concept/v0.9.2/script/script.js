@@ -226,8 +226,13 @@ function get_earlyPension(age, pension1, pension2, amount, availing_date) {
 	return early_pension>0?early_pension:0;
 }
 
-function get_deferredPension(age,amount) {
+function get_deferredPension(age,pension1, pension2) {
 	diff = age- 58;
+	if(pension1==pension2){
+		amount=pension2;
+	} else {
+		amount=pension1;
+	}
 	deferred_pension = round(amount*Math.pow(1+0.04,diff));
 	return (diff>2||diff<0)?amount:deferred_pension;
 }
@@ -437,10 +442,11 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 				'monthsafter':getCeilingDuration(doj,doe,'months',0),
 				'pensionabledays':get_pensionable_days(doj,doe),
 				'daysbefore':getCeilingDuration(doj,doe,'days',1),
+				'daysafter':getCeilingDuration(doj,doe,'days',0),
 				'yearsbefore':getCeilingDuration(doj,doe,'years',1),
 				'yearsafter':getCeilingDuration(doj,doe,'years',0)
 			};
-			service['daysafter']=service['pensionabledays']-service['daysbefore'];
+			service['daystotal']=service['daysafter']+service['daysbefore'];
 			log("addService:(daysbefore, daysafter, pensionabledays,ncp1,ncp2):",[service['daysbefore'],service['daysafter'],service['pensionabledays'],ncp1,ncp2])
 			$scope.services.push(service);
 			$scope.update();	
@@ -474,7 +480,14 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.pension.psalary = get_psalary($scope.pension.total_wage_psal,$scope.pension.total_ncp_psal,$scope.total.daysafter);
 		$scope.pension.pension1 = get_pension($scope.total.daysbefore,$scope.total.daysafter,$scope.total.ncp1,$scope.total.ncp2,$scope.pension.psalary,$scope.pension.weightage);
 		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
-		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
+		if($scope.basic.age<58 && $scope.basic.age>49){
+			$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
+		} else if(($scope.basic.age>=59) && ($scope.basic.doe>new Date('25-04-2016'))){
+			if($scope.basic.age>60) $scope.basic.age=60;
+			$scope.pension.pension3 = get_deferredPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
+		} else {
+			$scope.pension.pension3=0;
+		}
 	}
 	
 	$scope.WB_update = function() {
