@@ -474,7 +474,13 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.pension.psalary = get_psalary($scope.pension.total_wage_psal,$scope.pension.total_ncp_psal,$scope.total.daysafter);
 		$scope.pension.pension1 = get_pension($scope.total.daysbefore,$scope.total.daysafter,$scope.total.ncp1,$scope.total.ncp2,$scope.pension.psalary,$scope.pension.weightage);
 		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
-		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
+		if($scope.basic.age<58 && $scope.basic.age>49){
+			$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
+		} else if(($scope.basic.age==59 || $scope.basic.age==60) && ){
+			console.log($scope.basic.doe);
+			console.log($scope.basic.doe);
+			$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
+		}
 	}
 	
 	$scope.WB_update = function() {
