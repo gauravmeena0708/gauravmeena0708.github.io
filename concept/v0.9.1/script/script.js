@@ -476,7 +476,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
 		if($scope.basic.age<58 && $scope.basic.age>49){
 			$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
-		} else if(($scope.basic.age==59 || $scope.basic.age==60) && ){
+		} else if(($scope.basic.age==59 || $scope.basic.age==60) && (1)){
 			console.log($scope.basic.doe);
 			console.log($scope.basic.doe);
 			$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
