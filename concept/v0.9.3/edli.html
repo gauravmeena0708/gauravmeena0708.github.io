@@ -59,7 +59,7 @@
 							</div>
 							
 							<div class="form-check form-switch" ng-show="b_factor">
-								<input class="form-check-input" ng-model="continuous12" ng-click="update()" id="continuous" type="checkbox" id="flexSwitchCheckDefault">
+								<input class="form-check-input" ng-model="continuous12" ng-click="update_continuous(continuous12)" id="continuous" type="checkbox" id="flexSwitchCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod<limit3">Whether completed continuous 12 months service is same establishment(last service)?</label>
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod>=limit3">Whether completed continuous 12 months service (not necessarily in same est)?</label>
 							</div>
@@ -238,7 +238,7 @@
 			return d.toFormat('dd-MM-yyyy');
 		}
 		
-		$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+		$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage+"&continous12="+$scope.continuous12;
 		var qrcode = new QRCode("qrcode", {
 			text: $scope.url,
 			width: 128,
@@ -323,10 +323,10 @@
 			return additional;
 		};
 		
-		$scope.update_continuous=function(continuous12){
-			$scope.continuous12= continuous12;
-			$scope.getParams($scope.list, $scope.dod,continuous12);
-			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+		$scope.update_continuous=function(val){
+			$scope.continuous12= val;
+			$scope.getParams($scope.list, $scope.dod,val);
+			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage+"&continous12="+$scope.continuous12;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
 		};
@@ -388,7 +388,7 @@
 		
 		$scope.update = function () {
 			$scope.getParams($scope.list, $scope.dod);
-			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage;
+			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage+"&continous12="+$scope.continuous12;
 			qrcode.clear(); // clear the code.
 			qrcode.makeCode($scope.url);
 		};

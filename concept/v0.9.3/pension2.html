@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Pension Calculator</title>
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-icons.css">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+	<header class="p-1 mb-2 bg-info text-white shadow">
+		<div class="container">
+		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+			  <li><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
+			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li>
+			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI</a></li>
+			</ul>
+			<h3 class="text-center">CALCULATOR</h3>
+		  </div>
+		</div>
+	</header>
+    <div class="container-fluid" ng-app="pensionApp" ng-controller="pensionCtrl">
+		<div class="row">
+			<div class="alert fade show" role="alert">
+			<ul class="list-group">
+				<li  class="list-group-item list-group-item-danger"><i class="bi bi-exclamation-octagon-fill"></i>
+					The calculations shown here are only illustrative in nature and can not be used as a basis of any legal case/litigation.
+				</li>
+			</ul>
+			</div>
+		</div>
+		<div class="row mb-2">
+			<div class="col-sm-12">
+				<form>
+					<div class="input-group mb-3">
+						<span class="input-group-text col-5" id="basic-addon1">DOB: </span>
+						<input type="date" ng-model="basic.dob" class="form-control" placeholder="dob" aria-label="dob" aria-describedby="basic-addon1">
+					</div>
+				</form>
+			</div>
+		</div>
+	<!--
+	container fluid div closer
+	-->
+	</div>
+	<script type="text/javascript" src="./script/angular.min.js"></script>
+	<script type="text/javascript" src="./script/underscore-esm-min.js"></script>
+	<script type="text/javascript" src="./script/angular-cookies.js"></script>
+	<script type="text/javascript" src="./script/angular-route.js"></script>
+	<script type="text/javascript" src="./script/jquery-3.3.1.slim.min.js"></script>
+	<script type="text/javascript" src="./script/popper.min.js"></script>
+	<script type="text/javascript" src="./script/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="./script/luxon.min.js"></script>
+	<script type="text/javascript" src="./script/lodash.min.js"></script>
+	<script type="text/javascript" src="./script/qrcode.min.js"></script>
+	<script type="text/javascript" src="./script/script.js"></script>
+</body>
+</html>

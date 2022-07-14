@@ -22,7 +22,7 @@ const SUPERANNUATION_DEFAULT = {
 	"eligible_WB":0,
 	"min":0,
 	"pservice":0,
-	"psalary":0,
+	"psalary":15000,
 	"pension1":0,
 	"pension2":0,
 	"pension3":0,
