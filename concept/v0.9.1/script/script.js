@@ -436,10 +436,11 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 				'monthsafter':getCeilingDuration(doj,doe,'months',0),
 				'pensionabledays':get_pensionable_days(doj,doe),
 				'daysbefore':getCeilingDuration(doj,doe,'days',1),
+				'daysafter':getCeilingDuration(doj,doe,'days',0),
 				'yearsbefore':getCeilingDuration(doj,doe,'years',1),
 				'yearsafter':getCeilingDuration(doj,doe,'years',0)
 			};
-			service['daysafter']=service['pensionabledays']-service['daysbefore'];
+			service['daystotal']=service['daysafter']+service['daysbefore'];
 			log("addService:(daysbefore, daysafter, pensionabledays,ncp1,ncp2):",[service['daysbefore'],service['daysafter'],service['pensionabledays'],ncp1,ncp2])
 			$scope.services.push(service);
 			$scope.update();	
