@@ -398,17 +398,28 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.basic.alert = 0;
 		console.log("doe",$scope.basic.doe);
 		var date60 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
-		var date58 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate()
-		if($scope.basic.doe>new Date('2016-04-25') && $scope.basic.availing_date>date60){
-			$scope.basic.agealert="Date of pension option can not be chosen beyond age 60 for DOE from 2016-04-25."
-			$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
-			$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
-		} else if($scope.basic.age>=date58){
-			$scope.basic.agealert="Date of pension option can not be chosen beyond age 58 for DOE before 2016-04-25.";
-			$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
-			$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
+		var date58 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
+		var date50 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 50}).toJSDate();
+		var min_opt_date=luxon.DateTime.fromJSDate(CEILING1_DATE).plus({years: 9.5}).toJSDate();
+		if($scope.basic.availing_date<min_opt_date) {
+			$scope.basic.agealert="Opting date should be atleast 9.5 Years after joining EPS 95(16-11-1995)";
+			$scope.basic.availing_date=min_opt_date;
+		} else if($scope.basic.availing_date<date50){
+			$scope.basic.agealert="Opting date should be atleast 50 Years after Date of Birth.";
+			$scope.basic.availing_date=date50;
 		} else {
 			$scope.basic.agealert=0;
+			if($scope.basic.doe>new Date('2016-04-25') && $scope.basic.availing_date>date60){
+				$scope.basic.agealert="Date of pension option can not be chosen beyond age 60 for DOE from 2016-04-25."
+				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
+				$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
+			} else if($scope.basic.age>=date58){
+				$scope.basic.agealert="Date of pension option can not be chosen beyond age 58 for DOE before 2016-04-25.";
+				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
+				$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
+			} else {
+				$scope.basic.agealert=0;
+			}
 		}
 		$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
 	}
@@ -490,7 +501,6 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			
 			$scope.services.push(service);
 			$scope.availingDate();	
-			$scope.update();
 		}
 	}
 	
