@@ -232,7 +232,8 @@ function get_pension(days1,days2,ncp1,ncp2,psal,wt){
 	} else {
 		eligible1 = days1-ncp1+365*wt;
 		eligible2 = days2-ncp2;
-		p1 = eligible1*6500/(70*365);
+		psal1=psal>6500?6500:psal;
+		p1 = eligible1*psal1/(70*365);
 		p2 = eligible2*psal/(70*365);
 		pension = round(p1+p2);
 	}
