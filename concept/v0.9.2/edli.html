@@ -40,8 +40,8 @@
 				<div id="qrcode"></div>
 			</div>
 		</div>
-		<div class="row g-4">
-			<div class="col-sm-12">
+		<div class="row g-4 d-flex justify-content-between">
+			<div class="col-md-6 col-sm-12 mx-auto">
 				<div class="card shadow">
 					<div class="card-header">EDLI Calculator Input</div>
 					<div class="card-body">
@@ -59,7 +59,7 @@
 							
 							<div class="input-group mb-2" >
 								<span class="input-group-text col-8" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="top" title="Average progressive balance is average of balance in past 12 months. The same is available in the passbook website.">Average Progressive Balance: <i class="bi bi-question-circle-fill"></i></span>
-								<input type="number" ng-model="apb" name="apb" min="0" class="form-control col-4" ng-change="output=0" placeholder="Average Progressive Balance" aria-label="Average Progressive Balance" aria-describedby="basic-addon1" required>
+								<input type="number" ng-model="apb" name="apb" min="0" class="form-control col-4" ng-change="update()" placeholder="Average Progressive Balance" aria-label="Average Progressive Balance" aria-describedby="basic-addon1" required>
 							</div>
 							<div class="alert alert-danger alert-sm" ng-show="edliForm.apb.$dirty && edliForm.apb.$invalid">
 								<span ng-show="edliForm.apb.$error.required">Average Progressive Balance.</span>
@@ -67,14 +67,14 @@
 							</div>
 							
 							<div class="form-check form-switch" ng-show="params.b_factor">
-								<input class="form-check-input" ng-model="continuous12" ng-change="output=0" id="continuous" type="checkbox" id="flexSwitchCheckDefault">
+								<input class="form-check-input" ng-model="continuous12" ng-change="update()" id="continuous" type="checkbox" id="flexSwitchCheckDefault">
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod<limit2">Whether completed continuous 12 months service is same establishment(last service)?</label>
 								<label class="form-check-label" for="flexCheckDefault" ng-if="dod>=limit2">Whether completed continuous 12 months service (not necessarily in same est)?</label>
 							</div>
 							
 							<div class="input-group mb-2" ng-show="(continuous12 && params.b_factor)">
 								<span class="input-group-text col-8" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website. If Date-of-Death is 07.04.2022 then wages between 04-20 to 03-21 needs to be taken for average.">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
-								<input type="number" ng-model="avg_wage" name="avg_wage" class="form-control col-4" ng-change="output=0" min="0" max="15000" placeholder="Average Wage" max="{{b_ceiling+1000}}"  aria-label="Average Wage" aria-describedby="basic-addon1">
+								<input type="number" ng-model="avg_wage" name="avg_wage" class="form-control col-4" ng-change="update()" min="0" max="15000" placeholder="Average Wage" max="{{b_ceiling+1000}}"  aria-label="Average Wage" aria-describedby="basic-addon1">
 							</div>
 							<div class="alert alert-danger alert-sm" ng-show="edliForm.avg_wage.$dirty && edliForm.avg_wage.$invalid">
 								<span ng-show="edliForm.avg_wage.$error.required">Average Progressive Balance.</span>
@@ -92,7 +92,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-12" ng-show="output && !(edliForm.dod.$error.required || edliForm.apb.$error.required || edliForm.dod.$invalid || edliForm.apb.$invalid || edliForm.avg_wage.$invalid)">
+			<div class="col-md-6 col-sm-12" ng-show="output && !(edliForm.dod.$error.required || edliForm.apb.$error.required || edliForm.dod.$invalid || edliForm.apb.$invalid || edliForm.avg_wage.$invalid)">
 				<div class="card shadow">
 					<div class="card-header d-flex justify-content-between align-items-center">EDLI Calculator Output : <span>Date of Death: {{dod | date:'dd-MM-yyyy'}}</span></div>
 					<div class="card-body p-3">
@@ -139,7 +139,7 @@
 		Based on Date of death many factors are decided such as Minimum, Maximum, percentage of APB to be taken etc.
 		
 		<h4>What are the parts - Part A and Part B?</h4>
-		EDLI amount calculation is done by two formulas and the member is eligible for the amount whichever is greater. You may check the table and relavent circulars by clicking link given in input form.
+		EDLI amount calculation is done by two formulas and the member is eligible for the amount whichever is greater. You may check the table and relevant circulars by clicking link given in input form.
 		<br/>
 		Part A = Proportional amount+ Percent*(APB-Proportional)[subject to Maximum]+Additional_Percent*Amt if maximum not reached
 		<br/>
@@ -300,7 +300,7 @@
 	
 	const get_final_b = function(avg_wage, b_ceiling, b_factor, b_perc, b_perc1, apb, b_max, b_min,continuous12){
 		var bool=0, final_b = 0;
-		if(continuous12) {
+		if(continuous12 && avg_wage) {
 			bool = 1; 
 		} else {
 			avg_wage = 0;
@@ -383,8 +383,13 @@
 			} else {
 				$scope.params = getParams(TABLE, date);
 			}
-			$scope.output=0;
+			$scope.update();
 		};
+		
+		$scope.update = function (){
+			$scope.output=0;
+			$scope.final='Update Calculation';
+		}
 			
 		
 		$scope.updateCalculation = function () {
