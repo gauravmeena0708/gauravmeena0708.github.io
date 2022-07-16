@@ -66,7 +66,6 @@ const getServiceStr = function(days) {
 		Y = Math.floor(days/365);
 		M = Math.floor((days - Y*365)/30);
 		D = Math.floor(days - Y*365 -M*30);
-		console.log(Y,M,D);
 		str = Y.toString()+' Years,'+M.toString()+' Months,'+D.toString()+' Days';
 		return str;
 	}
