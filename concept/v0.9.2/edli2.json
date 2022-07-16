@@ -109,7 +109,8 @@
 		"b_perc": 0,
 		"b_perc1": 0,
 		"b_max": 0,
-		"b_min": 0
+		"b_min": 0,
+		"link_en":"http://epfindia.gov.in/site_docs/PDFs/Circulars/Y2010-2011/Amendment_EDLI_91010.pdf"
 	},
 	{
 		"id": 8,
@@ -125,7 +126,8 @@
 		"b_perc": 20,
 		"b_perc1": 0,
 		"b_max": 0,
-		"b_min": 0
+		"b_min": 0,
+		"link_en":"http://epfindia.gov.in/site_docs/PDFs/Circulars/Y2014-2015/Coord_SchemeAmendment_13637.pdf"
 	},
 	{
 		"id": 9,
@@ -141,7 +143,8 @@
 		"b_perc": 0,
 		"b_perc1": 50,
 		"b_max": 150000,
-		"b_min": 0
+		"b_min": 0,
+		"link_en":"http://epfindia.gov.in/site_docs/PDFs/Circulars/Y2016-2017/EDLI_AmendmentEDLI_5662.pdf"
 	},
 	{
 		"id": 10,
@@ -157,7 +160,8 @@
 		"b_perc": 0,
 		"b_perc1": 50,
 		"b_max": 150000,
-		"b_min": 250000
+		"b_min": 250000,
+		"link_en":"http://epfindia.gov.in/site_docs/PDFs/Circulars/Y2017-2018/EDLI_Amendment_GSR_AssuranceBenefits_26694.pdf"
 	},
 	{
 		"id": 11,
@@ -173,7 +177,8 @@
 		"b_perc": 0,
 		"b_perc1": 50,
 		"b_max": 150000,
-		"b_min": 250000
+		"b_min": 250000,
+		"link_en":"http://epfindia.gov.in/site_docs/PDFs/Circulars/Y2010-2011/Amendment_EDLI_91010.pdf"
 	},
 	{
 		"id": 12,
@@ -189,6 +194,7 @@
 		"b_perc": 0,
 		"b_perc1": 50,
 		"b_max": 175000,
-		"b_min": 250000
+		"b_min": 250000,
+		"link_en":"http://epfindia.gov.in/site_docs/PDFs/Circulars/Y2021-2022/EDLI_Notification_27058.pdf"
 	}
 ]

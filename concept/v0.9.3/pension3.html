@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EDLI Calculator</title>
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-icons.css">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div class="container">
+		<h2>Validation Example</h2>
+
+		<form ng-app="myApp" ng-controller="validateCtrl" name="myForm" novalidate>
+			<div class="input-group mb-2">
+				<span class="input-group-text col-8">Date of Death : </span>
+				<input class="form-control col-4 mb-2"type="date" name="dod" ng-model="dod"  dateofdeath required>	
+			</div>
+			<div class="alert alert-danger col-8" ng-show="myForm.dod.$invalid">
+				<span ng-show="myForm.dod.$error.required">Date of Death is required.</span>
+				<span ng-show="myForm.dod.$error.date">it should be date between 01-04-2011 and Today's Date</span>
+			</div>
+							
+			<div class="input-group mb-2">
+				<input class="form-control col-4 mb-2" type="number" name="email" ng-model="email" min="5" max="15" integer required>
+				<div class="alert alert-danger mt-2" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+					<span ng-show="myForm.email.$error.required">Invalid email address.</span>
+					<span ng-show="myForm.email.$error.integer">it should be integer</span>
+					<span ng-show="myForm.email.$error.min || myForm.email.$error.max">it should be between 5 to 15</span>
+				</div>
+			</div>
+			<div>
+				<label>
+				Size (integer 0 - 10):
+				<input type="number" ng-model="size" name="size" min="0" max="10" integer />{{size}}</label><br />
+				<span ng-show="myForm.size.$error.integer">The value is not a valid integer!</span>
+				<span ng-show="myForm.size.$error.min || myForm.size.$error.max"> The value must be in range 0 to 10!</span>
+			</div>
+		
+
+		<p>Average Progressive Balance:<br>
+		
+		</p>
+
+		<p>
+		<input type="submit" ng-disabled="myForm.dod.$dirty && myForm.user.$invalid ||  myForm.email.$dirty && myForm.email.$invalid">
+		</p>
+
+		</form>
+</div>
+	<script type="text/javascript" src="./script/angular.min.js"></script>
+	<script type="text/javascript" src="./script/angular-cookies.js"></script>
+	<script type="text/javascript" src="./script/angular-route.js"></script>
+	<script type="text/javascript" src="./script/jquery-3.3.1.slim.min.js"></script>
+	<script type="text/javascript" src="./script/popper.min.js"></script>
+	<script type="text/javascript" src="./script/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="./script/luxon.min.js"></script>
+	<script type="text/javascript" src="./script/lodash.min.js"></script>
+	<script type="text/javascript" src="./script/qrcode.min.js"></script>
+	<!--<script type="text/javascript" src="./script/script.js"></script>-->
+<script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.dod ;
+    $scope.email = 900000;
+	$scope.dod1=0;
+});
+
+
+
+
+
+var INTEGER_REGEXP = /^-?\d+$/;
+app.directive('dateofdeath', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+	  console.log(elm);
+      ctrl.$validators.date = function(modelValue, viewValue) {
+		console.log(modelValue, viewValue);
+        if (ctrl.$isEmpty(modelValue)) {
+          return false;
+        }
+
+        if (modelValue>new Date('2011-04-01') && modelValue<=new Date()) {
+          return true;
+        } 
+
+        return false;
+      };
+	  console.log(ctrl);
+    }
+  };
+});
+
+app.directive('email', function($q, $timeout) {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$validators.integer = function(modelValue, viewValue) {
+        if (ctrl.$isEmpty(modelValue)) {
+          return false;
+        }
+
+        if (INTEGER_REGEXP.test(viewValue)) {
+          // it is valid
+		  console.log(INTEGER_REGEXP.test(viewValue));
+          return true;
+        }
+
+        // it is invalid
+        return false;
+      };
+    }
+  };
+});
+
+
+</script>
+
+</body>
+</html>
