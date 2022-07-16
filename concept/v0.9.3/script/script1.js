@@ -9,17 +9,17 @@ const CEILING2_DATE = new Date('2014-09-01');
 
 const LIMIT_MAX     = new Date();
 const BASIC_DEFAULT = {
-	'dob': luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 59}).toJSDate(),
-	'availing_date':new Date(),
-	'age':58,
-	'date58':new Date(),
-	'doe': 0,
-	'agedoe':0
+	'dob': luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).toJSDate(),
+	'date58':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1, days:1}).toJSDate(),
+	'date50':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 9, days:1}).toJSDate(),
+	'avail58':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1}).toJSDate(),
+	'avail50':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1}).toJSDate(),
+	'minAD':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 8}).toJSDate()
 }
 
 const SERVICE_INPUT_DEFAULT = {
 	'doj': new Date('1995-11-16'),
-	'doe': new Date('2018-12-01'),
+	'doe': new Date('2011-03-31'),
 	'ncp1':0,
 	'ncp2':0,
 	'ncp1edit':1,
@@ -56,6 +56,20 @@ function getDays (date1, date2, withEndDate=1) {
 			interval2.length('Days')+
 			withEndDate
 			);
+}
+
+const getServiceStr = function(days) {
+	if(typeof(days)!='number' && days<0) {
+		return 'No service added or Not a valid Input';
+	} else {
+		let Y, M, D, str;
+		Y = Math.floor(days/365);
+		M = Math.floor((days - Y*365)/30);
+		D = Math.floor(days - Y*365 -M*30);
+		console.log(Y,M,D);
+		str = Y.toString()+' Years,'+M.toString()+' Months,'+D.toString()+' Days';
+		return str;
+	}
 }
 
 function getDifference(d1, d2, unit="Days", period="both", withEndDate=1) {

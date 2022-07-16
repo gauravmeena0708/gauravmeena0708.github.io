@@ -30,9 +30,9 @@
 			</ul>
 			</div>
 		</div>
-		<div class="row g-4">
+		<div class="row">
 			<div class="col-sm-12">
-				<div class="card shadow">
+				<div class="card">
 					<div class="card-header">Pension Calculator Input</div>
 					<div class="card-body">
 						<div class="row">
@@ -40,22 +40,14 @@
 								<form name="pensionForm" class="row need-validated">
 									<div class="input-group">
 										<span class="input-group-text col-md-4" id="dobPrepend">Date of Birth</span>
-										<input type="date" ng-model="basic.dob" id="dob" name="dob" ng-change="availingDate()" class="form-control col-md-4" ng-Class="{'is-invalid': pensionForm.dob.$invalid}"  dateofbirth required>
+										<input type="date" ng-model="basic.dob" id="dob" name="dob" ng-change="updateDOB()" class="form-control col-md-4" ng-Class="{'is-invalid': pensionForm.dob.$invalid}"  dateofbirth required>
 										<div class="invalid-feedback col-md-4 text-danger" ng-show="pensionForm.dob.$invalid">
 											<span ng-show="pensionForm.dob.$error.required">Date of Birth is required.</span>
 											<span ng-show="pensionForm.dob.$error.date">The Calculator gives output for Pension start date from 01-04-2011 and Today's Date. Please, enter Date of birth Accordingly.</span>
 										</div>	
 									</div>
 								</form>
-							</div>
-							<ul class="list-group mb-3 col-md-6">
-								<li class="list-group-item">Date of Attaining 58 Years:</li>
-							</ul>
-						</div>
-						<ul class="list-group mb-3">
-							<!--
-							<li class="list-group-item">
-								<table class="table table-striped table-bordered table-sm">
+								<table class="table table-striped table-bordered table-sm" ng-show="services.length">
 									<thead>
 										<tr>
 											<td>DOJ</td>
@@ -75,50 +67,28 @@
 										</tr>
 									</tbody>
 								</table>
-								<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
-								<ul class="list-group mt-2 mb-3">
-									<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total: <span>{{services.length}} services</span></li>
-									<li class="list-group-item list-group-item-warning" ng-if="eligibilityMsg"><i class="bi bi-exclamation-octagon-fill"></i> {{"Information: "+ eligibilityMsg}}</li>
-									<li class="list-group-item list-group-item-warning" ng-if="actual_service"><i class="bi bi-exclamation-octagon-fill"></i> Your Actual service is: {{actual_service}} days</li>
-									<li class="list-group-item list-group-item-warning" ng-if="eligible_service"><i class="bi bi-exclamation-octagon-fill"></i> Your eligible service is: {{eligible_service}} days</li>
-								</ul>
-							</li>
-							
-							<li class="list-group-item">
-								<form name="serviceForm">
-									<div class="input-group mb-1 has-validation">
-										<span class="input-group-text col-5" id="basic-addon1">Pension Availing Date/Date of Option: </span>
-										<input type="date" ng-model="basic.availing_date" name="ad" id="ad" ng-change="updateBasic()" class="form-control" placeholder="availing_date" aria-label="availing_date" aria-describedby="basic-addon1">
-										<div id="adFeedback" class="invalid-feedback">
-												Please choose a username.
-										</div>
-									</div>
-								</form>
-							</li>
-							<li class="list-group-item list-group-item-warning" ng-if="basic.agealert"><i class="bi bi-exclamation-octagon-fill"></i> {{basic.agealert}}</li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Age on Pension Availing Date: <span>{{basic.age}}</span></li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of attaining 58 Years: <span>{{basic.date58 | date:'dd/MM/yyyy' }}</span></li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="basic.doe">Date of Exit (EPS): <span>{{basic.doe | date:'dd/MM/yyyy' }}</span></li>
-							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="basic.doe">Age on Date of Exit(EPS): <span>{{basic.agedoe}}</span></li>
-						-->
-						</ul>	
+								<button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
+								
+							</div>
+							<ul class="list-group mb-3 col-md-6">
+								<li class="list-group-item  d-flex justify-content-around align-items-center">Date of Attaining 58 Years:<span>{{ basic.date58 |  date:'dd/MM/yyyy'}}</span></li>
+								<li class="list-group-item  d-flex justify-content-around align-items-center">Date of Attaining 50 Years:<span>{{ basic.date50 |  date:'dd/MM/yyyy'}}</span></li>
+								<li class="list-group-item  d-flex justify-content-around align-items-center">Min Availing Date:<span>{{ basic.minAD |  date:'dd/MM/yyyy'}}</span></li>
+								<li class="list-group-item  d-flex justify-content-around align-items-center">Pensionable Service till 58:<span>{{ total.pensionable_service}}</span></li>
+							</ul>
+						</div>	
 					</div>
 					
 					<div class="card-footer d-flex justify-content-between align-items-center">
-						Pension Benefit: {{}}
 						<span>
-							<button type="button" class="btn btn-success align-self-center" ng-click="output=true">Show Calculation</button>
+							<button type="button" class="btn btn-success align-self-center" ng-click="update()" ng-disabled="pensionForm.dob.$error.$invalid">Show/Update Calculation</button>
 							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">Reset</button>
 						</span>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row mt-3">
-			<div class="col">
-				
-			</div>
-		</div>
+
 <div class="modal fade" id="addService" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addService" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -176,7 +146,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	//$scope.dob = BASIC_DEFAULT.dob;
 	$scope.reset = function () {
 		$scope.resetBasic();
-		$scope.update()
+		$scope.updateDOB();
 	}
 	
 	$http({
@@ -193,16 +163,19 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		log(error,[])
 	});
 	
-	$scope.updateBasic = function(){
+	$scope.updateDOB = function(){
+		$scope.basic.date58  = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).minus({days: 1}).toJSDate();
+		$scope.basic.date50  = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 50}).minus({days: 1}).toJSDate();
+		$scope.basic.avail58 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
+		$scope.basic.avail50 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 50}).toJSDate();
 	}
 	
 	
 	$scope.resetBasic = function (){
 		$scope.basic = BASIC_DEFAULT;
 		$scope.resetService();
-		$scope.updateBasic();
+		$scope.updateDOB();
 		//$scope.basic.doe=0;
-		//$scope.updateBasic();
 	}
 	
 	$scope.resetService = function() {
@@ -221,13 +194,14 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		}
 	}
 	
+	$scope.updateMinAD = function(){
+		console.log($scope.total);
+		console.log("AD,date50,doe",$scope.total.doe,$scope.basic.date50,$scope.basic.minAD);
+		x = $scope.total.doe>$scope.basic.date50?$scope.total.doe:$scope.basic.date50;
+		$scope.basic.minAD = luxon.DateTime.fromJSDate(x).plus({days: 1}).toJSDate()
+	}
 	$scope.update = function() {
-		log("update called",[]);
-		//$scope.updateBasic();
-		$scope.total=updateTotal();
-
-		updateEligibility();		
-		$scope.updateSuperannuation();
+		alert("Botton is active");
 	}
 	
 	
@@ -241,20 +215,17 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			var x= $scope.services.reduce((a, b) => (a.doe > b.doe ? a : b));
 			var y= $scope.services.reduce((a, b) => (a.doj < b.doj ? a : b));
 			total.doe=x.doe;
-			total.doj=x.doj;
+			total.doj=y.doj;
+			total.pensionable_service = getServiceStr(total.daystotal_age58);
+			return total;
 			
 		} else {
 			total.doe=0;
 			total.doj=0;
 		}
-		$scope.basic.doe=total.doe;
-		$scope.basic.agedoe = getDifference($scope.basic.dob,$scope.basic.doe,'Years',"both");
-		console.log("total:",total);
 		return total;
 	}
 	
-	function updateEligibility(){
-	}
 	
 	$scope.availingDate=function(){
 		//$scope.basic.doe=0;
@@ -288,8 +259,6 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	}
 	
 	
-	$scope.updateSuperannuation = function(){
-	}
 	
 	$scope.update_ncp = function () {
 		if($scope.service_input.doj>CEILING2_DATE) {
@@ -349,11 +318,13 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 				'yearsafter':yearsafter,
 				'daysbefore':daysbefore,
 				'daysafter':daysafter,
-				'daystotal':daystotal	
+				'daystotal':daystotal,
+				'daystotal_age58':daystotal_age58
 			}
 			
 			$scope.services.push(service);
-			$scope.availingDate();	
+			$scope.total = updateTotal();
+			$scope.updateMinAD();
 		}
 	}
 	
@@ -371,7 +342,6 @@ app.directive('dateofbirth', function() {
 				}
 			
 				if (modelValue>=MIN_DOB && modelValue<=MAX_DOB) {
-					console.log(modelValue, MIN_DOB, MAX_DOB);
 					return true;
 				} 
 
