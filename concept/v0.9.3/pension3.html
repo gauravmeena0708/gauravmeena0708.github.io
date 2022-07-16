@@ -1,121 +1,385 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>EDLI Calculator</title>
+	<title>Pension Calculator</title>
 	<link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/bootstrap-icons.css">
 	<link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
-	<div class="container">
-		<h2>Validation Example</h2>
 
-		<form ng-app="myApp" ng-controller="validateCtrl" name="myForm" novalidate>
-			<div class="input-group mb-2">
-				<span class="input-group-text col-8">Date of Death : </span>
-				<input class="form-control col-4 mb-2"type="date" name="dod" ng-model="dod"  dateofdeath required>	
+<body style="background-image: linear-gradient(0deg, #FDFFFF 0%, #DFFFFF 100%);">
+	<header class="p-1 mb-2 bg-info text-white shadow">
+		<div class="container">
+		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+			  <li><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
+			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li>
+			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI</a></li>
+			</ul>
+			<h3 class="text-center">CALCULATOR</h3>
+		  </div>
+		</div>
+	</header>
+    <div class="container-fluid" ng-app="pensionApp" ng-controller="pensionCtrl">
+		<div class="row">
+			<div class="alert fade show" role="alert">
+			<ul class="list-group">
+				<li  class="list-group-item list-group-item-danger"><i class="bi bi-exclamation-octagon-fill"></i>
+					The calculations shown here are only illustrative in nature and can not be used as a basis of any legal case/litigation.
+				</li>
+			</ul>
 			</div>
-			<div class="alert alert-danger col-8" ng-show="myForm.dod.$invalid">
-				<span ng-show="myForm.dod.$error.required">Date of Death is required.</span>
-				<span ng-show="myForm.dod.$error.date">it should be date between 01-04-2011 and Today's Date</span>
-			</div>
+		</div>
+		<div class="row g-4">
+			<div class="col-sm-12">
+				<div class="card shadow">
+					<div class="card-header">Pension Calculator Input</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-6">
+								<form name="pensionForm" class="row need-validated">
+									<div class="input-group">
+										<span class="input-group-text col-md-4" id="dobPrepend">Date of Birth</span>
+										<input type="date" ng-model="basic.dob" id="dob" name="dob" ng-change="availingDate()" class="form-control col-md-4" ng-Class="{'is-invalid': pensionForm.dob.$invalid}"  dateofbirth required>
+										<div class="invalid-feedback col-md-4 text-danger" ng-show="pensionForm.dob.$invalid">
+											<span ng-show="pensionForm.dob.$error.required">Date of Birth is required.</span>
+											<span ng-show="pensionForm.dob.$error.date">The Calculator gives output for Pension start date from 01-04-2011 and Today's Date. Please, enter Date of birth Accordingly.</span>
+										</div>	
+									</div>
+								</form>
+							</div>
+							<ul class="list-group mb-3 col-md-6">
+								<li class="list-group-item">Date of Attaining 58 Years:</li>
+							</ul>
+						</div>
+						<ul class="list-group mb-3">
+							<!--
+							<li class="list-group-item">
+								<table class="table table-striped table-bordered table-sm">
+									<thead>
+										<tr>
+											<td>DOJ</td>
+											<td>DOE</td>
+											<td>NCP1</td>
+											<td>NCP2</td>
+											<td></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="service in services">
+											<td>{{service.doj |  date:'dd-MM-yyyy'}}</td>
+											<td>{{service.doe |  date:'dd-MM-yyyy'}}</td>
+											<td>{{service.ncp1}}</td>
+											<td>{{service.ncp2}}</td>
+											<td><i class="bi bi-trash" ng-click='removeService($index)'></i></td>
+										</tr>
+									</tbody>
+								</table>
+								<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
+								<ul class="list-group mt-2 mb-3">
+									<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Total: <span>{{services.length}} services</span></li>
+									<li class="list-group-item list-group-item-warning" ng-if="eligibilityMsg"><i class="bi bi-exclamation-octagon-fill"></i> {{"Information: "+ eligibilityMsg}}</li>
+									<li class="list-group-item list-group-item-warning" ng-if="actual_service"><i class="bi bi-exclamation-octagon-fill"></i> Your Actual service is: {{actual_service}} days</li>
+									<li class="list-group-item list-group-item-warning" ng-if="eligible_service"><i class="bi bi-exclamation-octagon-fill"></i> Your eligible service is: {{eligible_service}} days</li>
+								</ul>
+							</li>
 							
-			<div class="input-group mb-2">
-				<input class="form-control col-4 mb-2" type="number" name="email" ng-model="email" min="5" max="15" integer required>
-				<div class="alert alert-danger mt-2" ng-show="myForm.email.$dirty && myForm.email.$invalid">
-					<span ng-show="myForm.email.$error.required">Invalid email address.</span>
-					<span ng-show="myForm.email.$error.integer">it should be integer</span>
-					<span ng-show="myForm.email.$error.min || myForm.email.$error.max">it should be between 5 to 15</span>
+							<li class="list-group-item">
+								<form name="serviceForm">
+									<div class="input-group mb-1 has-validation">
+										<span class="input-group-text col-5" id="basic-addon1">Pension Availing Date/Date of Option: </span>
+										<input type="date" ng-model="basic.availing_date" name="ad" id="ad" ng-change="updateBasic()" class="form-control" placeholder="availing_date" aria-label="availing_date" aria-describedby="basic-addon1">
+										<div id="adFeedback" class="invalid-feedback">
+												Please choose a username.
+										</div>
+									</div>
+								</form>
+							</li>
+							<li class="list-group-item list-group-item-warning" ng-if="basic.agealert"><i class="bi bi-exclamation-octagon-fill"></i> {{basic.agealert}}</li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Age on Pension Availing Date: <span>{{basic.age}}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center">Date of attaining 58 Years: <span>{{basic.date58 | date:'dd/MM/yyyy' }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="basic.doe">Date of Exit (EPS): <span>{{basic.doe | date:'dd/MM/yyyy' }}</span></li>
+							<li class="list-group-item list-group-item d-flex justify-content-between align-items-center" ng-show="basic.doe">Age on Date of Exit(EPS): <span>{{basic.agedoe}}</span></li>
+						-->
+						</ul>	
+					</div>
+					
+					<div class="card-footer d-flex justify-content-between align-items-center">
+						Pension Benefit: {{}}
+						<span>
+							<button type="button" class="btn btn-success align-self-center" ng-click="output=true">Show Calculation</button>
+							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">Reset</button>
+						</span>
+					</div>
 				</div>
 			</div>
-			<div>
-				<label>
-				Size (integer 0 - 10):
-				<input type="number" ng-model="size" name="size" min="0" max="10" integer />{{size}}</label><br />
-				<span ng-show="myForm.size.$error.integer">The value is not a valid integer!</span>
-				<span ng-show="myForm.size.$error.min || myForm.size.$error.max"> The value must be in range 0 to 10!</span>
+		</div>
+		<div class="row mt-3">
+			<div class="col">
+				
 			</div>
-		
-
-		<p>Average Progressive Balance:<br>
-		
-		</p>
-
-		<p>
-		<input type="submit" ng-disabled="myForm.dod.$dirty && myForm.user.$invalid ||  myForm.email.$dirty && myForm.email.$invalid">
-		</p>
-
-		</form>
+		</div>
+<div class="modal fade" id="addService" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addService" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="addService">Add Service</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<form>
+					<div class="input-group mb-3 bg-info">
+						<span class="input-group-text col-6">DOJ</span>
+						<input type="date" ng-model ="service_input.doj" ng-change="update_ncp()" class="form-control" placeholder="doj" aria-label="doj">
+					</div>
+					<div class="input-group mb-3 bg-light">
+						<span class="input-group-text col-6">DOE</span>
+						<input type="date" ng-model ="service_input.doe" ng-change="update_ncp()" class="form-control" placeholder="doe" aria-label="doe">
+					</div>
+					<div class="input-group mb-3 bg-light" ng-show="service_input.ncp1edit">
+						<span class="input-group-text col-6">NCP b/w 16-11-1995 to 31-08-2014</span>
+						<input type="number" ng-model ="service_input.ncp1"  class="form-control" placeholder="NCP1" aria-label="NCP1">
+					</div>
+					<div class="input-group mb-3 bg-light" ng-show="service_input.ncp2edit">
+						<span class="input-group-text col-6">NCP from 01-09-2014</span>
+						<input type="number" ng-model ="service_input.ncp2"  class="form-control" placeholder="NCP2" aria-label="NCP2">
+					</div>
+					<div class="row mb-3">
+						<div class="col-3">
+							<button type="button" class="btn btn-success waves-effect" ng-click="addService()" data-bs-dismiss="modal"><i class="bi bi-plus-circle-fill"></i> Add Service</button>
+						</div>
+					</div>
+			</form>
+		</div>
+    </div>
+  </div>
 </div>
+	<!--
+	container fluid div closer
+	-->
+	</div>
 	<script type="text/javascript" src="./script/angular.min.js"></script>
 	<script type="text/javascript" src="./script/angular-cookies.js"></script>
-	<script type="text/javascript" src="./script/angular-route.js"></script>
+	<script type="text/javascript" src="./script/angular-route.js"></script>	
 	<script type="text/javascript" src="./script/jquery-3.3.1.slim.min.js"></script>
 	<script type="text/javascript" src="./script/popper.min.js"></script>
 	<script type="text/javascript" src="./script/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="./script/luxon.min.js"></script>
 	<script type="text/javascript" src="./script/lodash.min.js"></script>
 	<script type="text/javascript" src="./script/qrcode.min.js"></script>
-	<!--<script type="text/javascript" src="./script/script.js"></script>-->
+	<script type="text/javascript" src="./script/script1.js"></script>
 <script>
-var app = angular.module('myApp', []);
-app.controller('validateCtrl', function($scope) {
-    $scope.dod ;
-    $scope.email = 900000;
-	$scope.dod1=0;
+
+var app = angular.module('pensionApp', ['ngCookies']);
+
+app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
+	//$scope.dob = BASIC_DEFAULT.dob;
+	$scope.reset = function () {
+		$scope.resetBasic();
+		$scope.update()
+	}
+	
+	$http({
+		method: 'GET',
+		url: './data.json'
+	}).then(function (success){
+		log("json downloaded",[]);
+		TABLEB = success.data.TABLEB;	
+		TABLEC = success.data.TABLEC;
+		TABLED = success.data.TABLED;
+		TABLE_BASIC = success.data.TABLE_BASIC_PENSION;
+		$scope.reset();
+	},function (error){
+		log(error,[])
+	});
+	
+	$scope.updateBasic = function(){
+	}
+	
+	
+	$scope.resetBasic = function (){
+		$scope.basic = BASIC_DEFAULT;
+		$scope.resetService();
+		$scope.updateBasic();
+		//$scope.basic.doe=0;
+		//$scope.updateBasic();
+	}
+	
+	$scope.resetService = function() {
+		$scope.dates=[];
+		$scope.services=[];
+		$scope.service_input  = SERVICE_INPUT_DEFAULT;
+		$scope.pension = SUPERANNUATION_DEFAULT;
+		$scope.total=TOTAL_DEFAULT;
+	}
+	
+	$scope.removeService = function(index) {
+		if(index >= 0){
+			$scope.dates.splice(index*2, 2);
+			$scope.services.splice(index, 1);
+			$scope.update();	
+		}
+	}
+	
+	$scope.update = function() {
+		log("update called",[]);
+		//$scope.updateBasic();
+		$scope.total=updateTotal();
+
+		updateEligibility();		
+		$scope.updateSuperannuation();
+	}
+	
+	
+	function updateTotal() {
+		var total = $scope.services.reduce(function(acc, o) {
+				for (var p in o)
+					acc[p] = (p in acc ? acc[p] : 0) + o[p];
+					return acc;
+				}, {});
+		if($scope.services.length) {
+			var x= $scope.services.reduce((a, b) => (a.doe > b.doe ? a : b));
+			var y= $scope.services.reduce((a, b) => (a.doj < b.doj ? a : b));
+			total.doe=x.doe;
+			total.doj=x.doj;
+			
+		} else {
+			total.doe=0;
+			total.doj=0;
+		}
+		$scope.basic.doe=total.doe;
+		$scope.basic.agedoe = getDifference($scope.basic.dob,$scope.basic.doe,'Years',"both");
+		console.log("total:",total);
+		return total;
+	}
+	
+	function updateEligibility(){
+	}
+	
+	$scope.availingDate=function(){
+		//$scope.basic.doe=0;
+		$scope.basic.alert = 0;
+		console.log("doe",$scope.basic.doe);
+		var date60 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
+		var date58 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
+		var date50 = luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 50}).toJSDate();
+		var min_opt_date=luxon.DateTime.fromJSDate(CEILING1_DATE).plus({years: 9.5}).toJSDate();
+		if($scope.basic.availing_date<min_opt_date) {
+			$scope.basic.agealert="Opting date should be atleast 9.5 Years after joining EPS 95(16-11-1995)";
+			$scope.basic.availing_date=min_opt_date;
+		} else if($scope.basic.availing_date<date50){
+			$scope.basic.agealert="Opting date should be atleast 50 Years after Date of Birth.";
+			$scope.basic.availing_date=date50;
+		} else {
+			$scope.basic.agealert=0;
+			if($scope.basic.doe>new Date('2016-04-25') && $scope.basic.availing_date>date60){
+				$scope.basic.agealert="Date of pension option can not be chosen beyond age 60 for DOE from 2016-04-25."
+				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 60}).toJSDate();
+				$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
+			} else if($scope.basic.age>=date58){
+				$scope.basic.agealert="Date of pension option can not be chosen beyond age 58 for DOE before 2016-04-25.";
+				$scope.basic.availing_date=luxon.DateTime.fromJSDate($scope.basic.dob).plus({years: 58}).toJSDate();
+				$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
+			} else {
+				$scope.basic.agealert=0;
+			}
+		}
+		$scope.basic.age = getDifference($scope.basic.dob,$scope.basic.availing_date, "Years","both");
+	}
+	
+	
+	$scope.updateSuperannuation = function(){
+	}
+	
+	$scope.update_ncp = function () {
+		if($scope.service_input.doj>CEILING2_DATE) {
+			$scope.service_input.ncp1=0;
+			$scope.service_input.ncp1edit=0;
+		} else {
+			$scope.service_input.ncp1edit=1;
+		}
+		if($scope.service_input.doe<CEILING2_DATE) {
+			$scope.service_input.ncp2=0;
+			$scope.service_input.ncp2edit=0;
+		} else {
+			$scope.service_input.ncp2edit=1;
+		}
+	}
+	
+	$scope.addService = function(){
+		
+		var doj = $scope.service_input.doj;
+		var doe = $scope.service_input.doe;
+		var ncp1 = $scope.service_input.ncp1;
+		var ncp2 = $scope.service_input.ncp2;
+		log("Add Service Called: (DOJ, DOE): ",[doj,doe]);
+		var date1 = $scope.dates.slice();
+		$scope.dates.push(doj);
+		$scope.dates.push(doe);
+		
+		if(!validateService($scope.service_input, $scope.basic.dob)) {
+			alert("Invalid Service Details. Returning to previous state.");
+			$scope.dates = date1.slice();
+		} else if(multipleDateRangeOverlaps($scope.dates)){
+			alert("Date range overlapping. Returning to previous state");
+			$scope.dates = date1.slice();
+		} else {
+			var monthsbefore     = getDifference(doj,doe,'Months',"before");
+			var monthsafter      = getDifference(doj,doe,'Months',"after");
+			var yearsbefore      = getDifference(doj,doe,'Years',"before");
+			var yearsafter       = getDifference(doj,doe,'Years',"after");
+			var daysbefore       = getDifference(doj,doe,'Days',"before");
+			var daysafter        = getDifference(doj,doe,'Days',"after");
+			var daystotal        = daysbefore+daysafter;
+			var date58           = $scope.basic.date58;
+			date58               = doe>date58?date58:doe;
+			var daysbefore_age58 = getDifference(doj,date58,'Days',"before");
+			var daysafter_age58  = getDifference(doj,date58,'Days',"after");
+			var daystotal_age58   = daysbefore_age58+daysafter_age58;
+			
+			log("AddService:(DOJ,DOE,NCP1,NCP2,Y1,Y2,M1,M2,D1,D2,D_Total)",[doj,doe,ncp1,ncp2,yearsbefore,yearsafter,monthsbefore,monthsafter,daysbefore,daysafter,daystotal]);
+			var service = {
+				'doj':doj,
+				'doe':doe,
+				'ncp1':ncp1,
+				'ncp2':ncp2,
+				'monthsbefore':monthsbefore,
+				'monthsafter':monthsafter,
+				'yearsbefore':yearsbefore,
+				'yearsafter':yearsafter,
+				'daysbefore':daysbefore,
+				'daysafter':daysafter,
+				'daystotal':daystotal	
+			}
+			
+			$scope.services.push(service);
+			$scope.availingDate();	
+		}
+	}
+	
+	
+}]);
+
+app.directive('dateofbirth', function() {
+	return {
+		require: 'ngModel',
+		link: function(scope, elm, attrs, ctrl) {
+			ctrl.$validators.date = function(modelValue, viewValue) {
+				
+				if (ctrl.$isEmpty(modelValue)) {
+					return false;
+				}
+			
+				if (modelValue>=MIN_DOB && modelValue<=MAX_DOB) {
+					console.log(modelValue, MIN_DOB, MAX_DOB);
+					return true;
+				} 
+
+				return false;
+			};
+		}
+	};
 });
-
-
-
-
-
-var INTEGER_REGEXP = /^-?\d+$/;
-app.directive('dateofdeath', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, elm, attrs, ctrl) {
-	  console.log(elm);
-      ctrl.$validators.date = function(modelValue, viewValue) {
-		console.log(modelValue, viewValue);
-        if (ctrl.$isEmpty(modelValue)) {
-          return false;
-        }
-
-        if (modelValue>new Date('2011-04-01') && modelValue<=new Date()) {
-          return true;
-        } 
-
-        return false;
-      };
-	  console.log(ctrl);
-    }
-  };
-});
-
-app.directive('email', function($q, $timeout) {
-  return {
-    require: 'ngModel',
-    link: function(scope, elm, attrs, ctrl) {
-      ctrl.$validators.integer = function(modelValue, viewValue) {
-        if (ctrl.$isEmpty(modelValue)) {
-          return false;
-        }
-
-        if (INTEGER_REGEXP.test(viewValue)) {
-          // it is valid
-		  console.log(INTEGER_REGEXP.test(viewValue));
-          return true;
-        }
-
-        // it is invalid
-        return false;
-      };
-    }
-  };
-});
-
-
-</script>
-
+	</script>
 </body>
 </html>
