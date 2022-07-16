@@ -59,10 +59,10 @@
 							
 							<div class="input-group mb-2" >
 								<span class="input-group-text col-8" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="top" title="Average progressive balance is average of balance in past 12 months. The same is available in the passbook website.">Average Progressive Balance: <i class="bi bi-question-circle-fill"></i></span>
-								<input type="number" ng-model="apb" name="apb" min="0" class="form-control col-4" ng-change="update()" placeholder="Average Progressive Balance" aria-label="Average Progressive Balance" aria-describedby="basic-addon1" required>
+								<input type="number" ng-model="apb" name="apb" min="1" class="form-control col-4" ng-change="update()" placeholder="Average Progressive Balance" aria-label="Average Progressive Balance" aria-describedby="basic-addon1" required>
 							</div>
 							<div class="alert alert-danger alert-sm" ng-show="edliForm.apb.$dirty && edliForm.apb.$invalid">
-								<span ng-show="edliForm.apb.$error.required">Average Progressive Balance.</span>
+								<span ng-show="edliForm.apb.$error.required">Average Progressive Balance is required.</span>
 								<span ng-show="edliForm.apb.$error.integer || edliForm.apb.$error.min || edliForm.apb.$error.max">For Calculator to work, The average progressive balance should be entered</span>
 							</div>
 							
@@ -74,9 +74,9 @@
 							
 							<div class="input-group mb-2" ng-show="(continuous12 && params.b_factor)">
 								<span class="input-group-text col-8" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="top" title="Average wages is average of PF contributory wages in past 12 months. The same is available in the passbook website. If Date-of-Death is 07.04.2022 then wages between 04-20 to 03-21 needs to be taken for average.">Average Wages in preceding 12 Months (max:{{b_ceiling}}): </span>
-								<input type="number" ng-model="avg_wage" name="avg_wage" class="form-control col-4" ng-change="update()" min="0" max="15000" placeholder="Average Wage" max="{{b_ceiling+1000}}"  aria-label="Average Wage" aria-describedby="basic-addon1">
+								<input type="number" ng-model="avg_wage" name="avg_wage" class="form-control col-4" ng-change="update()" min="1" max="15000" placeholder="Average Wage" max="{{b_ceiling+1000}}"  aria-label="Average Wage" aria-describedby="basic-addon1">
 							</div>
-							<div class="alert alert-danger alert-sm" ng-show="edliForm.avg_wage.$dirty && edliForm.avg_wage.$invalid">
+							<div class="alert alert-danger alert-sm" ng-show="(continuous12 && params.b_factor) && edliForm.avg_wage.$dirty && edliForm.avg_wage.$invalid">
 								<span ng-show="edliForm.avg_wage.$error.required">Average Progressive Balance.</span>
 								<span ng-show="edliForm.avg_wage.$error.integer || edliForm.avg_wage.$error.min || edliForm.avg_wage.$error.max">For Part B calculation of EDLI benefit, average wage amount is needed. The amount should be less than wage ceiling. </span>
 							</div>
@@ -367,7 +367,7 @@
 		$scope.output = false;
 		console.log($scope.output);
 		$scope.reset = function(){
-			$scope.continuous12=DEFAULT.continuous12;
+			$scope.continuous12=false;
 			$('#continuous').prop('checked', false); 
 			console.log($scope.continuous12);
 			$scope.dod = DOD;
