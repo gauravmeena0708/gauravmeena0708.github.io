@@ -20,7 +20,7 @@ const BASIC_DEFAULT = {
 
 const SERVICE_INPUT_DEFAULT = {
 	'doj': new Date('1995-11-16'),
-	'doe': new Date('2011-03-31'),
+	'doe': new Date('2014-08-31'),
 	'ncp1':0,
 	'ncp2':0,
 	'ncp1edit':1,
@@ -85,12 +85,12 @@ function getDifference(d1, d2, unit="Days", period="both", withEndDate=1) {
 		if(d1<CEILING1_DATE) {
 			d1=CEILING1_DATE;
 		} else if(d1>CEILING2_DATE){
-			d1=d2;
+			return 0;
 		}
 	} else if(period=="after" && d1<CEILING2_DATE) {
 		d1= CEILING2_DATE;
 		if(d2<CEILING2_DATE){
-			d2=d1;
+			return 0;
 		}
 	}
 	if(d1==d2) return 0;
@@ -119,9 +119,9 @@ function getDifference(d1, d2, unit="Days", period="both", withEndDate=1) {
 }
 
 function log(str, array) {
-	//console.log("Log:", str,":")
+	console.log("Log:", str,":")
 	let text = array.join();
-	//if(array.length) console.log(text);
+	if(array.length) console.log(text);
 }
 
 function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
@@ -149,7 +149,6 @@ function multipleDateRangeOverlaps(dates) {
 }
 
 function validateService(service, dob){
-	
 	if(typeof(service.doj)!="object" || typeof(service.doe)!="object" || typeof(service.ncp1) !="number" || typeof(service.ncp2) !="number") {
 		log("validateService:",["Type not matching."]);
 		return 0;
@@ -183,9 +182,11 @@ function validateService(service, dob){
 	} else {
 		var daysbefore   = getDifference(service.doj,service.doe,'Days',"before");
 		var daysafter    = getDifference(service.doj,service.doe,'Days',"after");
-		if (daysbefore<service.ncp1 || daysafter<service.ncp2 || (daysbefore+daysafter)<(service.ncp1+service.ncp2)) 
+		if (daysbefore<service.ncp1 || daysafter<service.ncp2 || (daysbefore+daysafter)<(service.ncp1+service.ncp2)) {
 			alert("NCP  days not tallying with the service details. Service not added")
 			return 0;
+		}
 		return 1;
 	}
+	return 1;
 }
