@@ -7,6 +7,7 @@ const MAX_DOB = luxon.DateTime.fromJSDate(new Date()).minus({years: 50}).toJSDat
 const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
 const ELG_DATE1 = new Date('2015-03-26');
+const ELG_DAYS = 3465;
 
 const LIMIT_MAX     = new Date();
 const BASIC_DEFAULT = {

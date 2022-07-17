@@ -70,7 +70,29 @@
 								</table>
 								<button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" ng-clic="update_ncp()" ng-disabled="pensionForm.$pristine" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
 								
+								<form name="form2" class="row need-validated mt-2" ng-show="pensionForm.$dirty && pensionForm.dob.$valid && total.eligibility && total.doe<basic.date58">
+									<div class="input-group">
+										<span class="input-group-text col-md-4" id="dobPrepend">Date of Pension start/Pension option</span>
+										<input type="date" ng-model="ad" id="ad" name="ad" min="{{basic.minAD}}" max="{{basic.avail58}}" class="form-control col-md-4" ng-Class="{'is-invalid': (form2.ad.$invalid)}" availing_date required>
+										<div class="invalid-feedback col-md-4 text-danger" ng-show="form2.ad.$invalid">
+											<span ng-show="form2.$pristine">Please update the DOB</span>
+											<span ng-show="form2.ad.$error.required">The availing date is required.</span>
+											<span ng-show="form2.ad.$error.avail || form2.psalary.$error.min || form2.psalary.$error.max">The option date should be greater than DOE. It should be after attaining age of 50 and max 1 day after attaining age of 58.</span>
+										</div>	
+									</div>
+									<div class="input-group mt-2" ng-show="ad">
+										<span class="input-group-text col-md-4" id="dobPrepend">Pensionable Salary</span>
+										<input type="number" ng-model="psalary" id="psalary" min="1" max="15000" name="psalary" class="form-control col-md-4" ng-Class="{'is-invalid': (form2.psalary.$invalid)}" psalary required>
+										<div class="invalid-feedback col-md-4 text-danger" ng-show="form2.psalary.$invalid">
+											<span ng-show="form2.psalary.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+											<span ng-show="form2.psalary.$error.psal || form2.psalary.$error.min || form2.psalary.$error.max">The Pensionable Salary should be greater than 0 and Max 15000 for DOE after 01-09-2014 (6500 before 01-09-2014).</span>
+										</div>	
+									</div>
+								</form>
 							</div>
+							
+							
+							
 							<ul class="list-group mb-3 col-md-6">
 								<li class="list-group-item  d-flex justify-content-around align-items-center">Date of Attaining 58 Years:<span>{{ basic.date58 |  date:'dd/MM/yyyy'}}</span></li>
 								<li class="list-group-item  d-flex justify-content-around align-items-center">Date of Attaining 50 Years:<span>{{ basic.date50 |  date:'dd/MM/yyyy'}}</span></li>
@@ -79,15 +101,17 @@
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.actual_service">Actual Service:<span>{{ total.actual_service}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_service">Pensionable Service (max age 58):<span>{{ total.pensionable_service}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_days">Pensionable days:<span>{{ total.pensionable_days}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.eligibility">Eligibility of Service length:<span>{{ total.eligibility}}</span></li>
 								
 								
 							</ul>
-						</div>	
+						</div>
+						
 					</div>
 					
 					<div class="card-footer d-flex justify-content-between align-items-center">
 						<span>
-							<button type="button" class="btn btn-success align-self-center" ng-click="update()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid">Show/Update Calculation</button>
+							<button type="button" class="btn btn-success align-self-center" ng-click="update()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid || !total.eligibility || form2.$invalid || form2.psalary.$error.$invalid">Show/Update Calculation</button>
 							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">Reset</button>
 						</span>
 					</div>
@@ -189,6 +213,8 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	$scope.resetService = function() {
 		$scope.dates=[];
 		$scope.services=[];
+		$scope.availing_date = 0;
+		$scope.psalary = 0;
 		$scope.service_input  = SERVICE_INPUT_DEFAULT;
 		$scope.pension = SUPERANNUATION_DEFAULT;
 		$scope.total=updateTotal();
@@ -227,6 +253,11 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			total.pensionable_service = getServiceStr(total.pensionable_days);
 			total.actual_service = getServiceStr(total.daystotal);
 			total.actual_service1 = getServiceStr(total.daysact);
+			if(total.doe>=ELG_DATE1) {
+				total.eligibility = total.daystotal_age58>=ELG_DAYS?true:false;
+			} else {
+				total.eligibility = total.pensionable_days>=ELG_DAYS?true:false;
+			}
 			return total;
 			
 		} else {
@@ -302,6 +333,9 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			
 			$scope.services.push(service);
 			$scope.total = updateTotal();
+			if($scope.total.doe==$scope.basic.date58) {
+				$scope.availing_date = $scope.basic.avail58;
+			}
 			$scope.updateMinAD();
 		}
 	}
@@ -322,6 +356,47 @@ app.directive('dateofbirth', function() {
 				if (modelValue>=MIN_DOB && modelValue<=MAX_DOB) {
 					return true;
 				} 
+
+				return false;
+			};
+		}
+	};
+});
+
+app.directive('availing_date', function() {
+	return {
+		require: 'ngModel',
+		link: function(scope, elm, attrs, ctrl) {
+			ctrl.$validators.avail = function(modelValue, viewValue) {
+				console.log(modelValue, viewValue)
+				if (ctrl.$isEmpty(modelValue)) {
+					return false;
+				}
+			
+				if (modelValue>=scope.basic.avail50 && modelValue<=scope.basic.avail58 && modelValue>=scope.total.doe) {
+					return true;
+				} 
+
+				return false;
+			};
+		}
+	};
+});
+
+app.directive('psalary', function() {
+	return {
+		require: 'ngModel',
+		link: function(scope, elm, attrs, ctrl) {
+			ctrl.$validators.psal = function(modelValue, viewValue) {
+				console.log(modelValue, viewValue)
+				if (ctrl.$isEmpty(modelValue)) {
+					return false;
+				}
+			
+				/*if (modelValue>=scope.basic.avail50 && modelValue<=scope.basic.avail58 && modelValue>=scope.total.doe) {
+					return true;
+				} 
+				*/
 
 				return false;
 			};
