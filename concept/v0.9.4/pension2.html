@@ -224,14 +224,16 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	$scope.removeService = function(index) {
 		if(index >= 0){
 			$scope.dates.splice(index*2, 2);
-			$scope.services.splice(index, 1);
-			$scope.update();	
+			$scope.services.splice(index, 1);	
+			$scope.total=updateTotal();
+			$scope.update();
 		}
 	}
 	
 	$scope.updateMinAD = function(){
 		x = $scope.total.doe>$scope.basic.date50?$scope.total.doe:$scope.basic.date50;
-		$scope.basic.minAD = luxon.DateTime.fromJSDate(x).plus({days: 1}).toJSDate()
+		$scope.basic.minAD = luxon.DateTime.fromJSDate(x).plus({days: 1}).toJSDate();
+		$scope.total.eligibility = $scope.total.eligibility;
 	}
 	$scope.update = function() {
 		alert("Botton is active");
@@ -363,26 +365,6 @@ app.directive('dateofbirth', function() {
 	};
 });
 
-app.directive('availing_date', function() {
-	return {
-		require: 'ngModel',
-		link: function(scope, elm, attrs, ctrl) {
-			ctrl.$validators.avail = function(modelValue, viewValue) {
-				console.log(modelValue, viewValue)
-				if (ctrl.$isEmpty(modelValue)) {
-					return false;
-				}
-			
-				if (modelValue>=scope.basic.avail50 && modelValue<=scope.basic.avail58 && modelValue>=scope.total.doe) {
-					return true;
-				} 
-
-				return false;
-			};
-		}
-	};
-});
-
 app.directive('psalary', function() {
 	return {
 		require: 'ngModel',
@@ -393,10 +375,10 @@ app.directive('psalary', function() {
 					return false;
 				}
 			
-				/*if (modelValue>=scope.basic.avail50 && modelValue<=scope.basic.avail58 && modelValue>=scope.total.doe) {
+				if ((scope.total.doe<CEILING2_DATE && modelValue<=6500) || (scope.total.doe>CEILING2_DATE && modelValue<=15000)) {
 					return true;
 				} 
-				*/
+				
 
 				return false;
 			};
