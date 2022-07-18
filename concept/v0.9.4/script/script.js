@@ -1,59 +1,55 @@
 const MIN = 1000;
 const CEILING1 = 6500;
 const CEILING2 = 15000;
-const CEILING0_DATE = new Date("1971-03-04");
+const LIMIT_MIN     = new Date('2011-04-01');
+//luxon.Zone="Asia/Kolkata";
+luxon.Settings.defaultZone="Asia/Kolkata";
+console.log(luxon.UTC);
+const MIN_DOB = luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).toJSDate();
+console.log(luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).zoneName);
+const MAX_DOB = luxon.DateTime.fromJSDate(new Date()).minus({years: 50}).toJSDate();
 const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
+const ELG_DATE1 = new Date('2015-03-26');
+const ELG_DAYS = 3465;
+const EARLY_PERC_CHANGE_DATE = new Date('2008-11-26');
 
-const BASIC_DEFAULT =  {
-	'dob': new Date('1963-12-25'),
-	'availing_date':new Date('2021-12-25'),	
-	'age':0,
-	'dod':0,
-	'doe':0
-};
-
-const SUPERANNUATION_DEFAULT = {
-	"total_month_psal":60,
-	"total_wage_psal":597247,
-	"total_ncp_psal":0,
-	"weightage":0,
-	"eligible":0,
-	"eligible_WB":0,
-	"min":0,
-	"pservice":0,
-	"psalary":15000,
-	"pension1":0,
-	"pension2":0,
-	"pension3":0,
-	"last_wage":15000,
-	'greater':1
+const LIMIT_MAX     = new Date();
+const BASIC_DEFAULT = {
+	'dob': luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).toJSDate(),
+	'date58':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1, days:1}).toJSDate(),
+	'date50':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 9, days:1}).toJSDate(),
+	'avail58':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1}).toJSDate(),
+	'avail50':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1}).toJSDate(),
+	'minAD':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 8}).toJSDate()
 }
 
-
-const SERVICE_DEFAULT = {
-	'actual':0,
-	'eligible': 0,
-	'eligible1':0,
-	'months1': 0,
-	'months2': 0,
-	'avg_wage1':CEILING1,
-	'avg_wage2':CEILING2,
+const SERVICE_INPUT_DEFAULT = {
+	'doj': new Date('1995-11-16'),
+	'doe': new Date('2014-08-31'),
 	'ncp1':0,
 	'ncp2':0,
-	'days95':0,
-	'total_ncp':0,
-	'wage95':0,
-	'factor':0,
-	'past_pension':0
+	'ncp1edit':0,
+	'ncp2edit':0
 }
-	
-const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('1990-02-01'),
-	'doe': new Date('2018-12-01'),
-	'ncp1':8,
-	'ncp2':46
+
+const SUPERANNUATION_DEFAULT = {
+	"pension":0,
+	"availing_date":0,
+	"age":0,
+	"doe":0,
+	"agedoe":0
 }
+
+const getDate_ddmmyyyy =function (date) {
+
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2,'0');
+    const dd = String(date.getDate()).padStart(2,'0');
+
+    return `${dd}-${mm}-${yyyy}`
+}
+
 
 const TOTAL_DEFAULT = {
 	'doj':new Date(),
@@ -66,10 +62,6 @@ const TOTAL_DEFAULT = {
 	'daysafter':0
 }
 
-const download = function () {
-	window.print();
-};
-	
 const round = (n, dp,bool=0) => {
 	var val=0
 	const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
@@ -77,50 +69,143 @@ const round = (n, dp,bool=0) => {
 	return val;
 };
 
-function getDiff(d1, d2, str, withbool=1) {	
+
+const get_earlyReductionAmount = function (superannuation,availing_date,years_to_58) {
+	var amount = 0;
+	if(availing_date<EARLY_PERC_CHANGE_DATE) {
+		amount = superannuation - round(superannuation*Math.pow(1-0.03,years_to_58));
+	} else {
+		amount = superannuation - round(superannuation*Math.pow(1-0.04,years_to_58));
+	}
+	return amount;
+}
+
+
+
+const get_pension = function (total,psalary,dob, availing_date){
+	console.log(total)
+	var days1 = total.daysbefore;
+	var days2 = total.daysafter;
+	var ncp1 = total.ncp1;
+	var ncp2 = total.ncp2;
+	var weightage = total.weightage;
+	var psal = psalary;
+	var pension={};
+	
+	if(!days1 && !days2){
+		pension.superannuation = 0;
+	} else if((days1-ncp1)<0 || (days2-ncp2)<0) {
+		pension.superannuation = 0;
+	} else if(days2==0){
+		eligible1=eligible1 = days1-ncp1+365*weightage;
+		p1 = eligible1*psal/(70*365);
+		pension.superannuation = round(p1);
+	} else {
+		eligible1 = days1-ncp1+365*weightage;
+		eligible2 = days2-ncp2;
+		psal1=psal>6500?6500:psal;
+		p1 = eligible1*psal1/(70*365);
+		p2 = eligible2*psal/(70*365);
+		pension.superannuation = round(p1+p2);
+	}
+	
+	var age = getDifference(dob, availing_date, "Years", "both");
+	var years_to_58 = 58-age;
+	console.log("age, years_to_58", age,years_to_58);
+	pension.earlyreduction = get_earlyReductionAmount(pension.superannuation,availing_date,years_to_58);
+	if(pension.earlyreduction) {
+		pension.early= pension.superannuation - pension.earlyreduction;
+	}
+	if(pension.early<1000 && availing_date>CEILING2_DATE) {
+		pension.earlymin=1000-pension.earlyreduction;
+	}
+	if(pension) {
+		log("get_pension:(days1,days2, ncp1, ncp2,psal, wt, pension,early reduction)",[days1,days2,ncp1,ncp2,psalary,weightage,pension.superannuation,pension.earlyreduction]);
+	}
+	return pension;
+}
+
+function getDays (date1, date2, withEndDate=1) {
+	var interval = luxon.Interval.fromDateTimes(date1, date2);
+	var date1_modified = date1.plus({months: Math.floor(interval.length('Months'))});
+	var interval2 = luxon.Interval.fromDateTimes(date1_modified, date2);
+	
+	return (
+			(Math.floor(interval.length('Years'))*365)+
+			(Math.floor(interval.length('Months')%12)*30)+
+			interval2.length('Days')+
+			withEndDate
+			);
+}
+
+const getServiceStr = function(days) {
+	if(typeof(days)!='number' && days<0) {
+		return 'No service added or Not a valid Input';
+	} else {
+		let Y, M, D, str;
+		Y = Math.floor(days/365);
+		M = Math.floor((days - Y*365)/30);
+		if(M>=12) {
+				Y=Y+1;
+				M=M-12;
+		}
+		D = Math.floor(days - Y*365 -M*30);
+		str = Y.toString()+' Years,'+M.toString()+' Months,'+D.toString()+' Days';
+		return str;
+	}
+}
+
+function getDifference(d1, d2, unit="Days", period="both", withEndDate=1) {
+	//date1 is initial date
+	//date2 is final date
+	//unit is unit which is to be used for finding the difference
+	//period both=total, before=Before 01-09-2014, after=after 2014
+	//withEndDate 1=true, 0=false
+	//return -1 if any error
+	
+	if(period=="before" && d2>CEILING2_DATE) {
+		d2 = luxon.DateTime.fromJSDate(CEILING2_DATE).minus({days: 1}).toJSDate();
+		if(d1<CEILING1_DATE) {
+			d1=CEILING1_DATE;
+		} else if(d1>CEILING2_DATE){
+			return 0;
+		}
+	} else if(period=="after" && d1<CEILING2_DATE) {
+		d1= CEILING2_DATE;
+		if(d2<CEILING2_DATE){
+			return 0;
+		}
+	}
+	if(d1==d2) return 0;
 	date1= luxon.DateTime.fromJSDate(d1);
 	date2= luxon.DateTime.fromJSDate(d2);
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
-	if(str=="days") {
-		Y = Math.floor(interval.length('Years'));
-		M = Math.floor(interval.length('Months')%12);	
-		months_to_add=Math.floor(interval.length('Months'));
-		date3 = date1.plus({months: months_to_add})
-		var interval2 = luxon.Interval.fromDateTimes(date3, date2);
-		d2=interval2.length('Days');
-		days=(Y*365)+(M*30)+d2+1;
-		log("getDiff Called",[Y, M,days,d2])
-		return days;
-	}
-	var diffUnits = 0;
-	if(!withbool){
-		diffUnits = Math.floor(interval.length(str));
-		return diffUnits>=1?diffUnits:0;
-	} else {
-		diffUnits = interval.count(str);
-		return diffUnits>=1?diffUnits:0;
-	}
-};
-function get_pensionable_days(doj,doe){
-	date0= new Date('1995-11-16');
-	days=0
-	if(doj<date0){
-		doj=date0;
-	}
+	if (interval.invalid) {
+		console.log(interval);
+		log("getDifference1: Error:",["Invalid Input",date1,date2,d1,d2])
+		return -1;
+	} else if(!['Years','Months','Days'].includes(unit) || !["both","before","after"].includes(period) || ![0,1].includes(withEndDate)){
+		log("getDifference: Error:",["Invalid Input"])
+		return -1;
+	} 
 	
-	date1= luxon.DateTime.fromJSDate(doj);
-	date2= luxon.DateTime.fromJSDate(doe);
-	var interval = luxon.Interval.fromDateTimes(date1, date2);
-	Y = Math.floor(interval.length('Years'));
-	M = Math.floor(interval.length('Months')%12);
-	date3 = date1.plus({months: Math.floor(interval.length('Months'))})
-	var interval2 = luxon.Interval.fromDateTimes(date3, date2);
-	d2=interval2.length('Days');
-	days=(Y*365)+(M*30)+d2+1;
-	log("get_pensionable_days called",[Y, M,days,d2]);
+	
+	if(unit=="Days") {
+		days = getDays (date1, date2, withEndDate);
+		return days;
+	} else if (unit=="Years" || unit=="Months") {
+		interval = luxon.Interval.fromDateTimes(date1, date2.plus({'days':1}));
+		return Math.floor(interval.length(unit));
+	} 
+	
+	return -1;
+}
 
-	return days;
-};
+function log(str, array) {
+	console.log("Log:", str,":")
+	let text = array.join();
+	if(array.length) console.log(text);
+}
 
 function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
 	if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
@@ -146,330 +231,46 @@ function multipleDateRangeOverlaps(dates) {
 	return false;
 }
 
-function getCeilingDuration(doj,doe, str, before=1) {
-	unit = 0
-	if(before==2) {
-		if(doj>CEILING1_DATE){
-			unit = 0;
-		} else {
-			unit = getDiff(doj, CEILING1_DATE, str)-1;
-		}	
-	} else if(before==1){
-		if (doj >= CEILING2_DATE) {
-			log("Get Ceiling duration: both DOJ DOE are greater",[]);			
-		} else {
-			if(doe < CEILING2_DATE) {
-				if(doj<CEILING1_DATE) {
-					unit = getDiff(CEILING1_DATE, doe, str);
-				} else {
-					unit = getDiff(doj,doe,str);
-				}
-			} else {
-				if(doj<CEILING1_DATE) {
-					unit = getDiff(CEILING1_DATE, CEILING2_DATE, str)-1;
-				} else {
-					unit = getDiff(doj, CEILING2_DATE, str)-1;
-				}
-			}
-		}
+function validateService(service, dob){
+	if(typeof(service.doj)!="object" || typeof(service.doe)!="object" || typeof(service.ncp1) !="number" || typeof(service.ncp2) !="number") {
+		log("validateService:",["Type not matching."]);
+		return 0;
 	} else {
-		if (doe < CEILING2_DATE) {
-			log("Get Ceiling duration: both DOJ DOE are lesser",[]);			
-		} else {
-			if(doj >= CEILING2_DATE) {
-				unit = getDiff(doj,doe,str);
-			} else {
-				unit = getDiff(CEILING2_DATE, doe, str);
-			}
-		}
+		//alert(getDifference(dob,service.doe,'Years',"both")>60)
+		var max_avail_date=0;
+		/*if(service.doe>=new Date('2016-04-25')){
+			lastdate = luxon.DateTime.fromJSDate(dob).plus({years: 60}).toJSDate();
+		} else 
+		{*/
+			max_avail_date = luxon.DateTime.fromJSDate(dob).plus({years: 58}).toJSDate();
+			log("lastdate",[max_avail_date]);
+		//}
 	}
-	return unit>=1?unit:0;
-}
-
-function get_earlyPension(age, pension1, pension2, amount, availing_date) {
-	diff = 58 - age;
-	log("get_earlyPension: diff", [diff]);
-	date1 = new Date('2008-11-26');
-	
-	if(pension1==pension2){
-		amount=pension2;
+	if(service.doj>=service.doe) {
+		log("validateService:",["DOJ can not be after DOE."]);
+		alert("DOJ can not be equal to or later than DOE. Service not added.");
+		return 0;
+	} else if (service.doj<CEILING1_DATE) {
+		log("validateService:",["DOJ can not be less than 16-11-1995."]);
+		alert("The current version of calculator does not handle past service. DOJ should be equal to or later than 16-11-1995. Service not added.");
+		return 0;
+	} else if(service.doj<dob) {
+		log("validateService:",["DOJ can not be earlier than DOB."]);
+		alert("service date can not be before date of birth.service not added.")
+		return 0;
+	} else if(service.doe>=max_avail_date) {
+		console.log(service.doe,max_avail_date,service.doe>max_avail_date)
+		log("validateService:",["DOE can not be more than age 60/58."]);
+		alert("The current version of calculator is only for Superannuation Pension and Early Pension. DOE can not be greater than date of superannuation. Service not added.")
+		return 0;
 	} else {
-		amount=pension1;
-	}
-	if(availing_date<date1){
-		deduction = amount - round(amount*Math.pow(1-0.03,diff));
-	} else {
-		deduction = amount - round(amount*Math.pow(1- 0.04,diff));
-	}
-	
-	early_pension = pension2-deduction;
-	return early_pension>0?early_pension:0;
-}
-
-function get_deferredPension(age,amount) {
-	diff = age- 58;
-	deferred_pension = round(amount*Math.pow(1+0.04,diff));
-	return (diff>2||diff<0)?amount:deferred_pension;
-}
-
-function get_psalary(wage_sum, ncp, bool=0){
-	var total = bool<1?365:1825;
-	var total1= bool<1?360:1800;
-	var denom = ncp?total-ncp:total1;
-	return denom>0?round(wage_sum*30/denom):0;
-}
-
-function get_pension(days1,days2,ncp1,ncp2,psal,wt){
-	var pension=0;
-	if(!days1 && !days2){
-		pension = 0;
-	} else if((days1-ncp1)<0 || (days2-ncp2)<0) {
-		pension = 0;
-	} else if(days2==0){
-		eligible1=eligible1 = days1-ncp1+365*wt;
-		p1 = eligible1*psal/(70*365);
-		pension = round(p1);
-	} else {
-		eligible1 = days1-ncp1+365*wt;
-		eligible2 = days2-ncp2;
-		psal1=psal>6500?6500:psal;
-		p1 = eligible1*psal1/(70*365);
-		p2 = eligible2*psal/(70*365);
-		pension = round(p1+p2);
-	}
-	if(pension) {
-		log("get_pension:(days1,days2, ncp1, ncp2,psal, wt, pension)",[days1,days2,ncp1,ncp2,psal,wt,pension]);
-	}
-	return pension;
-}
-
-function findElement(data, attr, value, retattr){
-	var found = data.find(function(element) {
-		return element[attr] == value;
-	});
-	var val = found[retattr]?found[retattr]:0;
-	log("findElement Called:(attr,value,retattr,value)", [attr,value,retattr,val]);
-	return val;
-}
-
-function log(str, array) {
-	console.log("Log:", str,":")
-	let text = array.join();
-	if(array.length) console.log(text);
-	/*for (const item of array) {
-		console.log(item);
-	}
-	*/
-}
-	
-var TABLEB = [];
-var TABLEC = [];
-var TABLED = [];
-var TABLE_BASIC=[];
-
-var app = angular.module('pensionApp', ['ngCookies']);
-app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
-
-	
-	//function to call if basic details are changed
-	$scope.updateBasic= function(){
-		log('updateBasic called',[]);
-		$scope.basic.age = getDiff($scope.basic.dob,$scope.basic.availing_date, "years",0);
-	}
-	
-	function updateEligibility() {
-		log('updateEligibility called',[]);
-		if($scope.services.length ==0) {
-			$scope.eligibility = 0;
-			$scope.eligibilityMsg = "You have not added any service. please add Service.";
-		} else if($scope.basic.dod) {
-			$scope.eligibility = 3;
-			$scope.eligibilityMsg = "You are eligible for Family Pension.";
-		} else if($scope.basic.age<50) {
-			if($scope.service.eligible<180) {
-				$scope.eligibility = 0;
-				$scope.eligibilityMsg = "You are not eligible for any benefit as your service is less than 180 days. You may however transfer your service to new account to add service.";
-			} else if($scope.service.eligible>3420) {
-				$scope.eligibility = 0;
-				$scope.eligibilityMsg = "You are not eligible for as your service is more than 9.5 Years(3420) but age is less than 50 years. You may apply for scheme certificate or transfer the service to future establishment.";
-			} else if($scope.service.eligible>=180 && $scope.service.eligible<=3420) {
-				$scope.eligibility = 1;
-				$scope.eligibilityMsg = "You are eligible for withdrawal benefit below is the calculator for Withdrawal benefit. However, it is advised that the service may be transferred to new establishment to become eligible for pension.";
-			}
-		} else if($scope.basic.age>=50 && $scope.basic.age<58) {
-			if($scope.service.eligible<180) {
-				$scope.eligibility = 0;
-				$scope.eligibilityMsg = "You are not eligible for any benefit as your service is less than 180 days.";
-			} else if($scope.service.eligible>3420) {
-				$scope.eligibility = 2;
-				$scope.eligibilityMsg = "You are eligible for Early Pension. However, it is advised to apply for pension after attaining the age of 58 to avoid reduced pension.";
-			} else if($scope.service.eligible>=180 && $scope.service.eligible<=3420) {
-				$scope.eligibility = 1;
-				$scope.eligibilityMsg = "You are eligible for withdrawal benefit below is the calculator for Withdrawal benefit.";
-			}
-		} else if($scope.basic.age>=58){
-			if($scope.service.eligible<180) {
-				$scope.eligibility = 0;
-				$scope.eligibilityMsg = "You are not eligible for any benefit as your service is less than 180 days.";
-			} else if($scope.service.eligible>3420) {
-				$scope.eligibility = 2;
-				$scope.eligibilityMsg = "You are eligible for Pension.";
-			} else if($scope.service.eligible>=180 && $scope.service.eligible<=3420) {
-				$scope.eligibility = 1;
-				$scope.eligibilityMsg = "You are eligible for withdrawal benefit below is the calculator for Withdrawal benefit.";
-			}
+		var daysbefore   = getDifference(service.doj,service.doe,'Days',"before");
+		var daysafter    = getDifference(service.doj,service.doe,'Days',"after");
+		if (daysbefore<service.ncp1 || daysafter<service.ncp2 || (daysbefore+daysafter)<(service.ncp1+service.ncp2)) {
+			alert("NCP  days not tallying with the service details. Service not added")
+			return 0;
 		}
+		return 1;
 	}
-	
-	function getTotal() {
-		var total = _.reduce($scope.services, function(acc, o) {
-				for (var p in o)
-					acc[p] = (p in acc ? acc[p] : 0) + o[p];
-					return acc;
-				}, {});
-		$scope.service.actual=total.daysbefore+total.daysafter - round((total.yearsbefore+total.yearsafter)/4);
-		var eligible = total.daysbefore+total.daysafter-total.ncp1-total.ncp2- round((total.yearsbefore+total.yearsafter)/4);
-		$scope.service.eligible= eligible>0?eligible:0;
-		$scope.service.months1= total.monthsafter>60?0:60-total.monthsafter;
-		$scope.service.months2= total.monthsafter>60?60:total.monthsafter;
-		$scope.service.ncp1=total.ncp1;
-		$scope.service.ncp2=total.ncp2;
-		log("get Total: total ncp1 total ncp2:",[total.ncp1,total.ncp2]);
-		$scope.service.total_ncp=total.ncp2+total.ncp1;
-		days1 = total.daysbefore>total.ncp1?total.daysbefore-total.ncp1:0;
-		days2 = total.daysafter>total.ncp2?total.daysafter-total.ncp2:0;
-		$scope.years_total=round((total.pensionabledays-total.ncp1-total.ncp2)/365,2);
-		$scope.years1 = round(days1/365,2);
-		$scope.years2 = round(days2/365,2);
-		log("get Total:(days1,days2,years1,years2,yearsbefore, yearsafter):",[days1,days2,$scope.years1,$scope.years2,total.yearsbefore,total.yearsafter]);
-		return total;
-	}
-	
-	$scope.addService = function(){
-		
-		var doj = $scope.service_input.doj;
-		var doe = $scope.service_input.doe;
-		var ncp1 = $scope.service_input.ncp1;
-		var ncp2 = $scope.service_input.ncp2;
-		log("Add Service Called: (DOJ, DOE): ",[doj,doe]);
-		var date1 = $scope.dates.slice();
-		$scope.dates.push(doj);
-		$scope.dates.push(doe);
-		
-		if(multipleDateRangeOverlaps($scope.dates)){
-			alert("Date range overlapping. Returning to previous state");
-			$scope.dates = date1.slice();
-		} else if (doj>doe) {
-			alert("DOJ can not be later than DOE. Returning to previous state");
-			$scope.dates = date1.slice();
-		} else if (doj<$scope.basic.dob) {
-			alert("DOJ can not be earlier than DOB. Returning to previous state");
-			$scope.dates = date1.slice();
-		} else if (doj<CEILING1_DATE) {
-			alert("DOJ can not be less than 16-11-1995.Returning to previous state.");
-			$scope.dates = date1.slice();
-		} else if(getCeilingDuration(doj,doe,'days',1)<ncp1 || get_pensionable_days(doj,doe)<(ncp1+ncp2) || getCeilingDuration(doj,doe,'days',0)<ncp2){
-			alert("NCP can not be more than service days.Returning to previous state.");
-			$scope.dates = date1.slice();
-		} else {
-			$scope.basic.doe=doe>$scope.basic.doe?doe:$scope.basic.doe;
-			var service = {
-				'doj':doj,
-				'doe':doe,
-				'ncp1':ncp1,
-				'ncp2':ncp2,
-				'days95':getCeilingDuration(doj,doe,'days',2),
-				'monthsbefore':getCeilingDuration(doj,doe,'months',1),
-				'monthsafter':getCeilingDuration(doj,doe,'months',0),
-				'pensionabledays':get_pensionable_days(doj,doe),
-				'daysbefore':getCeilingDuration(doj,doe,'days',1),
-				'yearsbefore':getCeilingDuration(doj,doe,'years',1),
-				'yearsafter':getCeilingDuration(doj,doe,'years',0)
-			};
-			service['daysafter']=service['pensionabledays']-service['daysbefore'];
-			log("addService:(daysbefore, daysafter, pensionabledays,ncp1,ncp2):",[service['daysbefore'],service['daysafter'],service['pensionabledays'],ncp1,ncp2])
-			$scope.services.push(service);
-			$scope.update();	
-		}
-	}
-	
-	$scope.removeService = function(index) {
-		if(index >= 0){
-			$scope.dates.splice(index*2, 2);
-			$scope.services.splice(index, 1);
-			$scope.update();	
-		}
-	}
-	
-	$scope.eligibility = 0;
-	$scope.eligibilityMsg="You have not added any service. PLease add service to check eligibility."
-	
-	$scope.update_Superannuation = function(){
-		$scope.pension.total_month_psal=$scope.total.daysafter?60:12;
-		$scope.pension.eligible = $scope.service.actual - $scope.service.total_ncp;
-		if($scope.basic.age>=58 && $scope.pension.eligible+$scope.total.days95>7300){
-			$scope.pension.weightage = 2;	
-		} else {
-			$scope.pension.weightage = 0;
-		}
-		$scope.pension.eligible_WB= $scope.pension.eligible+365*$scope.pension.weightage;
-		
-		$scope.pension.min= $scope.pension.eligible>3650? MIN:0;
-		$scope.pension.total_month_psal = $scope.service.months2>0?60:12;
-		
-		$scope.pension.psalary = get_psalary($scope.pension.total_wage_psal,$scope.pension.total_ncp_psal,$scope.total.daysafter);
-		$scope.pension.pension1 = get_pension($scope.total.daysbefore,$scope.total.daysafter,$scope.total.ncp1,$scope.total.ncp2,$scope.pension.psalary,$scope.pension.weightage);
-		$scope.pension.pension2 = $scope.pension.pension1>MIN?$scope.pension.pension1:MIN;
-		$scope.pension.pension3 = get_earlyPension($scope.basic.age,$scope.pension.pension1, $scope.pension.pension2, $scope.basic.availing_date);
-	}
-	
-	$scope.WB_update = function() {
-		console.log("WB");
-		
-	}
-	
-	$scope.familyPension = function(){
-		console.log("Family");
-	}
-	
-	$scope.update_past = function(){
-		console.log("PAST");
-		
-	}
-	
-	$scope.update = function() {
-		log("update called",[])
-		$scope.total=getTotal();
-		$scope.updateBasic();
-		updateEligibility();		
-		$scope.update_Superannuation();
-	}
-	
-	$scope.initiatilize = function (){
-		$scope.basic = BASIC_DEFAULT;
-		$scope.dates=[];
-		$scope.services=[];
-		$scope.service = SERVICE_DEFAULT;
-		$scope.service_input  = SERVICE_INPUT_DEFAULT;
-		$scope.pension = SUPERANNUATION_DEFAULT;
-		$scope.total=TOTAL_DEFAULT;
-		
-		$scope.update()
-	}
-	
-	$http({
-		method: 'GET',
-		url: './data.json'
-	}).then(function (success){
-		log("json downloaded",[]);
-		TABLEB = success.data.TABLEB;	
-		TABLEC = success.data.TABLEC;
-		TABLED = success.data.TABLED;
-		TABLE_BASIC = success.data.TABLE_BASIC_PENSION;
-		$scope.initiatilize();
-	},function (error){
-		log(error,[])
-	});
-	
-	
- }]);
+	return 1;
+}
