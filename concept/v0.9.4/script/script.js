@@ -16,7 +16,7 @@ const EARLY_PERC_CHANGE_DATE = new Date('2008-11-26');
 
 const LIMIT_MAX     = new Date();
 const BASIC_DEFAULT = {
-	'dob': luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).toJSDate(),
+	'dob': ,
 	'date58':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1, days:1}).toJSDate(),
 	'date50':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 9, days:1}).toJSDate(),
 	'avail58':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1}).toJSDate(),
@@ -25,8 +25,8 @@ const BASIC_DEFAULT = {
 }
 
 const SERVICE_INPUT_DEFAULT = {
-	'doj': new Date('1995-11-16'),
-	'doe': new Date('2014-08-31'),
+	'doj': 0,
+	'doe': 0,
 	'ncp1':0,
 	'ncp2':0,
 	'ncp1edit':0,
