@@ -70,17 +70,17 @@
 								</table>
 								<button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" ng-clic="update_ncp()" ng-disabled="pensionForm.$pristine" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
 								
-								<form name="form2" class="row need-validated mt-2" ng-show="pensionForm.$dirty && pensionForm.dob.$valid && total.eligibility && total.doe<basic.date58">
+								<form name="form2" class="row need-validated mt-2" ng-show="pensionForm.$dirty && pensionForm.dob.$valid && total.eligibility && total.doe<=basic.date58">
 									<div class="input-group">
 										<span class="input-group-text col-md-4" id="dobPrepend">Date of Pension start/Pension option</span>
-										<input type="date" ng-model="ad" id="ad" name="ad" min="{{basic.minAD}}" max="{{basic.avail58}}" class="form-control col-md-4" ng-Class="{'is-invalid': (form2.ad.$invalid)}" availing_date required>
+										<input type="date" ng-model="availing_date" id="ad" name="ad" min="minAD" max="basic.avail58" ng-change="updateAD()" class="form-control col-md-4" ng-Class="{'is-invalid': (form2.ad.$invalid)}" availing_date required>
 										<div class="invalid-feedback col-md-4 text-danger" ng-show="form2.ad.$invalid">
 											<span ng-show="form2.$pristine">Please update the DOB</span>
 											<span ng-show="form2.ad.$error.required">The availing date is required.</span>
 											<span ng-show="form2.ad.$error.avail || form2.psalary.$error.min || form2.psalary.$error.max">The option date should be greater than DOE. It should be after attaining age of 50 and max 1 day after attaining age of 58.</span>
 										</div>	
 									</div>
-									<div class="input-group mt-2" ng-show="ad">
+									<div class="input-group mt-2" ng-show="availing_date">
 										<span class="input-group-text col-md-4" id="dobPrepend">Pensionable Salary</span>
 										<input type="number" ng-model="psalary" id="psalary" min="1" max="15000" name="psalary" class="form-control col-md-4" ng-Class="{'is-invalid': (form2.psalary.$invalid)}" psalary required>
 										<div class="invalid-feedback col-md-4 text-danger" ng-show="form2.psalary.$invalid">
@@ -94,16 +94,17 @@
 							
 							
 							<ul class="list-group mb-3 col-md-6">
-								<li class="list-group-item  d-flex justify-content-around align-items-center">Date of Attaining 58 Years:<span>{{ basic.date58 |  date:'dd/MM/yyyy'}}</span></li>
-								<li class="list-group-item  d-flex justify-content-around align-items-center">Date of Attaining 50 Years:<span>{{ basic.date50 |  date:'dd/MM/yyyy'}}</span></li>
-								<li class="list-group-item  d-flex justify-content-around align-items-center">Min Availing Date:<span>{{ basic.minAD |  date:'dd/MM/yyyy'}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center">Date of Attaining 58 Years:<span>{{ basic.date58 |  date:'dd/MM/yyyy'}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center">Date of Attaining 50 Years:<span>{{ basic.date50 |  date:'dd/MM/yyyy'}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center">Min Availing Date:<span>{{ minAD |  date:'dd/MM/yyyy'}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.daystotal_age58">Actual Days:<span>{{ total.daystotal_age58}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.actual_service">Actual Service:<span>{{ total.actual_service}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_service">Pensionable Service (max age 58):<span>{{ total.pensionable_service}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_days">Pensionable days:<span>{{ total.pensionable_days}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.eligibility">Eligibility of Service length:<span>{{ total.eligibility}}</span></li>
-								
-								
+								<li class="list-group-item  d-flex justify-content-between align-items-center">Weightage:<span>{{ total.weightage}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center">Min AD:<span>{{ minAD |  date:'dd/MM/yyyy'}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center">Avail 58:<span>{{ basic.avail58 |  date:'dd/MM/yyyy'}}</span></li>
 							</ul>
 						</div>
 						
@@ -111,9 +112,27 @@
 					
 					<div class="card-footer d-flex justify-content-between align-items-center">
 						<span>
-							<button type="button" class="btn btn-success align-self-center" ng-click="update()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid || !total.eligibility || form2.$invalid || form2.psalary.$error.$invalid">Show/Update Calculation</button>
+							<button type="button" class="btn btn-success align-self-center" ng-click="updateCalculation()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid || !total.eligibility || form2.$invalid || form2.psalary.$error.$invalid">Show/Update Calculation</button>
 							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">Reset</button>
 						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" ng-show="output">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header">Pension Calculator Output</div>
+					<div class="card-body">
+						<ul class="list-group mb-3 col-md-6">
+							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_service">Pensionable Service:<span>{{ total.pensionable_service}}</span></li>
+							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="psalary">Pensionable Salary:<span>{{ psalary }}</span></li>
+							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation">Superannuation Pension :<span>{{ pension.superannuation }}</span></li>
+							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation<1000 || (pension.early && pension.early<1000)">Minimum Superannuation pension (from 01-09-2014) :<span>Rs. 1000</span></li>
+							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction">Reduction due to early Pension :<span>{{pension.earlyreduction}}</span></li>
+							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.early">Early Pension(Calculated) :<span>{{pension.early}}</span></li>
+							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction && (pension.early && pension.early<1000)">Early Pension after (Calculated) :<span>{{pension.early}}</span></li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -134,7 +153,7 @@
 					</div>
 					<div class="input-group mb-3 bg-light">
 						<span class="input-group-text col-6">DOE</span>
-						<input type="date" ng-model ="service_input.doe" ng-change="update_ncp()" class="form-control" placeholder="doe" aria-label="doe">
+						<input type="date" ng-model ="service_input.doe" min="service_input.doj" max="basic.date58" ng-change="update_ncp()" class="form-control" placeholder="doe" aria-label="doe">
 					</div>
 					<div class="input-group mb-3 bg-light" ng-show="service_input.ncp1edit">
 						<span class="input-group-text col-6">NCP b/w 16-11-1995 to 31-08-2014</span>
@@ -214,11 +233,14 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.dates=[];
 		$scope.services=[];
 		$scope.availing_date = 0;
+		$scope.minAD=0;
 		$scope.psalary = 0;
 		$scope.service_input  = SERVICE_INPUT_DEFAULT;
 		$scope.pension = SUPERANNUATION_DEFAULT;
 		$scope.total=updateTotal();
 		$scope.updateMinAD();
+		$scope.output = false;
+		$scope.pension = false;
 	}
 	
 	$scope.removeService = function(index) {
@@ -226,17 +248,35 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			$scope.dates.splice(index*2, 2);
 			$scope.services.splice(index, 1);	
 			$scope.total=updateTotal();
-			$scope.update();
+			$scope.updateCalculation();
 		}
 	}
 	
 	$scope.updateMinAD = function(){
+		
 		x = $scope.total.doe>$scope.basic.date50?$scope.total.doe:$scope.basic.date50;
-		$scope.basic.minAD = luxon.DateTime.fromJSDate(x).plus({days: 1}).toJSDate();
+		$scope.minAD = luxon.DateTime.fromJSDate(x).plus({days: 1}).toJSDate();
 		$scope.total.eligibility = $scope.total.eligibility;
 	}
-	$scope.update = function() {
-		alert("Botton is active");
+	
+	$scope.updateAD = function(){
+		var availing_date = luxon.DateTime.fromJSDate($scope.availing_date).toJSDate();
+		if(getDate_ddmmyyyy($scope.availing_date) == getDate_ddmmyyyy($scope.basic.avail58) && getDate_ddmmyyyy($scope.total.doe) == getDate_ddmmyyyy($scope.basic.date58) && $scope.total.daysact>=7300) {
+			$scope.total.weightage = 2;
+		} else {
+			$scope.total.weightage = 0;
+		}
+		log("availing,doe, weightage,total,actual",[$scope.availing_date, $scope.total.doe, $scope.total.weightage,$scope.total.daystotal,$scope.total.daysact]);
+	}
+	
+	$scope.updateCalculation = function() {
+		
+		$scope.output=true;
+		$scope.pension = get_pension($scope.total,$scope.psalary);
+		if($scope.pension.superannuation<=0) {
+			alert("invalid input");
+			$scope.output=false;
+		}
 	}
 	
 	
@@ -252,9 +292,9 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			total.doe=x.doe;
 			total.doj=y.doj;
 			total.pensionable_days = total.daystotal_age58-total.ncp1-total.ncp2;
-			total.pensionable_service = getServiceStr(total.pensionable_days);
-			total.actual_service = getServiceStr(total.daystotal);
-			total.actual_service1 = getServiceStr(total.daysact);
+			total.pensionable_service = '';//getServiceStr(total.pensionable_days);
+			total.actual_service = '';//getServiceStr(total.daystotal);
+			total.actual_service1 = '';//getServiceStr(total.daysact);
 			if(total.doe>=ELG_DATE1) {
 				total.eligibility = total.daystotal_age58>=ELG_DAYS?true:false;
 			} else {
@@ -337,7 +377,12 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			$scope.total = updateTotal();
 			if($scope.total.doe==$scope.basic.date58) {
 				$scope.availing_date = $scope.basic.avail58;
+				console.log($scope.availing_date);
+				$scope.updateAD();
+			} else {
+				$scope.total.weightage = 0;
 			}
+			log("doe,date58,availing_date",[$scope.total.doe,$scope.basic.date58,$scope.availing_date]);
 			$scope.updateMinAD();
 		}
 	}
@@ -365,6 +410,27 @@ app.directive('dateofbirth', function() {
 	};
 });
 
+/*
+app.directive('availing_date', function() {
+	return {
+		require: 'ngModel',
+		link: function(scope, elm, attrs, ctrl) {
+			ctrl.$validators.required = function(modelValue, viewValue) {
+				console.log(modelValue, viewValue,scope.total.doe,scope.basic.avail50,avail58)
+				if (ctrl.$isEmpty(modelValue)) {
+					return false;
+				}
+			
+				if ((viewValue>scope.total.doe && viewValue>=scope.basic.avail50) && viewValue<=avail58) {
+					return true;
+				} 
+
+				return false;
+			};
+		}
+	};
+});
+*/
 app.directive('psalary', function() {
 	return {
 		require: 'ngModel',

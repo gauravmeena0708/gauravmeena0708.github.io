@@ -2,7 +2,11 @@ const MIN = 1000;
 const CEILING1 = 6500;
 const CEILING2 = 15000;
 const LIMIT_MIN     = new Date('2011-04-01');
+//luxon.Zone="Asia/Kolkata";
+luxon.Settings.defaultZone="Asia/Kolkata";
+console.log(luxon.UTC);
 const MIN_DOB = luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).toJSDate();
+console.log(luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).zoneName);
 const MAX_DOB = luxon.DateTime.fromJSDate(new Date()).minus({years: 50}).toJSDate();
 const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
@@ -24,8 +28,8 @@ const SERVICE_INPUT_DEFAULT = {
 	'doe': new Date('2014-08-31'),
 	'ncp1':0,
 	'ncp2':0,
-	'ncp1edit':1,
-	'ncp2edit':1
+	'ncp1edit':0,
+	'ncp2edit':0
 }
 
 const SUPERANNUATION_DEFAULT = {
@@ -36,6 +40,16 @@ const SUPERANNUATION_DEFAULT = {
 	"agedoe":0
 }
 
+const getDate_ddmmyyyy =function (date) {
+
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2,'0');
+    const dd = String(date.getDate()).padStart(2,'0');
+
+    return `${dd}-${mm}-${yyyy}`
+}
+
+
 const TOTAL_DEFAULT = {
 	'doj':new Date(),
 	'doe':new Date(),
@@ -45,6 +59,37 @@ const TOTAL_DEFAULT = {
 	'monthsafter':0,
 	'daysbefore':0,
 	'daysafter':0
+}
+
+const get_pension = function (total,psalary){
+	console.log(total)
+	var days1 = total.daysbefore;
+	var days2 = total.daysafter;
+	var ncp1 = total.ncp1;
+	var ncp2 = total.ncp2;
+	var weightage = total.weightage;
+	
+	var pension={};
+	if(!days1 && !days2){
+		pension.superannuation = 0;
+	} else if((days1-ncp1)<0 || (days2-ncp2)<0) {
+		pension.superannuation = 0;
+	} else if(days2==0){
+		eligible1=eligible1 = days1-ncp1+365*weightage;
+		p1 = eligible1*psal/(70*365);
+		pension.superannuation = round(p1);
+	} else {
+		eligible1 = days1-ncp1+365*weightage;
+		eligible2 = days2-ncp2;
+		psal1=psal>6500?6500:psal;
+		p1 = eligible1*psal1/(70*365);
+		p2 = eligible2*psal/(70*365);
+		pension.superannuation = round(p1+p2);
+	}
+	if(pension) {
+		log("get_pension:(days1,days2, ncp1, ncp2,psal, wt, pension)",[days1,days2,ncp1,ncp2,psalary,weightage,pension.superannuation]);
+	}
+	return pension;
 }
 
 function getDays (date1, date2, withEndDate=1) {
@@ -67,6 +112,10 @@ const getServiceStr = function(days) {
 		let Y, M, D, str;
 		Y = Math.floor(days/365);
 		M = Math.floor((days - Y*365)/30);
+		if(M>=12) {
+				Y=Y+1;
+				M=M-12;
+		}
 		D = Math.floor(days - Y*365 -M*30);
 		str = Y.toString()+' Years,'+M.toString()+' Months,'+D.toString()+' Days';
 		return str;
@@ -155,12 +204,13 @@ function validateService(service, dob){
 		return 0;
 	} else {
 		//alert(getDifference(dob,service.doe,'Years',"both")>60)
-		var lastdate=0;
+		var max_avail_date=0;
 		/*if(service.doe>=new Date('2016-04-25')){
 			lastdate = luxon.DateTime.fromJSDate(dob).plus({years: 60}).toJSDate();
 		} else 
 		{*/
-			lastdate = luxon.DateTime.fromJSDate(dob).plus({years: 58}).toJSDate();
+			max_avail_date = luxon.DateTime.fromJSDate(dob).plus({years: 58}).toJSDate();
+			log("lastdate",[max_avail_date]);
 		//}
 	}
 	if(service.doj>=service.doe) {
@@ -175,8 +225,8 @@ function validateService(service, dob){
 		log("validateService:",["DOJ can not be earlier than DOB."]);
 		alert("service date can not be before date of birth.service not added.")
 		return 0;
-	} else if(service.doe>lastdate) {
-		console.log(service.doe,lastdate,service.doe>lastdate)
+	} else if(service.doe>=max_avail_date) {
+		console.log(service.doe,max_avail_date,service.doe>max_avail_date)
 		log("validateService:",["DOE can not be more than age 60/58."]);
 		alert("The current version of calculator is only for Superannuation Pension and Early Pension. DOE can not be greater than date of superannuation. Service not added.")
 		return 0;
