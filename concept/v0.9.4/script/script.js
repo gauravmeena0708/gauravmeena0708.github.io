@@ -23,8 +23,10 @@ const CEILING2_DATE = getDate(new Date('2014-09-01')).toJSDate();
 const ELG_DATE1     = getDate(new Date('2015-03-26')).toJSDate();
 const EARLY_PERC_CHANGE_DATE = getDate(new Date('2008-11-26')).toJSDate();
 var dod = getDate(new Date('2011-04-01'));
-console.log("current,min,max,mindob,maxdob,ceiling1,ceiling2,elgdate1,earlyperc",[CURRENT_DATE,LIMIT_MIN,LIMIT_MAX,MIN_DOB,MAX_DOB,CEILING1_DATE,CEILING2_DATE,ELG_DATE1,EARLY_PERC_CHANGE_DATE]);
-
+//console.log("current,min,max,mindob,maxdob,ceiling1,ceiling2,elgdate1,earlyperc",[CURRENT_DATE,LIMIT_MIN,LIMIT_MAX,MIN_DOB,MAX_DOB,CEILING1_DATE,CEILING2_DATE,ELG_DATE1,EARLY_PERC_CHANGE_DATE]);
+const download = function () {
+		window.print();
+	}
 
 const BASIC_DEFAULT = {
 	'dob': 0,
