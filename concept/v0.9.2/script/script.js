@@ -4,6 +4,7 @@ const CEILING2 = 15000;
 const CEILING0_DATE = new Date("1971-03-04");
 const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
+const ELG_DATE1 = new Date('2015-03-26');
 
 const BASIC_DEFAULT =  {
 	'dob': new Date('1963-12-25'),
