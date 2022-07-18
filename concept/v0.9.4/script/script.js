@@ -2,11 +2,7 @@ const MIN = 1000;
 const CEILING1 = 6500;
 const CEILING2 = 15000;
 const LIMIT_MIN     = new Date('2011-04-01');
-//luxon.Zone="Asia/Kolkata";
-luxon.Settings.defaultZone="Asia/Kolkata";
-console.log(luxon.UTC);
-const MIN_DOB = luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).toJSDate();
-console.log(luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).zoneName);
+const MIN_DOB = luxon.DateTime.fromJSDate(LIMIT_MIN,DEFAULT_ZONE).minus({years: 58}).toJSDate();
 const MAX_DOB = luxon.DateTime.fromJSDate(new Date()).minus({years: 50}).toJSDate();
 const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
@@ -251,7 +247,7 @@ function validateService(service, dob){
 		alert("DOJ can not be equal to or later than DOE. Service not added.");
 		return 0;
 	} else if (service.doj<CEILING1_DATE) {
-		log("validateService:",["DOJ can not be less than 16-11-1995."]);
+		log("validateService:DOJ can not be less than 16-11-1995.",[service.doj,CEILING1_DATE]);
 		alert("The current version of calculator does not handle past service. DOJ should be equal to or later than 16-11-1995. Service not added.");
 		return 0;
 	} else if(service.doj<dob) {

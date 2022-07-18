@@ -93,7 +93,7 @@
 							
 							
 							
-							<ul class="list-group mb-3 col-md-6">
+							<ul class="list-group mb-3 col-md-6" ng-show="dob">
 								<li class="list-group-item  d-flex justify-content-between align-items-center">Date of Attaining 58 Years:<span>{{ basic.date58 |  date:'dd/MM/yyyy'}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center">Date of Attaining 50 Years:<span>{{ basic.date50 |  date:'dd/MM/yyyy'}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center">Min Availing Date:<span>{{ minAD |  date:'dd/MM/yyyy'}}</span></li>
@@ -256,6 +256,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		
 		x = $scope.total.doe>$scope.basic.date50?$scope.total.doe:$scope.basic.date50;
 		$scope.minAD = luxon.DateTime.fromJSDate(x).plus({days: 1}).toJSDate();
+		$scope.minAD = 
 		$scope.total.eligibility = $scope.total.eligibility;
 	}
 	
