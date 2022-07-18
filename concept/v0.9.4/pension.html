@@ -39,9 +39,9 @@
 							<div class="col-md-6">
 								<form name="pensionForm" class="row need-validated">
 									<div class="input-group">
-										<span class="input-group-text col-md-4" id="dobPrepend">Date of Birth</span>
-										<input type="date" ng-model="dob" id="dob" name="dob" ng-change="updateDOB()" class="form-control col-md-4" ng-Class="{'is-invalid': (pensionForm.$pristine || pensionForm.dob.$invalid)}"  dateofbirth required>
-										<div class="invalid-feedback col-md-4 text-danger" ng-show="pensionForm.$pristine || pensionForm.dob.$invalid">
+										<span class="input-group-text col-md-6" id="dobPrepend">Date of Birth</span>
+										<input type="date" ng-model="dob" id="dob" name="dob" ng-change="updateDOB()" class="form-control col-md-6" ng-Class="{'is-invalid': (pensionForm.$pristine || pensionForm.dob.$invalid)}"  dateofbirth required>
+										<div class="invalid-feedback col-md-6 text-danger" ng-show="pensionForm.$pristine || pensionForm.dob.$invalid">
 											<span ng-show="pensionForm.$pristine">Please update the DOB</span>
 											<span ng-show="pensionForm.dob.$error.required">Date of Birth is required.</span>
 											<span ng-show="pensionForm.dob.$error.date">The Calculator gives output for Pension start date from 01-04-2011 and Today's Date. Please, enter Date of birth Accordingly.</span>
@@ -72,8 +72,8 @@
 								
 								<form name="form2" class="row need-validated mt-2" ng-show="pensionForm.$dirty && pensionForm.dob.$valid && total.eligibility && total.doe<=basic.date58">
 									<div class="input-group">
-										<span class="input-group-text col-md-4" id="dobPrepend">Date of Pension start/Pension option</span>
-										<input type="date" ng-model="availing_date" id="ad" name="ad" min="minAD" max="basic.avail58" ng-change="updateAD()" class="form-control col-md-4" ng-Class="{'is-invalid': (form2.ad.$invalid)}" availing_date required>
+										<span class="input-group-text col-md-6" id="dobPrepend">Date of Pension start/Pension option</span>
+										<input type="date" ng-model="availing_date" id="ad" name="ad" min="minAD" max="basic.avail58" ng-change="updateAD()" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.ad.$invalid)}" availing_date required>
 										<div class="invalid-feedback col-md-4 text-danger" ng-show="form2.ad.$invalid">
 											<span ng-show="form2.$pristine">Please update the DOB</span>
 											<span ng-show="form2.ad.$error.required">The availing date is required.</span>
