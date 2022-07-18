@@ -68,6 +68,7 @@ const get_pension = function (total,psalary){
 	var ncp1 = total.ncp1;
 	var ncp2 = total.ncp2;
 	var weightage = total.weightage;
+	var psal = psalary;
 	
 	var pension={};
 	if(!days1 && !days2){
