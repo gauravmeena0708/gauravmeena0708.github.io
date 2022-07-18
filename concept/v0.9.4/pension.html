@@ -223,8 +223,8 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	
 	
 	$scope.resetBasic = function (){
-		$scope.dob  = BASIC_DEFAULT.dob;
-		$scope.basic = BASIC_DEFAULT;
+		$scope.dob  = 0;//BASIC_DEFAULT.dob;
+		$scope.basic = {};BASIC_DEFAULT;
 		$scope.resetService();
 		$scope.updateDOB();
 	}
