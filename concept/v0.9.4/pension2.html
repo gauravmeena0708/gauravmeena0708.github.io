@@ -124,9 +124,9 @@
 				<div class="card">
 					<div class="card-header">Pension Calculator Output</div>
 					<div class="card-body">
-						<ul class="list-group mb-3 col-md-6">
-							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_service">Pensionable Service:<span>{{ total.pensionable_service}}</span></li>
+						<ul class="list-group mb-3 col-md-12">
 							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="psalary">Pensionable Salary:<span>{{ psalary }}</span></li>
+							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_service">Pensionable Service:<span>{{ total.pensionable_service}}</span></li>
 							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation">Superannuation Pension :<span>{{ pension.superannuation }}</span></li>
 							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation<1000 || (pension.early && pension.early<1000)">Minimum Superannuation pension (from 01-09-2014) :<span>Rs. 1000</span></li>
 							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction">Reduction due to early Pension :<span>{{pension.earlyreduction}}</span></li>
@@ -266,13 +266,14 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		} else {
 			$scope.total.weightage = 0;
 		}
+		$scope.output = false;
 		log("availing,doe, weightage,total,actual",[$scope.availing_date, $scope.total.doe, $scope.total.weightage,$scope.total.daystotal,$scope.total.daysact]);
 	}
 	
 	$scope.updateCalculation = function() {
 		
 		$scope.output=true;
-		$scope.pension = get_pension($scope.total,$scope.psalary);
+		$scope.pension = get_pension($scope.total,$scope.psalary, $scope.dob, $scope.availing_date);
 		if($scope.pension.superannuation<=0) {
 			alert("invalid input");
 			$scope.output=false;

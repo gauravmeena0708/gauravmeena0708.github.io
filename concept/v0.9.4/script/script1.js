@@ -12,6 +12,7 @@ const CEILING1_DATE = new Date('1995-11-16');
 const CEILING2_DATE = new Date('2014-09-01');
 const ELG_DATE1 = new Date('2015-03-26');
 const ELG_DAYS = 3465;
+const EARLY_PERC_CHANGE_DATE = new Date('2008-11-26');
 
 const LIMIT_MAX     = new Date();
 const BASIC_DEFAULT = {
@@ -68,7 +69,20 @@ const round = (n, dp,bool=0) => {
 	return val;
 };
 
-const get_pension = function (total,psalary){
+
+const get_earlyReductionAmount = function (superannuation,availing_date,years_to_58) {
+	var amount = 0;
+	if(availing_date<EARLY_PERC_CHANGE_DATE) {
+		amount = superannuation - round(superannuation*Math.pow(1-0.03,years_to_58));
+	} else {
+		amount = superannuation - round(superannuation*Math.pow(1-0.04,years_to_58));
+	}
+	return amount;
+}
+
+
+
+const get_pension = function (total,psalary,dob, availing_date){
 	console.log(total)
 	var days1 = total.daysbefore;
 	var days2 = total.daysafter;
@@ -76,8 +90,8 @@ const get_pension = function (total,psalary){
 	var ncp2 = total.ncp2;
 	var weightage = total.weightage;
 	var psal = psalary;
-	
 	var pension={};
+	
 	if(!days1 && !days2){
 		pension.superannuation = 0;
 	} else if((days1-ncp1)<0 || (days2-ncp2)<0) {
@@ -94,8 +108,16 @@ const get_pension = function (total,psalary){
 		p2 = eligible2*psal/(70*365);
 		pension.superannuation = round(p1+p2);
 	}
+	
+	var age = getDifference(dob, availing_date, "Years", "both");
+	var years_to_58 = 58-age;
+	console.log("age, years_to_58", age,years_to_58);
+	pension.earlyreduction = get_earlyReductionAmount(pension.superannuation,availing_date,years_to_58);
+	if(pension.earlyreduction) {
+		pension.early= pension.superannuation - pension.earlyreduction;
+	}
 	if(pension) {
-		log("get_pension:(days1,days2, ncp1, ncp2,psal, wt, pension)",[days1,days2,ncp1,ncp2,psalary,weightage,pension.superannuation]);
+		log("get_pension:(days1,days2, ncp1, ncp2,psal, wt, pension,early reduction)",[days1,days2,ncp1,ncp2,psalary,weightage,pension.superannuation,pension.earlyreduction]);
 	}
 	return pension;
 }
