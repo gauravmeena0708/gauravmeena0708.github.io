@@ -61,6 +61,13 @@ const TOTAL_DEFAULT = {
 	'daysafter':0
 }
 
+const round = (n, dp,bool=0) => {
+	var val=0
+	const h = +('1'.padEnd(dp + 1, '0')) // 10 or 100 or 1000 or etc
+	val = Math.round(n * h) / h;
+	return val;
+};
+
 const get_pension = function (total,psalary){
 	console.log(total)
 	var days1 = total.daysbefore;
