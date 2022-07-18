@@ -438,7 +438,6 @@ app.directive('psalary', function() {
 		require: 'ngModel',
 		link: function(scope, elm, attrs, ctrl) {
 			ctrl.$validators.psal = function(modelValue, viewValue) {
-				console.log(modelValue, viewValue)
 				if (ctrl.$isEmpty(modelValue)) {
 					return false;
 				}
