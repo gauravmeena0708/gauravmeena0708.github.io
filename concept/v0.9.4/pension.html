@@ -81,9 +81,9 @@
 										</div>	
 									</div>
 									<div class="input-group mt-2" ng-show="availing_date">
-										<span class="input-group-text col-md-4" id="dobPrepend">Pensionable Salary</span>
-										<input type="number" ng-model="psalary" id="psalary" min="1" max="15000" name="psalary" ng-click="output=0" class="form-control col-md-4" ng-Class="{'is-invalid': (form2.psalary.$invalid)}" psalary required>
-										<div class="invalid-feedback col-md-4 text-danger" ng-show="form2.psalary.$invalid">
+										<span class="input-group-text col-md-6" id="dobPrepend">Pensionable Salary</span>
+										<input type="number" ng-model="psalary" id="psalary" min="1" max="15000" name="psalary" ng-click="output=0" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.psalary.$invalid)}" psalary required>
+										<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.psalary.$invalid">
 											<span ng-show="form2.psalary.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
 											<span ng-show="form2.psalary.$error.psal || form2.psalary.$error.min || form2.psalary.$error.max">The Pensionable Salary should be greater than 0 and Max 15000 for DOE after 01-09-2014 (6500 before 01-09-2014).</span>
 										</div>	
