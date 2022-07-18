@@ -102,7 +102,7 @@
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_service">Pensionable Service (max age 58):<span>{{ total.pensionable_service}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_days">Pensionable days:<span>{{ total.pensionable_days}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.eligibility">Eligibility of Service length:<span>{{ total.eligibility}}</span></li>
-								<li class="list-group-item  d-flex justify-content-between align-items-center">Weightage:<span>{{ total.weightage}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.weightage">Weightage:<span>{{ total.weightage}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center">Min AD:<span>{{ minAD |  date:'dd/MM/yyyy'}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center">Avail 58:<span>{{ basic.avail58 |  date:'dd/MM/yyyy'}}</span></li>
 							</ul>
@@ -214,11 +214,14 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	
 	$scope.updateDOB = function(){
 		$scope.resetService();
-		$scope.basic.date58  = luxon.DateTime.fromJSDate($scope.dob).plus({years: 58}).minus({days: 1}).toJSDate();
-		$scope.basic.date50  = luxon.DateTime.fromJSDate($scope.dob).plus({years: 50}).minus({days: 1}).toJSDate();
-		$scope.basic.avail58 = luxon.DateTime.fromJSDate($scope.dob).plus({years: 58}).toJSDate();
-		$scope.basic.avail50 = luxon.DateTime.fromJSDate($scope.dob).plus({years: 50}).toJSDate();
-		$scope.updateMinAD();
+		if($scope.dob) {
+			$scope.basic.date58  = getDate($scope.dob).plus({years: 58}).minus({days: 1}).toJSDate();
+			$scope.basic.date50  = getDate($scope.dob).plus({years: 50}).minus({days: 1}).toJSDate();
+			$scope.basic.avail58 = getDate($scope.dob).plus({years: 58}).toJSDate();
+			$scope.basic.avail50 = getDate($scope.dob).plus({years: 50}).toJSDate();
+			console.log("dob,basic.58,scope.dob",$scope.dob,$scope.basic.date58)
+			$scope.updateMinAD();
+		}
 	}
 	
 	
@@ -256,12 +259,11 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		
 		x = $scope.total.doe>$scope.basic.date50?$scope.total.doe:$scope.basic.date50;
 		$scope.minAD = luxon.DateTime.fromJSDate(x).plus({days: 1}).toJSDate();
-		$scope.minAD = 
+		$scope.minAD = $scope.minAD<LIMIT_MIN?LIMIT_MIN:$scope.minAD;
 		$scope.total.eligibility = $scope.total.eligibility;
 	}
 	
 	$scope.updateAD = function(){
-		var availing_date = luxon.DateTime.fromJSDate($scope.availing_date).toJSDate();
 		if(getDate_ddmmyyyy($scope.availing_date) == getDate_ddmmyyyy($scope.basic.avail58) && getDate_ddmmyyyy($scope.total.doe) == getDate_ddmmyyyy($scope.basic.date58) && $scope.total.daysact>=7300) {
 			$scope.total.weightage = 2;
 		} else {
@@ -327,7 +329,6 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	}
 	
 	$scope.addService = function(){
-		
 		var doj = $scope.service_input.doj;
 		var doe = $scope.service_input.doe;
 		var ncp1 = $scope.service_input.ncp1;

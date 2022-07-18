@@ -1,23 +1,38 @@
+
+
+// Configure the time zone
+luxon.Settings.defaultZone = "Asia/Kolkata";
 const MIN = 1000;
 const CEILING1 = 6500;
 const CEILING2 = 15000;
-const LIMIT_MIN     = new Date('2011-04-01');
-const MIN_DOB = luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 58}).toJSDate();
-const MAX_DOB = luxon.DateTime.fromJSDate(new Date()).minus({years: 50}).toJSDate();
-const CEILING1_DATE = new Date('1995-11-16');
-const CEILING2_DATE = new Date('2014-09-01');
-const ELG_DATE1 = new Date('2015-03-26');
 const ELG_DAYS = 3465;
-const EARLY_PERC_CHANGE_DATE = new Date('2008-11-26');
+const getDate = function(date) {
+	if(date) {
+		var x = new Date(luxon.DateTime.fromJSDate(date).toISODate())
+		return luxon.DateTime.fromJSDate(x).minus({minutes:330})
+	} else
+		return luxon.DateTime();
+}
+const CURRENT_DATE  = getDate(new Date()).toJSDate();
+const LIMIT_MIN     = getDate(new Date('2011-04-01')).toJSDate();
+const LIMIT_MAX     = getDate(new Date()).toJSDate();
+const MIN_DOB       = getDate(LIMIT_MIN).minus({years: 58}).toJSDate();
+const MAX_DOB       = getDate(new Date()).minus({years: 50}).toJSDate();
+const CEILING1_DATE = getDate(new Date('1995-11-16')).toJSDate();
+const CEILING2_DATE = getDate(new Date('2014-09-01')).toJSDate();
+const ELG_DATE1     = getDate(new Date('2015-03-26')).toJSDate();
+const EARLY_PERC_CHANGE_DATE = getDate(new Date('2008-11-26')).toJSDate();
+var dod = getDate(new Date('2011-04-01'));
+console.log("current,min,max,mindob,maxdob,ceiling1,ceiling2,elgdate1,earlyperc",[CURRENT_DATE,LIMIT_MIN,LIMIT_MAX,MIN_DOB,MAX_DOB,CEILING1_DATE,CEILING2_DATE,ELG_DATE1,EARLY_PERC_CHANGE_DATE]);
 
-const LIMIT_MAX     = new Date();
+
 const BASIC_DEFAULT = {
 	'dob': 0,
-	'date58':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1, days:1}).toJSDate(),
-	'date50':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 9, days:1}).toJSDate(),
-	'avail58':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1}).toJSDate(),
-	'avail50':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 1}).toJSDate(),
-	'minAD':luxon.DateTime.fromJSDate(LIMIT_MIN).minus({years: 8}).toJSDate()
+	'date58':getDate(LIMIT_MIN).minus({years: 1, days:1}).toJSDate(),
+	'date50':getDate(LIMIT_MIN).minus({years: 9, days:1}).toJSDate(),
+	'avail58':getDate(LIMIT_MIN).minus({years: 1}).toJSDate(),
+	'avail50':getDate(LIMIT_MIN).minus({years: 1}).toJSDate(),
+	'minAD':getDate(LIMIT_MIN).minus({years: 8}).toJSDate()
 }
 
 const SERVICE_INPUT_DEFAULT = {
@@ -160,7 +175,7 @@ function getDifference(d1, d2, unit="Days", period="both", withEndDate=1) {
 	//return -1 if any error
 	
 	if(period=="before" && d2>CEILING2_DATE) {
-		d2 = luxon.DateTime.fromJSDate(CEILING2_DATE).minus({days: 1}).toJSDate();
+		d2 = getDate(CEILING2_DATE).minus({days: 1}).toJSDate();
 		if(d1<CEILING1_DATE) {
 			d1=CEILING1_DATE;
 		} else if(d1>CEILING2_DATE){
@@ -173,8 +188,8 @@ function getDifference(d1, d2, unit="Days", period="both", withEndDate=1) {
 		}
 	}
 	if(d1==d2) return 0;
-	date1= luxon.DateTime.fromJSDate(d1);
-	date2= luxon.DateTime.fromJSDate(d2);
+	date1= getDate(d1);
+	date2= getDate(d2);
 	var interval = luxon.Interval.fromDateTimes(date1, date2);
 	if (interval.invalid) {
 		console.log(interval);
@@ -235,10 +250,10 @@ function validateService(service, dob){
 		//alert(getDifference(dob,service.doe,'Years',"both")>60)
 		var max_avail_date=0;
 		/*if(service.doe>=new Date('2016-04-25')){
-			lastdate = luxon.DateTime.fromJSDate(dob).plus({years: 60}).toJSDate();
+			lastdate = getDate(dob).plus({years: 60}).toJSDate();
 		} else 
 		{*/
-			max_avail_date = luxon.DateTime.fromJSDate(dob).plus({years: 58}).toJSDate();
+			max_avail_date = getDate(dob).plus({years: 58}).toJSDate();
 			log("lastdate",[max_avail_date]);
 		//}
 	}
