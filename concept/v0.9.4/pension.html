@@ -111,7 +111,7 @@
 					
 					<div class="card-footer d-flex justify-content-between align-items-center">
 						<span>
-							<button type="button" class="btn btn-success align-self-center" ng-click="updateCalculation()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid || !total.eligibility || form2.$invalid || form2.psalary.$error.$invalid">Show/Update Calculation</button>
+							<button type="button" class="btn btn-success align-self-center" data-bs-toggle="modal" data-bs-target="#pensioninfo" ng-click="updateCalculation()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid || !total.eligibility || form2.$invalid || form2.psalary.$error.$invalid">Show/Update Calculation</button>
 							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">Reset</button>
 						</span>
 					</div>
@@ -173,6 +173,25 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="pensioninfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pensioninfo" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="pensioninfoLabel">Information</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<p>The Calculation in this part is only indicative in nature as the data entered by user and data available in database may be different.</p>
+			<p>Currently, only Early pension and Superannuation pension is provided other types of pensions and functionalities will be added soon </p>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 	<!--
 	container fluid div closer
 	-->
@@ -278,7 +297,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.output=true;
 		$scope.pension = get_pension($scope.total,$scope.psalary, $scope.dob, $scope.availing_date);
 		if($scope.pension.superannuation<=0) {
-			alert("invalid input");
+			console.log("invalid input");
 			$scope.output=false;
 		}
 	}
