@@ -339,7 +339,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.dates.push(doe);
 		
 		if(!validateService($scope.service_input, $scope.dob)) {
-			log("Validate: Invalid Service Details. Returning to previous state.",[];
+			log("Validate: Invalid Service Details. Returning to previous state.",[]);
 			$scope.dates = date1.slice();
 		} else if(multipleDateRangeOverlaps($scope.dates)){
 			log("Overlap: Date range overlapping. Returning to previous state",[]);
