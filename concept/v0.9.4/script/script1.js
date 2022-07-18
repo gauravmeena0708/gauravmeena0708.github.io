@@ -116,6 +116,9 @@ const get_pension = function (total,psalary,dob, availing_date){
 	if(pension.earlyreduction) {
 		pension.early= pension.superannuation - pension.earlyreduction;
 	}
+	if(pension.early<1000 && availing_date>CEILING2_DATE) {
+		pension.earlymin=1000-pension.earlyreduction;
+	}
 	if(pension) {
 		log("get_pension:(days1,days2, ncp1, ncp2,psal, wt, pension,early reduction)",[days1,days2,ncp1,ncp2,psalary,weightage,pension.superannuation,pension.earlyreduction]);
 	}
