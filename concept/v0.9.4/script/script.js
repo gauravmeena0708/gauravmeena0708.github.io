@@ -21,8 +21,8 @@ const MAX_DOB       = getDate(new Date()).minus({years: 50}).toJSDate();
 const CEILING1_DATE = getDate(new Date('1995-11-16')).toJSDate();
 const CEILING2_DATE = getDate(new Date('2014-09-01')).toJSDate();
 const ELG_DATE1     = getDate(new Date('2015-03-26')).toJSDate();
+const DEFER_DATE = getDate(new Date('2016-04-25')).toJSDate();
 const EARLY_PERC_CHANGE_DATE = getDate(new Date('2008-11-26')).toJSDate();
-var dod = getDate(new Date('2011-04-01'));
 //console.log("current,min,max,mindob,maxdob,ceiling1,ceiling2,elgdate1,earlyperc",[CURRENT_DATE,LIMIT_MIN,LIMIT_MAX,MIN_DOB,MAX_DOB,CEILING1_DATE,CEILING2_DATE,ELG_DATE1,EARLY_PERC_CHANGE_DATE]);
 const download = function () {
 		window.print();

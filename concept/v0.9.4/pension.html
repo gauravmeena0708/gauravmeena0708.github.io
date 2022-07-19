@@ -130,6 +130,10 @@
 							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.early">Early Pension(Calculated) :<span>{{pension.early}}</span></li>
 							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction && (pension.early && pension.early<1000) && pension.earlymin">Early Pension after applying Minimum :<span>{{pension.earlymin}}</span></li>
 						</ul>
+						<div class="alert alert-warning mt-3">
+							For calculating the deferred pension. The superannuation pension can be multiplied by a factor of 1.04 for each year(max two) pension is deferred.
+							Deferred pension is applicable only when date of option is after 25-04-2016.
+						</div>
 					</div>
 					<div class="card-footer">
 						<button type="button" class="btn btn-danger align-self-center" onclick="download()">Download</button>
