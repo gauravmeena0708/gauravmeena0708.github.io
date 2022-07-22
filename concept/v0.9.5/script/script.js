@@ -147,8 +147,8 @@ function getDays (date1, date2, withEndDate=1) {
 	var date1_modified = date1.plus({months: months_between });
 	var interval2 = luxon.Interval.fromDateTimes(date1_modified, date21);
 	var D = interval2.length('Days');
-	var days = ((Y*365)+(M)*30)+D);
-	log("getDays,Date1,Date2,days,Y,M,D",[date1,date2,days,Y,M,D])
+	var days = ((Y*365)+(M)*30)+D;
+	log("getDays,Date1,Date2,days,Y,M,D",[date1,date2,days,Y,M,D]);
 	return days;
 }
 
