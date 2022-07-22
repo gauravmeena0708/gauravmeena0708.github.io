@@ -139,16 +139,17 @@ const get_pension = function (total,psalary,dob, availing_date){
 }
 
 function getDays (date1, date2, withEndDate=1) {
-	var interval = luxon.Interval.fromDateTimes(date1, date2);
-	var date1_modified = date1.plus({months: Math.floor(interval.length('Months'))});
-	var interval2 = luxon.Interval.fromDateTimes(date1_modified, date2);
-	
-	return (
-			(Math.floor(interval.length('Years'))*365)+
-			(Math.floor(interval.length('Months')%12)*30)+
-			interval2.length('Days')+
-			withEndDate
-			);
+	var date21 = luxon.DateTime.fromISO(date2).plus({'days':withEndDate}).toJSDate();
+	var interval = luxon.Interval.fromDateTimes(date1, date21);
+	var months_between = Math.floor(interval.length('Months'));
+	var Y = Math.floor(months_between/12);
+	var M = months_between - Y*12; //Math.floor(interval.length('Months')%12);
+	var date1_modified = date1.plus({months: months_between });
+	var interval2 = luxon.Interval.fromDateTimes(date1_modified, date21);
+	var D = interval2.length('Days');
+	var days = ((Y*365)+(M)*30)+D);
+	log("getDays,Date1,Date2,days,Y,M,D",[date1,date2,days,Y,M,D])
+	return days;
 }
 
 const getServiceStr = function(days) {
