@@ -97,13 +97,15 @@
 								<li class="list-group-item  d-flex justify-content-between align-items-center">Date of Attaining 58 Years:<span>{{ basic.date58 |  date:'dd/MM/yyyy'}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center">Date of Attaining 50 Years:<span>{{ basic.date50 |  date:'dd/MM/yyyy'}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center">Min Availing Date:<span>{{ minAD |  date:'dd/MM/yyyy'}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center">Avail 58:<span>{{ basic.avail58 |  date:'dd/MM/yyyy'}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.daystotal_age58">Actual Days:<span>{{ total.daystotal_age58}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.actual_service">Actual Service:<span>{{ total.actual_service}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_service">Pensionable Service (max age 58):<span>{{ total.pensionable_service}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.pensionable_days">Pensionable days:<span>{{ total.pensionable_days}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.eligibility">Eligibility of Service length:<span>{{ total.eligibility}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.weightage">Weightage:<span>{{ total.weightage}}</span></li>
-								<li class="list-group-item  d-flex justify-content-between align-items-center">Avail 58:<span>{{ basic.avail58 |  date:'dd/MM/yyyy'}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.days1">Days till 31-08-2014:<span>{{ total.days1}}</span></li>
+								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.days2">Days after 31-08-2014:<span>{{ total.days2}}</span></li>
 							</ul>
 						</div>
 						
