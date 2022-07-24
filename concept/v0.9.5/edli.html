@@ -224,7 +224,16 @@
 						</ul>
 						<div class="alert alert-info"><a class="alert-link" href="{{ params.link_en }}">Link to the Applicable Circular: </a></div>
 						</ul>
-						
+						<div class="alert fade show" role="alert">
+							<ul class="list-group">
+								<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
+									The calculation on this page is only illustrative and based on the data entered by the user. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
+								</li>
+								<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
+								Preceding months - Example: If Date-of-Death is 07.04.2022 then wages and progressive balance between 04-21 to 03-22 needs to be taken for calculation of Average wages and average progressive balance.
+								</li>
+							</ul>
+						</div>
 					</div>
 					<div class="card-footer">
 						<button type="button" class="btn btn-danger align-self-center" onclick="download()">Download</button>
@@ -287,7 +296,7 @@
 	const LIMIT1 = new Date('1976-08-01');
 	const LIMIT2 = new Date('2021-04-29');
 	const LIMIT3 = new Date('2024-04-27');
-	const LIMIT_MIN=new Date('2011-04-01');
+	const LIMIT_MIN=new Date('2011-03-31');
 	const LIMIT_MAX=new Date();
 	
 	
