@@ -216,8 +216,6 @@
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.weightage">Weightage:<span>{{ total.weightage}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.daysbefore">Days till 31-08-2014:<span>{{ total.daysbefore}}</span></li>
 								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.daysafter">Days after 31-08-2014:<span>{{ total.daysafter}}</span></li>
-								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.daystotal">Total Days(Adding above):<span>{{ total.daystotal}}</span></li>
-								<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="total.daysact">Total Days(actual):<span>{{ total.daysact}}</span></li>
 							</ul>
 						</div>
 						
@@ -491,9 +489,6 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			var daysact          = getDifference(doj,doe,'Days',"both");
 			var daystotal        = daysbefore+daysafter;
 			
-			if(daysact>daystotal) {
-				daysafter=daysact-daysbefore ;
-			}
 			
 			var date58           = $scope.basic.date58;
 			date58               = doe>date58?date58:doe;
