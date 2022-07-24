@@ -174,7 +174,7 @@
 										</tr>
 									</tbody>
 								</table>
-								<button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" ng-clic="update_ncp()" ng-disabled="pensionForm.$pristine" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
+								<button type="button" class="btn btn-success mt-2" id="addservclick" data-bs-toggle="modal" ng-clic="update_ncp()" ng-disabled="pensionForm.$pristine" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i> Add Service</button>			
 								
 								<form name="form2" class="row need-validated mt-2" ng-show="pensionForm.$dirty && pensionForm.dob.$valid && total.eligibility && total.doe<=basic.date58">
 									<div class="input-group">
@@ -219,7 +219,8 @@
 					
 					<div class="card-footer d-flex justify-content-between align-items-center">
 						<span>
-							<button type="button" class="btn btn-success align-self-center" data-bs-toggle="modal" data-bs-target="#pensioninfo" ng-click="updateCalculation()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid || !total.eligibility || form2.$invalid || form2.psalary.$error.$invalid">Show/Update Calculation</button>
+							<!--data-bs-toggle="modal" data-bs-target="#pensioninfo"-->
+							<button type="button" class="btn btn-success align-self-center"  id="updatecalc" ng-click="updateCalculation()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid || !total.eligibility || form2.$invalid || form2.psalary.$error.$invalid">Show/Update Calculation</button>
 							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">Reset</button>
 						</span>
 					</div>
@@ -232,7 +233,7 @@
 					<div class="card-header">Pension Calculator Output</div>
 					<div class="card-body">
 						<ul class="list-group mb-3 col-md-12">
-							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation">Superannuation Pension :<span>{{ pension.superannuation }}</span></li>
+							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation">Superannuation Pension :<span id="psuper">{{ pension.superannuation }}</span></li>
 							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation<1000 || (pension.early && pension.early<1000)">Minimum Superannuation pension (from 01-09-2014) :<span>Rs. 1000</span></li>
 							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction">Reduction due to early Pension :<span>{{pension.earlyreduction}}</span></li>
 							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.early">Early Pension(Calculated) :<span>{{pension.early}}</span></li>
@@ -261,23 +262,23 @@
 			<form name="serviceForm" class="need-validated">
 					<div class="input-group mb-3 bg-info">
 						<span class="input-group-text col-6">DOJ</span>
-						<input type="date" ng-model ="service_input.doj" ng-change="update_ncp()" class="form-control" placeholder="doj" aria-label="doj">
+						<input type="date" ng-model ="service_input.doj" id="doj" ng-change="update_ncp()" class="form-control" placeholder="doj" aria-label="doj">
 					</div>
 					<div class="input-group mb-3 bg-light">
 						<span class="input-group-text col-6">DOE</span>
-						<input type="date" ng-model ="service_input.doe" min="service_input.doj" max="basic.date58" ng-change="update_ncp()" class="form-control" placeholder="doe" aria-label="doe">
+						<input type="date" ng-model ="service_input.doe" id="doe" min="service_input.doj" max="basic.date58" ng-change="update_ncp()" class="form-control" placeholder="doe" aria-label="doe">
 					</div>
 					<div class="input-group mb-3 bg-light" ng-show="service_input.ncp1edit">
 						<span class="input-group-text col-6">NCP b/w 16-11-1995 to 31-08-2014</span>
-						<input type="number" ng-model ="service_input.ncp1"  name="ncp1" class="form-control" placeholder="NCP1" aria-label="NCP1">
+						<input type="number" ng-model ="service_input.ncp1"  id="ncp1" name="ncp1" class="form-control" placeholder="NCP1" aria-label="NCP1">
 					</div>
 					<div class="input-group mb-3 bg-light" ng-show="service_input.ncp2edit">
 						<span class="input-group-text col-6">NCP from 01-09-2014</span>
-						<input type="number" ng-model ="service_input.ncp2"  name="ncp2" class="form-control" placeholder="NCP2" aria-label="NCP2">
+						<input type="number" ng-model ="service_input.ncp2"  id="ncp2" name="ncp2" class="form-control" placeholder="NCP2" aria-label="NCP2">
 					</div>
 					<div class="row mb-3">
 						<div class="col-3">
-							<button type="button" class="btn btn-success waves-effect" ng-click="addService()" data-bs-dismiss="modal"><i class="bi bi-plus-circle-fill"></i> Add Service</button>
+							<button type="button" id="addserv" class="btn btn-success waves-effect" ng-click="addService()" data-bs-dismiss="modal"><i class="bi bi-plus-circle-fill"></i> Add Service</button>
 						</div>
 					</div>
 			</form>
