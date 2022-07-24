@@ -487,6 +487,10 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			var daysact          = getDifference(doj,doe,'Days',"both");
 			var daystotal        = daysbefore+daysafter;
 			
+			if(daysact>daystotal) {
+				daysafter        = daysact-daysbefore;
+				daystotal        = daysbefore+daysafter;
+			}
 			
 			var date58           = $scope.basic.date58;
 			date58               = doe>date58?date58:doe;
