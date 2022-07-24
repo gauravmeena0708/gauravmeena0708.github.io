@@ -6,10 +6,121 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/bootstrap-icons.css">
 	<link rel="stylesheet" href="./css/style.css">
+<style>
+.marquee {
+	width:450px;
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+.marquee span {
+	display: inline-block;
+	padding-left: 100%;
+	text-indent: 0;
+	animation: marquee 60s linear infinite;
+}
+.marquee span:hover {
+	animation-play-state: paused
+}
 
+/* Make it move */
+@keyframes marquee {
+	0%   { transform: translate(0, 0); }
+	100% { transform: translate(-100%, 0); }
+}
+
+.sample {
+	width: 100%;
+	max-height: 296px;
+}
+
+#epfo {
+	color:#E60000;
+	font-size:180%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-weight:bold;
+	text-decoration: none !important;
+}
+
+#goi {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	text-decoration: none !important;
+}
+
+.breadcrumb {
+	padding: 2px 15px !important;
+	margin-bottom:0px;
+}
+
+#accordionExample .show{
+	height:200px;
+	overflow-y:scroll;
+}
+
+#accordionRight .show {
+	min-height:400px;
+	overflow-y:scroll;
+}
+
+.bg-info {
+	background-color: #048281 !important;
+}
+</style>
 </head>
 
 <body ng-app="edliApp" ng-controller="edliCtrl" class="pt-100 pb-100"  style="background-image: linear-gradient(0deg, #FDFFFF 0%, #DFFFFF 100%);">
+	<nav class="navbar navbar-dark py-0 bg-danger navbar-expand-lg py-md-0">
+		
+			<button class="navbar-toggler mt-1" type="button" data-toggle="collapse" data-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<i class="fa fa-bars"></i>
+			</button>
+			
+			<div class="navbar-collapse collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item py-0"><a href="#" class="nav-link text-white"><i class="fas fa-envelope"></i> Helpdesk/Toll Free Number <i class="fas fa-phone-square-alt"></i>1800118005</a></li>
+					
+				</ul>
+				<div class="marquee text-white">
+					<div>
+					<span class="text-light">EPFO Helpdesk will not be operational on 22.03.2020. Inconvenience is regretted. 
+					<a class="ml-100" href="..\site_docs\PDFs\Downloads_PDFs\FD_COI_E.pdf" target="_blank" style="color:#fff; margin-left:20px;"><b>FUNDAMENTAL DUTIES OF THE CITIZENS OF INDIA</b></a>
+					<a href="https://pledge.cvc.nic.in/" target="_blank" style="color:#fff; margin-left:20px;"><b>VAW 2019 -Have you taken Integrity Pledge?  Click here</b></a>
+					<a style="margin-left:20px;"></a>Please note-THERE IS NO APP, OTHER THAN 'UMANG', FOR EPFO RELATED SERVICES.
+					<a style="margin-left:20px;"></a>KINDLY BEWARE OF THE FAKE WEBSITES THAT ARE FLASHING WRONG INFORMATION ABOUT EPFO. https://www.epfindia.gov.in IS THE ONLY OFFICIAL WEBSITE OF EPFO.
+					<a style="margin-left:20px;"></a>PLEASE DO NOT SHARE YOUR PERSONAL DETAILS LIKE AADHAAR/PAN/UAN OVER TELEPHONE WITH ANYONE.
+					<a style="margin-left:20px;"></a>EPFO HR SOFTWARE CAN BE ACCESSED USING <a href="https://hr.epfindia.gov.in/hrm">https://hr.epfindia.gov.in/hrm</a> [For Office Use&gt;&gt;Logins&gt;&gt; HR Soft Login]
+					<a style="margin-left:20px;"></a>ATTENTION PENSIONER!! PLEASE SUBMIT DIGITAL LIFE CERTIFICATE FOR THE YEAR 2019 FROM 1.11.2018 ONWARDS EITHER THROUGH UMANG MOBILE APP/AT ANY NEARBY COMMON SERVICE CENTER/EPFO OFFICE/BANK BRANCH.
+					<a style="margin-left:20px;"></a>EMPLOYER CAN PAY DUES DIRECTLY THROUGH CENTRAL BANK OF INDIA.
+					</span>
+					
+					</div>
+				</div>
+				
+				<div class="col-4 text-right">
+					<ul class="navbar-nav ml-md-auto text-right float-right">
+						<li class="nav-item"><a class="nav-link text-white p-1" href="https://twitter.com/socialepfo/" target="_blank"><i class="fab fa-twitter-square fa-2x"></i></a></li>
+						<li class="nav-item"><a class="nav-link text-white p-1" href="https://www.facebook.com/socialepfo/" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a></li>		
+						<li class="nav-item"><a class="nav-link text-white p-1" href="https://epfindia.gov.in/site_en/help.php" target="_blank"><i class="fab fa-question-circle fa-2x"></i></a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</nav>
+	<div class="container">
+	<div class="row pt-2 px-5  d-flex justify-content-between align-items-center">
+				<div class="emblem col-sm-12 text-center col-md-1 order-md-3 float-right text-md-right">
+					<a href="index.php"><img src="images/nationalemblem1.png" id="epf_img1" alt="National Emblem"></a>
+				</div>
+				<div class="title col-sm-12 text-center col-md-9 order-md-2 text-md-center my-auto float-center d-none d-md-block">
+					<a href="index.php" class="text-decoration-none" ><span id="epfo">Employees' Provident Fund Organisation, India</span></a><br>
+					<a href="index.php" class="text-decoration-none" ><span id="goi">Ministry of Labour &amp; Employment, Government of India</span></a><br>
+				</div>
+				<div class="logo col-sm-12 text-center col-md-2 order-md-1 float-left text-md-left">
+					<a class="img-fluid" href="index.php"><img src="images/logo_shadow.png" alt="EPFO" title="EPFO"></a>
+				</div>
+			</div>
+	</div>
 	<header class="p-1 mb-2 bg-info text-white shadow">
 		<div class="container">
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -18,31 +129,30 @@
 			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li>
 			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI</a></li>
 			</ul>
-			<h3 class="text-center">CALCULATOR</h3>
 		  </div>
 		</div>
 	</header>
+	
     <div class="container-fluid">
-		<div class="row">
-			<div class="col-md-10">
-				<div class="alert fade show" role="alert">
-					<ul class="list-group">
-						<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
-							The calculation on this page is only illustrative and based on the data entered by the user. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
-						</li>
-						<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
-						Preceding months - Example: If Date-of-Death is 07.04.2022 then wages and progressive balance between 04-21 to 03-22 needs to be taken for calculation of Average wages and average progressive balance.
-						</li>
-					</ul>
-				</div>
+		<div class="row g-4 mx-4 d-flex justify-content-between">
+			<div class="col-md-6" ng-show="!(output && !(edliForm.dod.$error.required || edliForm.apb.$error.required || edliForm.dod.$invalid || edliForm.apb.$invalid || edliForm.avg_wage.$invalid))">
+					<div class="row px-5 mt-5 mx-5" style="min-height:200px;"><img src="aazaadi.png" class="img-fluid mx-auto"></div>
+					<div class="row">
+						<div class="alert fade show" role="alert">
+							<ul class="list-group">
+								<li  class="list-group-item list-group-item-warning"><i class="bi bi-exclamation-octagon-fill"></i>
+									The calculation on this page is only illustrative and based on the data entered by the user. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
+								</li>
+								<li class="list-group-item list-group-item-warning" ><i class="bi bi-exclamation-octagon-fill"></i>
+								Preceding months - Example: If Date-of-Death is 07.04.2022 then wages and progressive balance between 04-21 to 03-22 needs to be taken for calculation of Average wages and average progressive balance.
+								</li>
+							</ul>
+						</div>
+					</div>
+
 			</div>
-			<div class="col-md-2 py-4">
-				<div id="qrcode"></div>
-			</div>
-		</div>
-		<div class="row g-4 d-flex justify-content-between">
-			<div class="col-md-6 col-sm-12 mx-auto">
-				<div class="card shadow">
+			<div class="col-md-6 col-sm-12">
+				<div class="card shadow mt-5">
 					<div class="card-header">EDLI Calculator Input</div>
 					<div class="card-body">
 						<form name="edliForm">
@@ -157,7 +267,6 @@
 	<script type="text/javascript"  src="./script/popper.min.js"></script>
 	<script type="text/javascript"  src="./script/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript"  src="./script/luxon.min.js"></script>
-	<script type="text/javascript"  src="./script/qrcode.min.js"></script>
 	<script>
 	// jshint esversion: 6
 	let url = new URL(window.location);
@@ -167,7 +276,6 @@
 	let CONTUINITY = 0; 
 	let AVG_WAGE = 0;
 	var TABLE = [];
-	let qrcode;
 	
 	const DEFAULT = {
 		'apb':	0,
@@ -208,23 +316,7 @@
 		});
 	}
 	
-	const initiate_qrcode = function(){
-		qrc =  new QRCode("qrcode", {
-			text: 'Please Enter the values ',
-			width: 128,
-			height: 128,
-			colorDark : "#000000",
-			colorLight : "#ffffff",
-			correctLevel : QRCode.CorrectLevel.H
-		});
-		
-		return qrc;
-	}
 	
-	const update_qrcode = function(url,qrc){
-		qrc.clear(); // clear the code.
-		qrc.makeCode(url);
-	}
 	const download = function () {
 		window.print();
 	}
@@ -240,8 +332,6 @@
 	const initialize = function (){
 		get_urlParams();
 		initiate_tooltips();
-		qrcode = initiate_qrcode();
-		
 	};
 	
 	const getParams = function(list,date) {
@@ -397,8 +487,6 @@
 			$scope.part_a = get_final_a($scope.params.a_perc2,$scope.params.a_min, $scope.params.a_max, $scope.apb, $scope.params.a_perc1);
 			$scope.part_b = get_final_b($scope.avg_wage, $scope.params.b_ceiling, $scope.params.b_factor, $scope.params.b_perc, $scope.params.b_perc1, $scope.apb, $scope.params.b_max, $scope.params.b_min,$scope.continuous12);
 			$scope.final = Math.max($scope.part_a.total, $scope.part_b.total);
-			$scope.url = "https://gauravmeena0708.github.io/concept/edli2.html?apb="+$scope.apb+"&dod="+getDateString($scope.dod)+"&avg_wage="+$scope.avg_wage+"&continous12="+$scope.continuous12;
-			update_qrcode($scope.url,qrcode);
 		};
 	}]);
 	</script>
