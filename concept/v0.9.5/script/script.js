@@ -270,7 +270,7 @@ function validateService(service, dob){
 		return 0;
 	} else if(service.doj<dob) {
 		log("validateService:",["DOJ can not be earlier than DOB."]);
-		alert("service date can not be before date of birth.service not added.")
+		alert("Service date can not be before date of birth.service not added.")
 		return 0;
 	} else if(service.doe>=max_avail_date) {
 		console.log(service.doe,max_avail_date,service.doe>max_avail_date)
