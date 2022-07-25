@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="UTF-8" />
 	<title>Pension Calculator</title>
 	<link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/bootstrap-icons.css">
@@ -174,7 +175,7 @@
 										</tr>
 									</tbody>
 								</table>
-								<button type="button" class="btn btn-success mt-2" id="addservclick" data-bs-toggle="modal" ng-clic="update_ncp()" ng-disabled="pensionForm.$pristine" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i>  सेवा जोड़ें <br/> Add Service</button>			
+								<button type="button" class="btn btn-success mt-2" id="addservclick" data-bs-toggle="modal" ng-clic="update_ncp()" ng-disabled="pensionForm.$pristine" data-bs-target="#addService"><i class="bi bi-plus-circle-fill"></i>  सेवा जोड़ें/ Add Service</button>			
 								
 								<form name="form2" class="row need-validated mt-2" ng-show="pensionForm.$dirty && pensionForm.dob.$valid && total.eligibility && total.doe<=basic.date58">
 									<div class="input-group">
@@ -220,8 +221,8 @@
 					<div class="card-footer d-flex justify-content-between align-items-center">
 						<span>
 							<!--data-bs-toggle="modal" data-bs-target="#pensioninfo"-->
-							<button type="button" class="btn btn-success align-self-center"  id="updatecalc" ng-click="updateCalculation()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid || !total.eligibility || form2.$invalid || form2.psalary.$error.$invalid">Show/Update Calculation</button>
-							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">रीसेट<br/>Reset</button>
+							<button type="button" class="btn btn-success align-self-center"  id="updatecalc" ng-click="updateCalculation()" ng-disabled="pensionForm.$pristine || pensionForm.dob.$error.$invalid || !total.eligibility || form2.$invalid || form2.psalary.$error.$invalid">गणना दिखाएं / अपडेट करे/Show/Update Calculation</button>
+							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">रीसेट/Reset</button>
 						</span>
 					</div>
 				</div>
