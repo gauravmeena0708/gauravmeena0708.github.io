@@ -352,6 +352,12 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 			$scope.basic.date50  = getDate($scope.dob).plus({years: 50}).minus({days: 1}).toJSDate();
 			$scope.basic.avail58 = getDate($scope.dob).plus({years: 58}).toJSDate();
 			$scope.basic.avail50 = getDate($scope.dob).plus({years: 50}).toJSDate();
+			//For setting avail date as current
+			var diff = luxon.Interval.fromDateTimes(getDate($scope.dob), getDate(new Date()));
+			$scope.basic.age     = Math.floor(diff.length('years'));
+			if(new Date()>$scope.basic.avail58){
+				$scope.availing_date = $scope.basic.avail58;
+			}
 			console.log("dob,basic.58,scope.dob",$scope.dob,$scope.basic.date58)
 			$scope.updateMinAD();
 		}
@@ -393,6 +399,11 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		x = $scope.total.doe>$scope.basic.date50?$scope.total.doe:$scope.basic.date50;
 		$scope.minAD = luxon.DateTime.fromJSDate(x).plus({days: 1}).toJSDate();
 		$scope.minAD = $scope.minAD<LIMIT_MIN?LIMIT_MIN:$scope.minAD;
+		//For setting avail date as current
+		if(new Date()>$scope.basic.avail58){
+			$scope.minAD = 	$scope.basic.avail58;
+			$scope.availing_date = $scope.basic.avail58;
+		}
 		$scope.total.eligibility = $scope.total.eligibility;
 	}
 	
