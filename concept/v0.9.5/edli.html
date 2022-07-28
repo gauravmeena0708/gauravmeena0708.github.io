@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="UTF-8" />
 	<title>EDLI Calculator</title>
 	<!-- CSS only -->
     <link rel="stylesheet" href="./css/bootstrap.min.css">
@@ -82,7 +83,6 @@
 				<div class="marquee text-white col-7">
 					<div>
 						<span class="text-light">
-							<a class="ml-100" href="..\site_docs\PDFs\Downloads_PDFs\FD_COI_E.pdf" target="_blank" style="color:#fff; margin-left:20px;"><b>FUNDAMENTAL DUTIES OF THE CITIZENS OF INDIA</b></a>
 							<a style="margin-left:20px;"></a>Please note-THERE IS NO APP, OTHER THAN 'UMANG', FOR EPFO RELATED SERVICES.
 							<a style="margin-left:20px;"></a>KINDLY BEWARE OF THE FAKE WEBSITES THAT ARE FLASHING WRONG INFORMATION ABOUT EPFO. https://www.epfindia.gov.in IS THE ONLY OFFICIAL WEBSITE OF EPFO.
 							<a style="margin-left:20px;"></a>PLEASE DO NOT SHARE YOUR PERSONAL DETAILS LIKE AADHAAR/PAN/UAN OVER TELEPHONE WITH ANYONE.
@@ -105,25 +105,25 @@
 			</div>
 		</nav>
 	<div class="container">
-	<div class="row pt-2 px-5  d-flex justify-content-between align-items-center">
-				<div class="emblem col-sm-12 text-center col-md-1 order-md-3 float-right text-md-right">
-					<a href="index.php"><img src="images/nationalemblem1.png" id="epf_img1" alt="National Emblem"></a>
-				</div>
-				<div class="title col-sm-12 text-center col-md-9 order-md-2 text-md-center my-auto float-center d-none d-md-block">
-					<a href="index.php" class="text-decoration-none" ><span id="epfo">Employees' Provident Fund Organisation, India</span></a><br>
-					<a href="index.php" class="text-decoration-none" ><span id="goi">Ministry of Labour &amp; Employment, Government of India</span></a><br>
-				</div>
-				<div class="logo col-sm-12 text-center col-md-2 order-md-1 float-left text-md-left">
-					<a class="img-fluid" href="index.php"><img src="images/logo_shadow.png" alt="EPFO" title="EPFO"></a>
-				</div>
+		<div class="row pt-2 px-5  d-flex justify-content-between align-items-center">
+			<div class="emblem col-sm-12 text-center col-md-1 order-md-3 float-right text-md-right">
+				<a href="#"><img src="./images/nationalemblem1.png" id="epf_img1" alt="National Emblem"></a>
 			</div>
+			<div class="title col-sm-12 text-center col-md-9 order-md-2 text-md-center my-auto float-center d-none d-md-block">
+				<a href="https://epfindia.gov.in/site_en/index.php" class="text-decoration-none" ><span id="epfo">Employees' Provident Fund Organisation, India</span></a><br> 
+				<a href="#" class="text-decoration-none" ><span id="goi">Ministry of Labour &amp; Employment, Government of India</span></a><br>
+			</div>
+			<div class="logo col-sm-12 text-center col-md-2 order-md-1 float-left text-md-left">
+				<a class="https://epfindia.gov.in/site_en/img-fluid" href="index.php"><img src="images/logo_shadow.png" alt="EPFO" title="EPFO"></a> 
+			</div>
+		</div>
 	</div>
 	<header class="p-1 mb-2 bg-info text-white shadow">
 		<div class="container">
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI Benefit Calculator</a></li>
-			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li>
+			  <li><a href="./edli.html" class="nav-link px-2 text-white">EDLI Benefit Calculator</a></li><!--Relative link --> 
+			  <li><a href="./pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li><!--Relative link --> 
 			</ul>
 		  </div>
 		</div>
@@ -132,7 +132,7 @@
     <div class="container-fluid demo">
 		<div class="row g-4 mx-4 d-flex justify-content-between">
 			<div class="col-md-6" ng-show="!(output && !(edliForm.dod.$error.required || edliForm.apb.$error.required || edliForm.dod.$invalid || edliForm.apb.$invalid || edliForm.avg_wage.$invalid))">
-					<div class="row px-5 mt-5 mx-5" style="min-height:200px;"><img src="aazaadi.png" class="img-fluid mx-auto"></div>
+					<div class="row px-5 mt-5 mx-5" style="min-height:200px;"><img src="./images/aazaadi.png" class="img-fluid mx-auto"></div>
 					<div class="row">
 						<div class="alert fade show" role="alert">
 							<ul class="list-group">
@@ -164,7 +164,7 @@
 							</div>
 							
 							<div class="input-group mb-2" >
-								<span class="input-group-text col-8" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="top" title="Average progressive balance is average of balance in past 12 months. The same is available in the passbook website.">Average Progressive Balance: <i class="bi bi-question-circle-fill"></i></span>
+								<span class="input-group-text col-8" id="basic-addon1" data-bs-toggle="tooltip" data-bs-placement="top" title="Average progressive balance is average of balance in past 12 months. The same can be calculated from information in the passbook website.">Average Progressive Balance: <i class="bi bi-question-circle-fill"></i></span>
 								<input type="number" ng-model="apb" name="apb" min="1" class="form-control col-4" ng-change="update()" placeholder="Average Progressive Balance" aria-label="Average Progressive Balance" aria-describedby="basic-addon1" required>
 							</div>
 							<div class="alert alert-danger alert-sm" ng-show="edliForm.apb.$dirty && edliForm.apb.$invalid">
