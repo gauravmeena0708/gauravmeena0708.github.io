@@ -120,8 +120,8 @@
 		<div class="container">
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI Benefit Calculator</a></li>
-			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li>
+			  <li><a href="./edli.html" class="nav-link px-2 text-white">EDLI Benefit Calculator</a></li>
+			  <li><a href="./pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li>
 			</ul>
 		  </div>
 		</div>
@@ -132,6 +132,9 @@
 			<ul class="list-group">
 				<li  class="list-group-item list-group-item-danger"><i class="bi bi-exclamation-octagon-fill"></i>
 					The calculations shown here are only illustrative in nature and based on the data entered by the user and can not be used as a basis of any legal case/litigation. Hence, it may differ with the actual benefit processed by the office based on the data available in the EPFO database. In case of any mismatch, the actual benefit processed by the EPFO office will be considered final.
+				</li>
+				<li  class="list-group-item list-group-item-danger"><i class="bi bi-exclamation-octagon-fill"></i>
+					The calculator gives estimation of superannuation pension and Early Pension only. The calculator should not be used for verifying the benefit already given by the Field offices through due process.
 				</li>
 			</ul>
 			</div>
@@ -260,7 +263,7 @@
 		</div>
 		<div class="modal-body">
 			<form name="serviceForm" class="need-validated">
-					<div class="input-group mb-3 bg-info">
+					<div class="input-group mb-3 bg-light">
 						<span class="input-group-text col-6">सेवारंभ  तिथि / Date of Joining</span>
 						<input type="date" ng-model ="service_input.doj" id="doj" ng-change="update_ncp()" class="form-control" placeholder="doj" aria-label="doj">
 					</div>
