@@ -4,21 +4,20 @@
     <title>Pension Contribution Eligibility Checker</title>
     <!-- Include Bootstrap CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-  
   </head>
   <body>
     <div class="container mt-5">
       <h1 class="mb-4">Pension Contribution Eligibility Checker</h1>
       <div id="date-of-joining-form">
         <div class="form-group">
-          <label for="date-of-joining">Date of Joining (DD/MM/YYYY)</label>
-          <input type="text" class="form-control" id="date-of-joining" name="date-of-joining" required>
+          <label for="date-of-joining">Date of Joining:</label>
+          <input type="text" class="form-control datepicker" id="date-of-joining" data-provide="datepicker" data-date-format="dd-mm-yyyy" required>
         </div>
         <button type="submit" class="btn btn-primary" id="date-of-joining-submit">Submit</button>
       </div>
@@ -48,74 +47,63 @@
       </div>
     </div>
     
-
     
     <script>
 		$(document).ready(function() {
-  // Initialize the date picker
-  $('#date-of-joining').datepicker({
-    format: 'dd/mm/yyyy',
-    autoclose: true
-  });
+			// Submit date of joining form
+			function date_convert(dateString) {
+					[day, month, year] = dateString.split('-');
+					date = new Date(year, month - 1, day);
+					return date;
+			}
+			
+			$('#date-of-joining-submit').click(function() {
+			  var dateOfJoining = date_convert($('#date-of-joining').val());
+			  console.log(dateOfJoining);
+			  if (new Date(dateOfJoining) < new Date('2014-09-01')) {
+				// Show pension service form
+				$('#pension-service-form').removeClass('d-none');
+				$('#date-of-joining-form').addClass('d-none');
+			  } else {
+				// Show joining salary form
+				$('#joining-salary-form').removeClass('d-none');
+				$('#date-of-joining-form').addClass('d-none');
+				}
+			});
+			
+				// Submit pension service form
+			$('#pension-service-submit').click(function() {
+			  var pensionServiceSettled = $('input[name="pension-service-settled"]:checked').val();
+			  if (pensionServiceSettled === 'no') {
+				// Show result
+				$('#result-message').text('You are eligible for pension contribution');
+				$('#result').removeClass('d-none');
+				$('#pension-service-form').addClass('d-none');
+			  } else {
+				  // Show message and ask for earliest unsettled service
+				  $('#result-message').text('This service is settled hence not counted. Please fill the form again by entering the details of the earliest unsettled service.');
+				  $('#result').removeClass('d-none');
+				  $('#pension-service-form').addClass('d-none');
+				  $('#next-date-of-joining-form').removeClass('d-none');
+				}
+			});
 
-  // Handle form submission
-  $('#date-of-joining-form').submit(function(event) {
-    event.preventDefault();
-    var dateOfJoining = $('#date-of-joining').val();
-    var eligibility;
-    if (isEligibleForPensionContribution(dateOfJoining)) {
-      eligibility = 'You are eligible for pension contribution.';
-    } else {
-      eligibility = 'You are not eligible for pension contribution.';
-    }
-    $('#result-message').text(eligibility);
-    $('#result').removeClass('d-none');
-  });
-
-  // Handle pension service form submission
-  $('#pension-service-submit').click(function() {
-    var pensionServiceSettled = $('input[name="pension-service-settled"]:checked').val();
-    var eligibility;
-    if (pensionServiceSettled === 'no') {
-      eligibility = 'You are eligible for pension contribution.';
-    } else {
-      eligibility = 'You are not eligible for pension contribution.';
-    }
-    $('#result-message').text(eligibility);
-    $('#result').removeClass('d-none');
-  });
-
-  // Handle joining salary form submission
-  $('#joining-salary-submit').click(function() {
-    var joiningSalary = $('#joining-salary').val();
-    var eligibility;
-    if (joiningSalary < 15000) {
-      eligibility = 'You are eligible for pension contribution.';
-    } else {
-      eligibility = 'You are not eligible for pension contribution.';
-    }
-    $('#result-text').text(eligibility);
-    $('#result').removeClass('d-none');
-  });
-
-  // Function to check eligibility based on date of joining
-  function isEligibleForPensionContribution(dateOfJoining) {
-    var dateParts = dateOfJoining.split('/');
-    var joinDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
-    var eligibility;
-    if (joinDate < new Date(2014, 8, 1)) {
-      // Joined before 01-09-2014
-      $('#pension-service-form').removeClass('d-none');
-      eligibility = false;
-    } else {
-      // Joined on or after 01-09-2014
-      $('#joining-salary-form').removeClass('d-none');
-      eligibility = true;
-    }
-    return eligibility;
-  }
-});
-
+			// Submit joining salary form
+			$('#joining-salary-submit').click(function() {
+			  var joiningSalary = $('#joining-salary').val();
+			  if (joiningSalary < 15000) {
+				// Show result
+				$('#result-message').text('You are eligible for pension contribution');
+				$('#result').removeClass('d-none');
+				$('#joining-salary-form').addClass('d-none');
+			  } else {
+				// Show result
+				$('#result-message').text('You are not eligible for pension contribution');
+				$('#result').removeClass('d-none');
+				$('#joining-salary-form').addClass('d-none');
+			  }
+			});
+		});
 	</script>
  </body>
 </html>
