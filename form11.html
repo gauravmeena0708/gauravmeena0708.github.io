@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pension Contribution Eligibility Checker</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">Pension Contribution Eligibility Checker</h1>
+      <div id="date-of-joining-form">
+        <div class="form-group">
+          <label for="date-of-joining">Date of Joining:</label>
+          <input type="date" class="form-control" id="date-of-joining" required>
+        </div>
+        <button type="submit" class="btn btn-primary" id="date-of-joining-submit">Submit</button>
+      </div>
+      <div id="pension-service-form" class="d-none">
+        <div class="form-group">
+          <label>Is your pension service settled?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="pension-service-settled" id="pension-service-settled-yes" value="yes" required>
+            <label class="form-check-label" for="pension-service-settled-yes">Yes</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="pension-service-settled" id="pension-service-settled-no" value="no">
+            <label class="form-check-label" for="pension-service-settled-no">No</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="pension-service-submit">Submit</button>
+      </div>
+      <div id="joining-salary-form" class="d-none">
+        <div class="form-group">
+          <label for="joining-salary">Joining Salary:</label>
+          <input type="number" class="form-control" id="joining-salary" required>
+        </div>
+        <button type="submit" class="btn btn-primary" id="joining-salary-submit">Submit</button>
+      </div>
+      <div id="result" class="d-none">
+        <h2 class="mt-4" id="result-message"></h2>
+      </div>
+    </div>
+    
+    <!-- Include jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    <script>
+		$(document).ready(function() {
+			// Submit date of joining form
+			$('#date-of-joining-submit').click(function() {
+			  var dateOfJoining = $('#date-of-joining').val();
+			  if (new Date(dateOfJoining) < new Date('2014-09-01')) {
+				// Show pension service form
+				$('#pension-service-form').removeClass('d-none');
+				$('#date-of-joining-form').addClass('d-none');
+			  } else {
+				// Show joining salary form
+				$('#joining-salary-form').removeClass('d-none');
+				$('#date-of-joining-form').addClass('d-none');
+				}
+			});
+			
+				// Submit pension service form
+			$('#pension-service-submit').click(function() {
+			  var pensionServiceSettled = $('input[name="pension-service-settled"]:checked').val();
+			  if (pensionServiceSettled === 'no') {
+				// Show result
+				$('#result-message').text('You are eligible for pension contribution');
+				$('#result').removeClass('d-none');
+				$('#pension-service-form').addClass('d-none');
+			  } else {
+				// Redirect to home page
+				window.location.href = '/';
+			  }
+			});
+
+			// Submit joining salary form
+			$('#joining-salary-submit').click(function() {
+			  var joiningSalary = $('#joining-salary').val();
+			  if (joiningSalary < 15000) {
+				// Show result
+				$('#result-message').text('You are eligible for pension contribution');
+				$('#result').removeClass('d-none');
+				$('#joining-salary-form').addClass('d-none');
+			  } else {
+				// Show result
+				$('#result-message').text('You are not eligible for pension contribution');
+				$('#result').removeClass('d-none');
+				$('#joining-salary-form').addClass('d-none');
+			  }
+			});
+		});
+	</script>
+ </body>
+</html>
