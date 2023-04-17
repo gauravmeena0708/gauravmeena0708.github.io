@@ -48,57 +48,74 @@
       </div>
     </div>
     
-    <!-- Include jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
     
     <script>
 		$(document).ready(function() {
-			// Submit date of joining form
-			$('#date-of-joining-submit').click(function() {
-			  var dateOfJoining = $('#date-of-joining').val();
-			  if (new Date(dateOfJoining) < new Date('2014-09-01')) {
-				// Show pension service form
-				$('#pension-service-form').removeClass('d-none');
-				$('#date-of-joining-form').addClass('d-none');
-			  } else {
-				// Show joining salary form
-				$('#joining-salary-form').removeClass('d-none');
-				$('#date-of-joining-form').addClass('d-none');
-				}
-			});
-			
-				// Submit pension service form
-			$('#pension-service-submit').click(function() {
-			  var pensionServiceSettled = $('input[name="pension-service-settled"]:checked').val();
-			  if (pensionServiceSettled === 'no') {
-				// Show result
-				$('#result-message').text('You are eligible for pension contribution');
-				$('#result').removeClass('d-none');
-				$('#pension-service-form').addClass('d-none');
-			  } else {
-				// Redirect to home page
-				window.location.href = '/';
-			  }
-			});
+  // Initialize the date picker
+  $('#date-of-joining').datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose: true
+  });
 
-			// Submit joining salary form
-			$('#joining-salary-submit').click(function() {
-			  var joiningSalary = $('#joining-salary').val();
-			  if (joiningSalary < 15000) {
-				// Show result
-				$('#result-message').text('You are eligible for pension contribution');
-				$('#result').removeClass('d-none');
-				$('#joining-salary-form').addClass('d-none');
-			  } else {
-				// Show result
-				$('#result-message').text('You are not eligible for pension contribution');
-				$('#result').removeClass('d-none');
-				$('#joining-salary-form').addClass('d-none');
-			  }
-			});
-		});
+  // Handle form submission
+  $('#date-of-joining-form').submit(function(event) {
+    event.preventDefault();
+    var dateOfJoining = $('#date-of-joining').val();
+    var eligibility;
+    if (isEligibleForPensionContribution(dateOfJoining)) {
+      eligibility = 'You are eligible for pension contribution.';
+    } else {
+      eligibility = 'You are not eligible for pension contribution.';
+    }
+    $('#result-text').text(eligibility);
+    $('#result').removeClass('d-none');
+  });
+
+  // Handle pension service form submission
+  $('#pension-service-submit').click(function() {
+    var pensionServiceSettled = $('input[name="pension-service-settled"]:checked').val();
+    var eligibility;
+    if (pensionServiceSettled === 'no') {
+      eligibility = 'You are eligible for pension contribution.';
+    } else {
+      eligibility = 'You are not eligible for pension contribution.';
+    }
+    $('#result-text').text(eligibility);
+    $('#result').removeClass('d-none');
+  });
+
+  // Handle joining salary form submission
+  $('#joining-salary-submit').click(function() {
+    var joiningSalary = $('#joining-salary').val();
+    var eligibility;
+    if (joiningSalary < 15000) {
+      eligibility = 'You are eligible for pension contribution.';
+    } else {
+      eligibility = 'You are not eligible for pension contribution.';
+    }
+    $('#result-text').text(eligibility);
+    $('#result').removeClass('d-none');
+  });
+
+  // Function to check eligibility based on date of joining
+  function isEligibleForPensionContribution(dateOfJoining) {
+    var dateParts = dateOfJoining.split('/');
+    var joinDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+    var eligibility;
+    if (joinDate < new Date(2014, 8, 1)) {
+      // Joined before 01-09-2014
+      $('#pension-service-form').removeClass('d-none');
+      eligibility = false;
+    } else {
+      // Joined on or after 01-09-2014
+      $('#joining-salary-form').removeClass('d-none');
+      eligibility = true;
+    }
+    return eligibility;
+  }
+});
+
 	</script>
  </body>
 </html>
