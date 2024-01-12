@@ -36,7 +36,25 @@
 				<div class="card">
 					<div class="card-header">Pension Calculator Input</div>
 					<div class="card-body">
-						
+						<div class="card">
+							<div class="card-header">Pension Calculator Output</div>
+							<div class="card-body">
+								<ul class="list-group mb-3 col-md-12">
+									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation">सेवानिवृत्ति पेंशन <br/>Superannuation Pension :<span>{{ pension.superannuation }}</span></li>
+									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation<1000 || (pension.early && pension.early<1000)">Minimum Superannuation pension (from 01-09-2014) :<span>Rs. 1000</span></li>
+									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction">Reduction due to early Pension :<span>{{pension.earlyreduction}}</span></li>
+									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.early">Early Pension(Calculated) :<span>{{pension.early}}</span></li>
+									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction && (pension.early && pension.early<1000) && pension.earlymin">Early Pension after applying Minimum :<span>{{pension.earlymin}}</span></li>
+								</ul>
+								<div class="alert alert-warning mt-3">
+									For calculating the deferred pension. The superannuation pension can be multiplied by a factor of 1.04 for each year(max two) pension is deferred.
+									Deferred pension is applicable only when date of option is after 25-04-2016.
+								</div>
+							</div>
+							<div class="card-footer">
+								<button type="button" class="btn btn-danger align-self-center" onclick="download()">Download</button>
+							</div>
+						</div>
 					</div>
 					
 					<div class="card-footer d-flex justify-content-between align-items-center">
@@ -47,49 +65,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row mt-2" ng-show="output">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-header">Pension Calculator Output</div>
-					<div class="card-body">
-						<ul class="list-group mb-3 col-md-12">
-							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation">सेवानिवृत्ति पेंशन <br/>Superannuation Pension :<span>{{ pension.superannuation }}</span></li>
-							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation<1000 || (pension.early && pension.early<1000)">Minimum Superannuation pension (from 01-09-2014) :<span>Rs. 1000</span></li>
-							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction">Reduction due to early Pension :<span>{{pension.earlyreduction}}</span></li>
-							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.early">Early Pension(Calculated) :<span>{{pension.early}}</span></li>
-							<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction && (pension.early && pension.early<1000) && pension.earlymin">Early Pension after applying Minimum :<span>{{pension.earlymin}}</span></li>
-						</ul>
-						<div class="alert alert-warning mt-3">
-							For calculating the deferred pension. The superannuation pension can be multiplied by a factor of 1.04 for each year(max two) pension is deferred.
-							Deferred pension is applicable only when date of option is after 25-04-2016.
-						</div>
-					</div>
-					<div class="card-footer">
-						<button type="button" class="btn btn-danger align-self-center" onclick="download()">Download</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-
-		<div class="modal fade" id="pensioninfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pensioninfo" aria-hidden="true">
-		  <div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="pensioninfoLabel">Information</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p>The Calculation in this part is only indicative in nature as the data entered by user and data available in database may be different.</p>
-					<p>Currently, only Early pension and Superannuation pension is provided other types of pensions and functionalities will be added soon </p>
-			  </div>
-			  <div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			  </div>
-			</div>
-		  </div>
 		</div>
 
 	<!--
