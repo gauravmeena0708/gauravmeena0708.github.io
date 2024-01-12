@@ -36,24 +36,13 @@
 				<div class="card">
 					<div class="card-header">Pension Calculator Input</div>
 					<div class="card-body">
-						<div class="card">
-							<div class="card-header">Pension Calculator Output</div>
-							<div class="card-body">
-								<ul class="list-group mb-3 col-md-12">
-									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation">सेवानिवृत्ति पेंशन <br/>Superannuation Pension :<span>{{ pension.superannuation }}</span></li>
-									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.superannuation<1000 || (pension.early && pension.early<1000)">Minimum Superannuation pension (from 01-09-2014) :<span>Rs. 1000</span></li>
-									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction">Reduction due to early Pension :<span>{{pension.earlyreduction}}</span></li>
-									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.early">Early Pension(Calculated) :<span>{{pension.early}}</span></li>
-									<li class="list-group-item  d-flex justify-content-between align-items-center" ng-show="pension.earlyreduction && (pension.early && pension.early<1000) && pension.earlymin">Early Pension after applying Minimum :<span>{{pension.earlymin}}</span></li>
-								</ul>
-								<div class="alert alert-warning mt-3">
-									For calculating the deferred pension. The superannuation pension can be multiplied by a factor of 1.04 for each year(max two) pension is deferred.
-									Deferred pension is applicable only when date of option is after 25-04-2016.
-								</div>
-							</div>
-							<div class="card-footer">
-								<button type="button" class="btn btn-danger align-self-center" onclick="download()">Download</button>
-							</div>
+						<div class="input-group mt-2" ng-show="availing_date">
+							<span class="input-group-text col-md-6" id="dobPrepend">पेंशन योग्य वेतन <br/>Pensionable Salary</span>
+							<input type="number" ng-model="psalary" id="psalary" min="1" max="15000" name="psalary" ng-click="output=0" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.psalary.$invalid)}" psalary required>
+							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.psalary.$invalid">
+								<span ng-show="form2.psalary.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.psalary.$error.psal || form2.psalary.$error.min || form2.psalary.$error.max">The Pensionable Salary should be greater than 0 and Max 15000 for DOE after 01-09-2014 (6500 before 01-09-2014).</span>
+							</div>	
 						</div>
 					</div>
 					
