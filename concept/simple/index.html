@@ -119,11 +119,36 @@
 				<div class="card">
 					<div class="card-header">Pension Calculator Output</div>
 					<div class="card-body">
-						
-						<div class="alert alert-warning mt-3">
-							For calculating the deferred pension. The superannuation pension can be multiplied by a factor of 1.04 for each year(max two) pension is deferred.
-							Deferred pension is applicable only when date of option is after 25-04-2016.
-						</div>
+						<table class="table table-striped table-bordered table-sm mt-2">
+							<thead>
+								<tr>
+									<td> </td>
+									<td> </td>
+									<td> </td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<table class="table table-striped table-bordered table-sm mt-2">
+											<thead>
+												<tr>
+													<td colspan=3> Before 16.11.1995</td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td colspan=2> Past Benefit</td>
+													<td > {pastBenefit}</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					<div class="card-footer">
 						<button type="button" class="btn btn-danger align-self-center" onclick="download()">Download</button>
