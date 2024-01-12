@@ -74,23 +74,23 @@
 
 
 
-<div class="modal fade" id="pensioninfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pensioninfo" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-		<div class="modal-header">
-			<h5 class="modal-title" id="pensioninfoLabel">Information</h5>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		<div class="modal fade" id="pensioninfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pensioninfo" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="pensioninfoLabel">Information</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>The Calculation in this part is only indicative in nature as the data entered by user and data available in database may be different.</p>
+					<p>Currently, only Early pension and Superannuation pension is provided other types of pensions and functionalities will be added soon </p>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			  </div>
+			</div>
+		  </div>
 		</div>
-		<div class="modal-body">
-			<p>The Calculation in this part is only indicative in nature as the data entered by user and data available in database may be different.</p>
-			<p>Currently, only Early pension and Superannuation pension is provided other types of pensions and functionalities will be added soon </p>
-	  </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 	<!--
 	container fluid div closer
@@ -117,283 +117,12 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.updateDOB();
 	}
 	
-	$http({
-		method: 'GET',
-		url: './data.json'
-	}).then(function (success){
-		log("json downloaded",[]);
-		TABLEB = success.data.TABLEB;	
-		TABLEC = success.data.TABLEC;
-		TABLED = success.data.TABLED;
-		TABLE_BASIC = success.data.TABLE_BASIC_PENSION;
-		$scope.reset();
-	},function (error){
-		log(error,[])
-	});
-	
-	$scope.updateDOB = function(){
-		$scope.resetService();
-		if($scope.dob) {
-			$scope.basic.date58  = getDate($scope.dob).plus({years: 58}).minus({days: 1}).toJSDate();
-			$scope.basic.date50  = getDate($scope.dob).plus({years: 50}).minus({days: 1}).toJSDate();
-			$scope.basic.avail58 = getDate($scope.dob).plus({years: 58}).toJSDate();
-			$scope.basic.avail50 = getDate($scope.dob).plus({years: 50}).toJSDate();
-			console.log("dob,basic.58,scope.dob",$scope.dob,$scope.basic.date58)
-			$scope.updateMinAD();
-		}
-	}
-	
-	
-	$scope.resetBasic = function (){
-		$scope.dob  = 0;//BASIC_DEFAULT.dob;
-		$scope.basic = {};BASIC_DEFAULT;
-		$scope.resetService();
-		$scope.updateDOB();
-	}
-	
-	$scope.resetService = function() {
-		$scope.dates=[];
-		$scope.services=[];
-		$scope.availing_date = 0;
-		$scope.minAD=0;
-		$scope.psalary = 0;
-		$scope.service_input  = SERVICE_INPUT_DEFAULT;
-		$scope.pension = SUPERANNUATION_DEFAULT;
-		$scope.total=updateTotal();
-		$scope.updateMinAD();
-		$scope.output = false;
-		$scope.pension = false;
-	}
-	
-	$scope.removeService = function(index) {
-		if(index >= 0){
-			$scope.dates.splice(index*2, 2);
-			$scope.services.splice(index, 1);	
-			$scope.total=updateTotal();
-			$scope.updateCalculation();
-		}
-	}
-	
-	$scope.updateMinAD = function(){
-		
-		x = $scope.total.doe>$scope.basic.date50?$scope.total.doe:$scope.basic.date50;
-		$scope.minAD = luxon.DateTime.fromJSDate(x).plus({days: 1}).toJSDate();
-		$scope.minAD = $scope.minAD<LIMIT_MIN?LIMIT_MIN:$scope.minAD;
-		$scope.total.eligibility = $scope.total.eligibility;
-	}
-	
-	$scope.updateAD = function(){
-		if(getDate_ddmmyyyy($scope.availing_date) == getDate_ddmmyyyy($scope.basic.avail58) && getDate_ddmmyyyy($scope.total.doe) == getDate_ddmmyyyy($scope.basic.date58) && $scope.total.daysact>=7300) {
-			$scope.total.weightage = 2;
-		} else {
-			$scope.total.weightage = 0;
-		}
-		$scope.output = false;
-		log("availing,doe, weightage,total,actual",[$scope.availing_date, $scope.total.doe, $scope.total.weightage,$scope.total.daystotal,$scope.total.daysact]);
-	}
-	
-	$scope.updateCalculation = function() {
-		
-		$scope.output=true;
-		$scope.pension = get_pension($scope.total,$scope.psalary, $scope.dob, $scope.availing_date);
-		if($scope.pension.superannuation<=0) {
-			console.log("invalid input");
-			$scope.output=false;
-		}
-	}
-	
-	
-	function updateTotal() {
-		var total = $scope.services.reduce(function(acc, o) {
-				for (var p in o)
-					acc[p] = (p in acc ? acc[p] : 0) + o[p];
-					return acc;
-				}, {});
-		if($scope.services.length) {
-			var x= $scope.services.reduce((a, b) => (a.doe > b.doe ? a : b));
-			var y= $scope.services.reduce((a, b) => (a.doj < b.doj ? a : b));
-			total.doe=x.doe;
-			total.doj=y.doj;
-			total.pensionable_days = total.daystotal_age58-total.ncp1-total.ncp2;
-			total.pensionable_service = '';//getServiceStr(total.pensionable_days);
-			total.actual_service = '';//getServiceStr(total.daystotal);
-			total.actual_service1 = '';//getServiceStr(total.daysact);
-			if(total.doe>=ELG_DATE1) {
-				total.eligibility = total.daystotal_age58>=ELG_DAYS?true:false;
-			} else {
-				total.eligibility = total.pensionable_days>=ELG_DAYS?true:false;
-			}
-			return total;
-			
-		} else {
-			total.doe=0;
-			total.doj=0;
-		}
-		return total;
-	}	
-	
-	$scope.update_ncp = function () {
-		if($scope.service_input.doj>CEILING2_DATE) {
-			$scope.service_input.ncp1=0;
-			$scope.service_input.ncp1edit=0;
-		} else {
-			$scope.service_input.ncp1edit=1;
-		}
-		if($scope.service_input.doe<CEILING2_DATE) {
-			$scope.service_input.ncp2=0;
-			$scope.service_input.ncp2edit=0;
-		} else {
-			$scope.service_input.ncp2edit=1;
-		}
-	}
-	
-	$scope.addService = function(){
-		var doj = $scope.service_input.doj;
-		var doe = $scope.service_input.doe;
-		var ncp1 = $scope.service_input.ncp1;
-		var ncp2 = $scope.service_input.ncp2;
-		log("Add Service Called: (DOJ, DOE): ",[doj,doe]);
-		var date1 = $scope.dates.slice();
-		$scope.dates.push(doj);
-		$scope.dates.push(doe);
-		
-		if(!validateService($scope.service_input, $scope.dob)) {
-			log("Validate: Invalid Service Details. Returning to previous state.",[]);
-			$scope.dates = date1.slice();
-		} else if(multipleDateRangeOverlaps($scope.dates)){
-			log("Overlap: Date range overlapping. Returning to previous state",[]);
-			$scope.dates = date1.slice();
-		} else {
-			var monthsbefore     = getDifference(doj,doe,'Months',"before");
-			var monthsafter      = getDifference(doj,doe,'Months',"after");
-			var yearsbefore      = getDifference(doj,doe,'Years',"before");
-			var yearsafter       = getDifference(doj,doe,'Years',"after");
-			var daysbefore       = getDifference(doj,doe,'Days',"before");
-			var daysafter        = getDifference(doj,doe,'Days',"after");
-			var daysact          = getDifference(doj,doe,'Days',"both");
-			var daystotal        = daysbefore+daysafter;
-			var date58           = $scope.basic.date58;
-			date58               = doe>date58?date58:doe;
-			var daysbefore_age58 = getDifference(doj,date58,'Days',"before");
-			/*var daysafter_age58  = getDifference(doj,date58,'Days',"after");
-			var daystotal_age58   = daysbefore_age58+daysafter_age58;
-			log("AddService:(DOJ,DOE,NCP1,NCP2,Y1,Y2,M1,M2,D1,D2,D_Total)",[doj,doe,ncp1,ncp2,yearsbefore,yearsafter,monthsbefore,monthsafter,daysbefore,daysafter,daystotal]);
-			var service = {
-				'doj':doj,
-				'doe':doe,
-				'ncp1':ncp1,
-				'ncp2':ncp2,
-				'monthsbefore':monthsbefore,
-				'monthsafter':monthsafter,
-				'yearsbefore':yearsbefore,
-				'yearsafter':yearsafter,
-				'daysbefore':daysbefore,
-				'daysafter':daysafter,
-				'daysact':daysact,
-				'daystotal':daystotal,
-				'daystotal_age58':daystotal_age58
-			}*/
-			
-			var daystotal_age58   = getDifference(doj,date58,'Days',"both");
-			var daysafter_age58  = daystotal_age58-daysbefore_age58;
-			
-			log("AddService:(DOJ,DOE,NCP1,NCP2,Y1,Y2,M1,M2,D1,D2,D_Total,DAYS_TOT_58,DAYS_BEFORE_58)",[doj,doe,ncp1,ncp2,yearsbefore,yearsafter,monthsbefore,monthsafter,daysbefore,daysafter,daystotal,daystotal_age58,daysbefore_age58]);
-			var service = {
-				'doj':doj,
-				'doe':doe,
-				'ncp1':ncp1,
-				'ncp2':ncp2,
-				'monthsbefore':monthsbefore,
-				'monthsafter':monthsafter,
-				'yearsbefore':yearsbefore,
-				'yearsafter':yearsafter,
-				'daysbefore':daysbefore,
-				'daysafter':daysafter,
-				'daysact':daysact,
-				'daystotal':daystotal,
-				'daystotal_age58':daystotal_age58,
-				'daysbefore_age58':daysbefore_age58,
-				'daysafter_age58':daysafter_age58
-			}
-			
-			
-			$scope.services.push(service);
-			$scope.total = updateTotal();
-			if($scope.total.doe==$scope.basic.date58) {
-				$scope.availing_date = $scope.basic.avail58;
-				console.log($scope.availing_date);
-				$scope.updateAD();
-			} else {
-				$scope.total.weightage = 0;
-			}
-			log("doe,date58,availing_date",[$scope.total.doe,$scope.basic.date58,$scope.availing_date]);
-			$scope.updateMinAD();
-		}
-	}
-	
+
 	
 }]);
 
-app.directive('dateofbirth', function() {
-	return {
-		require: 'ngModel',
-		link: function(scope, elm, attrs, ctrl) {
-			ctrl.$validators.date = function(modelValue, viewValue) {
-				
-				if (ctrl.$isEmpty(modelValue)) {
-					return false;
-				}
-			
-				if (modelValue>=MIN_DOB && modelValue<=MAX_DOB) {
-					return true;
-				} 
 
-				return false;
-			};
-		}
-	};
-});
 
-/*
-app.directive('availing_date', function() {
-	return {
-		require: 'ngModel',
-		link: function(scope, elm, attrs, ctrl) {
-			ctrl.$validators.required = function(modelValue, viewValue) {
-				console.log(modelValue, viewValue,scope.total.doe,scope.basic.avail50,avail58)
-				if (ctrl.$isEmpty(modelValue)) {
-					return false;
-				}
-			
-				if ((viewValue>scope.total.doe && viewValue>=scope.basic.avail50) && viewValue<=avail58) {
-					return true;
-				} 
-
-				return false;
-			};
-		}
-	};
-});
-*/
-app.directive('psalary', function() {
-	return {
-		require: 'ngModel',
-		link: function(scope, elm, attrs, ctrl) {
-			ctrl.$validators.psal = function(modelValue, viewValue) {
-				if (ctrl.$isEmpty(modelValue)) {
-					return false;
-				}
-			
-				if ((scope.total.doe<CEILING2_DATE && modelValue<=6500) || (scope.total.doe>CEILING2_DATE && modelValue<=15000)) {
-					return true;
-				} 
-				
-
-				return false;
-			};
-		}
-	};
-});
 	</script>
 </body>
 </html>
