@@ -155,8 +155,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>Total Pension=</td>
-									<td>{{pastBenefit}}</td>
+									<td colspan="7">Total Pension= {{pastBenefit}}</td>
 									<td>+</td>
 									<td>{{pension1}}</td>
 									<td>+</td>
@@ -214,12 +213,13 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 	
 	
 	$scope.updateCalculation = function() {
-		
 		$scope.ncp2 = $scope.ncptotal - $scope.ncp1;
 		$scope.netdays1 = $scope.service1+($scope.weightage2y*730)-$scope.ncp1;
 		$scope.netdays2 = $scope.service2+-$scope.ncp2
 		$scope.pension1 = ($scope.psalary1*$scope.netdays1)/ (70*365)
+		$scope.pension1 = Math.round($scope.pension1 =  * 100) / 100
 		$scope.pension2 = ($scope.psalary2*$scope.netdays2)/ (70*365)
+		$scope.pension2 = Math.round($scope.pension2 =  * 100) / 100
 		$scope.pension = $scope.pastBenefit + $scope.pension1 + $scope.pension2
 		$scope.output = 1;
 		console.log($scope.netdays1,$scope.netdays2,$scope.pastBenefit,$scope.pension1,$scope.pension2,$scope.pension);
