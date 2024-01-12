@@ -36,6 +36,7 @@
 				<div class="card">
 					<div class="card-header">Pension Calculator Input</div>
 					<div class="card-body">
+					<form name="form2" class="row need-validated mt-2">
 						<div class="input-group mt-2">
 							<span class="input-group-text col-md-6" id="pastBenefit">Past Service Benefit</span>
 							<input type="number" ng-model="pastBenefit" id="pastBenefit" min="0" max="2000" name="pastBenefit" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.pastBenefit.$invalid)}" pastBenefit required>
@@ -101,6 +102,7 @@
 								<span ng-show="form2.psalary2.$error.min || form2.psalary2.$error.max">Pensionable salary can not be less than 0</span>
 							</div>	
 						</div>
+					</form>
 					</div>
 					
 					<div class="card-footer d-flex justify-content-between align-items-center">
