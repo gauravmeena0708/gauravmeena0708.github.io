@@ -70,7 +70,7 @@
 							</div>	
 						</div>
 						<div class="input-group mt-2">
-							<span class="input-group-text col-md-6" id="ncptotal">Total</span>
+							<span class="input-group-text col-md-6" id="ncptotal">Total NCP (EPS 95)</span>
 							<input type="number" ng-model="ncptotal" id="ncptotal" min="0" max="10000" name="ncptotal" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.ncptotal.$invalid)}" ncptotal required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.ncptotal.$invalid">
 								<span ng-show="form2.ncptotal.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
@@ -114,7 +114,23 @@
 				</div>
 			</div>
 		</div>
-
+        <div class="row mt-2" ng-show="output">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header">Pension Calculator Output</div>
+					<div class="card-body">
+						
+						<div class="alert alert-warning mt-3">
+							For calculating the deferred pension. The superannuation pension can be multiplied by a factor of 1.04 for each year(max two) pension is deferred.
+							Deferred pension is applicable only when date of option is after 25-04-2016.
+						</div>
+					</div>
+					<div class="card-footer">
+						<button type="button" class="btn btn-danger align-self-center" onclick="download()">Download</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	<!--
 	container fluid div closer
 	-->
@@ -130,7 +146,9 @@
 	<script type="text/javascript" src="./script/qrcode.min.js"></script>
 	<script type="text/javascript" src="./script/script.js"></script>
 <script>
-
+const download = function () {
+	window.print();
+}
 var app = angular.module('pensionApp', ['ngCookies']);
 
 app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
@@ -144,16 +162,26 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.service1 = 0;
 		$scope.service2 = 0;
 		$scope.weightage2y = 0;
-		$scope.showOutput = 0;
+		$scope.output = 0;
+		$scope.ncp2 = 0;
+		$scope.netdays1 = 0;
+		$scope.netdays2 = 0;
+		$scope.pension1 = 0;
+		$scope.pension2 = 0;
+		$scope.pension = 0;
 	}
 	
 	
 	$scope.updateCalculation = function() {
 		
 		$scope.ncp2 = $scope.ncptotal - $scope.ncp1;
-		$scope.pension = $scope.pastBenefit + ((($scope.psalary1*($scope.service1+($scope.weightage2y*730)-$scope.ncp1))+($scope.psalary2*($scope.service2-$scope.ncp2)))/(70*365))
-		$scope.showOutput = 1;
-		console.log($scope.ncp2, $scope.pension);
+		$scope.netdays1 = $scope.service1+($scope.$scope.weightage2y*730)-$scope.ncp1;
+		$scope.netdays2 = $scope.service2+-$scope.ncp2
+		$scope.pension1 = ($scope.psalary1*$scope.netdays1)/ (70*365)
+		$scope.pension2 = ($scope.psalary2*$scope.netdays2)/ (70*365)
+		$scope.pension = $scope.pastBenefit + $scope.pension1 + $scope.pension2
+		$scope.output = 1;
+		console.log($scope.netdays1,$scope.netdays2,$scope.pastBenefit,$scope.pension1,$scope.pension2,$scope.pension);
 	}
 
 	
