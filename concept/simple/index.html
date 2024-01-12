@@ -70,11 +70,11 @@
 							</div>	
 						</div>
 						<div class="input-group mt-2">
-							<span class="input-group-text col-md-6" id="ncp2">NCP from 01.09.2014</span>
-							<input type="number" ng-model="ncp2" id="ncp1" min="0" max="6864" name="ncp2" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.ncp2.$invalid)}" ncp2 required>
-							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.ncp2.$invalid">
-								<span ng-show="form2.ncp2.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
-								<span ng-show="form2.ncp2.$error.min || form2.ncp2.$error.max">NCP after 01.09.2014 can be between 0 and 6864</span>
+							<span class="input-group-text col-md-6" id="ncptotal">Total</span>
+							<input type="number" ng-model="ncptotal" id="ncptotal" min="0" max="10000" name="ncptotal" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.ncptotal.$invalid)}" ncptotal required>
+							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.ncptotal.$invalid">
+								<span ng-show="form2.ncptotal.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.ncptotal.$error.min || form2.ncptotal.$error.max">NCP can not be more than 10000</span>
 							</div>	
 						</div>
 						<div class="input-group mt-2">
@@ -136,12 +136,25 @@ var app = angular.module('pensionApp', ['ngCookies']);
 app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', function($scope,$cookies,$cookieStore, $http) {
 	//$scope.dob = BASIC_DEFAULT.dob;
 	$scope.reset = function () {
-		$scope.resetBasic();
-		$scope.updateDOB();
+		$scope.pastBenefit = 0;
+		$scope.psalary1 = 0;
+		$scope.psalary2 = 0;
+		$scope.ncp1 = 0;
+		$scope.ncptotal = 0;
+		$scope.service1 = 0;
+		$scope.service2 = 0;
+		$scope.weightage2y = 0;
+		$scope.showOutput = 0;
 	}
 	
-	$scope.pastBenefit = 0;
 	
+	$scope.updateCalculation = function() {
+		
+		$scope.ncp2 = $scope.ncptotal - $scope.ncp1;
+		$scope.pension = $scope.pastBenefit + ((($scope.psalary1*($scope.service1+($scope.weightage2y*730)-$scope.ncp1))+($scope.psalary2*($scope.service2-$scope.ncp2)))/(70*365))
+		$scope.showOutput = 1;
+		console.log($scope.ncp2, $scope.pension);
+	}
 
 	
 }]);
