@@ -120,35 +120,51 @@
 					<div class="card-header">Pension Calculator Output</div>
 					<div class="card-body">
 						<table class="table table-striped table-bordered table-sm mt-2">
-							<thead>
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							</thead>
 							<tbody>
 								<tr>
-									<td>
-										<table class="table table-striped table-bordered table-sm mt-2">
-											<thead>
-												<tr>
-													<td colspan=3> Before 16.11.1995</td>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td colspan=2> Past Benefit</td>
-													<td > {pastBenefit}</td>
-												</tr>
-											</tbody>
-										</table>
+									<td colspan=7> Before 16.11.1995</td>
+									<td colspan=4> Past Benefit</td>
+									<td colspan=3> {{pastBenefit}}</td>
+								</tr>
+								<tr>
+									<td colspan=3>
+										<tr><td colspan=3> Beetween 16.11.1995 and 31.08.2014</td></tr>
+										<tr><td>Service(days)<td><tr></td><td>{{service1}}</td></tr>
+										<tr><td>NCP(days)<td><tr></td><td>{{ncp1}}</td></tr>
+										<tr><td>Weightage(days)<td><tr></td><td>{{weightage2y*730}}</td></tr>
+										<tr><td>Net Service(days)<td><tr></td><td>{{netdays1}}</td></tr>
+										<tr><td>Pensionable salary<td><tr></td><td>{{psalary1}}</td></tr>
+										<tr><td>Pension for period<td><tr></td><td>{{pension1}}</td></tr>
 									</td>
-									<td></td>
-									<td></td>
+									<td colspan=1> </td>
+									<td colspan=3>
+										<tr><td colspan=3> From 01.09.2014</td><tr>
+										<tr><td>Service(days)<td><tr></td><td>{{service1}}</td></tr>
+										<tr><td>NCP(days)<td><tr></td><td>{{ncp1}}</td></tr>
+										<tr><td>Weightage(days)<td><tr></td><td>{{weightage2y*730}}</td></tr>
+										<tr><td>Net Service(days)<td><tr></td><td>{{netdays1}}</td></tr>
+										<tr><td>Pensionable salary<td><tr></td><td>{{psalary2}}</td></tr>
+										<tr><td>Pension for period<td><tr></td><td>{{pension2}}</td></tr>
+									</td>
+								</tr>
+								<tr>
+									<td>Total Pension=</td>
+									<td>{{pastBenefit}}</td>
+									<td>+</td>
+									<td>{{pension1}} </td>
+									<td>+</td>
+									<td>{{pension2}} </td>
+									<td>= {{pension}} </td>
 								</tr>
 							</tbody>
 						</table>
+						Service (days)					
+NCP(days)					
+Weightage					
+Total days					
+Pensionable Salary					
+Pension amount					
+
 					</div>
 					<div class="card-footer">
 						<button type="button" class="btn btn-danger align-self-center" onclick="download()">Download</button>
