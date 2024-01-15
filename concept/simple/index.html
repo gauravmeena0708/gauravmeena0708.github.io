@@ -64,13 +64,12 @@
 							</div>	
 						</div>
 						<div class="input-group mt-2">
-							<span class="input-group-text col-md-6" id="weightage2y">2 Year Weightage</span>
+							<span class="input-group-text col-md-6" id="weightage2y">2 Year Weightage (<a href="#" data-bs-toggle="tooltip" title="" data-bs-original-title="Default tooltip">For weightage, 1 means eligible for weightage and 0 means not eligible.</a>)</span>
 							<input type="number" ng-model="weightage2y" id="weightage2y" min="0" max="1" name="weightage2y" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.weightage2y.$invalid)}" weightage2y required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.weightage2y.$invalid">
 								<span ng-show="form2.weightage2y.$error.required">This is required.</span>
 								<span ng-show="form2.weightage2y.$error.min || form2.weightage2y.$error.max">2 Year weightage can either be 0 or 1.</span>
-							</div>	
-							<span>For wieghtage, 1 means eligible for weightage and 0 means not eligible.</span>
+							</div>
 						</div>
 						<br/>
 						<div class="input-group mt-2">
@@ -171,6 +170,10 @@
 	<script type="text/javascript" src="./script/qrcode.min.js"></script>
 	<script type="text/javascript" src="./script/script.js"></script>
 <script>
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
 var app = angular.module('pensionApp', ['ngCookies']);
 
