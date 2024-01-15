@@ -12,12 +12,7 @@
 	<header class="p-1 mb-2 bg-info text-white shadow">
 		<div class="container">
 		  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-			  <li><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
-			  <li><a href="pension.html" class="nav-link px-2 text-white">Pension Calculator</a></li>
-			  <li><a href="edli.html" class="nav-link px-2 text-white">EDLI</a></li>
-			</ul>
-			<h3 class="text-center">CALCULATOR</h3>
+			<h3 class="text-center">PENSION CALCULATOR</h3>
 		  </div>
 		</div>
 	</header>
@@ -36,8 +31,8 @@
 				<div class="card">
 					<div class="card-header">Pension Calculator Input</div>
 					<div class="card-body">
-					<form name="form2" class="row need-validated mt-2">
-						<div class="input-group mt-2">
+					<form name="form2" class="row need-validated">
+						<div class="input-group">
 							<span class="input-group-text col-md-6" id="pastBenefit">Past Service Benefit</span>
 							<input type="number" ng-model="pastBenefit" id="pastBenefit" min="0" max="2000" name="pastBenefit" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.pastBenefit.$invalid)}" pastBenefit required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.pastBenefit.$invalid">
