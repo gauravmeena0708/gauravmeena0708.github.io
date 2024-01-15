@@ -214,7 +214,7 @@ app.controller('pensionCtrl', ['$scope','$cookies','$cookieStore', '$http', func
 		$scope.pension1 = Math.round($scope.pension1 * 100) / 100
 		$scope.pension2 = ($scope.psalary2*$scope.netdays2)/ (70*365)
 		$scope.pension2 = Math.round($scope.pension2 * 100) / 100
-		$scope.pension = $scope.pastBenefit + $scope.pension1 + $scope.pension2
+		$scope.pension = $scope.pastBenefit + ((($scope.netdays1*$scope.psalary1)+($scope.netdays2*$scope.psalary2))/((70*365)))
 		$scope.pension = Math.round($scope.pension)
 		$scope.output = 1;
 		console.log($scope.netdays1,$scope.netdays2,$scope.pastBenefit,$scope.pension1,$scope.pension2,$scope.pension);
