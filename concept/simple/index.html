@@ -18,15 +18,6 @@
 	</header>
     <div class="container-fluid" ng-app="pensionApp" ng-controller="pensionCtrl">
 		<div class="row">
-			<div class="alert fade show" role="alert">
-			<ul class="list-group">
-				<li  class="list-group-item list-group-item-danger"><i class="bi bi-exclamation-octagon-fill"></i>
-					The calculations shown here are only illustrative in nature and can not be used as a basis of any legal case/litigation.
-				</li>
-			</ul>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-sm-12">
 				<div class="card">
 					<div class="card-header">Pension Calculator Input</div>
@@ -154,6 +145,18 @@
 								<tr>
 									<td colspan="3">* The inidividual values may be at difference of Rs. 1 as the total Pension is calculated in single formula ((P1*S1)+(P2*S2))/(70*365)</td>
 								</tr>
+								<tr>
+									<td colspan="3">
+										<div class="alert fade show" role="alert">
+											<ul class="list-group">
+												<li  class="list-group-item list-group-item-danger"><i class="bi bi-exclamation-octagon-fill"></i>
+													The calculations shown here are only illustrative in nature and can not be used as a basis of any legal case/litigation.
+												</li>
+											</ul>
+										</div>
+									</td>
+								</tr>
+								
 							</tbody>
 						</table>
 
