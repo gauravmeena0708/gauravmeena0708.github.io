@@ -27,7 +27,7 @@
 							<span class="input-group-text col-md-6" id="pastBenefit">Past Service Benefit</span>
 							<input type="number" ng-model="pastBenefit" id="pastBenefit" min="0" max="2000" name="pastBenefit" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.pastBenefit.$invalid)}" pastBenefit required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.pastBenefit.$invalid">
-								<span ng-show="form2.pastBenefit.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.pastBenefit.$error.required">This is required.</span>
 								<span ng-show="form2.pastBenefit.$error.min || form2.pastBenefit.$error.max">Past Service Benefit is out of range</span>
 							</div>	
 						</div>
@@ -35,7 +35,7 @@
 							<span class="input-group-text col-md-6" id="service1">Service Before 01.09.2014</span>
 							<input type="number" ng-model="service1" id="service1" min="0" max="6864" name="service1" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.service1.$invalid)}" service1 required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.service1.$invalid">
-								<span ng-show="form2.service1.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.service1.$error.required">This is required.</span>
 								<span ng-show="form2.service1.$error.min || form2.service1.$error.max">Service Before 01.09.2014 can be between 0 and 6864</span>
 							</div>	
 						</div>
@@ -43,7 +43,7 @@
 							<span class="input-group-text col-md-6" id="service2">Service from 01.09.2014</span>
 							<input type="number" ng-model="service2" id="service2" min="0" max="6864" name="service2" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.service2.$invalid)}" service2 required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.service2.$invalid">
-								<span ng-show="form2.service2.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.service2.$error.required">This is required.</span>
 								<span ng-show="form2.service2.$error.min || form2.service2.$error.max">Service after 01.09.2014 can be between 0 and 6864</span>
 							</div>	
 						</div>
@@ -51,7 +51,7 @@
 							<span class="input-group-text col-md-6" id="ncp1">NCP before 01.09.2014</span>
 							<input type="number" ng-model="ncp1" id="ncp1" min="0" max="6864" name="ncp1" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.ncp1.$invalid)}" ncp1 required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.ncp1.$invalid">
-								<span ng-show="form2.ncp1.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.ncp1.$error.required">This is required.</span>
 								<span ng-show="form2.ncp1.$error.min || form2.ncp1.$error.max">NCP Before 01.09.2014 can be between 0 and 6864</span>
 							</div>	
 						</div>
@@ -59,7 +59,7 @@
 							<span class="input-group-text col-md-6" id="ncptotal">Total NCP (EPS 95)</span>
 							<input type="number" ng-model="ncptotal" id="ncptotal" min="0" max="10000" name="ncptotal" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.ncptotal.$invalid)}" ncptotal required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.ncptotal.$invalid">
-								<span ng-show="form2.ncptotal.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.ncptotal.$error.required">This is required.</span>
 								<span ng-show="form2.ncptotal.$error.min || form2.ncptotal.$error.max">NCP can not be more than 10000</span>
 							</div>	
 						</div>
@@ -67,7 +67,7 @@
 							<span class="input-group-text col-md-6" id="weightage2y">2 Year Weightage</span>
 							<input type="number" ng-model="weightage2y" id="weightage2y" min="0" max="1" name="weightage2y" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.weightage2y.$invalid)}" weightage2y required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.weightage2y.$invalid">
-								<span ng-show="form2.weightage2y.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.weightage2y.$error.required">This is required.</span>
 								<span ng-show="form2.weightage2y.$error.min || form2.weightage2y.$error.max">2 Year weightage can either be 0 or 1.</span>
 							</div>	
 						</div>
@@ -76,7 +76,7 @@
 							<span class="input-group-text col-md-6" id="psalary1">Pensionable Salary Before 01.09.2014(avg of last 12 months)</span>
 							<input type="number" ng-model="psalary1" id="psalary1" min="0" name="psalary1" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.psalary1.$invalid)}" weightage2y required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.psalary1.$invalid">
-								<span ng-show="form2.psalary1.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.psalary1.$error.required">This is required.</span>
 								<span ng-show="form2.psalary1.$error.min || form2.psalary1.$error.max">Pensionable salary can not be less than 0</span>
 							</div>	
 						</div>
@@ -84,7 +84,7 @@
 							<span class="input-group-text col-md-6" id="psalary2">Pensionable Salary from 01.09.2014(avg of last 60 months)</span>
 							<input type="number" ng-model="psalary2" id="psalary2" min="0" name="psalary2" class="form-control col-md-6" ng-Class="{'is-invalid': (form2.psalary2.$invalid)}" weightage2y required>
 							<div class="invalid-feedback col-md-6 text-danger" ng-show="form2.psalary2.$invalid">
-								<span ng-show="form2.psalary2.$error.required">This is required. Click on icon above to knwo how to calculate it.</span>
+								<span ng-show="form2.psalary2.$error.required">This is required.</span>
 								<span ng-show="form2.psalary2.$error.min || form2.psalary2.$error.max">Pensionable salary can not be less than 0</span>
 							</div>	
 						</div>
