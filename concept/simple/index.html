@@ -95,6 +95,7 @@
 						<span>
 							<button type="button" class="btn btn-success align-self-center" ng-click="updateCalculation()" ng-disabled="form2.$invalid || form2.psalary2.$invalid">Calculate</button>
 							<button type="button" class="btn btn-danger align-self-center" ng-click="reset()">रीसेट/Reset</button>
+							<button type="button" class="btn btn-danger align-self-center" ng-show="output" onclick="download()">Download</button>
 						</span>
 					</div>
 				</div>
@@ -104,7 +105,7 @@
 			<div class="col-sm-12">
 				<div class="card">
 					<div class="card-header">Pension Calculator Output</div>
-					<div class="card-body">
+					<div class="card-body mb-0">
 						<table class="table table-striped table-bordered table-sm">
 							<tbody>
 								<tr><td colspan="3">Before 16.11.1995</td>
@@ -150,11 +151,6 @@
 								</tr>
 							</tbody>
 						</table>
-
-						
-					</div>
-					<div class="card-footer">
-						<button type="button" class="btn btn-danger align-self-center" onclick="download()">Download</button>
 					</div>
 				</div>
 			</div>
