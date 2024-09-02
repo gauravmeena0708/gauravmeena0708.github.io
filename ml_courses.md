@@ -1,4 +1,5 @@
 1. [Introduction to AI by Mausam](https://www.youtube.com/watch?v=lV6v6elsTvU)
 2. [18.06 by Gilbert Strang](https://www.youtube.com/watch?v=JibVXBElKL0)
-3. [CS229 by Andrew Ng](https://www.youtube.com/watch?v=het9HFqo1TQ)
-4. [NPTEL Machine Learning IITM](https://www.youtube.com/watch?v=_M-nDb0MIa4)
+3. [18.065 by Gilbert Strang - Linear algebra for Data Scientist](https://www.youtube.com/playlist?list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k)
+4. [CS229 by Andrew Ng](https://www.youtube.com/watch?v=het9HFqo1TQ)
+5. [NPTEL Machine Learning IITM](https://www.youtube.com/watch?v=_M-nDb0MIa4)
