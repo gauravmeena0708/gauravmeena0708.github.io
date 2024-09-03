@@ -8,8 +8,9 @@
 
 ### Books
 1. Introduction to linear Algebra - Gilbert Strang
-2. Linear Algebra Done Right - Sheldon Axler
-3. Pattern Recognition - Christopher Bishop
+2. Linear Algebra and Learning from Data - Gilbert Strang
+3. Linear Algebra Done Right - Sheldon Axler
+4. Pattern Recognition - Christopher Bishop
 
 ### Other sources
 1. [Fast.ai](https://course.fast.ai/)
