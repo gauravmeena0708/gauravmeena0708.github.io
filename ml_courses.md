@@ -5,3 +5,11 @@
 3. [18.065 by Gilbert Strang - Linear algebra for Data Scientist](https://www.youtube.com/playlist?list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k)
 4. [CS229 by Andrew Ng](https://www.youtube.com/watch?v=het9HFqo1TQ)
 5. [NPTEL Machine Learning IITM](https://www.youtube.com/watch?v=_M-nDb0MIa4)
+
+### Books
+1. Introduction to linear Algebra - Gilbert Strang
+2. Linear Algebra Done Right - Sheldon Axler
+3. Pattern Recognition - Christopher Bishop
+
+### Other sources
+1. [Fast.ai](https://course.fast.ai/)
