@@ -13,3 +13,4 @@
 
 ### Other sources
 1. [Fast.ai](https://course.fast.ai/)
+2. [3blue1brown](https://www.youtube.com/@3blue1brown)
