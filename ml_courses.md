@@ -18,6 +18,6 @@
 
 ### Learnings
 1. Linear repression, Logistic Regression (Binary, Multinominal), Neural Networks, CNNs
-2. Feature Selection (PSO, PCA), Hyper Param tuning(Grid Search, Ternary Search, Adam, adagrad), Initialisation (Xavier, random)
+2. Feature Selection (PSO, PCA), Hyper Param tuning(Grid Search, Ternary Search, Adam, adagrad. adadelta, RMSProp), Initialisation (Xavier, random)
 3. Search (DFS, iDFS, Bredth FS, Best FS, Greedy, A* etc), Local Search(local Beam, Hill Climbing, Simulated Annealing).. Random walks, restarts, early stopping
 4. Probabilistic interference, Constraint Satisfaction Problems
