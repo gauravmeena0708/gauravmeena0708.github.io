@@ -27,3 +27,4 @@
 
 ### Other sources
 1. [NPTEL IMAGE Processing IIT G](https://www.youtube.com/playlist?list=PLwdnzlV3ogoVsma5GmBSsgJM6gHv1QoAo)
+2. [Berkley AI](https://www.youtube.com/playlist?list=PLjsx92GvetlT6aVqJodhOdMZ7M_IkJsmL)
