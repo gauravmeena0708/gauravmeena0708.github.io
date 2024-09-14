@@ -5,12 +5,14 @@
 3. [18.065 by Gilbert Strang - Linear algebra for Data Scientist](https://www.youtube.com/playlist?list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k)
 4. [CS229 by Andrew Ng](https://www.youtube.com/watch?v=het9HFqo1TQ)
 5. [NPTEL Machine Learning IITM](https://www.youtube.com/watch?v=_M-nDb0MIa4)
+6. [Machine learning with Graphs](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)
 
 ### Books
 1. Introduction to linear Algebra - Gilbert Strang
 2. Linear Algebra and Learning from Data - Gilbert Strang
 3. Linear Algebra Done Right - Sheldon Axler
 4. Pattern Recognition - Christopher Bishop
+5. Networks, Crowds, and Markets Jon Kleinberg (For ML with Graphs)
 
 ### Other sources
 1. [Fast.ai](https://course.fast.ai/)
@@ -21,3 +23,4 @@
 2. Feature Selection (PSO, PCA), Hyper Param tuning(Grid Search, Ternary Search, Adam, adagrad. adadelta, RMSProp), Initialisation (Xavier, random)
 3. Search (DFS, iDFS, Bredth FS, Best FS, Greedy, A* etc), Local Search(local Beam, Hill Climbing, Simulated Annealing).. Random walks, restarts, early stopping
 4. Probabilistic interference, Constraint Satisfaction Problems
+5. Graph Neural Networks
