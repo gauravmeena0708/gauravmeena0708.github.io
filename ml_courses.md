@@ -24,3 +24,6 @@
 3. Search (DFS, iDFS, Bredth FS, Best FS, Greedy, A* etc), Local Search(local Beam, Hill Climbing, Simulated Annealing).. Random walks, restarts, early stopping
 4. Probabilistic interference, Constraint Satisfaction Problems
 5. Graph Neural Networks
+
+### Other sources
+1. [NPTEL IMAGE Processing IIT G](https://www.youtube.com/playlist?list=PLwdnzlV3ogoVsma5GmBSsgJM6gHv1QoAo)
