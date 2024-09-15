@@ -25,5 +25,21 @@ def logistic_multi(X, Y):
   loss  = sum( log(softmax where y==1)
   W_final = gradient_decent(X, Y, W, learning_rate)
   Y_pred = np.exp(X@W_final)/np.sum(np.exp(X@W_final))
+
+def neural_net():
+  def forward():
+    Zn = An-1@Wn+bn
+    An = sigmoid(zn)
+  def backward():
+    dan = y/y_hat - (1-y)/(1-y_hat)
+    dzn = dan.an*(1-an) = y - y_hat 
+    dwn = dzn.an-1
+    db1 = dzn.1
+    
+    dan-1 = dzn@Wn.T
+
+    W -= rate*dw
+    b -= rate*db
+    dw = dan.sig(an)
       
 
