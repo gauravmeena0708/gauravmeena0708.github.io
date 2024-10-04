@@ -33,13 +33,16 @@
             <option value="8">8</option>
         </select>
         
-        <!-- Dropdown to choose Player 2 (Human or AI) -->
-        <label for="player2Type">Player 2:</label>
         <select id="player2Type">
-             <option value="ai">AI</option>
-             <option value="ai2">AI 2</option>
             <option value="human">Human</option>
-           
+            <option value="ai">AI</option>
+        </select>
+
+        <!-- New Dropdown for selecting AI version -->
+        <label for="aiSelect">Select AI Type:</label>
+        <select id="aiSelect">
+            <option value="ai">AI</option>
+            <option value="ai2">AI2</option>
         </select>
         
         <button id="startGameBtn">Start Game</button>
@@ -59,7 +62,7 @@
     <script src="ai2.js"></script>
 
     <script>
-        let canvas = document.getElementById('gameCanvas');
+       let canvas = document.getElementById('gameCanvas');
         let context = canvas.getContext('2d');
         let layers;
         let currentPlayer = 0; // 0 -> Player 1, 1 -> Player 2
@@ -69,20 +72,7 @@
         let intervalId;
         let hexSize;
         let aiPlayer = null;  // AI for Player 1
-let aiPlayer2 = null; // AI for Player 2
-
-// Determine if Player 2 is AI or human
-isPlayer2AI = document.getElementById('player2Type').value === 'ai';
-if (isPlayer2AI) {
-    let selectedAI = document.getElementById('aiSelect').value; // New dropdown for AI type
-    if (selectedAI === 'ai') {
-        aiPlayer2 = new AIPlayer2(2);  // Initialize AI2 for Player 2
-    } else if (selectedAI === 'ai2') {
-        aiPlayer2 = new AIPlayer(2);   // Initialize AI1 for Player 2
-    }
-}
-
-        let particles = []; // Array to store sparkles for celebration effect
+        let aiPlayer2 = null; // AI for Player 2
 
         document.getElementById('startGameBtn').addEventListener('click', startGame);
 
@@ -93,10 +83,8 @@ if (isPlayer2AI) {
             currentPlayer = 0;
             gameOver = false;
             playerTime = [300, 300];
-            particles = []; // Reset particles
             document.getElementById('winner').textContent = '';
             document.getElementById('currentTurn').textContent = 'Current Turn: Player 1';
-            canvas.style.border = '1px solid black'; // Reset canvas border to default
             drawBoard(board);
             if (intervalId) clearInterval(intervalId);
             intervalId = setInterval(updateTimer, 1000); // Update timer every second
@@ -104,9 +92,19 @@ if (isPlayer2AI) {
             // Determine if Player 2 is AI or human
             isPlayer2AI = document.getElementById('player2Type').value === 'ai';
             if (isPlayer2AI) {
-                aiPlayer = new AIPlayer(2); // Initialize AI for Player 2
+                let selectedAI = document.getElementById('aiSelect').value; // New dropdown for AI type
+                if (selectedAI === 'ai') {
+                    aiPlayer2 = new AIPlayer2(2);  // Initialize AI2 for Player 2
+                } else if (selectedAI === 'ai2') {
+                    aiPlayer2 = new AIPlayer(2);   // Initialize AI1 for Player 2
+                }
             }
         }
+        let particles = []; // Array to store sparkles for celebration effect
+
+        #document.getElementById('startGameBtn').addEventListener('click', startGame);
+
+        
 
         function adjustCanvasSize(layers) {
             const screenHeight = window.innerHeight; // Get the screen height
