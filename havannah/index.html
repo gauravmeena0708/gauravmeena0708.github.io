@@ -67,6 +67,7 @@
         let hexSize;
         let aiPlayer = null; // AI Player 2 object
         let isPlayer2AI = false; // Flag to determine if Player 2 is AI
+        let particles = []; // Array to store sparkles for celebration effect
 
         document.getElementById('startGameBtn').addEventListener('click', startGame);
 
@@ -77,6 +78,7 @@
             currentPlayer = 0;
             gameOver = false;
             playerTime = [300, 300];
+            particles = []; // Reset particles
             document.getElementById('winner').textContent = '';
             document.getElementById('currentTurn').textContent = 'Current Turn: Player 1';
             canvas.style.border = '1px solid black'; // Reset canvas border to default
@@ -124,6 +126,8 @@
                     drawHexagon(hexCoords, color, i, j);
                 }
             }
+            // Draw particles (sparkles)
+            drawParticles();
         }
 
         function calculateHexagon(i, j) {
@@ -254,9 +258,59 @@
             const winnerColor = winner === 1 ? 'yellow' : 'red';
             canvas.style.border = `5px solid ${winnerColor}`; // Change canvas border to winning player's color
             document.getElementById('currentTurn').textContent = `Game Over! Player ${winner} wins by ${structure}!`;
-            alert(`Yeah! Player ${winner} won!!`); // Alert the winner
+            
+            
+            // Trigger the celebration (sparkle effect)
+            triggerCelebration();
+            alert(`Player ${winner} won!!`); // Alert the winner
         }
 
+        // Sparkle/celebration effect
+        function triggerCelebration() {
+            for (let i = 0; i < 100; i++) { // Create 100 particles
+                particles.push(createParticle());
+            }
+            animateParticles();
+        }
+
+        function createParticle() {
+            return {
+                x: canvas.width / 2,
+                y: canvas.height / 2,
+                radius: Math.random() * 4 + 2, // Random radius
+                color: `hsl(${Math.random() * 360}, 100%, 50%)`, // Random color
+                speedX: Math.random() * 5 - 2.5, // Random speed X
+                speedY: Math.random() * 5 - 2.5, // Random speed Y
+                life: 100 // Lifespan of the particle
+            };
+        }
+
+        function drawParticles() {
+            particles.forEach((particle, index) => {
+                context.beginPath();
+                context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                context.fillStyle = particle.color;
+                context.fill();
+                context.closePath();
+
+                // Update particle position and reduce life
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                particle.life--;
+
+                // Remove particle if life is over
+                if (particle.life <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+        }
+
+        function animateParticles() {
+            if (particles.length > 0) {
+                drawBoard(board); // Redraw the board
+                requestAnimationFrame(animateParticles);
+            }
+        }
     </script>
 </body>
 </html>
