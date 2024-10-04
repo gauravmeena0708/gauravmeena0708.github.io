@@ -253,24 +253,38 @@ class AIPlayer2 {
         '((0, 6), (3, 6))': [[1, 5], [2, 5], [3, 5], [1, 6], [2, 6]],
     };
 
-    if (this.move_counter === 1) {
-        // If it's the first move, pick the center hexagons or strategic openings based on valid actions
+   if (this.move_counter === 1) {
+        // Strategic opening moves for size 6
         if (size === 6) {
             if (valid_actions.some(action => action[0] === 5 && action[1] === 5)) {
-                return [5, 5];  // Center hexagon move for size 6 board
+                return [5, 5];  // Center hexagon move for size 6
             }
             if (valid_actions.some(action => action[0] === 5 && action[1] === 10)) {
-                return [5, 10]; // Another center move for size 6 board
-            }
-        }
-
-        // Logic to handle other board sizes (e.g., size 4)
-        if (size === 4) {
-            if (valid_actions.some(action => action[0] === 3 && action[1] === 3)) {
-                return [3, 3];  // Example strategic move for size 4 board
+                return [5, 10];  // Another center move for size 6
             }
         }
     }
+
+    if (this.move_counter === 2) {
+        // Handle corner adjacency logic
+        for (const [corner1Key, corner2Key] of Object.keys(this.counter3_adjacent_nodes)) {
+            const corner1 = parseKey(corner1Key);
+            const corner2 = parseKey(corner2Key);
+
+            if (state[corner1[0]][corner1[1]] === this.opponent_number && state[corner2[0]][corner2[1]] === this.opponent_number) {
+                const adjacent_moves = this.counter3_adjacent_nodes[`${corner1Key},${corner2Key}`];
+                for (const move of adjacent_moves) {
+                    if (valid_actions.some(action => action[0] === move[0] && action[1] === move[1])) {
+                        return move;  // Block opponent by placing in adjacent node
+                    }
+                }
+            }
+        }
+    }
+
+    // No specific opening move found
+    return null;
+}
 
     if (this.move_counter === 2) {
         // Handle the second move for Player 2 based on the opening strategies
