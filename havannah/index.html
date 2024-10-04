@@ -76,30 +76,30 @@
 
         document.getElementById('startGameBtn').addEventListener('click', startGame);
 
-        function startGame() {
-            layers = parseInt(document.getElementById('sizeSelect').value);
-            adjustCanvasSize(layers); // Adjust canvas size dynamically based on board size
-            board = createInitialBoard(layers);
-            currentPlayer = 0;
-            gameOver = false;
-            playerTime = [300, 300];
-            document.getElementById('winner').textContent = '';
-            document.getElementById('currentTurn').textContent = 'Current Turn: Player 1';
-            drawBoard(board);
-            if (intervalId) clearInterval(intervalId);
-            intervalId = setInterval(updateTimer, 1000); // Update timer every second
+function startGame() {
+    layers = parseInt(document.getElementById('sizeSelect').value);
+    adjustCanvasSize(layers); // Adjust canvas size dynamically based on board size
+    board = createInitialBoard(layers);
+    currentPlayer = 0;
+    gameOver = false;
+    playerTime = [300, 300];
+    document.getElementById('winner').textContent = '';
+    document.getElementById('currentTurn').textContent = 'Current Turn: Player 1';
+    drawBoard(board);
+    if (intervalId) clearInterval(intervalId);
+    intervalId = setInterval(updateTimer, 1000); // Update timer every second
 
-            // Determine if Player 2 is AI or human
-            isPlayer2AI = document.getElementById('player2Type').value === 'ai';
-            if (isPlayer2AI) {
-                let selectedAI = document.getElementById('aiSelect').value; // New dropdown for AI type
-                if (selectedAI === 'ai') {
-                    aiPlayer2 = new AIPlayer2(2);  // Initialize AI2 for Player 2
-                } else if (selectedAI === 'ai2') {
-                    aiPlayer2 = new AIPlayer(2);   // Initialize AI1 for Player 2
-                }
-            }
+    // Determine if Player 2 is AI or human
+    isPlayer2AI = document.getElementById('player2Type').value === 'ai';
+    if (isPlayer2AI) {
+        let selectedAI = document.getElementById('aiSelect').value; // New dropdown for AI type
+        if (selectedAI === 'ai') {
+            aiPlayer2 = new AIPlayer(2);   // Initialize AI for Player 2
+        } else if (selectedAI === 'ai2') {
+            aiPlayer2 = new AIPlayer2(2);  // Initialize AI2 for Player 2
         }
+    }
+}
         let particles = []; // Array to store sparkles for celebration effect
 
         //document.getElementById('startGameBtn').addEventListener('click', startGame);
@@ -261,7 +261,7 @@
 
         function handleAITurn() {
             setTimeout(() => {
-                const aiMove = aiPlayer.getMove(board);
+                const aiMove = aiPlayer2.getMove(board);
                 makeMove(aiMove[0], aiMove[1]);
             }, 500); // Slight delay to mimic AI thinking
         }
