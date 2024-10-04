@@ -12,7 +12,7 @@ class AIPlayer2 {
         this.counter3_adjacent_nodes = null;
     }
 
-    get_move(state) {
+    getMove(state) {
         if (this.move_counter > 15) {
             this.simulations = 50;
         }
