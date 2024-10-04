@@ -36,8 +36,10 @@
         <!-- Dropdown to choose Player 2 (Human or AI) -->
         <label for="player2Type">Player 2:</label>
         <select id="player2Type">
+             <option value="ai">AI</option>
+             <option value="ai2">AI 2</option>
             <option value="human">Human</option>
-            <option value="ai">AI</option>
+           
         </select>
         
         <button id="startGameBtn">Start Game</button>
@@ -54,6 +56,7 @@
 
     <script src="helper.js"></script> <!-- Include helper.js -->
     <script src="ai.js"></script> <!-- Include ai.js for AI functionality -->
+    <script src="ai2.js"></script>
 
     <script>
         let canvas = document.getElementById('gameCanvas');
@@ -65,8 +68,20 @@
         let board;
         let intervalId;
         let hexSize;
-        let aiPlayer = null; // AI Player 2 object
-        let isPlayer2AI = false; // Flag to determine if Player 2 is AI
+        let aiPlayer = null;  // AI for Player 1
+let aiPlayer2 = null; // AI for Player 2
+
+// Determine if Player 2 is AI or human
+isPlayer2AI = document.getElementById('player2Type').value === 'ai';
+if (isPlayer2AI) {
+    let selectedAI = document.getElementById('aiSelect').value; // New dropdown for AI type
+    if (selectedAI === 'ai') {
+        aiPlayer2 = new AIPlayer2(2);  // Initialize AI2 for Player 2
+    } else if (selectedAI === 'ai2') {
+        aiPlayer2 = new AIPlayer(2);   // Initialize AI1 for Player 2
+    }
+}
+
         let particles = []; // Array to store sparkles for celebration effect
 
         document.getElementById('startGameBtn').addEventListener('click', startGame);
