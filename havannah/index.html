@@ -260,11 +260,13 @@ function startGame() {
         }
 
         function handleAITurn() {
-            setTimeout(() => {
-                const aiMove = aiPlayer2.getMove(board);
-                makeMove(aiMove[0], aiMove[1]);
-            }, 500); // Slight delay to mimic AI thinking
+    setTimeout(() => {
+        if (aiPlayer2) {
+            const aiMove = aiPlayer2.getMove(board); // Use the selected AI for Player 2
+            makeMove(aiMove[0], aiMove[1]);
         }
+    }, 500); // Slight delay to mimic AI thinking
+}
 
         function endGame(winner, structure) {
             gameOver = true;
