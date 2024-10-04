@@ -240,7 +240,7 @@ class AIPlayer2 {
    get_opening_moves(state, valid_actions) {
     const size = this.size;
     const dim = state.length;
-    const corners = this.get_all_corners(dim);
+    const corners = this.getAllCorners(dim);
 
     // Define adjacent nodes logic for size 6 and other sizes
     const adjacent_nodes = {
