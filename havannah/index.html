@@ -50,7 +50,7 @@
         <div id="winner"></div> <!-- Show who won -->
     </div>
 
-    <canvas id="gameCanvas" width="600" height="600"></canvas>
+    <canvas id="gameCanvas"></canvas>
 
     <script src="helper.js"></script> <!-- Include helper.js -->
     <script src="ai.js"></script> <!-- Include ai.js for AI functionality -->
@@ -64,7 +64,7 @@
         let gameOver = false;
         let board;
         let intervalId;
-        let hexSize = 40;
+        let hexSize;
         let aiPlayer = null; // AI Player 2 object
         let isPlayer2AI = false; // Flag to determine if Player 2 is AI
 
@@ -72,6 +72,7 @@
 
         function startGame() {
             layers = parseInt(document.getElementById('sizeSelect').value);
+            adjustCanvasSize(layers); // Adjust canvas size dynamically based on board size
             board = createInitialBoard(layers);
             currentPlayer = 0;
             gameOver = false;
@@ -87,6 +88,17 @@
             if (isPlayer2AI) {
                 aiPlayer = new AIPlayer(2); // Initialize AI for Player 2
             }
+        }
+
+        function adjustCanvasSize(layers) {
+            const screenHeight = window.innerHeight; // Get the screen height
+            const maxCanvasSize = screenHeight - 200; // Max canvas size should be 200px less than screen height
+            const canvasPadding = 50; // Extra padding around the canvas
+            hexSize = Math.floor(maxCanvasSize / (3 * layers)); // Dynamically calculate hex size based on layers and max canvas size
+            const canvasSize = (hexSize * 3 * layers) + canvasPadding; // Adjust canvas size dynamically
+
+            canvas.width = canvasSize;
+            canvas.height = canvasSize;
         }
 
         function createInitialBoard(layers) {
@@ -244,3 +256,4 @@
     </script>
 </body>
 </html>
+
