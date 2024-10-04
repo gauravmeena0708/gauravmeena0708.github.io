@@ -79,6 +79,7 @@
             playerTime = [300, 300];
             document.getElementById('winner').textContent = '';
             document.getElementById('currentTurn').textContent = 'Current Turn: Player 1';
+            canvas.style.border = '1px solid black'; // Reset canvas border to default
             drawBoard(board);
             if (intervalId) clearInterval(intervalId);
             intervalId = setInterval(updateTimer, 1000); // Update timer every second
@@ -250,10 +251,12 @@
 
         function endGame(winner, structure) {
             gameOver = true;
+            const winnerColor = winner === 1 ? 'yellow' : 'red';
+            canvas.style.border = `5px solid ${winnerColor}`; // Change canvas border to winning player's color
             document.getElementById('currentTurn').textContent = `Game Over! Player ${winner} wins by ${structure}!`;
+            alert(`Yeah! Player ${winner} won!!`); // Alert the winner
         }
 
     </script>
 </body>
 </html>
-
