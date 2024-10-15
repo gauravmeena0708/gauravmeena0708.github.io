@@ -33,4 +33,4 @@
 3. [Bullshit remover](https://www.bullshitremover.com/)
 4. [Tensorflow Playground](https://playground.tensorflow.org)
 5. [Backprop Explainer](https://xnought.github.io/backprop-explainer/)
-6. Havnnah Game Bot using MCTS (https://gauravmeena0708.github.io/havannah/index.html)
+6. [Havnnah Game Bot using MCTS](https://gauravmeena0708.github.io/havannah/index.html)
