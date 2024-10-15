@@ -19,14 +19,18 @@
 2. [3blue1brown](https://www.youtube.com/@3blue1brown)
 
 ### Learnings
-1. Linear repression, Logistic Regression (Binary, Multinominal), Neural Networks(Binary, Multi), Activation funs (sigmoid, softmax, ReLU, tanh) CNNs
+1. Linear repression, Logistic Regression (Binary, Multinominal), Neural Networks(Binary, Multi), Activation functionss (sigmoid, softmax, ReLU, tanh) CNNs
 2. Feature Selection (PSO, PCA), Hyper Param tuning(Grid Search, Ternary Search, Adam, adagrad. adadelta, RMSProp), Initialisation (Xavier, random)
 3. Search (DFS, iDFS, Bredth FS, Best FS, Greedy, A* etc), Local Search(local Beam, Hill Climbing, Simulated Annealing).. Random walks, restarts, early stopping
 4. Probabilistic interference, Constraint Satisfaction Problems
 5. Graph Neural Networks
-6. Try Standerdization/Normalisation if model not converging 
+6. Try Standerdization/Normalisation if model not converging
+7. NaiveBayes
 
 ### Other sources
 1. [NPTEL IMAGE Processing IIT G](https://www.youtube.com/playlist?list=PLwdnzlV3ogoVsma5GmBSsgJM6gHv1QoAo)
 2. [Berkley AI](https://www.youtube.com/playlist?list=PLjsx92GvetlT6aVqJodhOdMZ7M_IkJsmL)
 3. [Bullshit remover](https://www.bullshitremover.com/)
+4. [Tensorflow Playground](https://playground.tensorflow.org)
+5. [Backprop Explainer](https://xnought.github.io/backprop-explainer/)
+6. Havnnah Game Bot using MCTS (https://gauravmeena0708.github.io/havannah/index.html)
