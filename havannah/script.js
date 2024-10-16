@@ -753,6 +753,7 @@ function endGame(winner, structure) {
       "currentTurn"
     ).textContent = `Game Over! Player ${winner} wins by ${structure}!`;
     alert(`Player ${winner} won!!`); // Alert the winner
+    ga("send", "event", "Game", "Win", `Level 1 ${winner}`);
   } else if (structure === "tie") {
     document.getElementById(
       "currentTurn"
