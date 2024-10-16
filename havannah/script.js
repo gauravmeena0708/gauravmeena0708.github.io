@@ -765,6 +765,12 @@ function endGame(winner, structure) {
         event_label: `Level 1 ${winner}`,
         value: `Player ${winner} won`,
       });
+
+      gtag("event", "Game Outcome", {
+        Game_Name: "Havannah",
+        Winner: winner,
+        "Won BY": structure,
+      });
     } else {
       console.warn("Google Analytics (gtag) is not defined.");
     }
