@@ -758,7 +758,7 @@ function endGame(winner, structure) {
       gtag("event", "Win", {
         event_category: "Game",
         event_label: `Level 1 ${winner}`,
-        value: winner,
+        value: `Player ${winner} won`,
       });
     } else {
       console.warn("Google Analytics (gtag) is not defined.");
