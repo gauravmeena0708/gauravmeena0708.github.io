@@ -752,9 +752,14 @@ function endGame(winner, structure) {
     document.getElementById(
       "currentTurn"
     ).textContent = `Game Over! Player ${winner} wins by ${structure}!`;
-    gtag("send", "event", "Game", "Win", `Level 1 ${winner}`);
+    gtag("send", "event", "Game", `Win player ${winner}`);
     alert(`Player ${winner} won!!`); // Alert the winner
     if (typeof gtag === "function") {
+      gtag("send", "event", "Win", {
+        event_category: "Game",
+        event_label: `Level 1 ${winner}`,
+        value: `Player ${winner} won`,
+      });
       gtag("event", "Win", {
         event_category: "Game",
         event_label: `Level 1 ${winner}`,
