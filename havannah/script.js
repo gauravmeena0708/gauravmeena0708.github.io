@@ -714,3 +714,54 @@ function makeMove(row, col) {
     switchPlayer();
   }
 }
+
+// Add this function to check if there are any valid moves left for any player
+function checkForTie(board) {
+  const validMoves = getValidActions(board);
+  return validMoves.length === 0; // Return true if no valid moves are left
+}
+
+// Update the makeMove function to check for a tie after each move
+function makeMove(row, col) {
+  board[row][col] = currentPlayer + 1; // Player 1 is Yellow, Player 2 is Red
+  drawBoard(board);
+  renderGameTable(board); // Update the table after each move
+
+  // Check if the current move results in a win
+  const [win, structure] = checkWin(board, [row, col], currentPlayer + 1);
+  if (win) {
+    endGame(currentPlayer + 1, structure);
+  } else {
+    // Check if there are no valid moves left for either player
+    if (checkForTie(board)) {
+      endGame(null, "tie");
+    } else {
+      switchPlayer();
+    }
+  }
+}
+
+// Update the endGame function to handle tie cases
+function endGame(winner, structure) {
+  gameOver = true;
+  clearInterval(intervalId); // Stop the timer
+
+  if (winner) {
+    const winnerColor = winner === 1 ? "yellow" : "red";
+    canvas.style.border = `5px solid ${winnerColor}`; // Change canvas border to winning player's color
+    document.getElementById(
+      "currentTurn"
+    ).textContent = `Game Over! Player ${winner} wins by ${structure}!`;
+    alert(`Player ${winner} won!!`); // Alert the winner
+  } else if (structure === "tie") {
+    document.getElementById(
+      "currentTurn"
+    ).textContent = `Game Over! It's a tie!`;
+    alert("It's a tie! No valid moves left.");
+  }
+
+  // Trigger the celebration (sparkle effect) if there's a winner
+  if (winner) {
+    triggerCelebration();
+  }
+}
