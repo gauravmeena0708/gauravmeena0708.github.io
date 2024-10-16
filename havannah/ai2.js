@@ -107,7 +107,7 @@ class AIPlayer2 {
       this.size = (state.length + 1) / 2;
     }
     this.moveCounter++;
-
+    console.log(state);
     const validActions = this.getValidActions(state);
 
     // Check for immediate winning move for AI
