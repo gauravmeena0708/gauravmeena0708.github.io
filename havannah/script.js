@@ -752,6 +752,7 @@ function endGame(winner, structure) {
     document.getElementById(
       "currentTurn"
     ).textContent = `Game Over! Player ${winner} wins by ${structure}!`;
+    gtag("send", "event", "Game", "Win", `Level 1 ${winner}`);
     alert(`Player ${winner} won!!`); // Alert the winner
     var ga =
       typeof ga === "undefined" && typeof __gaTracker !== "undefined"
