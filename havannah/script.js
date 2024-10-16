@@ -755,14 +755,14 @@ function endGame(winner, structure) {
     gtag("send", "event", "Game", "Win", `Level 1 ${winner}`);
     alert(`Player ${winner} won!!`); // Alert the winner
     if (typeof gtag === "function") {
-        gtag('event', 'Win', {
-          'event_category': 'Game',
-          'event_label': Level 1 ${winner},
-          'value': winner
-        });
-      } else {
-        console.warn("Google Analytics (gtag) is not defined.");
-      }
+      gtag("event", "Win", {
+        event_category: "Game",
+        event_label: `Level 1 ${winner}`,
+        value: winner,
+      });
+    } else {
+      console.warn("Google Analytics (gtag) is not defined.");
+    }
   } else if (structure === "tie") {
     document.getElementById(
       "currentTurn"
