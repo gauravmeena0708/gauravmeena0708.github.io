@@ -1,4 +1,4 @@
-## Semester I 
+## Semester I (at IIT Delhi)
 ### 
 1. [Introduction to AI by Mausam](https://www.youtube.com/watch?v=lV6v6elsTvU)
 2. [18.06 by Gilbert Strang](https://www.youtube.com/watch?v=JibVXBElKL0)
