@@ -34,3 +34,12 @@
 4. [Tensorflow Playground](https://playground.tensorflow.org)
 5. [Backprop Explainer](https://xnought.github.io/backprop-explainer/)
 6. [Havnnah Game Bot using MCTS](https://gauravmeena0708.github.io/havannah/index.html)
+
+### Sites for competitive Coding
+1. [Interviewbit](interviewbit.com/)
+2. [Leetcode](https://leetcode.com/)
+3. [Codeforces](https://codeforces.com/)
+4. [Topcoder](https://www.topcoder.com/)
+5. [HackerRank](https://www.hackerrank.com/)
+6. [CodeChef](https://www.codechef.com/)
+7. 
