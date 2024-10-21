@@ -25,7 +25,8 @@
 4. Probabilistic interference, Constraint Satisfaction Problems
 5. Graph Neural Networks
 6. Try Standerdization/Normalisation if model not converging
-7. NaiveBayes
+7. AutoEncoder, RNN, PCA, NaiveBayes, Decision Trees
+8. NaiveBayes
 
 ### Other sources
 1. [NPTEL IMAGE Processing IIT G](https://www.youtube.com/playlist?list=PLwdnzlV3ogoVsma5GmBSsgJM6gHv1QoAo)
@@ -42,4 +43,3 @@
 4. [Topcoder](https://www.topcoder.com/)
 5. [HackerRank](https://www.hackerrank.com/)
 6. [CodeChef](https://www.codechef.com/)
-7. 
