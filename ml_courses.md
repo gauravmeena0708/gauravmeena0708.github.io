@@ -1,5 +1,10 @@
+### Youtube Series
+COL671 - [Introduction to AI by Mausam](https://www.youtube.com/watch?v=lV6v6elsTvU)
+COL774 - [Machine Learning IITM](https://www.youtube.com/playlist?list=PLyqSpQzTE6M-SISTunGRBRiZk7opYBf_K)
+ELL780 - [Link1](https://youtube.com/playlist?list=PLG4ZBab_DdoeZOWHJhUAA8fzTTumHP2O-&si=dbXdXR4-f-o3NfaV), 
+ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedatasets6799)
+
 ## Semester I (at IIT Delhi)
-### 
 1. [Introduction to AI by Mausam](https://www.youtube.com/watch?v=lV6v6elsTvU)
 2. [18.06 by Gilbert Strang](https://www.youtube.com/watch?v=JibVXBElKL0)
 3. [18.065 by Gilbert Strang - Linear algebra for Data Scientist](https://www.youtube.com/playlist?list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k)
