@@ -43,6 +43,7 @@ ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedataset
 7. [Mathigon](https://mathigon.org/)
 8. [Mathforlove](https://mathforlove.com)
 9. [desmos](https://www.desmos.com/)
+10. [Brilliant](https://brilliant.org/)
 
 ### Sites for competitive Coding
 1. [Interviewbit](interviewbit.com/)
