@@ -42,6 +42,7 @@ ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedataset
 6. [Havnnah Game Bot using MCTS](https://gauravmeena0708.github.io/havannah/index.html)
 7. [Mathigon](https://mathigon.org/)
 8. [Mathforlove](https://mathforlove.com)
+9. [desmos](https://www.desmos.com/)
 
 ### Sites for competitive Coding
 1. [Interviewbit](interviewbit.com/)
