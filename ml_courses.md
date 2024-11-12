@@ -1,5 +1,5 @@
 ### Youtube Series
-COL671 - [Introduction to AI by Mausam](https://www.youtube.com/watch?v=lV6v6elsTvU)
+COL671 - [Introduction to AI by Prof. Mausam](https://www.youtube.com/playlist?list=PLp6ek2hDcoNB_YJCruBFjhF79f5ZHyBuz))
 COL774 - [Machine Learning IITM](https://www.youtube.com/playlist?list=PLyqSpQzTE6M-SISTunGRBRiZk7opYBf_K)
 ELL780 - [Link1](https://youtube.com/playlist?list=PLG4ZBab_DdoeZOWHJhUAA8fzTTumHP2O-&si=dbXdXR4-f-o3NfaV), 
 ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedatasets6799)
@@ -11,6 +11,8 @@ ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedataset
 4. [CS229 by Andrew Ng](https://www.youtube.com/watch?v=het9HFqo1TQ)
 5. [NPTEL Machine Learning IITM](https://www.youtube.com/watch?v=_M-nDb0MIa4)
 6. [Machine learning with Graphs](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)
+7. [CS188 AI](https://www.youtube.com/playlist?list=PL5gYI166VpDY6n0BGxNBkB-t1O0z4RmrJ)
+8. [CS188 AI2](https://www.youtube.com/playlist?list=PLsOUugYMBBJENfZ3XAToMsg44W7LeUVhF)
 
 ### Books
 1. Introduction to linear Algebra - Gilbert Strang
