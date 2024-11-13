@@ -13,6 +13,7 @@ ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedataset
 6. [Machine learning with Graphs](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)
 7. [CS188 AI](https://www.youtube.com/playlist?list=PL5gYI166VpDY6n0BGxNBkB-t1O0z4RmrJ)
 8. [CS188 AI2](https://www.youtube.com/playlist?list=PLsOUugYMBBJENfZ3XAToMsg44W7LeUVhF)
+9. [Purdue ML](https://www.youtube.com/playlist?list=PL4FSfq6xtSvyqEsz3UUnAizemXJfQyDVD)
 
 ### Books
 1. Introduction to linear Algebra - Gilbert Strang
