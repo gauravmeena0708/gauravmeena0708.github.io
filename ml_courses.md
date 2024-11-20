@@ -44,7 +44,28 @@ Other - [Fast.ai](https://course.fast.ai/), [3blue1brown](https://www.youtube.co
 ### Sites for competitive Coding
 1. [Interviewbit](interviewbit.com/)
 2. [Leetcode](https://leetcode.com/)
-3. [Codeforces](https://codeforces.com/)
-4. [Topcoder](https://www.topcoder.com/)
-5. [HackerRank](https://www.hackerrank.com/)
-6. [CodeChef](https://www.codechef.com/)
+
+<table><tbody>
+<tr>
+  <th> Left column </th>
+  <th> Right column </th>
+<tr>
+<tr>
+  <td>
+
+  * Just `write` **markdown**
+  * In _here_
+  </td>
+  <td>
+
+  ```python
+  def or_here():
+    pass
+  ```
+  </td>
+<tbody></table>
+
+4. [Codeforces](https://codeforces.com/)
+5. [Topcoder](https://www.topcoder.com/)
+6. [HackerRank](https://www.hackerrank.com/)
+7. [CodeChef](https://www.codechef.com/)
