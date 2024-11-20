@@ -24,6 +24,7 @@ ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedataset
 ### Other sources
 1. [Fast.ai](https://course.fast.ai/)
 2. [3blue1brown](https://www.youtube.com/@3blue1brown)
+3. [Reinforcement Learning - Balaraman Ravindran](https://www.youtube.com/@reinforcementlearning1077)
 
 ### Learnings
 1. Linear repression, Logistic Regression (Binary, Multinominal), Neural Networks(Binary, Multi), Activation functionss (sigmoid, softmax, ReLU, tanh) CNNs
