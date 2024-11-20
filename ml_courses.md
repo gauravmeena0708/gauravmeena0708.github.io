@@ -1,18 +1,15 @@
 ### Youtube Series
-COL774 - [Machine Learning IITM](https://www.youtube.com/playlist?list=PLyqSpQzTE6M-SISTunGRBRiZk7opYBf_K)  
-ELL780 - [Link1](https://youtube.com/playlist?list=PLG4ZBab_DdoeZOWHJhUAA8fzTTumHP2O-&si=dbXdXR4-f-o3NfaV), [Link2](https://www.youtube.com/playlist?list=PLTYWkBB_Zi67KTmbeDxxBPxcEeqPfPC6f)  
+COL774 - [CS229 by Andrew Ng](https://www.youtube.com/watch?v=het9HFqo1TQ), [Machine Learning IITM](https://www.youtube.com/playlist?list=PLyqSpQzTE6M-SISTunGRBRiZk7opYBf_K)  
+ELL780 - [18.06 by Gilbert Strang](https://www.youtube.com/watch?v=JibVXBElKL0), [18.065 by Gilbert Strang - Linear algebra for Data Scientist](https://www.youtube.com/playlist?list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k), [Link1](https://youtube.com/playlist?list=PLG4ZBab_DdoeZOWHJhUAA8fzTTumHP2O-&si=dbXdXR4-f-o3NfaV), [Link2](https://www.youtube.com/playlist?list=PLTYWkBB_Zi67KTmbeDxxBPxcEeqPfPC6f)  
 ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedatasets6799)  
+COL671 - [Introduction to AI by Prof. Mausam](https://www.youtube.com/playlist?list=PLp6ek2hDcoNB_YJCruBFjhF79f5ZHyBuz)), 
 
 ## Semester I (at IIT Delhi)
-1. [Introduction to AI by Prof. Mausam](https://www.youtube.com/playlist?list=PLp6ek2hDcoNB_YJCruBFjhF79f5ZHyBuz))
-2. [18.06 by Gilbert Strang](https://www.youtube.com/watch?v=JibVXBElKL0)
-3. [18.065 by Gilbert Strang - Linear algebra for Data Scientist](https://www.youtube.com/playlist?list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k)
-4. [CS229 by Andrew Ng](https://www.youtube.com/watch?v=het9HFqo1TQ)
-5. [NPTEL Machine Learning IITM](https://www.youtube.com/watch?v=_M-nDb0MIa4)
-6. [Machine learning with Graphs](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)
-7. [CS188 AI](https://www.youtube.com/playlist?list=PL5gYI166VpDY6n0BGxNBkB-t1O0z4RmrJ)
-8. [CS188 AI2](https://www.youtube.com/playlist?list=PLsOUugYMBBJENfZ3XAToMsg44W7LeUVhF)
-9. [Purdue ML](https://www.youtube.com/playlist?list=PL4FSfq6xtSvyqEsz3UUnAizemXJfQyDVD)
+1. [NPTEL Machine Learning IITM](https://www.youtube.com/watch?v=_M-nDb0MIa4)
+2. [Machine learning with Graphs](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)
+3. [CS188 AI](https://www.youtube.com/playlist?list=PL5gYI166VpDY6n0BGxNBkB-t1O0z4RmrJ)
+4. [CS188 AI2](https://www.youtube.com/playlist?list=PLsOUugYMBBJENfZ3XAToMsg44W7LeUVhF)
+5. [Purdue ML](https://www.youtube.com/playlist?list=PL4FSfq6xtSvyqEsz3UUnAizemXJfQyDVD)
 
 ### Books
 1. Introduction to linear Algebra - Gilbert Strang
