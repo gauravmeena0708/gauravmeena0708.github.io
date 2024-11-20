@@ -9,16 +9,14 @@ COL671 - [Introduction to AI by Prof. Mausam](https://www.youtube.com/playlist?l
 
 
 ### Books
-ELL780 - Introduction to linear Algebra - Gilbert Strang, Linear Algebra and Learning from Data - Gilbert Strang, Linear Algebra Done Right - Sheldon Axler, Convex Optimization by Boyd  
-ELL880 - Networks, Crowds, and Markets Jon Kleinberg (For ML with Graphs)  
-COL774 - Pattern Recognition - Christopher Bishop  
-COL671 -   
+  
 
-| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |
+| Course  |     Books     |
+|----------|:-------------:|
+| ELL780 |  Introduction to linear Algebra - Gilbert Strang, Linear Algebra and Learning from Data - Gilbert Strang, Linear Algebra Done Right - Sheldon Axler, Convex Optimization by Boyd |
+| ELL880 |  Networks, Crowds, and Markets Jon Kleinberg (For ML with Graphs)  |
+| COL774 |  Pattern Recognition - Christopher Bishop  |
+| COL671 |  right-aligned |
 
 
 ### Other sources
