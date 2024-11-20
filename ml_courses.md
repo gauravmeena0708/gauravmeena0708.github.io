@@ -22,24 +22,15 @@ COL671 - [Introduction to AI by Prof. Mausam](https://www.youtube.com/playlist?l
 2. [3blue1brown](https://www.youtube.com/@3blue1brown)
 3. [Reinforcement Learning - Balaraman Ravindran](https://www.youtube.com/@reinforcementlearning1077)
 
-### Learnings from ELL 880
-1. Graph Neural Networks
+### Learnings from
 
-### Learnings from ELL 780
-1. Linear Algebra
-2. Real Analysis
-3. Convex Optimization
+| Course  |      Topics     |
+|----------|-------------|
+| COL774 | Linear repression, Logistic Regression (Binary, Multinominal), Neural Networks(Binary, Multi), Activation functionss (sigmoid, softmax, ReLU, tanh) CNNs ... Feature Selection (PSO, PCA), Hyper Param tuning(Grid Search, Ternary Search, Adam, adagrad. adadelta, RMSProp), Initialisation (Xavier, random) ... Try Standerdization/Normalisation if model not converging ..  AutoEncoder, RNN, PCA, NaiveBayes, Decision Trees |
+| COL671 | Search (DFS, iDFS, Bredth FS, Best FS, Greedy, A* etc), Local Search(local Beam, Hill Climbing, Simulated Annealing).. Random walks, restarts, early stopping ... Probabilistic interference, Constraint Satisfaction Problems, Bayesnet, NaiveBayes|
+| ELL880 | Graph Neural Networks |
+| ELL780 | Linear Algebra, Real Analysis, Convex Optimization |
 
-### Learnings from COL 671
-1. Search (DFS, iDFS, Bredth FS, Best FS, Greedy, A* etc), Local Search(local Beam, Hill Climbing, Simulated Annealing).. Random walks, restarts, early stopping
-2. Probabilistic interference, Constraint Satisfaction Problems
-3. Bayesnet, NaiveBayes
-
-### Learnings from COL 774 
-1. Linear repression, Logistic Regression (Binary, Multinominal), Neural Networks(Binary, Multi), Activation functionss (sigmoid, softmax, ReLU, tanh) CNNs
-2. Feature Selection (PSO, PCA), Hyper Param tuning(Grid Search, Ternary Search, Adam, adagrad. adadelta, RMSProp), Initialisation (Xavier, random)
-3. Try Standerdization/Normalisation if model not converging
-4. AutoEncoder, RNN, PCA, NaiveBayes, Decision Trees
 
 ### Other sources
 1. [NPTEL IMAGE Processing IIT G](https://www.youtube.com/playlist?list=PLwdnzlV3ogoVsma5GmBSsgJM6gHv1QoAo)
