@@ -5,8 +5,7 @@ ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedataset
 COL671 - [Introduction to AI by Prof. Mausam](https://www.youtube.com/playlist?list=PLp6ek2hDcoNB_YJCruBFjhF79f5ZHyBuz), [CS188 AI](https://www.youtube.com/playlist?list=PL5gYI166VpDY6n0BGxNBkB-t1O0z4RmrJ), [CS188 AI2](https://www.youtube.com/playlist?list=PLsOUugYMBBJENfZ3XAToMsg44W7LeUVhF)
 
 ## Semester I (at IIT Delhi)
-1. [NPTEL Machine Learning IITM](https://www.youtube.com/watch?v=_M-nDb0MIa4)
-2. [Machine learning with Graphs](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)
+1. [Machine learning with Graphs](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)
 
 ### Books
 1. Introduction to linear Algebra - Gilbert Strang
