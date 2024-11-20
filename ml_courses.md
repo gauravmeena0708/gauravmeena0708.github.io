@@ -14,6 +14,12 @@ ELL880 - Networks, Crowds, and Markets Jon Kleinberg (For ML with Graphs)
 COL774 - Pattern Recognition - Christopher Bishop  
 COL671 -   
 
+| Tables   |      Are      |  Cool |
+|----------|:-------------:|------:|
+| col 1 is |  left-aligned | $1600 |
+| col 2 is |    centered   |   $12 |
+| col 3 is | right-aligned |    $1 |
+
 
 ### Other sources
 1. [Fast.ai](https://course.fast.ai/)
