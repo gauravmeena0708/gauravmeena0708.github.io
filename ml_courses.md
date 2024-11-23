@@ -6,6 +6,7 @@ ELL780 - [18.06 by Gilbert Strang](https://www.youtube.com/watch?v=JibVXBElKL0),
 ELL880 - [Mining massive Datasets](https://www.youtube.com/@miningmassivedatasets6799), [Machine learning with Graphs](https://www.youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn)  
 COL671 - [Introduction to AI by Prof. Mausam](https://www.youtube.com/playlist?list=PLp6ek2hDcoNB_YJCruBFjhF79f5ZHyBuz), [CS188 AI](https://www.youtube.com/playlist?list=PL5gYI166VpDY6n0BGxNBkB-t1O0z4RmrJ), [CS188 AI2](https://www.youtube.com/playlist?list=PLsOUugYMBBJENfZ3XAToMsg44W7LeUVhF)  
 Other - [Fast.ai](https://course.fast.ai/), [3blue1brown](https://www.youtube.com/@3blue1brown), [Reinforcement Learning - Balaraman Ravindran](https://www.youtube.com/@reinforcementlearning1077)
+past papers and solutions - [Berkley AI Exams](https://ai.berkeley.edu/exams.html), [Berkley AI handouts](https://ai.berkeley.edu/section_handouts.html)
 
 
 
