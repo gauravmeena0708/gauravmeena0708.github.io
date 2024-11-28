@@ -1,6 +1,6 @@
 ## Semester I (at IIT Delhi)
 
-ELL880 - [Notebook link](https://colab.research.google.com/drive/1jx1sSc9NH_QJGxJq2JxNNZMg2oKJLkVh?usp=sharing), [Image 1](https://gauravmeena0708.github.io/1.png), [Image 2](https://gauravmeena0708.github.io/2.png)
+ELL880 - [Notebook link](https://colab.research.google.com/drive/1jx1sSc9NH_QJGxJq2JxNNZMg2oKJLkVh?usp=sharing), [Image 1](https://gauravmeena0708.github.io/1.png), [Image 2](https://gauravmeena0708.github.io/2.png), [Latest Notebook](https://colab.research.google.com/drive/1eSW6EO_cQZMkDxqI2Dxrf8nvPprsljkn?usp=sharing)
 
 ### Youtube Series
 COL774 - [CS229 by Andrew Ng](https://www.youtube.com/watch?v=het9HFqo1TQ), [Machine Learning IITM](https://www.youtube.com/playlist?list=PLyqSpQzTE6M-SISTunGRBRiZk7opYBf_K), [Purdue ML](https://www.youtube.com/playlist?list=PL4FSfq6xtSvyqEsz3UUnAizemXJfQyDVD)  
