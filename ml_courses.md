@@ -1,5 +1,7 @@
 ## Semester I (at IIT Delhi)
 
+ELL880 - [Notebook link](https://colab.research.google.com/drive/1jx1sSc9NH_QJGxJq2JxNNZMg2oKJLkVh?usp=sharing)
+
 ### Youtube Series
 COL774 - [CS229 by Andrew Ng](https://www.youtube.com/watch?v=het9HFqo1TQ), [Machine Learning IITM](https://www.youtube.com/playlist?list=PLyqSpQzTE6M-SISTunGRBRiZk7opYBf_K), [Purdue ML](https://www.youtube.com/playlist?list=PL4FSfq6xtSvyqEsz3UUnAizemXJfQyDVD)  
 ELL780 - [18.06 by Gilbert Strang](https://www.youtube.com/watch?v=JibVXBElKL0), [18.065 by Gilbert Strang - Linear algebra for Data Scientist](https://www.youtube.com/playlist?list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k), [Link1](https://youtube.com/playlist?list=PLG4ZBab_DdoeZOWHJhUAA8fzTTumHP2O-&si=dbXdXR4-f-o3NfaV), [Link2](https://www.youtube.com/playlist?list=PLTYWkBB_Zi67KTmbeDxxBPxcEeqPfPC6f)  
