@@ -72,3 +72,15 @@ past papers and solutions - [Berkley AI Exams](https://ai.berkeley.edu/exams.htm
 5. [Topcoder](https://www.topcoder.com/)
 6. [HackerRank](https://www.hackerrank.com/)
 7. [CodeChef](https://www.codechef.com/)
+
+### Sites for Basics of CS Degree
+1. [CS101 by stanford](https://www.edx.org/learn/computer-science/stanford-university-computer-science-101)
+2. [DS n Algo specialization](https://www.coursera.org/specializations/data-structures-algorithms)
+3. [Distributed Systems](https://www.youtube.com/playlist?list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB)
+4. [Systematic Debugging](https://www.st.cs.uni-saarland.de/whyprogramsfail/slides.php)
+5. [Introduction to databases](https://www.youtube.com/playlist?list=PLroEs25KGvwzmvIxYHRhoGTz9w8LeXek0)
+6. [Computer Architechture](https://www.coursera.org/learn/comparch)
+7. [Introduction to theory of computation](https://www.youtube.com/playlist?list=PL601FC994BDD963E4)
+8. [EDX intro to cs](https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-computer-science)
+9. [EDX Web Programming with python and js](https://www.edx.org/learn/web-development/harvard-university-cs50-s-web-programming-with-python-and-javascript)
+10. [EDX intro to AI](https://www.edx.org/learn/artificial-intelligence/harvard-university-cs50-s-introduction-to-artificial-intelligence-with-python)
