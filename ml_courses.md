@@ -84,3 +84,6 @@ past papers and solutions - [Berkley AI Exams](https://ai.berkeley.edu/exams.htm
 8. [EDX intro to cs](https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-computer-science)
 9. [EDX Web Programming with python and js](https://www.edx.org/learn/web-development/harvard-university-cs50-s-web-programming-with-python-and-javascript)
 10. [EDX intro to AI](https://www.edx.org/learn/artificial-intelligence/harvard-university-cs50-s-introduction-to-artificial-intelligence-with-python)
+11. [UNSW CS1 Higher computing ](https://www.youtube.com/playlist?list=PL6B940F08B9773B9F)
+12. [UNSW CS2 DS and Algo](https://www.youtube.com/playlist?list=PLE621E25B3BF8B9D1)
+13. [UNSW CS3: Design in Computing](https://www.youtube.com/playlist?list=PLC3E93EF6B9645D9D)
