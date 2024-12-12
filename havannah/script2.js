@@ -782,6 +782,17 @@ function getAllCorners(dim) {
     [Math.floor(dim / 2), 0], // Middle-left corner
   ].map(([x, y]) => `${x},${y}`);
 }
+function getAllCorners(dim) {
+  const mid = Math.floor(dim / 2);
+  return [
+    [0, 0], // Top-left corner
+    [0, dim - 1], // Top-right corner
+    [mid, dim - 1 + mid], // Bottom-right corner
+    [dim - 1, dim - 1], // Bottom-middle corner
+    [dim - 1, mid], // Bottom-left corner
+    [mid, 0], // Top-left corner
+  ].map(([x, y]) => `${x},${y}`);
+}
 
 function getEdge(vertex, dim) {
   /*
