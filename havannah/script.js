@@ -379,6 +379,17 @@ function getAllEdges(dim) {
   return sides.map((edge) => new Set(edge));
 }
 
+function getAllEdges(dim) {
+  const siz = Math.floor((dim + 1) / 2);
+  const sides = [
+    Array.from({ length: siz }, (_, i) => `${0},${i}`), // Top edge
+    Array.from({ length: siz }, (_, i) => `${i},${dim - 1}`), // Right edge
+    Array.from({ length: siz }, (_, i) => `${dim - 1},${siz + i - 1}`), // Bottom edge
+    Array.from({ length: siz }, (_, i) => `${siz - 1 + i},${0}`), // Left edge
+  ];
+  return sides.map((edge) => new Set(edge));
+}
+
 // Helper function to check if a side has reachable points
 function sideHasReachablePoints(side, visited) {
   for (const point of visited) {
