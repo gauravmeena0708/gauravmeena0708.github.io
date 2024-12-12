@@ -412,6 +412,35 @@ function checkFork(board, move) {
   return reachableEdges.length >= 3;
 }
 
+function checkFork(board, move) {
+  const dim = board.length;
+  const visited = bfsReachable(board, move);
+  const edges = getAllEdges(dim);
+  const move_i = move[0],
+    move_j = move[1];
+
+  // Manually check if the move itself is on any edge
+  let edgesTouchedByMove = 0;
+  for (const edge of edges) {
+    if (edge.has(`${move_i},${move_j}`)) {
+      edgesTouchedByMove++;
+    }
+  }
+
+  // Count reachable edges, excluding those already counted by the move itself
+  let reachableEdges = 0;
+  for (const edge of edges) {
+    if (edge.has(`${move_i},${move_j}`)) continue; // Skip if the edge was already counted
+    if (sideHasReachablePoints(edge, visited)) {
+      reachableEdges++;
+    }
+  }
+
+  // A fork is detected if the move touches at least 3 edges 
+  // or if the move touches fewer than 3 edges but the total (including reachable edges) is 3 or more
+  return edgesTouchedByMove >= 3 || edgesTouchedByMove + reachableEdges >= 3;
+}
+
 // Function to check both fork and bridge in a single move
 function checkForkAndBridge(board, move) {
   const visited = bfsReachable(board, move);
