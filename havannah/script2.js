@@ -802,4 +802,226 @@ function getEdge(vertex, dim) {
   if (i === 0 && j > 0 && j < mid) return 1; // Top-left edge
   if (i === 0 && j > mid && j < dim - 1) return 2; // Top-right edge
   if (j === dim - 1 && i > 0 && i < mid) return 3; // Right edge
-  if (i > mid && i < dim - 1 && i +
+  if (i > mid && i < dim - 1 && i + j === 3 * mid) return 4; // Bottom-right edge
+  if (i > mid && i < dim - 1 && i - j === mid) return 5; // Bottom-left edge
+
+  return -1; // If the vertex does not lie on any edge
+}
+
+function getCorner(vertex, dim) {
+  /*
+        Returns the corner number on which the vertex lies.
+    
+        Parameters:
+        - vertex (Array): The coordinates of the vertex [i, j]
+        - dim (int): The dimension of the board
+    
+        Returns:
+        - int: Corner number (0 to 5), or -1 if the vertex is not on a corner.
+      */
+
+  let [i, j] = vertex;
+  const mid = Math.floor(dim / 2);
+
+  if (i === 0 && j === 0) return 0; // Top-left corner
+  if (i === 0 && j === mid) return 1; // Top middle corner
+  if (i === 0 && j === dim - 1) return 2; // Top-right corner
+  if (i === mid && j === dim - 1) return 3; // Right middle corner
+  if (i === dim - 1 && j === mid) return 4; // Bottom middle corner
+  if (i === mid && j === 0) return 5; // Left middle corner
+
+  return -1; // If the vertex does not lie on any corner
+}
+
+function moveCoordinates(direction, half) {
+  /*
+        Returns the coordinates of the move in the given direction.
+    
+        Parameters:
+        - direction (string): The direction to which the move is to be made (e.g., 'up', 'down', 'top-left', 'top-right', etc.)
+        - half (int): The half of the board (0 for middle, -1 for left half, 1 for right half)
+    
+        Returns:
+        - Array: The x and y deltas for the direction
+      */
+
+  if (direction === "up") {
+    return [-1, 0];
+  } else if (direction === "down") {
+    return [1, 0];
+  } else if (direction === "top-left") {
+    return half === 0 || half < 0 ? [-1, -1] : [0, -1];
+  } else if (direction === "top-right") {
+    return half === 0 || half > 0 ? [-1, 1] : [0, 1];
+  } else if (direction === "bottom-left") {
+    return half === 0 || half < 0 ? [0, -1] : [1, -1];
+  } else if (direction === "bottom-right") {
+    return half === 0 || half > 0 ? [0, 1] : [1, 1];
+  }
+
+  return [0, 0]; // Default case: No movement
+}
+
+function threeForwardMoves(direction) {
+  /**
+   * Returns the 3 forward moves from the current direction.
+   * @param {string} direction - The direction of the last move.
+   * @returns {Array} - List of 3 forward moves from the current direction.
+   */
+  if (direction === "up") {
+    return ["top-left", "up", "top-right"];
+  } else if (direction === "down") {
+    return ["bottom-left", "down", "bottom-right"];
+  } else if (direction === "top-left") {
+    return ["bottom-left", "top-left", "up"];
+  } else if (direction === "top-right") {
+    return ["top-right", "up", "bottom-right"];
+  } else if (direction === "bottom-left") {
+    return ["bottom-left", "down", "top-left"];
+  } else if (direction === "bottom-right") {
+    return ["bottom-right", "down", "top-right"];
+  }
+  return [];
+}
+
+// Add this function to render the game board in the table
+function renderGameTable(board) {
+  const gameTable = document.getElementById("gameTable");
+  gameTable.innerHTML = ""; // Clear previous table content
+
+  board.forEach((row, rowIndex) => {
+    const tr = document.createElement("tr");
+    row.forEach((cell, colIndex) => {
+      const td = document.createElement("td");
+      if (cell === 1) {
+        td.textContent = "Y"; // Player 1 (Yellow)
+        td.style.backgroundColor = "yellow";
+      } else if (cell === 2) {
+        td.textContent = "R"; // Player 2 (Red)
+        td.style.backgroundColor = "red";
+      } else if (cell === 3) {
+        td.textContent = "B"; // Blocked tiles
+        td.style.backgroundColor = "gray";
+      } else {
+        td.textContent = ""; // Empty cell
+      }
+      tr.appendChild(td);
+    });
+    gameTable.appendChild(tr);
+  });
+}
+
+// Update the startGame function to render the initial board
+function startGame() {
+  layers = parseInt(document.getElementById("sizeSelect").value);
+  adjustCanvasSize(layers); // Adjust canvas size dynamically based on board size
+  board = createInitialBoard(layers);
+  currentPlayer = 0;
+  gameOver = false;
+  playerTime = [300, 300];
+  document.getElementById("winner").textContent = "";
+  document.getElementById("currentTurn").textContent = "Current Turn: Player 1";
+  drawBoard(board);
+  renderGameTable(board); // Render the initial board in the table
+  if (intervalId) clearInterval(intervalId);
+  intervalId = setInterval(updateTimer, 1000); // Update timer every second
+
+  // Determine if Player 2 is AI or human/AI2
+  let player2Type = document.getElementById("player2Type").value;
+  if (player2Type === "human") {
+    aiPlayer2 = null; // Player 2 is human
+    isPlayer2AI = false;
+  } else if (player2Type === "ai") {
+    aiPlayer2 = new AIPlayer(2); // Initialize AI for Player 2
+    isPlayer2AI = true;
+  } else if (player2Type === "ai2") {
+    aiPlayer2 = new AIPlayer2(2); // Initialize AI2 for Player 2
+    isPlayer2AI = true;
+  }
+}
+
+// Update the makeMove function to also render the table after each move
+function makeMove(row, col) {
+  board[row][col] = currentPlayer + 1; // Player 1 is Yellow, Player 2 is Red
+  drawBoard(board);
+  renderGameTable(board); // Update the table after each move
+
+  const [win, structure] = checkWin(board, [row, col], currentPlayer + 1);
+  if (win) {
+    endGame(currentPlayer + 1, structure);
+  } else {
+    switchPlayer();
+  }
+}
+
+// Add this function to check if there are any valid moves left for any player
+function checkForTie(board) {
+  const validMoves = getValidActions(board);
+  return validMoves.length === 0; // Return true if no valid moves are left
+}
+
+// Update the makeMove function to check for a tie after each move
+function makeMove(row, col) {
+  board[row][col] = currentPlayer + 1; // Player 1 is Yellow, Player 2 is Red
+  drawBoard(board);
+  renderGameTable(board); // Update the table after each move
+
+  // Check if the current move results in a win
+  const [win, structure] = checkWin(board, [row, col], currentPlayer + 1);
+  if (win) {
+    endGame(currentPlayer + 1, structure);
+  } else {
+    // Check if there are no valid moves left for either player
+    if (checkForTie(board)) {
+      endGame(null, "tie");
+    } else {
+      switchPlayer();
+    }
+  }
+}
+
+// Update the endGame function to handle tie cases
+function endGame(winner, structure) {
+  gameOver = true;
+  clearInterval(intervalId); // Stop the timer
+
+  if (winner) {
+    const winnerColor = winner === 1 ? "yellow" : "red";
+    canvas.style.border = `5px solid ${winnerColor}`; // Change canvas border to winning player's color
+    document.getElementById(
+      "currentTurn"
+    ).textContent = `Game Over! Player ${winner} wins by ${structure}!`;
+    gtag("send", "event", "Game", `Win player ${winner}`);
+    alert(`Player ${winner} won!!`); // Alert the winner
+    if (typeof gtag === "function") {
+      gtag("send", "event", "Win", {
+        "event_category": "Game",
+        "event_label": `Level 1 ${winner}`,
+        "value": `Player ${winner} won`,
+      });
+      gtag("event", "Win", {
+        "event_category": "Game",
+        "event_label": `Level 1 ${winner}`,
+        "value": `Player ${winner} won`,
+      });
+
+      gtag("event", "Game Outcome", {
+        "Game_Name": "Havannah",
+        "Winner": winner,
+        "Won BY": structure,
+      });
+    } else {
+      console.warn("Google Analytics (gtag) is not defined.");
+    }
+  } else if (structure === "tie") {
+    document.getElementById(
+      "currentTurn"
+    ).textContent = `Game Over! It's a tie!`;
+    alert("It's a tie! No valid moves left.");
+  }
+
+  // Trigger the celebration (sparkle effect) if there's a winner
+  if (winner) {
+    triggerCelebration();
+  }
+}
