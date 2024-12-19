@@ -20,7 +20,7 @@
 
     <script>
         // Function to convert a password to a CryptoKey
-        async function getKeyFromPassword(password) {
+        async function getKeyFromPassword(password, salt) {
             const encoder = new TextEncoder();
             const keyMaterial = await crypto.subtle.importKey(
                 "raw", 
@@ -31,7 +31,7 @@
             );
             
             return await crypto.subtle.deriveKey(
-                { name: "PBKDF2", salt: encoder.encode('salt'), iterations: 100000, hash: 'SHA-256' },
+                { name: "PBKDF2", salt: salt, iterations: 100000, hash: 'SHA-256' },
                 keyMaterial, 
                 { name: "AES-GCM", length: 256 }, 
                 false, 
@@ -40,20 +40,21 @@
         }
 
         // Function to decrypt the JSON data using the password
-        async function decryptData(encryptedBase64, password) {
+        async function decryptData(encryptedBase64, password, salt) {
             try {
                 // Convert the base64 encoded string to an ArrayBuffer
                 const encryptedData = Uint8Array.from(atob(encryptedBase64), c => c.charCodeAt(0));
                 
                 // Get the decryption key from the password
-                const key = await getKeyFromPassword(password);
+                const key = await getKeyFromPassword(password, salt);
                 
-                // Decrypt the data (using AES-GCM)
+                // Extract IV and tag from the encrypted data
                 const iv = encryptedData.slice(0, 12); // The IV is the first 12 bytes
-                const cipherText = encryptedData.slice(12); // The rest is the encrypted data
+                const tag = encryptedData.slice(12, 28); // The tag is the next 16 bytes
+                const cipherText = encryptedData.slice(28); // The rest is the encrypted data
                 
                 const decryptedData = await crypto.subtle.decrypt(
-                    { name: "AES-GCM", iv: iv },
+                    { name: "AES-GCM", iv: iv, tag: tag },
                     key,
                     cipherText
                 );
@@ -74,10 +75,10 @@
             try {
                 // Fetch the encrypted data from the file
                 const response = await fetch('encrypted_data.json'); // Adjust path as necessary
-                const encryptedText = await response.text(); // Get the encrypted content as a string
+                const encryptedText = await response.json(); // Get the encrypted content as a JSON object
 
-                // Return the encrypted content (base64 string)
-                return encryptedText.trim(); // Ensure no extra spaces or newlines
+                // Return the encrypted content (base64 string) and salt
+                return { encryptedBase64: encryptedText.encrypted_data, salt: new TextEncoder().encode(atob(encryptedText.salt)) };
             } catch (error) {
                 console.error("Error loading encrypted file:", error);
                 alert("Error loading the encrypted file.");
@@ -93,8 +94,8 @@
                 return;
             }
 
-            // Load encrypted data from the file
-            const encryptedBase64 = await loadEncryptedData();
+            // Load encrypted data and salt from the file
+            const { encryptedBase64, salt } = await loadEncryptedData();
 
             if (!encryptedBase64) {
                 alert("Failed to load encrypted data.");
@@ -102,13 +103,8 @@
             }
 
             // Decrypt the data
-            const decryptedData = await decryptData(encryptedBase64, password);
+            const decryptedData = await decryptData(encryptedBase64, password, salt);
             
             // Display the decrypted data
             if (decryptedData) {
-                document.getElementById('output').textContent = JSON.stringify(decryptedData, null, 2);
-            }
-        });
-    </script>
-</body>
-</html>
+               
