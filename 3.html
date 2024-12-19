@@ -63,11 +63,16 @@
                 const cipherText = encryptedData.slice(28); // The rest is the encrypted data
                 console.log('Ciphertext extracted:', cipherText);
                 
+                // Concatenate the tag to the ciphertext to pass together
+                const fullCiphertext = new Uint8Array(cipherText.length + tag.length);
+                fullCiphertext.set(cipherText);
+                fullCiphertext.set(tag, cipherText.length);
+
                 // Decrypt the data (AES-GCM)
                 const decryptedData = await crypto.subtle.decrypt(
-                    { name: "AES-GCM", iv: iv, tag: tag },
+                    { name: "AES-GCM", iv: iv },
                     key,
-                    cipherText
+                    fullCiphertext
                 );
                 console.log('Data decrypted successfully');
 
