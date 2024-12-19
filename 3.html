@@ -98,7 +98,9 @@
                 console.log('Encrypted data loaded from file:', encryptedText);
                 
                 // Return the encrypted content (base64 string) and salt
-                return { encryptedBase64: encryptedText.encrypted_data, salt: new TextEncoder().encode(atob(encryptedText.salt)) };
+                const saltDecoded = new TextEncoder().encode(atob(encryptedText.salt));
+                console.log('Decoded salt:', saltDecoded);
+                return { encryptedBase64: encryptedText.encrypted_data, salt: saltDecoded };
             } catch (error) {
                 console.error("Error loading encrypted file:", error);
                 alert("Error loading the encrypted file.");
