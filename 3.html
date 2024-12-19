@@ -19,21 +19,22 @@
     <pre id="output"></pre>
 
     <script>
-        // Function to convert a password to a CryptoKey
+        // Function to convert a password to a CryptoKey using salt
         async function getKeyFromPassword(password, salt) {
             console.log('Generating key from password...');
             const encoder = new TextEncoder();
+            const saltArray = Uint8Array.from(atob(salt), c => c.charCodeAt(0)); 
             const keyMaterial = await crypto.subtle.importKey(
                 "raw", 
                 encoder.encode(password), 
-                { name: "PBKDF2" }, 
+                { name: "PBKDF2", salt: saltArray, iterations: 100000, hash: 'SHA-256' }, 
                 false, 
                 ["deriveKey"]
             );
             console.log('Key material derived from password');
-            
+
             const key = await crypto.subtle.deriveKey(
-                { name: "PBKDF2", salt: salt, iterations: 100000, hash: 'SHA-256' },
+                { name: "PBKDF2", salt: saltArray, iterations: 100000, hash: 'SHA-256' }, 
                 keyMaterial, 
                 { name: "AES-GCM", length: 256 }, 
                 false, 
@@ -42,6 +43,7 @@
             console.log('Decryption key derived from PBKDF2');
             return key;
         }
+        
 
         // Function to decrypt the JSON data using the password
         async function decryptData(encryptedBase64, password, salt) {
