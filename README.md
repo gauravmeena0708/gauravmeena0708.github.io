@@ -1,6 +1,6 @@
 # Gaurav Meena
 
-M.Tech in AI & Data Science @ IIT Delhi. Ex-Civil Servant (Commissioner) & IIT Bombay Alumnus (Aerospace Engineering). Passionate about leveraging technology to solve complex problems. My current research focus is on Generative AI. I am a lifelong learner, adept at full-stack development, data analysis, and automation.
+M.Tech in AI & Data Science @ IIT Delhi. Civil Servant (Commissioner) & IIT Bombay Alumnus (Aerospace Engineering). Passionate about leveraging technology to solve complex problems. My current research focus is on Generative AI. I am a lifelong learner, adept at full-stack development, data analysis, and automation.
 
 **Links:**
 *   **Live Portfolio:** https://gauravmeena0708.github.io/
