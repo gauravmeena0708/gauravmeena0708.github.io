@@ -31,7 +31,7 @@
             color: #4b5563; /* gray-600 */
         }
         .list-disc li {
-            margin-bottom: 0.25rem; /* mb-1 */
+            margin-bottom: 0.375rem; /* mb-1.5 for better spacing */
         }
         .tag-skill {
             display: inline-block;
@@ -44,13 +44,15 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
-        /* Ensure enough padding at the top if there's a fixed navbar on the main site */
         .main-container {
-             padding-top: 2rem; /* Add padding if needed */
+             padding-top: 2rem;
         }
          @media print {
             body {
                 font-size: 10pt;
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact; /* Firefox, Edge */
+
             }
             .no-print {
                 display: none !important;
@@ -62,19 +64,32 @@
             }
             a {
                 text-decoration: none;
-                color: inherit;
+                color: inherit !important; /* Ensure links inherit color */
             }
             .section-title {
                 font-size: 1.25rem;
                 border-bottom: 1px solid #000;
+                color: #000 !important;
             }
-            .bg-indigo-700 { /* Example, adjust as needed */
+            .job-title strong, .degree strong {
+                color: #000 !important;
+            }
+            .date-location, .text-slate-600, .text-slate-700, .text-slate-500 {
+                color: #000 !important;
+            }
+            .bg-indigo-700 {
                 background-color: #4f46e5 !important;
-                print-color-adjust: exact; /* Important for printing background colors */
             }
             .text-white {
                  color: #ffffff !important;
-                 print-color-adjust: exact;
+            }
+            .tag-skill {
+                border: 1px solid #ccc;
+                background-color: #f0f0f0 !important;
+                color: #000 !important;
+            }
+            .list-disc li::marker {
+                color: #000 !important;
             }
         }
     </style>
@@ -86,9 +101,9 @@
         <header class="text-center mb-10 border-b pb-6 border-slate-200">
             <h1 class="text-4xl font-bold text-indigo-700">Gaurav Meena</h1>
             <p class="text-xl text-slate-600 mt-1">Data Scientist | Full-Stack Developer | AI Researcher</p>
-            <div class="mt-4 text-sm text-slate-500 flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <div class="mt-4 text-sm text-slate-500 flex flex-wrap justify-center gap-x-4 sm:gap-x-6 gap-y-2">
                 <span><i class="fas fa-envelope mr-1 text-indigo-600"></i> gauravmeena0708[at]gmail[dott]com</span>
-                <span><i class="fas fa-map-marker-alt mr-1 text-indigo-600"></i> Bengaluru / New Delhi, IN</span>
+                <span><i class="fas fa-map-marker-alt mr-1 text-indigo-600"></i> New Delhi, IN</span>
                 <span><a href="https://linkedin.com/in/gauravmeena0708" target="_blank" class="hover:text-indigo-600"><i class="fab fa-linkedin mr-1 text-indigo-600"></i> LinkedIn</a></span>
                 <span><a href="https://github.com/gauravmeena0708" target="_blank" class="hover:text-indigo-600"><i class="fab fa-github mr-1 text-indigo-600"></i> GitHub</a></span>
                 <span><a href="https://www.behance.net/gauravmeena0708" target="_blank" class="hover:text-indigo-600"><i class="fab fa-behance mr-1 text-indigo-600"></i> Behance</a></span>
@@ -106,10 +121,10 @@
         <section id="profile" class="mb-8">
             <h2 class="section-title">Profile Summary</h2>
             <p class="text-slate-700 leading-relaxed">
-                Digital innovation enthusiast with 7+ years of experience as a Government officer, managing and leading cross-functional teams. Currently pursuing M.Tech in AI & Data Science at IIT Delhi (expected June 2026) with a research focus on Generative AI for synthetic tabular data. Skilled in identifying bottlenecks, root cause analysis, and automating repetitive tasks. Consistently exceed performance targets, possessing advanced analytical and problem-solving skills. Adept at leveraging cutting-edge digital tools and platforms to achieve objectives.
+                A results-oriented technology leader and AI researcher with 7+ years as a Government Officer (EPFO), complemented by a strong foundation in software engineering and aerospace. Currently pursuing an M.Tech in AI & Data Science at IIT Delhi (exp. June 2026), focusing on Generative AI for privacy-preserving synthetic tabular data (Diffusion & VAE models). Proven ability to lead cross-functional teams, architect complex systems, and leverage data for strategic decision-making. Passionate about solving real-world problems through automation, full-stack development, and advanced AI techniques.
             </p>
             <p class="mt-3 text-slate-700 leading-relaxed">
-                <strong>Areas of Interest:</strong> Generative AI, Machine Learning, Data Science, Web Development, User Experience, Problem Solving, Policy Making, Data Visualization, Automation.
+                <strong>Areas of Interest:</strong> Generative AI, Machine Learning, Data Science, Full-Stack Development, Distributed Systems, Secure Authentication, Data Visualization, Automation, Policy & Technology Interface.
             </p>
         </section>
 
@@ -120,8 +135,9 @@
                 <h3 class="text-lg font-semibold job-title"><strong>Regional PF Commissioner - II</strong>, EPFO</h3>
                 <p class="date-location">KR Puram, Bengaluru | 06/2021 – Present</p>
                 <ul class="list-disc list-inside text-slate-700 mt-1 ml-4 text-sm leading-relaxed">
-                    <li>Led and managed regional office operations, overseeing provident fund, pension, and insurance schemes.</li>
-                    <li>Contributed to zonal office initiatives by assisting in the automation of report generation processes, improving efficiency.</li>
+                    <li>Lead and manage regional office operations, overseeing provident fund, pension, and insurance schemes for a large subscriber base.</li>
+                    <li>Drive strategic initiatives for process optimization and enhanced service delivery within the zone.</li>
+                    <li>Contributed to zonal office efficiency by assisting in the automation of complex report generation processes.</li>
                 </ul>
             </div>
 
@@ -129,9 +145,9 @@
                 <h3 class="text-lg font-semibold job-title"><strong>Assistant PF Commissioner</strong>, EPFO</h3>
                 <p class="date-location">KR Puram, Bengaluru | 08/2021 – 05/2024</p>
                 <ul class="list-disc list-inside text-slate-700 mt-1 ml-4 text-sm leading-relaxed">
-                    <li>Developed a single-page dashboard summarizing office pendency for enhanced monitoring and decision-making.</li>
-                    <li>Authored Python libraries for periodicity analysis and WhatsApp group chat analysis for internal use.</li>
-                    <li>Created JavaScript-based front-end calculators for pension and EDLI, inaugurated by the Hon’ble Labour Minister in 2022.</li>
+                    <li>Developed and deployed a single-page dashboard for real-time monitoring of office pendency, significantly improving operational oversight.</li>
+                    <li>Authored and implemented Python libraries for periodicity analysis of official data and WhatsApp group chat analytics for internal communication insights.</li>
+                    <li>Engineered JavaScript-based front-end calculators for complex pension and EDLI computations, officially inaugurated by the Hon’ble Union Labour Minister in 2022.</li>
                 </ul>
             </div>
 
@@ -139,37 +155,38 @@
                 <h3 class="text-lg font-semibold job-title"><strong>Assistant PF Commissioner</strong>, EPFO (National Data Center)</h3>
                 <p class="date-location">New Delhi, India | 04/2018 – 08/2021</p>
                 <ul class="list-disc list-inside text-slate-700 mt-1 ml-4 text-sm leading-relaxed">
-                    <li>Single-handedly implemented and managed an issue tracker solution (e.g., Jira/Redmine equivalent) for internal technical issues.</li>
-                    <li>Developed a working model for an inventory management software tailored to EPFO's requirements.</li>
-                    <li>Coordinated and negotiated service agreements, achieving cost savings of ₹50L per annum.</li>
-                </ul>
-            </div>
-
-            <div class="job-entry">
-                <h3 class="text-lg font-semibold job-title"><strong>Assistant PF Commissioner</strong>, EPFO</h3>
-                <p class="date-location">Amritsar, India | 03/2017 – 03/2018</p>
-                <ul class="list-disc list-inside text-slate-700 mt-1 ml-4 text-sm leading-relaxed">
-                    <li>Adjudicated compliance cases, assessing amounts exceeding ₹3 Cr.</li>
-                    <li>Managed a team of 30 employees to ensure timely monthly pension disbursement to 40,000 pensioners and resolved their grievances.</li>
+                    <li>Spearheaded the end-to-end implementation and management of an organization-wide issue tracker system, streamlining internal technical issue resolution processes.</li>
+                    <li>Coordinated with technology partners on the lifecycle of software projects, including Big Data Analytics (BDA) and Business Continuity Planning (BCP) tools.</li>
+                    <li>Conducted in-depth analysis of large-scale claim datasets (20 million+ claims) to identify operational anomalies (e.g., multiple settlements) and root causes for claim rejections.</li>
+                    <li>Led IT policy formulation, drafted data sharing policies, and prepared strategic action plans for system-wide performance improvements.</li>
+                    <li>Oversaw technical aspects of key citizen-facing digital services including E-sign, Aadhaar authentication (AUA/KUA), and SMS alerts.</li>
+                    <li>Developed a working model for a customized inventory management software solution tailored to EPFO’s operational needs.</li>
+                    <li>Achieved significant annual cost savings (₹50 Lakhs p.a.) through strategic negotiation of service level agreements with technology vendors.</li>
                 </ul>
             </div>
             
             <div class="job-entry">
-                <h3 class="text-lg font-semibold job-title"><strong>Assistant PF Commissioner (Trainee)</strong>, EPFO</h3>
-                <p class="date-location">Chennai, IN | 12/2016 – 03/2017</p>
-                <ul class="list-disc list-inside text-slate-700 mt-1 ml-4 text-sm leading-relaxed">
-                    <li>Designed a dual-language batch training magazine using Adobe Photoshop.</li>
-                    <li>Completed comprehensive training in policies, law, public service, ethics, and service delivery.</li>
-                </ul>
+                 <h3 class="text-lg font-semibold job-title"><strong>Assistant PF Commissioner</strong>, EPFO</h3>
+                 <p class="date-location">Amritsar, India & Chennai, IN (Trainee) | 12/2016 – 03/2018</p>
+                 <ul class="list-disc list-inside text-slate-700 mt-1 ml-4 text-sm leading-relaxed">
+                    <li>Adjudicated compliance cases under EPF & MP Act, assessing financial liabilities exceeding ₹3 Crores.</li>
+                    <li>Managed a team of 30 for timely pension disbursement to 40,000+ pensioners and their grievance redressal.</li>
+                    <li>Designed a dual-language training magazine using Adobe Photoshop; completed comprehensive training in public policy, law, and service delivery.</li>
+                 </ul>
             </div>
 
             <div class="job-entry">
                 <h3 class="text-lg font-semibold job-title"><strong>Software Engineer</strong>, Exact Solutions</h3>
                 <p class="date-location">Mumbai, India | 07/2012 – 12/2013</p>
                 <ul class="list-disc list-inside text-slate-700 mt-1 ml-4 text-sm leading-relaxed">
-                    <li>Developed J2EE and ABAP applications with XA transactions for SAP and WebSphere Application Server.</li>
-                    <li>Built custom schema-based LDAP and Kerberos-based centralized authentication with a directory manager utility.</li>
-                    <li>Worked on iTran and iWatch, SQL query-level performance monitoring tools with a centralized database.</li>
+                    <li>Architected and developed J2EE and ABAP applications with XA distributed transactions across Sybase, Oracle, Informix, and MS SQL Server using WebSphere and SAP NetWeaver.</li>
+                    <li>Engineered secure authentication by implementing OpenLDAP and Kerberos; developed C client libraries and Bash scripts for automated OpenLDAP installation on CentOS.</li>
+                    <li>Led design of a custom schema-based LDAP infrastructure for iWatch monitoring tools, with granular access control and hashed/salted password management.</li>
+                    <li>Authored high-performance C/C++ programs for network packet (pcap) analysis, external sorting of large datasets, and inter-process communication using semaphores.</li>
+                    <li>Pioneered iWatch 7 web client groundwork using Node.js for backend REST APIs, real-time data with Socket.io, and integration with MonetDB & SQLite.</li>
+                    <li>Reverse-engineered and developed a Sybase IQ packet parser and protocol guide through manual testing.</li>
+                    <li>Developed a full-stack Node.js web client for iWatch 7, featuring LDAP authentication (Passport.js), dynamic data visualizations (dc.js, AMCharts, D3.js), and an interactive UI (SlickGrid, Angular.js).</li>
+                    <li>Implemented secure SSL/TLS communication for client-server applications and LDAP, including custom async socket APIs in C/C++ for Windows MFC.</li>
                 </ul>
             </div>
         </section>
@@ -180,13 +197,13 @@
                 <h3 class="text-lg font-semibold degree"><strong>M.Tech in Machine Intelligence & Data Science</strong></h3>
                 <p class="text-slate-700">Indian Institute of Technology (IIT), Delhi</p>
                 <p class="date-location">Expected Graduation: June 2026</p>
-                <p class="text-sm text-slate-600 mt-1">Focus: Generative AI (Diffusion & VAE models) for synthetic tabular data.</p>
+                <p class="text-sm text-slate-600 mt-1">Focus: Generative AI (Diffusion & VAE models) for privacy-preserving synthetic tabular data.</p>
             </div>
             <div class="education-entry">
                 <h3 class="text-lg font-semibold degree"><strong>Dual Degree (B.Tech + M.Tech) in Aerospace Engineering</strong></h3>
                 <p class="text-slate-700">Indian Institute of Technology (IIT), Bombay</p>
                 <p class="date-location">Graduated: 2012</p>
-                <p class="text-sm text-slate-600 mt-1">Relevant Courses: Industrial Design, Aircraft Design, Particle Swarm Optimization (Project).</p>
+                <p class="text-sm text-slate-600 mt-1">Relevant Courses: Industrial Design, Aircraft Design, Operations Research. Project: Particle Swarm Optimization.</p>
             </div>
         </section>
 
@@ -200,66 +217,89 @@
         </section>
         
         <section id="skills">
-            <h2 class="section-title">Skills</h2>
+            <h2 class="section-title">Technical Skills</h2>
             <div class="skill-category">
-                <h3 class="text-md font-semibold text-slate-700 mb-2">Programming & Data Science:</h3>
+                <h3 class="text-md font-semibold text-slate-700 mb-2">Programming & Scripting:</h3>
                 <div class="flex flex-wrap">
-                    <span class="tag-skill">Python</span><span class="tag-skill">Pandas</span><span class="tag-skill">NumPy</span><span class="tag-skill">Scikit-learn</span><span class="tag-skill">TensorFlow</span><span class="tag-skill">Keras</span><span class="tag-skill">Generative AI</span><span class="tag-skill">JavaScript</span><span class="tag-skill">Angular.js</span><span class="tag-skill">D3.js</span><span class="tag-skill">SQL</span><span class="tag-skill">MySQL</span><span class="tag-skill">PostgreSQL</span><span class="tag-skill">MongoDB</span><span class="tag-skill">PHP</span><span class="tag-skill">Java</span><span class="tag-skill">C/C++</span>
+                    <span class="tag-skill">Python (Pandas, NumPy, Scikit-learn, TensorFlow, Keras)</span>
+                    <span class="tag-skill">C/C++</span><span class="tag-skill">Java (J2EE)</span><span class="tag-skill">Node.js (Express.js)</span>
+                    <span class="tag-skill">JavaScript (ES6+, Angular.js, jQuery)</span><span class="tag-skill">PHP (Laravel)</span>
+                    <span class="tag-skill">SQL</span> <span class="tag-skill">ABAP</span><span class="tag-skill">Bash Scripting</span>
                 </div>
             </div>
             <div class="skill-category">
-                <h3 class="text-md font-semibold text-slate-700 mb-2">Web Technologies:</h3>
+                <h3 class="text-md font-semibold text-slate-700 mb-2">Data Science & AI/ML:</h3>
+                <div class="flex flex-wrap">
+                     <span class="tag-skill">Generative AI (VAE, Diffusion Models)</span><span class="tag-skill">Machine Learning</span>
+                     <span class="tag-skill">Data Analysis</span><span class="tag-skill">Data Visualization (D3.js, AMCharts, Matplotlib)</span>
+                     <span class="tag-skill">Statistical Analysis</span><span class="tag-skill">Big Data Analytics (Conceptual)</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3 class="text-md font-semibold text-slate-700 mb-2">Databases & Data Storage:</h3>
                  <div class="flex flex-wrap">
-                    <span class="tag-skill">HTML</span><span class="tag-skill">CSS</span><span class="tag-skill">Tailwind CSS</span><span class="tag-skill">Bootstrap</span><span class="tag-skill">Node.js</span><span class="tag-skill">Laravel</span><span class="tag-skill">REST APIs</span><span class="tag-skill">Git</span>
+                    <span class="tag-skill">LDAP (OpenLDAP)</span><span class="tag-skill">Sybase (ASE & IQ)</span><span class="tag-skill">Oracle</span>
+                    <span class="tag-skill">Informix</span><span class="tag-skill">MS SQL Server</span><span class="tag-skill">MonetDB</span>
+                    <span class="tag-skill">SQLite</span><span class="tag-skill">PostgreSQL</span><span class="tag-skill">MongoDB</span>
                 </div>
             </div>
             <div class="skill-category">
-                <h3 class="text-md font-semibold text-slate-700 mb-2">Tools & Software:</h3>
+                <h3 class="text-md font-semibold text-slate-700 mb-2">Web Technologies & Frameworks:</h3>
                 <div class="flex flex-wrap">
-                    <span class="tag-skill">Jupyter</span><span class="tag-skill">VS Code</span><span class="tag-skill">Photoshop</span><span class="tag-skill">Premiere Pro</span><span class="tag-skill">Indesign</span><span class="tag-skill">Selenium</span><span class="tag-skill">BeautifulSoup</span><span class="tag-skill">Wireshark</span>
+                    <span class="tag-skill">HTML5</span><span class="tag-skill">CSS3</span><span class="tag-skill">Tailwind CSS</span>
+                    <span class="tag-skill">Bootstrap</span><span class="tag-skill">REST APIs</span><span class="tag-skill">Socket.io</span>
+                    <span class="tag-skill">WebSphere</span><span class="tag-skill">SAP NetWeaver</span><span class="tag-skill">Git</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3 class="text-md font-semibold text-slate-700 mb-2">Security & Networking:</h3>
+                <div class="flex flex-wrap">
+                    <span class="tag-skill">Kerberos</span><span class="tag-skill">SSL/TLS</span><span class="tag-skill">GSSAPI</span>
+                    <span class="tag-skill">Packet Analysis (Wireshark, tcpdump)</span><span class="tag-skill">XA Transactions</span>
                 </div>
             </div>
              <div class="skill-category">
-                <h3 class="text-md font-semibold text-slate-700 mb-2">Soft Skills:</h3>
+                <h3 class="text-md font-semibold text-slate-700 mb-2">Tools & Platforms:</h3>
                 <div class="flex flex-wrap">
-                    <span class="tag-skill">Leadership</span><span class="tag-skill">Problem Solving</span><span class="tag-skill">Analytical Thinking</span><span class="tag-skill">Project Management</span><span class="tag-skill">Policy Analysis</span><span class="tag-skill">Communication</span><span class="tag-skill">Adaptability</span>
+                    <span class="tag-skill">Jupyter Notebooks</span><span class="tag-skill">VS Code</span><span class="tag-skill">VMware</span>
+                    <span class="tag-skill">CentOS</span><span class="tag-skill">Adobe Creative Suite (Photoshop, Premiere Pro, Indesign)</span>
+                    <span class="tag-skill">Selenium</span><span class="tag-skill">BeautifulSoup</span>
                 </div>
             </div>
         </section>
 
         <section id="iitb_details" class="mt-8 pt-6 border-t border-slate-200">
             <h2 class="section-title">IIT Bombay Highlights (B.Tech & M.Tech Aerospace)</h2>
-            <div class="grid md:grid-cols-2 gap-6 text-sm">
+            <div class="grid md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
                 <div>
-                    <h3 class="text-md font-semibold text-slate-700 mb-2">Key Projects:</h3>
+                    <h3 class="text-md font-semibold text-slate-700 mb-2">Key Academic Projects:</h3>
                     <ul class="list-disc list-inside text-slate-700 ml-4 leading-relaxed">
-                        <li>50 Seater Transport Aircraft Design</li>
-                        <li>Energy Harvesting Shoe Soles</li>
-                        <li>Interactive Car Racing Games (C++/EZwindows)</li>
-                        <li>Optimization of Structural Frames using Particle Swarm Optimization</li>
+                        <li>Design & Analysis of a 50-Seater Transport Aircraft</li>
+                        <li>Feasibility Study: Energy Harvesting Shoe Soles</li>
+                        <li>Development of Interactive Car Racing Game (C++/EZwindows)</li>
+                        <li>Thesis: Optimization of Structural Frames using <strong>Particle Swarm Optimization</strong></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-md font-semibold text-slate-700 mb-2">Positions of Responsibility:</h3>
                     <ul class="list-disc list-inside text-slate-700 ml-4 leading-relaxed">
-                        <li>Web Nominee, Hostel 13</li>
-                        <li>Web Manager, Aawaaz Hindi Newspaper</li>
-                        <li>Web Manager, Zephyr (Aerospace Dept. Festival)</li>
+                        <li>Web Nominee, Hostel 13 (Managed hostel website and IT infrastructure)</li>
+                        <li>Web Manager, Aawaaz (IITB Hindi Newspaper - Led online presence)</li>
+                        <li>Web Manager, Zephyr (Aerospace Dept. Festival - Developed and maintained event website)</li>
                     </ul>
                 </div>
-                 <div>
-                    <h3 class="text-md font-semibold text-slate-700 mb-2">Internships & Freelancing (During/Post IITB):</h3>
+                 <div class="md:col-span-2"> 
+                    <h3 class="text-md font-semibold text-slate-700 mb-2">Early Career Internships & Freelancing:</h3>
                     <ul class="list-disc list-inside text-slate-700 ml-4 leading-relaxed">
-                        <li>Front-End Development (Web IDE) at CodeEnvy</li>
-                        <li>Startup Information Aggregator Development at SCRI Labs</li>
-                        <li>ERP/CRM Software Development at Innowares</li>
-                        <li>Main Website Development at Broadvision Asia Pvt Ltd</li>
-                        <li>Website Management at Wilcom Pvt Ltd</li>
+                        <li>Front-End Development (Web IDE UI) at CodeEnvy</li>
+                        <li>Full-Stack Development (Startup Information Aggregator) at SCRI Labs (Python/Django, Bootstrap)</li>
+                        <li>ERP/CRM Software Module Development at Innowares</li>
+                        <li>Web Developer (Main Corporate Website) at Broadvision Asia Pvt Ltd (Website is 12+ years running)</li>
+                        <li>Website Management & Maintenance at Wilcom Pvt Ltd</li>
                     </ul>
                 </div>
             </div>
         </section>
-
 
         <footer class="text-center mt-12 pt-6 border-t border-slate-200 text-xs text-slate-500">
             <p>Gaurav Meena | gauravmeena0708[at]gmail[dott]com | Updated: <span id="currentDate"></span></p>
@@ -273,4 +313,3 @@
     </script>
 </body>
 </html>
-
