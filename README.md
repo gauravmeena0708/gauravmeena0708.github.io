@@ -1,4 +1,14 @@
-# Github Repositories
+# Gaurav Meena
+
+M.Tech in AI & Data Science @ IIT Delhi. Ex-Civil Servant (Commissioner) & IIT Bombay Alumnus (Aerospace Engineering). Passionate about leveraging technology to solve complex problems. My current research focus is on Generative AI. I am a lifelong learner, adept at full-stack development, data analysis, and automation.
+
+**Links:**
+*   **Live Portfolio:** https://gauravmeena0708.github.io/
+*   **Online Resume:** https://gauravmeena0708.github.io/resume.html
+
+---
+
+## Featured Repositories
 
 1. [Inventory Management Software](https://github.com/gauravmeena0708/inventory-management-software-laravel)
 2. [Python Scripts](https://github.com/gauravmeena0708/python-programming)
