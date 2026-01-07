@@ -1,3 +1,423 @@
-<ul>
-  <li><a href="https://notebooklm.google.com/">Notebook LM</a></li>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools Guide for EPFO Staff - Gaurav Meena</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .feature-tag {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .visit-link {
+            display: inline-flex;
+            align-items: center;
+            color: #4f46e5; /* indigo-600 */
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+        .visit-link:hover {
+            color: #4338ca; /* indigo-700 */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Navigation (Consistent with Main Site) -->
+    <nav class="bg-white shadow-md fixed w-full z-50 top-0">
+        <div class="container mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-xl font-bold text-indigo-600">Gaurav Meena</a>
+                <div class="flex md:hidden">
+                    <button type="button" class="text-slate-500 hover:text-slate-600 focus:outline-none focus:text-slate-600" aria-label="toggle menu" id="mobile-menu-button">
+                        <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
+                            <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="md:flex items-center hidden" id="mobile-menu">
+                <div class="flex flex-col md:flex-row md:mx-6">
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="index.html#home">Home</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="index.html#about">About</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="index.html#projects">Projects</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="resume.html">Resume</a>
+                    <a class="my-1 text-sm text-indigo-600 font-bold md:mx-4 md:my-0" href="#">AI Tools</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-indigo-700 text-white pt-32 pb-12">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">AI Tools Guide for EPFO Staff</h1>
+            <p class="text-lg md:text-xl text-indigo-100 max-w-3xl mx-auto">
+                A curated guide on how to leverage specific Artificial Intelligence tools to enhance productivity, research, and content creation in our daily operations.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        
+        <!-- Section: Research & Search -->
+        <div class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-4">
+                    <i class="fas fa-search text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">Research & Knowledge Discovery</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- NotebookLM -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-indigo-600 mb-2">NotebookLM</h3>
+                        <p class="text-slate-600 text-sm mb-4">Google's personalized AI research assistant grounded in your specific documents.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">Deep Research</span>
+                            <span class="feature-tag">Mind Maps</span>
+                            <span class="feature-tag">Audio Generation</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Researching:</strong> Upload circulars or PDFs to get instant summaries and citations.</li>
+                            <li><strong>Audio/Video:</strong> Generate "podcast-style" audio discussions to learn from uploaded content.</li>
+                            <li><strong>Mind Maps:</strong> Visualizing connections between complex topics.</li>
+                        </ul>
+                    </div>
+                    <a href="https://notebooklm.google.com/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Perplexity -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-indigo-600 mb-2">Perplexity</h3>
+                        <p class="text-slate-600 text-sm mb-4">An AI-powered answer engine that provides real-time, cited information.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">Internet Search</span>
+                            <span class="feature-tag">Citations</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Internet Search:</strong> Best for finding up-to-date facts with direct sources.</li>
+                            <li><strong>Verification:</strong> Quickly checking rules or recent news updates.</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.perplexity.ai/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Indian Language & Accessibility -->
+        <div class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-4">
+                    <i class="fas fa-language text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">Language & Accessibility</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Bhashini -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-orange-600 mb-2">Bhashini (Govt. of India)</h3>
+                        <p class="text-slate-600 text-sm mb-4">National Language Translation Mission platform for breaking language barriers.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">22 Languages</span>
+                            <span class="feature-tag">Voice-to-Text</span>
+                            <span class="feature-tag">Document Translation</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Public Grievances:</strong> Instantly translate grievances received in regional languages to English/Hindi.</li>
+                            <li><strong>Dictation:</strong> Use voice typing to draft notes faster in Indian languages.</li>
+                        </ul>
+                    </div>
+                    <a href="https://bhashini.gov.in/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Section: Drafting & Documentation -->
+        <div class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-4">
+                    <i class="fas fa-file-alt text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">Drafting & Presentations</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Antigravity + LaTeX -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">Antigravity + LaTeX</h3>
+                        <p class="text-slate-600 text-sm mb-4">Advanced prompt-based drafting workflow.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">Prompt to Draft</span>
+                            <span class="feature-tag">Automation</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Draft Making:</strong> Create high-quality first drafts of official documents simply by prompting.</li>
+                            <li><strong>Structure:</strong> Automatically organizes content into professional formats.</li>
+                        </ul>
+                    </div>
+                    <a href="https://developers.google.com/" target="_blank" class="visit-link">
+                        Visit Google Developers <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Overleaf -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">Overleaf + LaTeX</h3>
+                        <p class="text-slate-600 text-sm mb-4">Collaborative cloud-based LaTeX editor.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">PDF Generation</span>
+                            <span class="feature-tag">Formatting</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>PDF Making:</strong> Automates the creation of perfectly formatted PDFs.</li>
+                            <li><strong>Templates:</strong> Easy re-use of standard office templates for reports.</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.overleaf.com/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Gamma App -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">Gamma App</h3>
+                        <p class="text-slate-600 text-sm mb-4">A new medium for presenting ideas, powered by AI.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">PPT Generation</span>
+                            <span class="feature-tag">Presentations</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Instant PPTs:</strong> Type a topic or paste notes to generate a professional slide deck in minutes.</li>
+                            <li><strong>Export:</strong> Download as PowerPoint for official meetings.</li>
+                        </ul>
+                    </div>
+                    <a href="https://gamma.app/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- GitHub -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-green-700 mb-2">GitHub</h3>
+                        <p class="text-slate-600 text-sm mb-4">Platform for version control and collaboration.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">Hosting</span>
+                            <span class="feature-tag">Collaboration</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Hosting:</strong> Great for hosting public documents, ideas, or simple project pages.</li>
+                            <li><strong>Version Control:</strong> Keeping track of changes in collaborative drafts.</li>
+                        </ul>
+                    </div>
+                    <a href="https://github.com/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Content Creation & Media -->
+        <div class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+                    <i class="fas fa-photo-video text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">Content Creation & Media</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Gemini -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-purple-700 mb-2">Gemini</h3>
+                        <p class="text-slate-600 text-sm mb-4">Google's multimodal AI model.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">Image Gen</span>
+                            <span class="feature-tag">PDF OCR</span>
+                            <span class="feature-tag">Nano Banana</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Image Generation:</strong> Excellent control over generating specific images for presentations.</li>
+                            <li><strong>PDF OCR:</strong> Extracting text from scanned PDFs efficiently.</li>
+                        </ul>
+                    </div>
+                    <a href="https://gemini.google.com/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Adobe Express -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-purple-700 mb-2">Adobe Express</h3>
+                        <p class="text-slate-600 text-sm mb-4">Quick and easy design tool with AI features.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">Posters</span>
+                            <span class="feature-tag">Flyers</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Outreach:</strong> Create posters for "Nidhi Aapke Nikat" or awareness camps using templates.</li>
+                            <li><strong>Quick Edit:</strong> Remove backgrounds or resize images instantly.</li>
+                        </ul>
+                    </div>
+                    <a href="https://www.adobe.com/express/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- ChatGPT -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-purple-700 mb-2">ChatGPT</h3>
+                        <p class="text-slate-600 text-sm mb-4">OpenAI's leading conversational AI.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">Projects</span>
+                            <span class="feature-tag">Canvas</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Project Feature:</strong> Upload multiple files to create a specific "Project" context for focused work.</li>
+                            <li><strong>Canvas:</strong> A dedicated workspace for writing and coding side-by-side.</li>
+                        </ul>
+                    </div>
+                    <a href="https://chatgpt.com/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: General & Technical -->
+        <div class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                    <i class="fas fa-cogs text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">General & Technical Tools</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Google Colab -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-blue-700 mb-2">Google Colab</h3>
+                        <p class="text-slate-600 text-sm mb-4">Cloud-based Python environment.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">Online Editing</span>
+                            <span class="feature-tag">Coding</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Online Editing:</strong> Write and execute code (Python) directly in the browser without setup.</li>
+                            <li><strong>Analysis:</strong> Good for running data analysis scripts on the fly.</li>
+                        </ul>
+                    </div>
+                    <a href="https://colab.research.google.com/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Microsoft Copilot -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-blue-700 mb-2">Microsoft Copilot</h3>
+                        <p class="text-slate-600 text-sm mb-4">Your everyday AI companion with web access.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">GPT-4</span>
+                            <span class="feature-tag">Web Search</span>
+                            <span class="feature-tag">DALL-E 3</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Office Integration:</strong> Free access to advanced models via the web. Great for summarizing web pages.</li>
+                            <li><strong>Versatility:</strong> Use it for drafting emails, creating images, and coding help.</li>
+                        </ul>
+                    </div>
+                    <a href="https://copilot.microsoft.com/" target="_blank" class="visit-link">
+                        Visit Website <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- General LLMs -->
+                <div class="bg-white rounded-xl shadow-md p-6 tool-card border border-slate-100 flex flex-col">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-blue-700 mb-2">General LLMs</h3>
+                        <p class="text-slate-600 text-sm mb-4">Broad-purpose AI assistants.</p>
+                        <div class="mb-4">
+                            <span class="feature-tag">Claude</span>
+                            <span class="feature-tag">Grok</span>
+                            <span class="feature-tag">Llama</span>
+                        </div>
+                        <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                            <li><strong>Versatility:</strong> Use <a href="https://claude.ai/" target="_blank" class="text-indigo-600 hover:underline">Claude</a>, <a href="https://grok.com/" target="_blank" class="text-indigo-600 hover:underline">Grok</a>, or <a href="https://www.llama.com/" target="_blank" class="text-indigo-600 hover:underline">Llama</a> for general drafting, email composition, and quick questions.</li>
+                            <li><strong>Comparisons:</strong> Cross-check outputs between models for better accuracy.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer (Consistent with Main Site) -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center">
+        <p>&copy; <span id="currentYear"></span> Gaurav Meena. All rights reserved.</p>
+        <p class="text-sm mt-2">Built with HTML, Tailwind CSS, and <i class="fas fa-heart text-red-500"></i></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if(mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+</body>
+</html>
