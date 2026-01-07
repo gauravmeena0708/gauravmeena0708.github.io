@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,44 +13,60 @@
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
+
         .section {
-            padding-top: 4rem; /* 64px */
-            padding-bottom: 4rem; /* 64px */
+            padding-top: 4rem;
+            /* 64px */
+            padding-bottom: 4rem;
+            /* 64px */
         }
+
         .project-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+
         /* Custom scrollbar for better aesthetics (optional) */
         ::-webkit-scrollbar {
             width: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
         .tag {
             display: inline-block;
-            background-color: #e0e7ff; /* indigo-100 */
-            color: #3730a3; /* indigo-800 */
+            background-color: #e0e7ff;
+            /* indigo-100 */
+            color: #3730a3;
+            /* indigo-800 */
             padding: 0.25rem 0.75rem;
-            border-radius: 9999px; /* rounded-full */
-            font-size: 0.75rem; /* text-xs */
-            font-weight: 500; /* font-medium */
+            border-radius: 9999px;
+            /* rounded-full */
+            font-size: 0.75rem;
+            /* text-xs */
+            font-weight: 500;
+            /* font-medium */
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
     </style>
 </head>
+
 <body class="bg-slate-50 text-slate-800">
 
     <nav class="bg-white shadow-md fixed w-full z-50 top-0">
@@ -57,9 +74,13 @@
             <div class="flex items-center justify-between">
                 <a href="#" class="text-xl font-bold text-indigo-600">Gaurav Meena</a>
                 <div class="flex md:hidden">
-                    <button type="button" class="text-slate-500 hover:text-slate-600 focus:outline-none focus:text-slate-600" aria-label="toggle menu" id="mobile-menu-button">
+                    <button type="button"
+                        class="text-slate-500 hover:text-slate-600 focus:outline-none focus:text-slate-600"
+                        aria-label="toggle menu" id="mobile-menu-button">
                         <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
-                            <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"></path>
+                            <path fill-rule="evenodd"
+                                d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">
+                            </path>
                         </svg>
                     </button>
                 </div>
@@ -67,13 +88,24 @@
 
             <div class="md:flex items-center hidden" id="mobile-menu">
                 <div class="flex flex-col md:flex-row md:mx-6">
-                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#home">Home</a>
-                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#about">About</a>
-                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#projects">Projects</a>
-                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#skills">Skills</a>
-                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#education">Education</a>
-                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="https://gauravmeena0708.github.io/resume.html" target="_blank">Resume</a>
-                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#contact">Contact</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="#home">Home</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="#about">About</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="#projects">Projects</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="#skills">Skills</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="#education">Education</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="places.html">Food Atlas</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="tools.html">AI Tools</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="https://gauravmeena0708.github.io/resume.html" target="_blank">Resume</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="#contact">Contact</a>
                 </div>
             </div>
         </div>
@@ -81,21 +113,35 @@
 
     <header id="home" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white pt-32 pb-16 section">
         <div class="container mx-auto px-6 text-center">
-            <img src="https://avatars.githubusercontent.com/u/286544?v=4" alt="Gaurav Meena" class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full shadow-lg border-4 border-white mb-6">
+            <img src="https://avatars.githubusercontent.com/u/286544?v=4" alt="Gaurav Meena"
+                class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full shadow-lg border-4 border-white mb-6">
             <h1 class="text-4xl md:text-5xl font-bold mb-3">Gaurav Meena</h1>
             <p class="text-xl md:text-2xl mb-6 font-light">Data Scientist | Full-Stack Developer | AI Researcher</p>
             <p class="text-lg mb-8 max-w-2xl mx-auto">
-                M.Tech in AI & Data Science @ IIT Delhi. Leveraging a background as a Commissioner and Aerospace Engineer to solve complex problems with technology.
+                M.Tech in AI & Data Science @ IIT Delhi. Leveraging a background as a Commissioner and Aerospace
+                Engineer to solve complex problems with technology.
             </p>
             <div class="space-x-0 space-y-4 md:space-x-4 md:space-y-0">
-                <a href="#projects" class="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-50 transition duration-300 inline-block">View Projects</a>
-                <a href="https://gauravmeena0708.github.io/resume.html" target="_blank" class="border border-white text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-white hover:text-indigo-600 transition duration-300 inline-block">View Resume</a>
+                <a href="#projects"
+                    class="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-50 transition duration-300 inline-block">View
+                    Projects</a>
+                <a href="https://gauravmeena0708.github.io/resume.html" target="_blank"
+                    class="border border-white text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-white hover:text-indigo-600 transition duration-300 inline-block">View
+                    Resume</a>
             </div>
             <div class="mt-10 flex justify-center space-x-6">
-                <a href="https://www.linkedin.com/in/gauravmeena0708/" target="_blank" class="text-white hover:text-indigo-200 transition duration-300 text-2xl"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/gauravmeena0708" target="_blank" class="text-white hover:text-indigo-200 transition duration-300 text-2xl"><i class="fab fa-github"></i></a>
-                <a href="https://www.behance.net/gauravmeena0708" target="_blank" class="text-white hover:text-indigo-200 transition duration-300 text-2xl"><i class="fab fa-behance"></i></a>
-                <a href="https://x.com/gauravmeena0708" target="_blank" class="text-white hover:text-indigo-200 transition duration-300 text-2xl"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/gauravmeena0708/" target="_blank"
+                    class="text-white hover:text-indigo-200 transition duration-300 text-2xl"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/gauravmeena0708" target="_blank"
+                    class="text-white hover:text-indigo-200 transition duration-300 text-2xl"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://www.behance.net/gauravmeena0708" target="_blank"
+                    class="text-white hover:text-indigo-200 transition duration-300 text-2xl"><i
+                        class="fab fa-behance"></i></a>
+                <a href="https://x.com/gauravmeena0708" target="_blank"
+                    class="text-white hover:text-indigo-200 transition duration-300 text-2xl"><i
+                        class="fab fa-twitter"></i></a>
             </div>
         </div>
     </header>
@@ -105,14 +151,24 @@
             <h2 class="text-3xl font-bold text-center mb-12 text-slate-800">About Me</h2>
             <div class="max-w-3xl mx-auto text-lg text-slate-700 leading-relaxed space-y-6">
                 <p>
-                    I am Gaurav Meena, currently pursuing an M.Tech in Machine Intelligence and Data Science at the prestigious Indian Institute of Technology (IIT) Delhi, with an expected graduation in June 2026. My research focus is on <strong class="font-semibold text-indigo-600">Generative AI</strong>, specifically exploring diffusion and VAE models for generating synthetic conditional tabular data while preserving privacy.
+                    I am Gaurav Meena, currently pursuing an M.Tech in Machine Intelligence and Data Science at the
+                    prestigious Indian Institute of Technology (IIT) Delhi, with an expected graduation in June 2026. My
+                    research focus is on <strong class="font-semibold text-indigo-600">Generative AI</strong>,
+                    specifically exploring diffusion and VAE models for generating synthetic conditional tabular data
+                    while preserving privacy.
                 </p>
                 <p>
-                    My journey into technology has been unconventional and enriching. I hold a Dual Degree (B.Tech + M.Tech) in Aerospace Engineering from IIT Bombay. After graduating, I worked as a Software Engineer before transitioning into Civil Services, where I served as APFC and 
-                    Regional Provident Fund Commissioner. This role provided me with invaluable experience in public administration, policy-making, and leading large teams.
+                    My journey into technology has been unconventional and enriching. I hold a Dual Degree (B.Tech +
+                    M.Tech) in Aerospace Engineering from IIT Bombay. After graduating, I worked as a Software Engineer
+                    before transitioning into Civil Services, where I served as APFC and
+                    Regional Provident Fund Commissioner. This role provided me with invaluable experience in public
+                    administration, policy-making, and leading large teams.
                 </p>
                 <p>
-                    Driven by a passion for technology's potential to solve real-world problems, I've returned to academia to deepen my expertise in AI. I am a lifelong learner, adept at full-stack development, data analysis, and automation. I thrive on challenges and am always eager to explore new tools and methodologies to create impactful solutions.
+                    Driven by a passion for technology's potential to solve real-world problems, I've returned to
+                    academia to deepen my expertise in AI. I am a lifelong learner, adept at full-stack development,
+                    data analysis, and automation. I thrive on challenges and am always eager to explore new tools and
+                    methodologies to create impactful solutions.
                 </p>
             </div>
         </div>
@@ -121,86 +177,119 @@
     <section id="projects" class="section bg-slate-100">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-16 text-slate-800">Projects Showcase</h2>
-            
+
             <div class="mb-12">
                 <h3 class="text-2xl font-semibold mb-8 text-indigo-700">Data Science & AI/ML</h3>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/6366F1/FFFFFF?text=IITD+ML" alt="IITD Machine Learning" class="w-full h-48 object-cover">
+                        <img src="https://placehold.co/600x400/6366F1/FFFFFF?text=IITD+ML" alt="IITD Machine Learning"
+                            class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-semibold mb-2 text-slate-800">IITD Machine Learning</h4>
-                            <p class="text-slate-600 text-sm mb-4">Coursework, projects, and learnings from M.Tech in AI & Data Science at IIT Delhi.</p>
+                            <p class="text-slate-600 text-sm mb-4">Coursework, projects, and learnings from M.Tech in AI
+                                & Data Science at IIT Delhi.</p>
                             <div>
-                                <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Scikit-learn</span>
+                                <span class="tag">Python</span><span class="tag">TensorFlow</span><span
+                                    class="tag">Scikit-learn</span>
                             </div>
                             <div class="mt-6">
-                                <a href="https://github.com/gauravmeena0708/IITD-Machine-Learning" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium mr-4"><i class="fab fa-github mr-1"></i> GitHub</a>
-                                <a href="https://gauravmeena0708.github.io/IITD-Machine-Learning/" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fas fa-link mr-1"></i> Live Site</a>
+                                <a href="https://github.com/gauravmeena0708/IITD-Machine-Learning" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium mr-4"><i
+                                        class="fab fa-github mr-1"></i> GitHub</a>
+                                <a href="https://gauravmeena0708.github.io/IITD-Machine-Learning/" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fas fa-link mr-1"></i> Live Site</a>
                             </div>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Chat+Analyzer" alt="Whatsapp Chat Analyzer" class="w-full h-48 object-cover">
+                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Chat+Analyzer"
+                            alt="Whatsapp Chat Analyzer" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-semibold mb-2 text-slate-800">Whatsapp Group Chat Analyzer</h4>
-                            <p class="text-slate-600 text-sm mb-4">A Python package to analyze WhatsApp group chat exports, providing insights and visualizations.</p>
-                             <div>
-                                <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span>
+                            <p class="text-slate-600 text-sm mb-4">A Python package to analyze WhatsApp group chat
+                                exports, providing insights and visualizations.</p>
+                            <div>
+                                <span class="tag">Python</span><span class="tag">Pandas</span><span
+                                    class="tag">Matplotlib</span>
                             </div>
                             <div class="mt-6">
-                                <a href="https://github.com/gauravmeena0708/whatsapp-analyzer" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fab fa-github mr-1"></i> GitHub</a>
+                                <a href="https://github.com/gauravmeena0708/whatsapp-analyzer" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fab fa-github mr-1"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/8b8bbd/FFFFFF?text=AI+Player+for+Havannah+Game" alt="AI Player for Havannah Game" class="w-full h-48 object-cover">
+                        <img src="https://placehold.co/600x400/8b8bbd/FFFFFF?text=AI+Player+for+Havannah+Game"
+                            alt="AI Player for Havannah Game" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-semibold mb-2 text-slate-800">AI Player for Havannah Game</h4>
-                            <p class="text-slate-600 text-sm mb-4">A Web based game using Monte Carlo to make decisions.</p>
-                             <div>
-                                <span class="tag">Javascript</span><span class="tag">Monte Carlo</span><span class="tag">Front-End</span>
+                            <p class="text-slate-600 text-sm mb-4">A Web based game using Monte Carlo to make decisions.
+                            </p>
+                            <div>
+                                <span class="tag">Javascript</span><span class="tag">Monte Carlo</span><span
+                                    class="tag">Front-End</span>
                             </div>
                             <div class="mt-6">
-                                <a href="https://github.com/gauravmeena0708/havannah" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium  mr-4"><i class="fab fa-github mr-1"></i> GitHub</a>
-                                <a href="hhttps://gauravmeena0708.github.io/havannah/index.html" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fas fa-link mr-1"></i> Live Site</a>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/630034/FFFFFF?text=High+Confidence+image+Classification" alt="High Confidence Image Classification" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h4 class="text-xl font-semibold mb-2 text-slate-800">High Confidence Image Classification</h4>
-                            <p class="text-slate-600 text-sm mb-4">Pytorch based AI model which predict classes only if Confidence is High on 100 classes</p>
-                             <div>
-                                <span class="tag">Pytorch</span><span class="tag">Wide Resnet</span><span class="tag">CIFAR-100</span>
-                            </div>
-                            <div class="mt-6">
-                                <a href="https://github.com/gauravmeena0708/IITD-Machine-Learning/tree/main/semester1-projects/774%20A3%20high%20confidence%20classification" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fab fa-github mr-1"></i> GitHub</a>
+                                <a href="https://github.com/gauravmeena0708/havannah" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium  mr-4"><i
+                                        class="fab fa-github mr-1"></i> GitHub</a>
+                                <a href="hhttps://gauravmeena0708.github.io/havannah/index.html" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fas fa-link mr-1"></i> Live Site</a>
                             </div>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/3b97bb/FFFFFF?text=Baby+Cry+Classification" alt="Baby Cry Classification" class="w-full h-48 object-cover">
+                        <img src="https://placehold.co/600x400/630034/FFFFFF?text=High+Confidence+image+Classification"
+                            alt="High Confidence Image Classification" class="w-full h-48 object-cover">
                         <div class="p-6">
-                            <h4 class="text-xl font-semibold mb-2 text-slate-800">Baby Cry Classification</h4>
-                            <p class="text-slate-600 text-sm mb-4">Tensorflow based AI model to identify why baby is crying</p>
-                             <div>
-                                <span class="tag">Tensorflow</span><span class="tag">librosa</span><span class="tag">SMOTE</span>
+                            <h4 class="text-xl font-semibold mb-2 text-slate-800">High Confidence Image Classification
+                            </h4>
+                            <p class="text-slate-600 text-sm mb-4">Pytorch based AI model which predict classes only if
+                                Confidence is High on 100 classes</p>
+                            <div>
+                                <span class="tag">Pytorch</span><span class="tag">Wide Resnet</span><span
+                                    class="tag">CIFAR-100</span>
                             </div>
                             <div class="mt-6">
-                                <a href="https://github.com/gauravmeena0708/baby/" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fab fa-github mr-1"></i> GitHub</a>
+                                <a href="https://github.com/gauravmeena0708/IITD-Machine-Learning/tree/main/semester1-projects/774%20A3%20high%20confidence%20classification"
+                                    target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fab fa-github mr-1"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
-                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=GenAI+Research" alt="Generative AI Research" class="w-full h-48 object-cover">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
+                        <img src="https://placehold.co/600x400/3b97bb/FFFFFF?text=Baby+Cry+Classification"
+                            alt="Baby Cry Classification" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold mb-2 text-slate-800">Baby Cry Classification</h4>
+                            <p class="text-slate-600 text-sm mb-4">Tensorflow based AI model to identify why baby is
+                                crying</p>
+                            <div>
+                                <span class="tag">Tensorflow</span><span class="tag">librosa</span><span
+                                    class="tag">SMOTE</span>
+                            </div>
+                            <div class="mt-6">
+                                <a href="https://github.com/gauravmeena0708/baby/" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fab fa-github mr-1"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
+                        <img src="https://placehold.co/600x400/F59E0B/FFFFFF?text=GenAI+Research"
+                            alt="Generative AI Research" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-semibold mb-2 text-slate-800">Generative AI for Tabular Data</h4>
-                            <p class="text-slate-600 text-sm mb-4">M.Tech research on using diffusion and VAE models for synthetic, privacy-preserving tabular data generation.</p>
-                             <div>
-                                <span class="tag">Python</span><span class="tag">PyTorch/TF</span><span class="tag">VAE</span><span class="tag">Diffusion Models</span>
+                            <p class="text-slate-600 text-sm mb-4">M.Tech research on using diffusion and VAE models for
+                                synthetic, privacy-preserving tabular data generation.</p>
+                            <div>
+                                <span class="tag">Python</span><span class="tag">PyTorch/TF</span><span
+                                    class="tag">VAE</span><span class="tag">Diffusion Models</span>
                             </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,72 +297,100 @@
             <div class="mb-12">
                 <h3 class="text-2xl font-semibold mb-8 text-indigo-700">Web Development & Full-Stack</h3>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/EC4899/FFFFFF?text=Inventory+System" alt="Inventory Management System" class="w-full h-48 object-cover">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
+                        <img src="https://placehold.co/600x400/EC4899/FFFFFF?text=Inventory+System"
+                            alt="Inventory Management System" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-semibold mb-2 text-slate-800">Inventory Management System</h4>
-                            <p class="text-slate-600 text-sm mb-4">A comprehensive inventory management software built using the Laravel PHP framework.</p>
-                            <div><span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Bootstrap</span></div>
+                            <p class="text-slate-600 text-sm mb-4">A comprehensive inventory management software built
+                                using the Laravel PHP framework.</p>
+                            <div><span class="tag">PHP</span><span class="tag">Laravel</span><span
+                                    class="tag">MySQL</span><span class="tag">Bootstrap</span></div>
                             <div class="mt-6">
-                                <a href="https://github.com/gauravmeena0708/inventory-management-software-laravel" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fab fa-github mr-1"></i> GitHub</a>
+                                <a href="https://github.com/gauravmeena0708/inventory-management-software-laravel"
+                                    target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fab fa-github mr-1"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/8B5CF6/FFFFFF?text=PF+Projects" alt="PF Projects Suite" class="w-full h-48 object-cover">
+                        <img src="https://placehold.co/600x400/8B5CF6/FFFFFF?text=PF+Projects" alt="PF Projects Suite"
+                            class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-semibold mb-2 text-slate-800">PF Projects Suite</h4>
-                            <p class="text-slate-600 text-sm mb-4">A collection of web-based tools for EPF calculations, visualizations, and dashboards.</p>
-                            <div><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">D3.js</span></div>
+                            <p class="text-slate-600 text-sm mb-4">A collection of web-based tools for EPF calculations,
+                                visualizations, and dashboards.</p>
+                            <div><span class="tag">HTML</span><span class="tag">CSS</span><span
+                                    class="tag">JavaScript</span><span class="tag">D3.js</span></div>
                             <div class="mt-6">
-                                <a href="https://github.com/gauravmeena0708/pf-projects" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium mr-4"><i class="fab fa-github mr-1"></i> GitHub</a>
-                                <a href="https://gauravmeena0708.github.io/pf-projects/links-dashboard/" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fas fa-link mr-1"></i> Live Demos</a>
+                                <a href="https://github.com/gauravmeena0708/pf-projects" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium mr-4"><i
+                                        class="fab fa-github mr-1"></i> GitHub</a>
+                                <a href="https://gauravmeena0708.github.io/pf-projects/links-dashboard/" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fas fa-link mr-1"></i> Live Demos</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="mb-12">
                 <h3 class="text-2xl font-semibold mb-8 text-indigo-700">Python, Automation & Design</h3>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Python+Scripts" alt="Python Scripts" class="w-full h-48 object-cover">
+                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Python+Scripts" alt="Python Scripts"
+                            class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-semibold mb-2 text-slate-800">Python Programming Repo</h4>
-                            <p class="text-slate-600 text-sm mb-4">A collection of various Python scripts for automation, utilities, and learning exercises.</p>
-                            <div><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">Scripting</span></div>
+                            <p class="text-slate-600 text-sm mb-4">A collection of various Python scripts for
+                                automation, utilities, and learning exercises.</p>
+                            <div><span class="tag">Python</span><span class="tag">Automation</span><span
+                                    class="tag">Scripting</span></div>
                             <div class="mt-6">
-                                <a href="https://github.com/gauravmeena0708/python-programming" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fab fa-github mr-1"></i> GitHub</a>
+                                <a href="https://github.com/gauravmeena0708/python-programming" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fab fa-github mr-1"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
-                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/22D3EE/FFFFFF?text=EPF+Tools" alt="EPF Tools Package" class="w-full h-48 object-cover">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
+                        <img src="https://placehold.co/600x400/22D3EE/FFFFFF?text=EPF+Tools" alt="EPF Tools Package"
+                            class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-semibold mb-2 text-slate-800">EPF Tools (Python Package)</h4>
-                            <p class="text-slate-600 text-sm mb-4">Python package for generating PF office summary reports and other EPF related utilities.</p>
-                            <div><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Reporting</span></div>
+                            <p class="text-slate-600 text-sm mb-4">Python package for generating PF office summary
+                                reports and other EPF related utilities.</p>
+                            <div><span class="tag">Python</span><span class="tag">Pandas</span><span
+                                    class="tag">Reporting</span></div>
                             <div class="mt-6">
-                                <a href="https://github.com/gauravmeena0708/epftools" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fab fa-github mr-1"></i> GitHub</a>
+                                <a href="https://github.com/gauravmeena0708/epftools" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fab fa-github mr-1"></i> GitHub</a>
                             </div>
                         </div>
                     </div>
-                     <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
-                        <img src="https://placehold.co/600x400/A78BFA/FFFFFF?text=Design+Portfolio" alt="Design Portfolio" class="w-full h-48 object-cover">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
+                        <img src="https://placehold.co/600x400/A78BFA/FFFFFF?text=Design+Portfolio"
+                            alt="Design Portfolio" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-semibold mb-2 text-slate-800">Design Projects</h4>
-                            <p class="text-slate-600 text-sm mb-4">A showcase of various design projects, including UI/UX, graphics, and visualizations.</p>
-                             <div><span class="tag">UI/UX</span><span class="tag">Photoshop</span><span class="tag">Data Visualization</span></div>
+                            <p class="text-slate-600 text-sm mb-4">A showcase of various design projects, including
+                                UI/UX, graphics, and visualizations.</p>
+                            <div><span class="tag">UI/UX</span><span class="tag">Photoshop</span><span class="tag">Data
+                                    Visualization</span></div>
                             <div class="mt-6">
-                                <a href="https://www.behance.net/gauravmeena0708" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium"><i class="fab fa-behance mr-1"></i> View on Behance</a>
+                                <a href="https://www.behance.net/gauravmeena0708" target="_blank"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium"><i
+                                        class="fab fa-behance mr-1"></i> View on Behance</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="text-center mt-12">
-                 <a href="https://github.com/gauravmeena0708?tab=repositories" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-semibold text-lg">
+                <a href="https://github.com/gauravmeena0708?tab=repositories" target="_blank"
+                    class="text-indigo-600 hover:text-indigo-800 font-semibold text-lg">
                     View All Projects on GitHub <i class="fas fa-arrow-right ml-1"></i>
                 </a>
             </div>
@@ -297,9 +414,11 @@
                 </div>
                 <div class="mb-8">
                     <h3 class="text-xl font-semibold text-indigo-700 mb-3">Web Technologies</h3>
-                     <div class="flex flex-wrap">
-                        <span class="tag">HTML5</span> <span class="tag">CSS3</span> <span class="tag">Tailwind CSS</span> <span class="tag">Bootstrap</span>
-                        <span class="tag">Node.js</span> <span class="tag">Django</span> <span class="tag">Laravel</span>
+                    <div class="flex flex-wrap">
+                        <span class="tag">HTML5</span> <span class="tag">CSS3</span> <span class="tag">Tailwind
+                            CSS</span> <span class="tag">Bootstrap</span>
+                        <span class="tag">Node.js</span> <span class="tag">Django</span> <span
+                            class="tag">Laravel</span>
                         <span class="tag">REST APIs</span> <span class="tag">Git & GitHub</span>
                     </div>
                 </div>
@@ -320,21 +439,29 @@
             <h2 class="text-3xl font-bold text-center mb-12 text-slate-800">Education & Certifications</h2>
             <div class="max-w-3xl mx-auto space-y-8">
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-indigo-700 mb-1">M.Tech in Machine Intelligence & Data Science</h3>
+                    <h3 class="text-xl font-semibold text-indigo-700 mb-1">M.Tech in Machine Intelligence & Data Science
+                    </h3>
                     <p class="text-slate-600 mb-1">Indian Institute of Technology (IIT), Delhi</p>
                     <p class="text-sm text-slate-500">Expected Graduation: June 2026</p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-indigo-700 mb-1">Dual Degree (B.Tech + M.Tech) in Aerospace Engineering</h3>
+                    <h3 class="text-xl font-semibold text-indigo-700 mb-1">Dual Degree (B.Tech + M.Tech) in Aerospace
+                        Engineering</h3>
                     <p class="text-slate-600 mb-1">Indian Institute of Technology (IIT), Bombay</p>
                     <p class="text-sm text-slate-500">2007 - 2012</p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-xl font-semibold text-indigo-700 mb-2">Certifications</h3>
                     <ul class="list-disc list-inside text-slate-700 space-y-1">
-                        <li>Google Advanced Data Analytics Professional Certificate <a href="https://coursera.org/share/6205a00dc9ed3cb3247ba997fcec7003" target="_blank" class="text-indigo-500 hover:underline">(Verify)</a></li>
-                        <li>Google Data Analytics Professional Certificate <a href="https://coursera.org/share/efcf869451102008aba6a0cf6c27a433" target="_blank" class="text-indigo-500 hover:underline">(Verify)</a></li>
-                        <li>Google IT Automation with Python Professional Certificate <a href="https://coursera.org/share/98704909b2c1c1578d4e86f5eebb8d19" target="_blank" class="text-indigo-500 hover:underline">(Verify)</a></li>
+                        <li>Google Advanced Data Analytics Professional Certificate <a
+                                href="https://coursera.org/share/6205a00dc9ed3cb3247ba997fcec7003" target="_blank"
+                                class="text-indigo-500 hover:underline">(Verify)</a></li>
+                        <li>Google Data Analytics Professional Certificate <a
+                                href="https://coursera.org/share/efcf869451102008aba6a0cf6c27a433" target="_blank"
+                                class="text-indigo-500 hover:underline">(Verify)</a></li>
+                        <li>Google IT Automation with Python Professional Certificate <a
+                                href="https://coursera.org/share/98704909b2c1c1578d4e86f5eebb8d19" target="_blank"
+                                class="text-indigo-500 hover:underline">(Verify)</a></li>
                     </ul>
                 </div>
             </div>
@@ -347,14 +474,23 @@
             <p class="text-lg mb-8 max-w-xl mx-auto text-slate-300">
                 I'm always open to discussing new projects, collaborations, or opportunities. Feel free to reach out!
             </p>
-            <a href="mailto:gauravmeena0708@gmail.com" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 inline-block text-lg">
+            <a href="mailto:gauravmeena0708@gmail.com"
+                class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 inline-block text-lg">
                 <i class="fas fa-envelope mr-2"></i> Email Me
             </a>
             <div class="mt-10 flex justify-center space-x-6">
-                <a href="https://www.linkedin.com/in/gauravmeena0708/" target="_blank" class="text-slate-300 hover:text-white transition duration-300 text-3xl"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/gauravmeena0708" target="_blank" class="text-slate-300 hover:text-white transition duration-300 text-3xl"><i class="fab fa-github"></i></a>
-                <a href="https://www.behance.net/gauravmeena0708" target="_blank" class="text-slate-300 hover:text-white transition duration-300 text-3xl"><i class="fab fa-behance"></i></a>
-                <a href="https://x.com/gauravmeena0708" target="_blank" class="text-slate-300 hover:text-white transition duration-300 text-3xl"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/gauravmeena0708/" target="_blank"
+                    class="text-slate-300 hover:text-white transition duration-300 text-3xl"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/gauravmeena0708" target="_blank"
+                    class="text-slate-300 hover:text-white transition duration-300 text-3xl"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://www.behance.net/gauravmeena0708" target="_blank"
+                    class="text-slate-300 hover:text-white transition duration-300 text-3xl"><i
+                        class="fab fa-behance"></i></a>
+                <a href="https://x.com/gauravmeena0708" target="_blank"
+                    class="text-slate-300 hover:text-white transition duration-300 text-3xl"><i
+                        class="fab fa-twitter"></i></a>
             </div>
         </div>
     </section>
@@ -365,12 +501,12 @@
     </footer>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JHNCW79FZT"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-JHNCW79FZT', {
-              'cookie_domain': 'none'
-          });
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-JHNCW79FZT', {
+            'cookie_domain': 'none'
+        });
     </script>
     <script>
         // Mobile menu toggle
@@ -393,13 +529,14 @@
                 });
             });
         });
-        
+
         // Set current year in footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
-    
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="8f783b33-2862-44ee-9d42-a3074cd415bb" type="text/javascript" async></script>
+
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="8f783b33-2862-44ee-9d42-a3074cd415bb"
+        type="text/javascript" async></script>
 
 </body>
-</html>
 
+</html>

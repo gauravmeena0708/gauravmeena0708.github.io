@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCR Food Atlas - Gaurav Meena</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .section {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+
+            20% {
+                left: 100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .badge-shine {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .badge-shine::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: skewX(-25deg);
+            animation: shine 3s infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+    <nav class="bg-white shadow-md fixed w-full z-50 top-0">
+        <div class="container mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-xl font-bold text-indigo-600">Gaurav Meena</a>
+                <div class="flex md:hidden">
+                    <button type="button"
+                        class="text-slate-500 hover:text-slate-600 focus:outline-none focus:text-slate-600"
+                        aria-label="toggle menu" id="mobile-menu-button">
+                        <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
+                            <path fill-rule="evenodd"
+                                d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="md:flex items-center hidden" id="mobile-menu">
+                <div class="flex flex-col md:flex-row md:mx-6">
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="index.html#home">Home</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="index.html#about">About</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="index.html#projects">Projects</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="index.html#skills">Skills</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="index.html#education">Education</a>
+                    <a class="my-1 text-sm text-indigo-600 font-bold md:mx-4 md:my-0" href="places.html">Food Atlas</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="tools.html">AI Tools</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="https://gauravmeena0708.github.io/resume.html" target="_blank">Resume</a>
+                    <a class="my-1 text-sm text-slate-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
+                        href="index.html#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white pt-32 pb-16">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-3">NCR Food Atlas</h1>
+            <p class="text-xl md:text-2xl mb-8 font-light">The Ultimate Walkable Food Guide to Delhi-NCR</p>
+
+            <div class="relative max-w-xl mx-auto">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center">
+                    <i class="fas fa-search text-indigo-300"></i>
+                </span>
+                <input type="text" id="searchInput" placeholder="Search for a dish, place, or region..."
+                    class="w-full pl-12 pr-4 py-3 rounded-full bg-white/10 backdrop-blur-md text-white placeholder-indigo-200 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white transition-all">
+            </div>
+        </div>
+    </header>
+
+    <!-- Filters -->
+    <div class="bg-white shadow-sm border-b border-slate-200 sticky top-[64px] z-40 overflow-x-auto no-scrollbar">
+        <div class="container mx-auto px-6">
+            <div class="flex space-x-2 py-4" id="regionFilters">
+                <!-- Filters will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-6 py-12">
+        <div id="noResults" class="hidden text-center py-24 text-slate-500">
+            <div class="mb-6">
+                <i class="fas fa-utensils text-6xl text-slate-200"></i>
+            </div>
+            <p class="text-xl font-medium">No tasty spots found matching your search.</p>
+            <p class="mt-2 text-slate-400">Try searching for something else or reset filters.</p>
+            <button id="resetFilters"
+                class="mt-6 px-6 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-100">Reset
+                Filters</button>
+        </div>
+
+        <div id="foodGrid" class="grid gap-12">
+            <!-- Content will be injected here -->
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 text-center">
+        <div class="container mx-auto px-6">
+            <p class="mb-2">&copy; <span id="currentYear"></span> NCR Food Atlas - Gaurav Meena.</p>
+            <p class="text-sm">Curated for serious foodies. "Top 3" tags are the best in the entire region.</p>
+            <div class="mt-6 flex justify-center space-x-6">
+                <a href="https://www.linkedin.com/in/gauravmeena0708/" target="_blank"
+                    class="text-slate-400 hover:text-white transition duration-300 text-2xl"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/gauravmeena0708" target="_blank"
+                    class="text-slate-400 hover:text-white transition duration-300 text-2xl"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://x.com/gauravmeena0708" target="_blank"
+                    class="text-slate-400 hover:text-white transition duration-300 text-2xl"><i
+                        class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const foodData = [
+            {
+                id: 1,
+                region: "Paharganj",
+                description: "The Breakfast Capital. Chaotic, crowded, but home to India's most famous Chole Bhature.",
+                spots: [
+                    { name: "Sita Ram Diwan Chand", dish: "Chole Bhature", desc: "The undisputed king. Paneer-stuffed bhature with spicy, non-oily chole.", isTop3: true, location: "Chuna Mandi" },
+                    { name: "Kashmir Sweet Shop", dish: "Chur-Chur Naan Thali", desc: "Crushed, buttery naan served with dal makhani, chole, and raita.", isTop3: true, location: "Main Market" }
+                ]
+            },
+            {
+                id: 2,
+                region: "Jama Masjid",
+                description: "The Old Delhi Meat Hub. Best visited in the evening for rich Mughal flavors.",
+                spots: [
+                    { name: "Haji Shabrati Nihari Wale", dish: "Nihari", desc: "Slow-cooked beef/mutton stew. The benchmark for Nihari in Delhi.", isTop3: true, location: "Chitli Qabar" },
+                    { name: "Aslam Chicken", dish: "Butter Chicken (Roast)", desc: "Roasted chicken submerged in a block of melted butter and yogurt masala.", isTop3: true, location: "Matia Mahal" },
+                    { name: "Qureshi Kebab Corner", dish: "Seekh Kebabs", desc: "Juicy, melt-in-mouth kebabs. Requires patience as queues are long.", isTop3: true, location: "Opp. Jama Masjid Gate 1" },
+                    { name: "Cool Point", dish: "Shahi Tukda & Rabri", desc: "Fried bread pudding soaked in saffron milk. Best dessert in Old Delhi.", isTop3: true, location: "Matia Mahal" }
+                ]
+            },
+            {
+                id: 3,
+                region: "CR Park",
+                description: "Mini Kolkata. The only place for authentic Bengali sweets and street food.",
+                spots: [
+                    { name: "Raju Puchka Wala", dish: "Kolkata Puchka", desc: "Tangy tamarind & Gondhoraj lemon water. Distinctly different from Delhi Golgappe.", isTop3: true, location: "Market 1" },
+                    { name: "Kolkata Hot Kathi Roll", dish: "Egg-Mutton Roll", desc: "Authentic flaky paratha base, not the roomali roti version found elsewhere.", isTop3: true, location: "Market 1" },
+                    { name: "Dadu Cutlet Shop", dish: "Bhetki Fish Fry", desc: "Pure Bhetki fish fillet with a crispy mustard-hinted coating.", isTop3: true, location: "Market 2" }
+                ]
+            },
+            {
+                id: 4,
+                region: "Karol Bagh",
+                description: "A shopper's paradise hiding some of the oldest heavy-weight food legends.",
+                spots: [
+                    { name: "Roshan Di Kulfi", dish: "Kulfi Faluda", desc: "Thick, creamy, and loaded with dry fruits. The gold standard for Kulfi in NCR.", isTop3: true, location: "Ajmal Khan Road" },
+                    { name: "Ganesh Restaurant", dish: "Fish Fry (Pakora)", desc: "Sold by weight. Crispy, spicy besan coating on river fish.", isTop3: true, location: "Gurudwara Road" },
+                    { name: "Om Corner", dish: "Chole Bhature", desc: "Famous for dark, spicy chole. A strong contender for top 3 in Delhi.", isTop3: true, location: "Sant Nagar" }
+                ]
+            },
+            {
+                id: 5,
+                region: "Chandni Chowk",
+                description: "The vegetarian heritage heartland. Famous for Chaat, Paranthas, and Sweets.",
+                spots: [
+                    { name: "Natraj Dahi Bhalle", dish: "Dahi Bhalla", desc: "Only two items on the menu. The dahi is thick and the chutney has a unique kick.", isTop3: true, location: "Opp. Paranthe Wali Gali" },
+                    { name: "Old Famous Jalebi Wala", dish: "Desi Ghee Jalebi", desc: "Thick, soft, and syrup-soaked. Unlike the thin crispy ones.", isTop3: true, location: "Dariba Kalan" },
+                    { name: "Kuremal Mohanlal Kulfi", dish: "Stuffed Fruit Kulfi", desc: "Real mangoes and oranges hollowed out and filled with kulfi. Unique.", isTop3: true, location: "Sitaram Bazar" }
+                ]
+            },
+            {
+                id: 6,
+                region: "Sector 7 Dwarka",
+                description: "Ramphal Chowk. A grid of lanes packed with high-quality street food.",
+                spots: [
+                    { name: "KC Restaurant", dish: "Paneer Afghani Momos", desc: "Creamy, chargrilled gravy momos. A local legend.", isTop3: false, location: "Ramphal Chowk" },
+                    { name: "Shree Ram Pao Bhaji", dish: "Cheese Butter Pao Bhaji", desc: "Authentic Mumbai style where cheese is mashed into the bhaji.", isTop3: true, location: "Vardhman Star Mall" }
+                ]
+            },
+            {
+                id: 7,
+                region: "Sector 12 Dwarka",
+                description: "Home to the famous City Centre markets and heavy breakfast options.",
+                spots: [
+                    { name: "Raju Chur Chur Naan", dish: "Chur Chur Naan Thali", desc: "The Dwarka branch of the legend. The thali is massive and sleep-inducing.", isTop3: false, location: "Near Petrol Pump/Sec 12 Mkt" }
+                ]
+            },
+            {
+                id: 8,
+                region: "Majnu Ka Tila",
+                description: "Little Tibet. The best place for Himalayan vibes and budget friendly food.",
+                spots: [
+                    { name: "Street Stalls (Temple)", dish: "Laphing", desc: "Cold mung bean noodles with chili oil. Unbeatable authenticity.", isTop3: true, location: "Near Monastery" },
+                    { name: "Ama Cafe", dish: "Pancakes & Coffee", desc: "The most popular cafe for breakfast and bakery items.", isTop3: false, location: "MKT Main Alley" },
+                    { name: "Tee Dee / Himalayan", dish: "Thukpa & Tingmo", desc: "Authentic Tibetan broth and fluffy steamed buns.", isTop3: true, location: "MKT" }
+                ]
+            },
+            {
+                id: 9,
+                region: "Vishwavidyalaya",
+                description: "North Campus (Hudson Lane/Kamla Nagar). Student fuel.",
+                spots: [
+                    { name: "Chache Di Hatti", dish: "Aloo Wale Chole Bhature", desc: "Many rate this higher than Sita Ram. The stuffed bhatura is iconic.", isTop3: true, location: "Kamla Nagar" },
+                    { name: "Tom Uncle Maggi Point", dish: "Cheese Baked Pasta", desc: "A student rite of passage. Pasta covered in cheese and torched.", isTop3: false, location: "Near Ramjas College" }
+                ]
+            },
+            {
+                id: 10,
+                region: "Lajpat Nagar",
+                description: "Central Market. Famous for shopping and quick street bites.",
+                spots: [
+                    { name: "Dolma Aunty", dish: "Momos (Steamed)", desc: "The woman who arguably introduced momos to Delhi streets.", isTop3: false, location: "Central Market" },
+                    { name: "Jhakkas Bombay Pav Bhaji", dish: "Pav Bhaji", desc: "Buttery, spicy, and very close to the Mumbai original.", isTop3: false, location: "Amar Colony" },
+                    { name: "Street Hawkers", dish: "Ram Ladoo", desc: "Moong dal fritters topped with radish and green chutney.", isTop3: true, location: "Central Market" }
+                ]
+            },
+            {
+                id: 11,
+                region: "Krishna Nagar",
+                description: "East Delhi's hidden gem for unique vegetarian snacks.",
+                spots: [
+                    { name: "Samosa Hub", dish: "Pizza Samosa", desc: "Liquid cheese filling. 40+ varieties of samosa available here.", isTop3: false, location: "Mandir Marg" },
+                    { name: "Bhole Shankar Kachori", dish: "Kachori with Grape Chutney", desc: "Famous for the unique 'khatti-meethi' chutney containing grapes and banana.", isTop3: true, location: "Chhota Bazar" }
+                ]
+            },
+            {
+                id: 12,
+                region: "Rohini",
+                description: "The Mini-Punjab of North-West Delhi.",
+                spots: [
+                    { name: "Gopal's 56", dish: "Lassi & Chole Bhature", desc: "The lassi is so thick you need a spoon. A meal in itself.", isTop3: true, location: "Sector 13" },
+                    { name: "Chalte Firte Momos", dish: "Tandoori Afghani Gravy Momos", desc: "The inventors of the 'Gravy Momo' trend in Delhi.", isTop3: true, location: "Sector 16" }
+                ]
+            },
+            {
+                id: 13,
+                region: "Humayunpur",
+                description: "The Naga & North-East food capital within Safdarjung.",
+                spots: [
+                    { name: "Hornbill", dish: "Smoked Pork with Axone", desc: "Authentic Naga flavors using fermented soy beans (Axone).", isTop3: true, location: "Humayunpur" },
+                    { name: "Yo Tibet", dish: "Pork/Chicken Thenthuk", desc: "Hand-pulled noodle soup. Perfect comfort food.", isTop3: false, location: "Humayunpur" }
+                ]
+            },
+            {
+                id: 14,
+                region: "Connaught Place",
+                description: "The heart of Delhi. Colonial bakeries and historic diners.",
+                spots: [
+                    { name: "Wenger's Deli", dish: "Mutton Patty & Nutella Waffle", desc: "Delhi's oldest bakery. The patty is flaky and meat-heavy.", isTop3: true, location: "Inner Circle, A Block" },
+                    { name: "Kake Da Hotel", dish: "Dahi Meat / Chicken Curry", desc: "Historic eatery famous for rich, ghee-laden gravies.", isTop3: false, location: "Outer Circle" },
+                    { name: "Jain Chawal Wale", dish: "Rajma Chawal", desc: "Comfort food at its best. Served with onions and fried chili.", isTop3: true, location: "Baba Kharak Singh Marg" }
+                ]
+            },
+            {
+                id: 15,
+                region: "Tilak Nagar",
+                description: "West Delhi's hub for Fish Fry and late-night cravings.",
+                spots: [
+                    { name: "Sahni Fish Corner", dish: "Amritsari Fish Fry", desc: "Spicy, crispy, and fresh. Best enjoyed in your car.", isTop3: true, location: "Chaukhandi Road" },
+                    { name: "New Vishal Corner", dish: "Kachori & Chole Bhature", desc: "Massive footfall for their spicy breakfast items.", isTop3: false, location: "Main Market" }
+                ]
+            },
+            {
+                id: 16,
+                region: "Sector 6 Dwarka",
+                description: "Central Market area with reliable sweet shops and snacks.",
+                spots: [
+                    { name: "Nathu's Sweets", dish: "Chaat & Sweets", desc: "Reliable quality for Raj Kachori and traditional sweets.", isTop3: false, location: "Central Market" },
+                    { name: "Local Hawkers", dish: "Moong Dal Laddu", desc: "Freshly made fried laddu with spicy green chutney found near the market entrance.", isTop3: false, location: "Market Entrance" }
+                ]
+            }
+        ];
+
+        let selectedRegion = "All";
+        let searchTerm = "";
+
+        const searchInput = document.getElementById('searchInput');
+        const regionFilters = document.getElementById('regionFilters');
+        const foodGrid = document.getElementById('foodGrid');
+        const noResults = document.getElementById('noResults');
+        const resetFilters = document.getElementById('resetFilters');
+
+        function init() {
+            renderFilters();
+            renderContent();
+
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value;
+                renderContent();
+            });
+
+            resetFilters.addEventListener('click', () => {
+                searchTerm = "";
+                selectedRegion = "All";
+                searchInput.value = "";
+                renderFilters();
+                renderContent();
+            });
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        }
+
+        function renderFilters() {
+            const regions = ["All", ...new Set(foodData.map(item => item.region))];
+            regionFilters.innerHTML = regions.map(region => `
+                <button onclick="setRegion('${region}')" 
+                    class="whitespace-nowrap px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedRegion === region
+                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-100"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                }">
+                    ${region}
+                </button>
+            `).join('');
+        }
+
+        function setRegion(region) {
+            selectedRegion = region;
+            renderFilters();
+            renderContent();
+        }
+
+        function renderContent() {
+            const filteredData = foodData.filter(item => {
+                const matchesRegion = selectedRegion === "All" || item.region === selectedRegion;
+                const matchesSearch = item.region.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.spots.some(spot => spot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        spot.dish.toLowerCase().includes(searchTerm.toLowerCase()));
+                return matchesRegion && matchesSearch;
+            });
+
+            if (filteredData.length === 0) {
+                foodGrid.innerHTML = "";
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            foodGrid.innerHTML = filteredData.map(area => `
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="bg-slate-800 text-white p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h2 class="text-2xl md:text-3xl font-bold flex items-center">
+                                    <i class="fas fa-map-marker-alt text-indigo-400 mr-3"></i>
+                                    ${area.region}
+                                </h2>
+                                <p class="text-slate-400 mt-2 text-lg">${area.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 md:p-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                        ${area.spots.map(spot => `
+                            <div class="relative group rounded-xl p-6 border transition-all duration-300 hover:border-indigo-200 hover:shadow-lg flex flex-col ${spot.isTop3 ? 'bg-indigo-50/50 border-indigo-100' : 'bg-white border-slate-100'}">
+                                ${spot.isTop3 ? `
+                                    <div class="absolute -top-3 -right-3 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center border-2 border-white uppercase tracking-wider badge-shine">
+                                        <i class="fas fa-crown mr-1 text-yellow-300"></i> Top 3 in NCR
+                                    </div>
+                                ` : ''}
+                                <h3 class="font-bold text-xl text-slate-800 mb-2">${spot.name}</h3>
+                                <div class="flex items-center text-sm text-indigo-600 font-semibold mb-3">
+                                    <i class="fas fa-utensils mr-2"></i> ${spot.dish}
+                                </div>
+                                <p class="text-slate-600 text-sm mb-4 leading-relaxed flex-grow">
+                                    ${spot.desc}
+                                </p>
+                                <div class="flex items-center text-xs text-slate-400 mt-4 pt-4 border-t border-slate-100 border-dashed">
+                                    <i class="fas fa-location-arrow mr-2 text-indigo-300"></i>
+                                    <span class="truncate">${spot.location}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+
+</html>
