@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Tools Guide for EPFO Staff - Gaurav Meena</title>
+    <title>AI Tools Guide for Professionals - Gaurav Meena</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -100,16 +100,45 @@
     <!-- Header -->
     <header class="bg-indigo-700 text-white pt-32 pb-12">
         <div class="container mx-auto px-6 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold mb-4">AI Tools Guide for EPFO Staff</h1>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">AI Tools Guide for Professionals</h1>
             <p class="text-lg md:text-xl text-indigo-100 max-w-3xl mx-auto">
                 A curated guide on how to leverage specific Artificial Intelligence tools to enhance productivity,
-                research, and content creation in our daily operations.
+                research, and content creation in daily professional operations.
             </p>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="container mx-auto px-6 py-12 max-w-4xl">
+
+        <!-- Data Privacy Warning -->
+        <div class="bg-red-50 border-l-4 border-red-500 rounded-r-lg shadow-sm p-6 mb-8 mt-4">
+            <div class="flex items-start">
+                <div class="flex-shrink-0 text-red-500 mt-1 mr-4">
+                    <i class="fas fa-shield-alt text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-red-800 mb-2">Critical Data Privacy Warning</h3>
+                    <p class="text-red-700 text-sm leading-relaxed">
+                        <strong>NEVER</strong> upload or paste sensitive, confidential, or Personally Identifiable
+                        Information (PII) such as financial records, identification numbers, or private internal
+                        documents into public AI tools (like ChatGPT, Claude, or Perplexity). These models may store and
+                        train on your inputs. Always use approved, enterprise-secured, or offline local AI tools for
+                        sensitive workflows.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative mb-8">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <i class="fas fa-search text-slate-400 text-lg"></i>
+            </div>
+            <input type="text" id="tool-search"
+                class="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm text-slate-700 text-lg"
+                placeholder="Search for a tool or use case (e.g., 'PDF', 'Video', 'Design')...">
+        </div>
 
         <!-- Section: Popular LLMs -->
         <div class="bg-white rounded-xl shadow-md p-8 border border-slate-100 mb-8 transition-all hover:shadow-lg">
@@ -403,13 +432,13 @@
                 </ul>
             </div>
 
-            <!-- Category: Development & Data Science -->
+            <!-- Category: For the IT & Tech Cell -->
             <div class="bg-white rounded-xl shadow-md p-8 border border-slate-100 mb-8 transition-all hover:shadow-lg">
                 <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
                     <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 mr-4">
                         <i class="fas fa-code text-xl"></i>
                     </div>
-                    Development & Data Science
+                    For the IT & Tech Cell
                 </h2>
                 <ul class="space-y-4">
                     <li class="flex items-start">
@@ -627,6 +656,38 @@
                     moreToolsSection.classList.add('hidden');
                     showMoreBtn.innerHTML = 'Show More Useful Tools <i class="fas fa-chevron-down ml-2"></i>';
                 }
+            });
+        }
+
+        // Tool Search Logic
+        const searchInput = document.getElementById('tool-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', function (e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const toolItems = document.querySelectorAll('li.flex.items-start');
+
+                // If searching and there's text, force the hidden section open
+                if (searchTerm.length > 0 && moreToolsSection && moreToolsSection.classList.contains('hidden')) {
+                    moreToolsSection.classList.remove('hidden');
+                    showMoreBtn.innerHTML = 'Show Less Tools <i class="fas fa-chevron-up ml-2"></i>';
+                }
+
+                toolItems.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                // Hide entire category sections if all tools inside are hidden
+                document.querySelectorAll('div.bg-white.rounded-xl.shadow-md.p-8').forEach(section => {
+                    if (section.querySelector('ul')) {
+                        const hasVisibleTools = Array.from(section.querySelectorAll('li.flex.items-start')).some(li => li.style.display !== 'none');
+                        section.style.display = hasVisibleTools ? 'block' : 'none';
+                    }
+                });
             });
         }
     </script>
